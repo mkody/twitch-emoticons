@@ -53,7 +53,7 @@ function addChannel(channel){
     channel.emotes.forEach(e => emotes.set(e.name, e));
 }
 
-function getEmoteList(sync){
+function getEmoteList(){
     return new Promise((resolve, reject) => {
         request(TWITCH_EMOTES).end((err, res) => {
             if (err) return reject(err);
