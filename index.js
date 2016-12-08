@@ -202,7 +202,7 @@ function loadBTTVChannel(channelName){
 }
 
 /** 
- * Loads the channel that the emote belongs to, Twitch only.
+ * Loads the channel that the emote belongs to, Twitch and global BTTV only.
  * @param emoteName - Name of emote.
  * @return Promise containing emote.
  */
@@ -233,10 +233,8 @@ function loadByEmote(emoteName){
 
             channel.emotes = emotes;
             addChannel(channel);
-            
-            if (channel.name === BTTV_GLOBAL) loadBTTVChannel().then(c => resolve(c.emotes.get(emoteName))).catch(reject);
-            if (channel.name === TWITCH_GLOBAL) resolve(channel.emotes.get(emoteName));
 
+            if (channel.name === TWITCH_GLOBAL) resolve(channel.emotes.get(emoteName));
             loadBTTVChannel(channel.name).then(() => resolve(channel.emotes.get(emoteName))).catch(reject);
         }).catch(reject);
     });
@@ -389,9 +387,6 @@ module.exports = {
     channel, emote, getChannel, getEmote,
     TWITCH_GLOBAL, loadChannel, loadChannels,
     BTTV_GLOBAL, loadBTTVChannel,
-    loadByEmote,
     clearCache,
     parse, parseAll
 };
-
-loadByEmote('Kappa').then(console.log).catch(console.error);
