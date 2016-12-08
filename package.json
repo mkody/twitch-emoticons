@@ -1,0 +1,26 @@
+{
+  "name": "twitch-emoticons",
+  "version": "1.0.0",
+  "description": "Gets Twitch emotes.",
+  "main": "index.js",
+  "keywords": [
+    "twitch",
+    "emote",
+    "emoticon",
+    "emoji"
+  ],
+  "author": "1Computer",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.2",
+    "superagent": "^3.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/1Computer1/twitch-emoticons.git"
+  },
+  "bugs": {
+    "url": "https://github.com/1Computer1/twitch-emoticons/issues"
+  },
+  "homepage": "https://github.com/1Computer1/twitch-emoticons"
+}
