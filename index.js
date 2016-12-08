@@ -288,5 +288,3 @@ module.exports = {
     TWITCH_GLOBAL, loadChannel, loadChannels, loadByEmote,
     BTTV_GLOBAL, loadBTTVChannel
 };
-
-emote('FeelsBadMan').then(console.log).catch(console.log);
