@@ -1,13 +1,16 @@
 {
   "name": "twitch-emoticons",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Gets Twitch emotes.",
   "main": "index.js",
   "keywords": [
-    "twitch",
     "emote",
     "emoticon",
-    "emoji"
+    "emoji",
+    "bttv",
+    "better",
+    "twitch",
+    "tv"
   ],
   "author": "1Computer",
   "license": "MIT",
