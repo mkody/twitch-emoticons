@@ -233,6 +233,10 @@ function loadByEmote(emoteName){
 
             channel.emotes = emotes;
             addChannel(channel);
+            
+            if (channel.name === BTTV_GLOBAL) loadBTTVChannel().then(c => resolve(c.emotes.get(emoteName))).catch(reject);
+            if (channel.name === TWITCH_GLOBAL) resolve(channel.emotes.get(emoteName));
+
             loadBTTVChannel(channel.name).then(() => resolve(channel.emotes.get(emoteName))).catch(reject);
         }).catch(reject);
     });
@@ -284,7 +288,7 @@ function emote(name){
                 let emoteObj = emotes.get(emoteName);
                 if (emoteObj) return resolve(emoteObj);
                 
-                return loadByEmote(emote).then(resolve);
+                return loadByEmote(emoteName).then(resolve);
             }
         
             let emoteObj = emotes.get(emoteName);
@@ -389,3 +393,5 @@ module.exports = {
     clearCache,
     parse, parseAll
 };
+
+loadByEmote('Kappa').then(console.log).catch(console.error);
