@@ -1,52 +1,113 @@
 # twitch-emoticons
 Get a Twitch channel's Twitch emotes and BTTV emotes!
-
-### Usage for Twitch emotes
 ```js
-let twitch = require('twitch-emoticons');
+const emoticons = require('twitch-emoticons');
 
-// Load some channels we want to use.
-// These are specifically for Twitch emotes.
-twitch.loadChannel().then(console.log); // Global emotes.
-twitch.loadChannel('name').then(console.log);
-twitch.loadChannels(['nameA', 'nameB', 'nameC']).then(console.log);
-twitch.loadByEmote('Kappa').then(console.log);
+// Example for getting Twitch emotes:
+emoticons.emote('Kappa').then(emote => {
+    console.log(emote.toLink(0));
+    // https://static-cdn.jtvnw.net/emoticons/v1/25/1.0
+});
 
-// If you are not sure which channels to load first, no worries!
-// emote() caches the channel and emotes for you if they are not cached.
-twitch.emote('Kreygasm').then(console.log);
+// Example for getting BTTV emotes:
+emoticons.emote('thefreaking2:gachiGASM').then(emote => {
+    console.log(emote.toLink(1));
+    // https://cdn.betterttv.net/emote/55999813f0db38ef6c7c663e/2x
+});
 
-// Prefixing like BTTV emotes is allowed, but not always the best idea.
-twitch.emote(twitch.TWITCH_GLOBAL + ':Kreygasm').then(console.log);
-twitch.emote('name:twitchEmote').then(console.log);
+// Example for getting channels:
+emoticons.channel('cirno_tv').then(channel => {
+    console.log(channel.emotes);
+    // Map {...}
+})
 
-// Get a channel by name.
-// It also caches the channel and emotes if they are not cached.
-twitch.channel('name').then(console.log);
+// Example for parsing text:
+let parsed = emoticons.parse('hi everyone Kappa', 'html', 2);
+console.log(parsed);
+// Hi everyone <img class="twitch-emote twitch-emote-2 src=https://static-cdn.jtvnw.net/emoticons/v1/25/3.0">
 ```
 
-### Usage for BTTV emotes
-```js
-let twitch = require('twitch-emoticons');
+# Documentation
+### Emotes
+*Methods related to getting an emote or the Emote class.*
+> Due to how BTTV works, non-global BTTV emotes should be accessed like so:
+> `channelName:emoteName`
+> Once it has been added to the cache, this will not be necessary.
+> twitch-emoticons also provide TWITCH\_GLOBAL and BTTV\_GLOBAL for prefixing:
+> `TWITCH_GLOBAL + ':emoteName'`
+> This is not necessary at all, but may be useful.
+##### emote(emoteName)
+`emoteName` The name of the emote.
+If the emote is not found in cache, twitch-emoticons will attempt to find it and cache the channel and its emotes (Twitch and BTTV).
+Returns a Promise containing the Emote object.
 
-// Load the channel we want to use.
-// These are specifically for BTTV emotes.
-twitch.loadBTTVChannel().then(console.log); // Global BTTV emotes.
-twitch.loadBTTVChannel('name').then(console.log);
-twitch.loadByEmote('FeelsGoodMan').then(console.log); // Global BTTV emotes only.
+##### getEmote(emoteName)
+`emoteName` The name of the emote.
+Returns an Emote object, if it is in the cache.
 
-// If you are not sure which channels to load first, no worries!
-// emote() caches the channel and emotes for you if they are not cached.
-// For BTTV emotes, non-global emotes needs to be prefixed with the channel name if they are not cached.
-// Note that, unlike Twitch emotes, BTTV emotes do not have a channel property.
-twitch.emote('myCoolEmote').then(console.log);
-twitch.emote('name:myCoolEmote').then(console.log);
+##### <Emote>
+`id` The emote id.
+`name` Name of the emote.
+`channel` Channel this emote belongs to. Will be null for non-global BTTV emotes.
+`bttv` Whether or not this emote is a BTTV emote.
 
-// Global BTTV emotes are fine, but you can prefix it too, in order to save some time.
-twitch.emote('FeelsBadMan').then(console.log);
-twitch.emote(twitch.BTTV_GLOBAL + ':FeelsBadMan').then(console.log);
+##### <Emote>.toLink(size)
+`size` Size of the image, 0 to 2.
+Returns a link to the emote's image.
 
-// Get a channel by name.
-// It also caches the channel and emotes if they are not cached.
-twitch.channel('name').then(console.log);
-```
+### Channels
+*Methods related to getting a channel or the Channel class.*
+##### channel(channelName)
+`channelName` The name of the Twitch channel.
+If the channel is not found in cache, twitch-emoticons will attempt to find it and cache it and its emotes (Twitch and BTTV).
+Returns a Promise containing the Channel object.
+
+##### getChannel(emoteName)
+`channelName` The name of the Twitch channel.
+Returns a Channel object, if it is in the cache.
+
+##### <Channel>
+`name` The channel name.
+`emotes` A Map of emotes this channel has.
+
+### Parsing
+*These are methods that parses text.*
+##### parse(text, type, size)
+`text` Text to parse.
+`type` One of *html*, *markdown*, or *bbcode*.
+`size` Size of the image, 0 to 2.
+Only emotes that are cached will be formatted.
+Returns the formatted string.
+
+##### parseAll(text, type, size)
+`text` Text to parse.
+`type` One of *html*, *markdown*, or *bbcode*.
+`size` Size of the image, 0 to 2.
+Caution! This method goes through every word and checks the APIs for an emote. It is recommended that you use parse() instead.
+Returns a Promise containing the formatted string.
+
+### Caching
+*These are methods that interact with the cache, where channels and emotes are stored.*
+##### loadChannel(channelName)
+`channelName` The name of the Twitch channel. Leave null for global Twitch emotes.
+Caches a Twitch channel's emotes. This only includes Twitch emotes.
+Returns a Promise containing the Channel object.
+
+##### loadChannels(channelNames)
+`channelNames` Array of Twitch channel names.
+Caches multiple Twitch channels' emotes. This only includes Twitch emotes.
+Returns a Promise containing an array of Channel objects.
+
+##### loadBTTVChannel(channelName)
+`channelName` The name of the Twitch channel. Leave null for global BTTV emotes.
+Caches a Twitch channel's emotes. This only includes BTTV emotes.
+Returns a Promise containing the Channel object.
+
+##### loadByEmote(emoteName)
+`emoteName` The name of the emote.
+Caches the Twitch channel that owns the emote found. Emotes (both Twitch and BTTV) will be cached.
+This is only looks for Twitch emotes and global BTTV emotes.
+Returns a Promise containing the Emote object.
+
+##### clearCache()
+Clears the cache completely.
