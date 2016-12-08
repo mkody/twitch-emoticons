@@ -7,7 +7,7 @@ let twitch = require('twitch-emoticons');
 
 // Load some channels we want to use.
 // These are specifically for Twitch emotes.
-twitch.loadChannel().then(console.log); // Global emotes
+twitch.loadChannel().then(console.log); // Global emotes.
 twitch.loadChannel('name').then(console.log);
 twitch.loadChannels(['nameA', 'nameB', 'nameC']).then(console.log);
 twitch.loadByEmote('Kappa').then(console.log);
@@ -31,8 +31,9 @@ let twitch = require('twitch-emoticons');
 
 // Load the channel we want to use.
 // These are specifically for BTTV emotes.
-twitch.loadBTTVChannel().then(console.log); // Global BTTV emotes
+twitch.loadBTTVChannel().then(console.log); // Global BTTV emotes.
 twitch.loadBTTVChannel('name').then(console.log);
+twitch.loadByEmote('FeelsGoodMan').then(console.log); // Global BTTV emotes only.
 
 // If you are not sure which channels to load first, no worries!
 // emote() caches the channel and emotes for you if they are not cached.

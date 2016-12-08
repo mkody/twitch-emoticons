@@ -202,7 +202,15 @@ function loadByEmote(emoteName){
     return new Promise((resolve, reject) => {
         getEmoteList().then(emoteRes => {
             let emote = _.find(emoteRes, (obj) => obj.code === emoteName);
-            if (_.size(emote) === 0) reject('Emote not found.');
+
+            if (_.size(emote) === 0){
+                return getBTTVEmoteList().then(bttvRes => {
+                    let emote = bttvRes.find(e => e.code === emoteName);
+                    if (emote.length === 0) reject('Emote not found.');
+
+                   loadBTTVChannel().then((c) => resolve(c.emotes.get(emoteName))).catch(reject);
+                }).catch(reject);
+            }
 
             let channelEmotes = _.pickBy(emoteRes, (val, key) => val.channel === emote.channel);
 
@@ -271,7 +279,7 @@ function emote(name){
             }).catch(reject);
         }
 
-        loadByEmote(name).then(resolve).catch(reject);
+        loadByEmote(name).then(resolve).catch((reject));
     });
 }
 
@@ -280,3 +288,5 @@ module.exports = {
     TWITCH_GLOBAL, loadChannel, loadChannels, loadByEmote,
     BTTV_GLOBAL, loadBTTVChannel
 };
+
+emote('FeelsBadMan').then(console.log).catch(console.log);
