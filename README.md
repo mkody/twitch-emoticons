@@ -24,7 +24,7 @@ emoticons.channel('cirno_tv').then(channel => {
 // Example for parsing text:
 let parsed = emoticons.parse('Hi Kappa, PogChamp; wow, this is Kreygasm!!!', 'html', 2);
 console.log(parsed);
-// Hi <img class="twitch-emote twitch-emote-0 src=https://static-cdn.jtvnw.net/emoticons/v1/25/3.0">, <img class="twitch-emote twitch-emote-0 src=https://static-cdn.jtvnw.net/emoticons/v1/88/3.0">; wow, this is <img class="twitch-emote twitch-emote-0 src=https://static-cdn.jtvnw.net/emoticons/v1/41/3.0">!!!
+// Hi <img class="twitch-emote twitch-emote-2 src=https://static-cdn.jtvnw.net/emoticons/v1/25/3.0">, <img class="twitch-emote twitch-emote-2 src=https://static-cdn.jtvnw.net/emoticons/v1/88/3.0">; wow, this is <img class="twitch-emote twitch-emote-2 src=https://static-cdn.jtvnw.net/emoticons/v1/41/3.0">!!!
 ```
 
 # Documentation
