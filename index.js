@@ -121,7 +121,7 @@ function loadChannel(channelName){
     return new Promise((resolve, reject) => {
         getEmoteList().then(emoteRes => {
             let channelEmotes = _.pickBy(emoteRes, (val, key) => val.channel === channelName);
-            if (_.size(channelEmotes) === 0) reject('Channel not found.');
+            if (_.size(channelEmotes) === 0) return reject('Channel not found.');
 
             let channel = channels.get(channelName ? channelName : TWITCH_GLOBAL) || new Channel(channelName ? channelName : TWITCH_GLOBAL);
             let emotes = channel.emotes || new Map();
@@ -151,7 +151,7 @@ function loadChannels(channelNames){
 
             channelNames.forEach(channelName => {
                 let channelEmotes = _.pickBy(emoteRes, (val, key) => val.channel === channelName);
-                if (_.size(channelEmotes) === 0) reject('Channel not found.');
+                if (_.size(channelEmotes) === 0) return reject('Channel not found.');
 
                 let channel = channels.get(channelName ? channelName : TWITCH_GLOBAL) || new Channel(channelName ? channelName : TWITCH_GLOBAL);
                 let emotes = channel.emotes || new Map();
