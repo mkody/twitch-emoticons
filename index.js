@@ -256,7 +256,7 @@ function channel(name){
         let twitch = loadChannel(name);
         let bttv = loadBTTVChannel(name);
 
-        Promise.all([twitch, bttv]).then(() => resolve(channels.get(name))).catch(reject);
+        Promise.all([twitch, bttv].map(p => p.catch(e => e))).then(() => resolve(channels.get(name))).catch(reject);
     });
 }
 
