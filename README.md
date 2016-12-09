@@ -112,5 +112,9 @@ Returns a Promise containing an array of Channel objects.
 Caches a Twitch channel's emotes. This only includes BTTV emotes.  
 Returns a Promise containing the Channel object.
 
+##### cache()
+This methods gets you a copy of the cache.
+Returns an object with `channels`, `emotes`, and `bttvEmotes` Maps.
+
 ##### clearCache()
 Clears the cache completely.

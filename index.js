@@ -257,7 +257,7 @@ function channel(name){
         let twitch = loadChannel(name);
         let bttv = loadBTTVChannel(name);
 
-        Promise.all([twitch, bttv].map(p => p.catch(e => e))).then(() => channels.has(name) ? resolve(channels.get(name)) : reject('Channel "' + channelName + '" not found.')).catch(reject);
+        Promise.all([twitch, bttv].map(p => p.catch(e => e))).then(() => channels.has(name) ? resolve(channels.get(name)) : reject('Channel "' + name + '" not found.')).catch(reject);
     });
 }
 
@@ -409,10 +409,19 @@ function clearCache(){
     bttv.clear();
 }
 
+/** Gets a copy of the cache. */
+function cache(){
+    return {
+        channels: new Map(channels),
+        emotes: new Map(emotes),
+        bttvEmotes: new Map(bttv)
+    };
+}
+
 module.exports = {
     channel, emote, getChannel, getEmote,
     TWITCH_GLOBAL, loadChannel, loadChannels,
     BTTV_GLOBAL, loadBTTVChannel,
-    clearCache,
+    clearCache, cache,
     parse, parseAll
 };
