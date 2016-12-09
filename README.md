@@ -30,12 +30,13 @@ console.log(parsed);
 # Documentation
 ### Emotes
 *Methods related to getting an emote or the Emote class.*
-> Due to how BTTV works, non-global BTTV emotes should be accessed like so:\n
-> `channelName:emoteName`\n
-> Once it has been added to the cache, this will not be necessary.\n
-> twitch-emoticons also provide TWITCH\_GLOBAL and BTTV\_GLOBAL for prefixing:\n
-> `TWITCH_GLOBAL + ':emoteName'`\n
-> This is not necessary at all, but may be useful.\n
+
+**Due to how BTTV works, non-global BTTV emotes should be accessed like so:**
+`channelName:emoteName`
+Once it has been added to the cache, this will not be necessary.
+**twitch-emoticons also provide TWITCH\_GLOBAL and BTTV\_GLOBAL for prefixing:**
+`TWITCH_GLOBAL + ':emoteName'`
+This is not necessary at all, but may be useful.
 
 ##### emote(emoteName)
 `emoteName` The name of the emote.
