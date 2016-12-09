@@ -22,7 +22,7 @@ emoticons.channel('cirno_tv').then(channel => {
 })
 
 // Example for parsing text:
-let parsed = emoticons.parse('Hi Kappa, PogChamp; wow, this is Kreygasm!!!', 'html', 2);
+let parsed = emoticons.parse('Hi <Kappa>, <PogChamp>; wow, this is <Kreygasm>!!!', 'html', 2, '<', '>');
 console.log(parsed);
 // Hi <img class="twitch-emote twitch-emote-2 src=https://static-cdn.jtvnw.net/emoticons/v1/25/3.0">, <img class="twitch-emote twitch-emote-2 src=https://static-cdn.jtvnw.net/emoticons/v1/88/3.0">; wow, this is <img class="twitch-emote twitch-emote-2 src=https://static-cdn.jtvnw.net/emoticons/v1/41/3.0">!!!
 ```
@@ -31,10 +31,10 @@ console.log(parsed);
 ### Emotes
 *Methods related to getting an emote or the Emote class.*
 
-###### Due to how BTTV works, non-global BTTV emotes should be accessed like so:  
+- Due to how BTTV works, non-global BTTV emotes should be accessed like so:  
 `channelName:emoteName`  
 Once it has been added to the cache, this will not be necessary.  
-###### twitch-emoticons also provide TWITCH\_GLOBAL and BTTV\_GLOBAL for prefixing:  
+- twitch-emoticons also provide TWITCH\_GLOBAL and BTTV\_GLOBAL for prefixing:  
 `TWITCH_GLOBAL + ':emoteName'`  
 This is not necessary at all, but may be useful.  
 
@@ -76,17 +76,21 @@ Returns a Channel object, if it is in the cache.
 ### Parsing
 *These are methods that parses text.*
 
-##### parse(text, type, size)
+##### parse(text, type, size, start, end)
 `text` Text to parse.  
 `type` One of *html*, *markdown*, or *bbcode*.  
 `size` Size of the image, 0 to 2.  
+`start` Character to open an emote.  
+`end` Character to close an emote.  
 Only emotes that are cached will be formatted.  
 Returns the formatted string.
 
-##### parseAll(text, type, size)
+##### parseAll(text, type, size, start, end)
 `text` Text to parse.  
 `type` One of *html*, *markdown*, or *bbcode*.  
 `size` Size of the image, 0 to 2.  
+`start` Character to open an emote.  
+`end` Character to close an emote.  
 Caution! This method goes through every word and checks the APIs for an emote. It is recommended that you use parse() instead.  
 Returns a Promise containing the formatted string.
 

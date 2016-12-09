@@ -2,22 +2,24 @@ const _ = require('lodash');
 const request = require('superagent');
 
 const TWITCH_EMOTES = 'https://twitchemotes.com/api_cache/v2/images.json';
-const LINK_TEMPLATE = {
-    SMALL: 'https://static-cdn.jtvnw.net/emoticons/v1/{imageID}/1.0',
-    MEDIUM: 'https://static-cdn.jtvnw.net/emoticons/v1/{imageID}/2.0',
-    LARGE: 'https://static-cdn.jtvnw.net/emoticons/v1/{imageID}/3.0'
-};
+const LINK_TEMPLATE = [
+    'https://static-cdn.jtvnw.net/emoticons/v1/{imageID}/1.0',
+    'https://static-cdn.jtvnw.net/emoticons/v1/{imageID}/2.0',
+    'https://static-cdn.jtvnw.net/emoticons/v1/{imageID}/3.0'
+];
 
 const BTTV_EMOTES = 'https://api.betterttv.net/2/emotes';
 const BTTV_CHANNELS = 'https://api.betterttv.net/2/channels/{channelName}';
-const BTTV_TEMPLATE = {
-    SMALL: 'https://cdn.betterttv.net/emote/{imageID}/1x',
-    MEDIUM: 'https://cdn.betterttv.net/emote/{imageID}/2x',
-    LARGE: 'https://cdn.betterttv.net/emote/{imageID}/3x'
-};
+const BTTV_TEMPLATE = [
+    'https://cdn.betterttv.net/emote/{imageID}/1x',
+    'https://cdn.betterttv.net/emote/{imageID}/2x',
+    'https://cdn.betterttv.net/emote/{imageID}/3x'
+];
 
-const PUNCTUATIONS = /([\w\d]+)|(\s)|[\$\uFFE5\^\+=`~<>{}\[\]|\u3000-\u303F!-#%-\x2A,-/:;\x3F@\x5B-\x5D_\x7B}\u00A1\u00A7\u00AB\u00B6\u00B7\u00BB\u00BF\u037E\u0387\u055A-\u055F\u0589\u058A\u05BE\u05C0\u05C3\u05C6\u05F3\u05F4\u0609\u060A\u060C\u060D\u061B\u061E\u061F\u066A-\u066D\u06D4\u0700-\u070D\u07F7-\u07F9\u0830-\u083E\u085E\u0964\u0965\u0970\u0AF0\u0DF4\u0E4F\u0E5A\u0E5B\u0F04-\u0F12\u0F14\u0F3A-\u0F3D\u0F85\u0FD0-\u0FD4\u0FD9\u0FDA\u104A-\u104F\u10FB\u1360-\u1368\u1400\u166D\u166E\u169B\u169C\u16EB-\u16ED\u1735\u1736\u17D4-\u17D6\u17D8-\u17DA\u1800-\u180A\u1944\u1945\u1A1E\u1A1F\u1AA0-\u1AA6\u1AA8-\u1AAD\u1B5A-\u1B60\u1BFC-\u1BFF\u1C3B-\u1C3F\u1C7E\u1C7F\u1CC0-\u1CC7\u1CD3\u2010-\u2027\u2030-\u2043\u2045-\u2051\u2053-\u205E\u207D\u207E\u208D\u208E\u2329\u232A\u2768-\u2775\u27C5\u27C6\u27E6-\u27EF\u2983-\u2998\u29D8-\u29DB\u29FC\u29FD\u2CF9-\u2CFC\u2CFE\u2CFF\u2D70\u2E00-\u2E2E\u2E30-\u2E3B\u3001-\u3003\u3008-\u3011\u3014-\u301F\u3030\u303D\u30A0\u30FB\uA4FE\uA4FF\uA60D-\uA60F\uA673\uA67E\uA6F2-\uA6F7\uA874-\uA877\uA8CE\uA8CF\uA8F8-\uA8FA\uA92E\uA92F\uA95F\uA9C1-\uA9CD\uA9DE\uA9DF\uAA5C-\uAA5F\uAADE\uAADF\uAAF0\uAAF1\uABEB\uFD3E\uFD3F\uFE10-\uFE19\uFE30-\uFE52\uFE54-\uFE61\uFE63\uFE68\uFE6A\uFE6B\uFF01-\uFF03\uFF05-\uFF0A\uFF0C-\uFF0F\uFF1A\uFF1B\uFF1F\uFF20\uFF3B-\uFF3D\uFF3F\uFF5B\uFF5D\uFF5F-\uFF65]+/g;
+/** For use in parsing, a big regex. */
+const PUNCTUATIONS = "([\\w\\d]+)|(\\s)|([\\$\\uFFE5\\^\\+=`~<>{}\\[\\]|\\u3000-\\u303F!-#%-\\x2A,-\\/:;\\x3F@\\x5B-\\x5D_\\x7B}\\u00A1\\u00A7\\u00AB\\u00B6\\u00B7\\u00BB\\u00BF\\u037E\\u0387\\u055A-\\u055F\\u0589\\u058A\\u05BE\\u05C0\\u05C3\\u05C6\\u05F3\\u05F4\\u0609\\u060A\\u060C\\u060D\\u061B\\u061E\\u061F\\u066A-\\u066D\\u06D4\\u0700-\\u070D\\u07F7-\\u07F9\\u0830-\\u083E\\u085E\\u0964\\u0965\\u0970\\u0AF0\\u0DF4\\u0E4F\\u0E5A\\u0E5B\\u0F04-\\u0F12\\u0F14\\u0F3A-\\u0F3D\\u0F85\\u0FD0-\\u0FD4\\u0FD9\\u0FDA\\u104A-\\u104F\\u10FB\\u1360-\\u1368\\u1400\\u166D\\u166E\\u169B\\u169C\\u16EB-\\u16ED\\u1735\\u1736\\u17D4-\\u17D6\\u17D8-\\u17DA\\u1800-\\u180A\\u1944\\u1945\\u1A1E\\u1A1F\\u1AA0-\\u1AA6\\u1AA8-\\u1AAD\\u1B5A-\\u1B60\\u1BFC-\\u1BFF\\u1C3B-\\u1C3F\\u1C7E\\u1C7F\\u1CC0-\\u1CC7\\u1CD3\\u2010-\\u2027\\u2030-\\u2043\\u2045-\\u2051\\u2053-\\u205E\\u207D\\u207E\\u208D\\u208E\\u2329\\u232A\\u2768-\\u2775\\u27C5\\u27C6\\u27E6-\\u27EF\\u2983-\\u2998\\u29D8-\\u29DB\\u29FC\\u29FD\\u2CF9-\\u2CFC\\u2CFE\\u2CFF\\u2D70\\u2E00-\\u2E2E\\u2E30-\\u2E3B\\u3001-\\u3003\\u3008-\\u3011\\u3014-\\u301F\\u3030\\u303D\\u30A0\\u30FB\\uA4FE\\uA4FF\\uA60D-\\uA60F\\uA673\\uA67E\\uA6F2-\\uA6F7\\uA874-\\uA877\\uA8CE\\uA8CF\\uA8F8-\\uA8FA\\uA92E\\uA92F\\uA95F\\uA9C1-\\uA9CD\\uA9DE\\uA9DF\\uAA5C-\\uAA5F\\uAADE\\uAADF\\uAAF0\\uAAF1\\uABEB\\uFD3E\\uFD3F\\uFE10-\\uFE19\\uFE30-\\uFE52\\uFE54-\\uFE61\\uFE63\\uFE68\\uFE6A\\uFE6B\\uFF01-\\uFF03\\uFF05-\\uFF0A\\uFF0C-\\uFF0F\\uFF1A\\uFF1B\\uFF1F\\uFF20\\uFF3B-\\uFF3D\\uFF3F\\uFF5B\\uFF5D\\uFF5F-\\uFF65])+";
 
+/** Template for links. */
 const FORMAT_TEMPLATE = {
     HTML: '<img class="twitch-emote twitch-emote-{size} src={link}">',
     MARKDOWN: '![{name}]({link} "{name}")',
@@ -43,7 +45,7 @@ class Channel {
 
 /** An emote. */
 class Emote {
-    constructor(id, name, channel, bttv){
+    constructor(id, name, channel, bttv = false, gif = false){
         /** ID of the emote. */
         this.id = id;
 
@@ -55,6 +57,9 @@ class Emote {
 
         /** If this is a BTTV emote. */
         this.bttv = bttv;
+
+        /** If this emote is a GIF. */
+        this.gif = gif;
     }
 
     /** 
@@ -63,15 +68,8 @@ class Emote {
      * @return String link to emote image.
      */
     toLink(size = 0){
-        if (this.bttv){
-            if (size === 1) return BTTV_TEMPLATE.MEDIUM.replace('{imageID}', this.id);
-            if (size === 2) return BTTV_TEMPLATE.LARGE.replace('{imageID}', this.id);
-            return BTTV_TEMPLATE.SMALL.replace('{imageID}', this.id);
-        }
-
-        if (size === 1) return LINK_TEMPLATE.MEDIUM.replace('{imageID}', this.id);
-        if (size === 2) return LINK_TEMPLATE.LARGE.replace('{imageID}', this.id);
-        return LINK_TEMPLATE.SMALL.replace('{imageID}', this.id);
+        if (this.bttv) return (BTTV_TEMPLATE[size] || BTTV_TEMPLATE[0]).replace('{imageID}', this.id);
+        return (LINK_TEMPLATE[size] || LINK_TEMPLATE[0]).replace('{imageID}', this.id);
     }
 
     toString(){
@@ -88,6 +86,7 @@ let emotes = new Map();
 /** Cached BTTV emotes. */
 let bttv = new Map();
 
+/** Gets all emotes from Twitch. */
 function getEmoteList(){
     return new Promise((resolve, reject) => {
         request(TWITCH_EMOTES).end((err, res) => {
@@ -97,16 +96,18 @@ function getEmoteList(){
     });
 }
 
+/** Gets emotes from BTTV. */
 function getBTTVEmoteList(channelName){
     return new Promise((resolve, reject) => {
         request(channelName ? BTTV_CHANNELS.replace('{channelName}', channelName) : BTTV_EMOTES).end((err, res) => {
             if (err) return reject(err);
-            if (!res.body.emotes) return reject('Channel not found.');
+            if (!res.body.emotes) return reject('Channel "' + channelName + '" not found.');
             resolve(res.body.emotes);
         });
     });
 }
 
+/** Adds a channel and its emotes. */
 function addChannel(channel, bttv){
     channels.set(channel.name, channel);
     if (!bttv) channel.emotes.forEach(e => emotes.set(e.name, e));
@@ -121,13 +122,13 @@ function loadChannel(channelName){
     return new Promise((resolve, reject) => {
         getEmoteList().then(emoteRes => {
             let channelEmotes = _.pickBy(emoteRes, (val, key) => val.channel === channelName);
-            if (_.size(channelEmotes) === 0) return reject('Channel not found.');
+            if (_.size(channelEmotes) === 0) return reject('Channel "' + channelName + '" not found.');
 
             let channel = channels.get(channelName ? channelName : TWITCH_GLOBAL) || new Channel(channelName ? channelName : TWITCH_GLOBAL);
             let emotes = channel.emotes || new Map();
 
             _.forEach(channelEmotes, (val, key) => {
-                let emote = new Emote(key, val.code, channel, false);
+                let emote = new Emote(key, val.code, channel);
                 emotes.set(emote.name, emote);
             });
 
@@ -151,13 +152,13 @@ function loadChannels(channelNames){
 
             channelNames.forEach(channelName => {
                 let channelEmotes = _.pickBy(emoteRes, (val, key) => val.channel === channelName);
-                if (_.size(channelEmotes) === 0) return reject('Channel not found.');
+                if (_.size(channelEmotes) === 0) return reject('Channel "' + channelName + '" not found.');
 
                 let channel = channels.get(channelName ? channelName : TWITCH_GLOBAL) || new Channel(channelName ? channelName : TWITCH_GLOBAL);
                 let emotes = channel.emotes || new Map();
 
                 _.forEach(channelEmotes, (val, key) => {
-                    let emote = new Emote(key, val.code, channel, false);
+                    let emote = new Emote(key, val.code, channel);
                     emotes.set(emote.name, emote);
                 });
 
@@ -184,7 +185,7 @@ function loadBTTVChannel(channelName){
 
             if (channel.name === BTTV_GLOBAL){
                 emoteRes.forEach(emote => {
-                    emotes.set(emote.code, new Emote(emote.id, emote.code, BTTV_GLOBAL, true));
+                    emotes.set(emote.code, new Emote(emote.id, emote.code, BTTV_GLOBAL, true, emote.imageType === 'gif'));
                 });
 
                 channel.emotes = emotes;
@@ -192,8 +193,8 @@ function loadBTTVChannel(channelName){
                 resolve(channel);
             } else {
                 emoteRes.forEach(emote => {
-                    emotes.set(emote.code, new Emote(emote.id, emote.code, null, true));
-                    bttv.set(emote.code, new Emote(emote.id, emote.code, null, true));
+                    emotes.set(emote.code, new Emote(emote.id, emote.code, null, true, emote.imageType === 'gif'));
+                    bttv.set(emote.code, new Emote(emote.id, emote.code, null, true, emote.imageType === 'gif'));
                 });
 
                 channel.emotes = emotes;
@@ -217,7 +218,7 @@ function loadByEmote(emoteName){
             if (_.size(emote) === 0){
                 return getBTTVEmoteList().then(bttvRes => {
                     let emote = bttvRes.find(e => e.code === emoteName);
-                    if (!emote) reject('Emote not found.');
+                    if (!emote) reject('Emote ' + emoteName + ' not found.');
 
                    loadBTTVChannel().then(c => resolve(c.emotes.get(emoteName))).catch(reject);
                 }).catch(reject);
@@ -230,7 +231,7 @@ function loadByEmote(emoteName){
             let emotes = channel.emotes || new Map();
 
             _.forEach(channelEmotes, (val, key) => {
-                let emote = new Emote(key, val.code, channel, false);
+                let emote = new Emote(key, val.code, channel);
                 emotes.set(emote.name, emote);
             });
 
@@ -256,7 +257,7 @@ function channel(name){
         let twitch = loadChannel(name);
         let bttv = loadBTTVChannel(name);
 
-        Promise.all([twitch, bttv].map(p => p.catch(e => e))).then(() => resolve(channels.get(name))).catch(reject);
+        Promise.all([twitch, bttv].map(p => p.catch(e => e))).then(() => resolve(channels.has(name) ? channels.get(name) : reject('Channel "' + channelName + '" not found.'))).catch(reject);
     });
 }
 
@@ -296,7 +297,7 @@ function emote(name){
             let bttvObj = bttv.get(emoteName);
             if (emoteObj || bttvObj) return resolve(emoteObj || bttvObj);
 
-            return loadBTTVChannel(channelName === BTTV_GLOBAL ? null : channelName).then(() => resolve(emote(emoteName))).catch(reject);
+            return channel(channelName).then(() => resolve(emote(emoteName))).catch(reject);
         }
 
         loadByEmote(name).then(resolve).catch((reject));
@@ -334,18 +335,26 @@ function getEmote(name){
  * @param text - Text to parse.
  * @param type - One of: 'html', 'markdown', or 'bbcode'.
  * @param size - Image size, 0 to 2, default 0.
+ * @param start - Opening character.
+ * @param end - Closing character.
  * @return The formatted string.
  */
-function parse(text, type = 'html', size = 0){
+function parse(text, type = 'html', size = 0, start = '', end = start){
     if (!/html|markdown|bbcode/i.test(type)) type = 'html';
     if (size < 0 || size > 2) size = 0;
 
-    let words = text.match(PUNCTUATIONS);
+    let reg = new RegExp('(\\' + start + '[\\w\\d\\(\\)]+\\' + end + ')|' + PUNCTUATIONS, 'g');
+    let words = text.match(reg);
     let emotes = [];
 
+    console.log(words);
+
+    let emoteReg = new RegExp('(\\' + start + '[\\w\\d\\(\\)]+\\' + end + ')', 'g');
+    let limitReg = new RegExp('^\\' + start + '|\\' + end + '$', 'g');
+
     words.forEach(w => {
-        if (/[\w|\d|\(\)]+/g.test(w)){
-            let emote = getEmote(w);
+        if (emoteReg.test(w)){
+            let emote = getEmote(w.replace(limitReg, ''));
             return emotes.push(emote);
         }
 
@@ -357,23 +366,29 @@ function parse(text, type = 'html', size = 0){
 }
 
 /**
- * Parses text into one with the emotes formatted in. This can take a long time, as all words (separated by whitespace) are checked.
+ * Parses text into one with the emotes formatted in. This can take a long time, as all words are checked.
  * @param text - Text to parse.
  * @param type - One of: 'html', 'markdown', or 'bbcode'.
  * @param size - Image size, 0 to 2, default 0.
+ * @param start - Opening character.
+ * @param end - Closing character.
  * @return Promise containing formatted string.
  */
-function parseAll(text, type = 'html', size = 0){
+function parseAll(text, type = 'html', size = 0, start = '', end = start){
     if (!/html|markdown|bbcode/i.test(type)) type = 'html';
     if (size < 0 || size > 2) size = 0;
 
     return new Promise((resolve, reject) => {
-        let words = text.match(PUNCTUATIONS);
+        let reg = new RegExp('(\\' + start + '[\\w\\d\\(\\)]+\\' + end + ')|' + PUNCTUATIONS, 'g');
+        let words = text.match(reg);
         let promises = [];
 
+        let emoteReg = new RegExp('(\\' + start + '[\\w\\d\\(\\)]+\\' + end + ')', 'g');
+        let limitReg = new RegExp('^\\' + start + '|\\' + end + '$', 'g');
+
         words.forEach(w => {
-            if (/[\w|\d|\(\)]+/g.test(w)){
-                let emotePromise = emote(w);
+            if (emoteReg.test(w)){
+                let emotePromise = emote(w.replace(limitReg, ''));
                 return promises.push(emotePromise);
             }
 
