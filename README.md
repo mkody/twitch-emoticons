@@ -31,10 +31,10 @@ console.log(parsed);
 ### Emotes
 *Methods related to getting an emote or the Emote class.*
 
-###### Due to how BTTV works, non-global BTTV emotes should be accessed like so:**  
+###### Due to how BTTV works, non-global BTTV emotes should be accessed like so:  
 `channelName:emoteName`  
 Once it has been added to the cache, this will not be necessary.  
-###### twitch-emoticons also provide TWITCH\_GLOBAL and BTTV\_GLOBAL for prefixing:**  
+###### twitch-emoticons also provide TWITCH\_GLOBAL and BTTV\_GLOBAL for prefixing:  
 `TWITCH_GLOBAL + ':emoteName'`  
 This is not necessary at all, but may be useful.  
 
@@ -47,13 +47,13 @@ Returns a Promise containing the Emote object.
 `emoteName` The name of the emote.  
 Returns an Emote object, if it is in the cache.
 
-##### <Emote>
+##### \<Emote\>
 `id` The emote id.  
 `name` Name of the emote.  
 `channel` Channel this emote belongs to. Will be null for non-global BTTV emotes.  
 `bttv` Whether or not this emote is a BTTV emote.
 
-##### <Emote>.toLink(size)
+##### \<Emote\>.toLink(size)
 `size` Size of the image, 0 to 2.  
 Returns a link to the emote's image.
 
@@ -69,7 +69,7 @@ Returns a Promise containing the Channel object.
 `channelName` The name of the Twitch channel.  
 Returns a Channel object, if it is in the cache.
 
-##### <Channel>
+##### \<Channel\>
 `name` The channel name.  
 `emotes` A Map of emotes this channel has.
 
