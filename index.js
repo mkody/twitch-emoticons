@@ -101,6 +101,7 @@ function getBTTVEmoteList(channelName){
     return new Promise((resolve, reject) => {
         request(channelName ? BTTV_CHANNELS.replace('{channelName}', channelName) : BTTV_EMOTES).end((err, res) => {
             if (err) return reject(err);
+            if (!res.body.emotes) return reject('Channel not found.');
             resolve(res.body.emotes);
         });
     });
