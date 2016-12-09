@@ -22,9 +22,9 @@ emoticons.channel('cirno_tv').then(channel => {
 })
 
 // Example for parsing text:
-let parsed = emoticons.parse('hi everyone Kappa', 'html', 2);
+let parsed = emoticons.parse('Hi Kappa, PogChamp; wow, this is Kreygasm!!!', 'html', 2);
 console.log(parsed);
-// Hi everyone <img class="twitch-emote twitch-emote-2 src=https://static-cdn.jtvnw.net/emoticons/v1/25/3.0">
+// Hi <img class="twitch-emote twitch-emote-0 src=https://static-cdn.jtvnw.net/emoticons/v1/25/3.0">, <img class="twitch-emote twitch-emote-0 src=https://static-cdn.jtvnw.net/emoticons/v1/88/3.0">; wow, this is <img class="twitch-emote twitch-emote-0 src=https://static-cdn.jtvnw.net/emoticons/v1/41/3.0">!!!
 ```
 
 # Documentation
@@ -102,12 +102,6 @@ Returns a Promise containing an array of Channel objects.
 `channelName` The name of the Twitch channel. Leave null for global BTTV emotes.
 Caches a Twitch channel's emotes. This only includes BTTV emotes.
 Returns a Promise containing the Channel object.
-
-##### loadByEmote(emoteName)
-`emoteName` The name of the emote.
-Caches the Twitch channel that owns the emote found. Emotes (both Twitch and BTTV) will be cached.
-This is only looks for Twitch emotes and global BTTV emotes.
-Returns a Promise containing the Emote object.
 
 ##### clearCache()
 Clears the cache completely.
