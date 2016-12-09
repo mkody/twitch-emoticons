@@ -343,7 +343,7 @@ function parse(text, type = 'html', size = 0){
     let emotes = [];
 
     words.forEach(w => {
-        if (/[\w|\d]+/g.test(w)){
+        if (/[\w|\d|\(\)]+/g.test(w)){
             let emote = getEmote(w);
             return emotes.push(emote);
         }
@@ -371,7 +371,7 @@ function parseAll(text, type = 'html', size = 0){
         let promises = [];
 
         words.forEach(w => {
-            if (/[\w|\d]+/g.test(w)){
+            if (/[\w|\d|\(\)]+/g.test(w)){
                 let emotePromise = emote(w);
                 return promises.push(emotePromise);
             }
