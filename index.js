@@ -216,7 +216,7 @@ function loadByEmote(emoteName){
             if (_.size(emote) === 0){
                 return getBTTVEmoteList().then(bttvRes => {
                     let emote = bttvRes.find(e => e.code === emoteName);
-                    if (emote.length === 0) reject('Emote not found.');
+                    if (!emote) reject('Emote not found.');
 
                    loadBTTVChannel().then(c => resolve(c.emotes.get(emoteName))).catch(reject);
                 }).catch(reject);
