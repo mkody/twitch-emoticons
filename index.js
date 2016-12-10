@@ -32,14 +32,69 @@ const TWITCH_GLOBAL = 'GLOBAL/TWITCH';
 /** Channel name for global BTTV emotes. */
 const BTTV_GLOBAL = 'GLOBAL/BTTV';
 
+/** Utility class. */
+class Cache extends Map {
+    constructor(iterable){
+        super(iterable);
+    }
+
+    find(propOrFunc, value){
+        if (typeof propOrFunc === 'string'){
+            if (typeof value === 'undefined') return null;
+
+            for (const item of this.values()){
+                if (item[propOrFunc] === value) return item;
+            }
+
+            return null;
+        }
+
+        if (typeof propOrFunc === 'function'){
+            for (const [key, val] of this){
+                if (propOrFunc(val, key, this)) return val;
+            }
+
+            return null;
+        } 
+
+        return null;
+    }
+
+    filter(func, thisArg){
+        if (thisArg) func = func.bind(thisArg);
+
+        const results = new Cache();
+
+        for (const [key, val] of this) {
+            if (func(val, key, this)) results.set(key, val);
+        }
+
+        return results;
+    }
+
+    map(func, thisArg){
+        if (thisArg) func = func.bind(thisArg);
+
+        const array = new Array(this.size);
+        let i = 0;
+
+        for (const [key, val] of this) array[i++] = func(val, key, this);
+        return array;
+    }
+}
+
 /** A Twitch channel. */
 class Channel {
-    constructor(name, emotes){
+    constructor(name, emotes = new Cache()){
         /** Name of the Twitch channel. */
         this.name = name;
 
         /** Emotes belonging to this channel. */
         this.emotes = emotes;
+    }
+
+    toString(){
+        return this.name;
     }
 }
 
@@ -73,18 +128,18 @@ class Emote {
     }
 
     toString(){
-        return this.toLink(0);
+        return this.name;
     }
 }
 
 /** Cached channels. */
-let channels = new Map();
+let channels = new Cache();
 
 /** Cached emotes. */
-let emotes = new Map();
+let emotes = new Cache();
 
 /** Cached BTTV emotes. */
-let bttv = new Map();
+let bttv = new Cache();
 
 /** Gets all emotes from Twitch. */
 function getEmoteList(){
@@ -119,13 +174,15 @@ function addChannel(channel, bttv){
  * @return Promise containing channel.
  */
 function loadChannel(channelName){
+    channelName = typeof channelName === 'string' ? channelName.toLowerCase() : channelName;
+
     return new Promise((resolve, reject) => {
         getEmoteList().then(emoteRes => {
             let channelEmotes = _.pickBy(emoteRes, (val, key) => val.channel === channelName);
             if (_.size(channelEmotes) === 0) return reject('Channel "' + channelName + '" not found.');
 
             let channel = channels.get(channelName ? channelName : TWITCH_GLOBAL) || new Channel(channelName ? channelName : TWITCH_GLOBAL);
-            let emotes = channel.emotes || new Map();
+            let emotes = channel.emotes;
 
             _.forEach(channelEmotes, (val, key) => {
                 let emote = new Emote(key, val.code, channel);
@@ -151,11 +208,13 @@ function loadChannels(channelNames){
             let channels = [];
 
             channelNames.forEach(channelName => {
+                channelName = typeof channelName === 'string' ? channelName.toLowerCase() : channelName;
+
                 let channelEmotes = _.pickBy(emoteRes, (val, key) => val.channel === channelName);
                 if (_.size(channelEmotes) === 0) return reject('Channel "' + channelName + '" not found.');
 
                 let channel = channels.get(channelName ? channelName : TWITCH_GLOBAL) || new Channel(channelName ? channelName : TWITCH_GLOBAL);
-                let emotes = channel.emotes || new Map();
+                let emotes = channel.emotes;
 
                 _.forEach(channelEmotes, (val, key) => {
                     let emote = new Emote(key, val.code, channel);
@@ -163,8 +222,8 @@ function loadChannels(channelNames){
                 });
 
                 channel.emotes = emotes;
-                addChannel(channel);
                 channels.push(channel);
+                addChannel(channel);
             });
 
             resolve(channels);
@@ -178,10 +237,12 @@ function loadChannels(channelNames){
  * @return Promise containing channel.
  */
 function loadBTTVChannel(channelName){
+    channelName = typeof channelName === 'string' ? channelName.toLowerCase() : channelName;
+
     return new Promise((resolve, reject) => {
         getBTTVEmoteList(channelName).then(emoteRes => {
             let channel = channels.get(channelName ? channelName : BTTV_GLOBAL) || new Channel(channelName ? channelName : BTTV_GLOBAL);
-            let emotes = channel.emotes || new Map();
+            let emotes = channel.emotes;
 
             if (channel.name === BTTV_GLOBAL){
                 emoteRes.forEach(emote => {
@@ -228,7 +289,7 @@ function loadByEmote(emoteName){
 
             let channelName = channelEmotes[Object.keys(channelEmotes)[0]].channel;
             let channel = channels.get(channelName ? channelName : TWITCH_GLOBAL) || new Channel(channelName ? channelName : TWITCH_GLOBAL);
-            let emotes = channel.emotes || new Map();
+            let emotes = channel.emotes;
 
             _.forEach(channelEmotes, (val, key) => {
                 let emote = new Emote(key, val.code, channel);
@@ -245,11 +306,13 @@ function loadByEmote(emoteName){
 }
 
 /** 
- * Get Twitch channel by name. Twitch and global BTTV emotes only.
+ * Get Twitch channel by name.
  * @param name - Name of channel.
  * @return Promise containing channel.
  */
 function channel(name){
+    name = typeof name === 'string' ? name.toLowerCase() : name;
+    
     return new Promise((resolve, reject) => {
         let channelObj = channels.get(name ? name : TWITCH_GLOBAL);
         if (channelObj) return resolve(channelObj);
@@ -262,7 +325,7 @@ function channel(name){
 }
 
 /** 
- * Get Twitch channel by name, as long as it is in the cache. Twitch and global BTTV emotes only.
+ * Get Twitch channel by name, as long as it is in the cache.
  * @param name - Name of channel.
  * @return Channel object.
  */
@@ -402,19 +465,19 @@ function parseAll(text, type = 'html', size = 0, start = '', end = start){
     });
 }
 
-/** Clears the cache. */
+/** Clears the caches. */
 function clearCache(){
     channels.clear();
     emotes.clear();
     bttv.clear();
 }
 
-/** Gets a copy of the cache. */
+/** Gets a copy of the caches. */
 function cache(){
     return {
-        channels: new Map(channels),
-        emotes: new Map(emotes),
-        bttvEmotes: new Map(bttv)
+        channels: new Cache(channels),
+        emotes: new Cache(emotes),
+        bttvEmotes: new Cache(bttv)
     };
 }
 

@@ -18,13 +18,13 @@ emoticons.emote('thefreaking2:gachiGASM').then(emote => {
 // Example for getting channels:
 emoticons.channel('cirno_tv').then(channel => {
     console.log(channel.emotes);
-    // Map {...}
+    // Cache {...}
 })
 
 // Example for parsing text:
-let parsed = emoticons.parse('Hi <Kappa>, <PogChamp>; wow, this is <Kreygasm>!!!', 'html', 2, '<', '>');
+let parsed = emoticons.parse('Hi <Kappa>, <PogChamp>!!!, 'html', 2, '<', '>');
 console.log(parsed);
-// Hi <img class="twitch-emote twitch-emote-2 src=https://static-cdn.jtvnw.net/emoticons/v1/25/3.0">, <img class="twitch-emote twitch-emote-2 src=https://static-cdn.jtvnw.net/emoticons/v1/88/3.0">; wow, this is <img class="twitch-emote twitch-emote-2 src=https://static-cdn.jtvnw.net/emoticons/v1/41/3.0">!!!
+// "Hi <img class="twitch-emote twitch-emote-2 src=https://static-cdn.jtvnw.net/emoticons/v1/25/3.0">, <img class="twitch-emote twitch-emote-2 src=https://static-cdn.jtvnw.net/emoticons/v1/88/3.0">!!!"
 ```
 
 # Documentation
@@ -95,7 +95,7 @@ Caution! This method goes through every word and checks the APIs for an emote. I
 Returns a Promise containing the formatted string.
 
 ### Caching
-*These are methods that interact with the cache, where channels and emotes are stored.*
+*These are methods that interact with the caches, where channels and emotes are stored.*
 
 ##### loadChannel(channelName)
 `channelName` The name of the Twitch channel. Leave null for global Twitch emotes.  
@@ -113,8 +113,12 @@ Caches a Twitch channel's emotes. This only includes BTTV emotes.
 Returns a Promise containing the Channel object.
 
 ##### cache()
-This methods gets you a copy of the cache.
-Returns an object with `channels`, `emotes`, and `bttvEmotes` Maps.
+This methods gets you a copy of the caches.  
+Returns an object with `channels`, `emotes`, and `bttvEmotes` Caches.
 
 ##### clearCache()
-Clears the cache completely.
+Clears the caches completely.
+
+##### \<Cache\>
+Extends Map.
+Has `find()`, `filter()`, and `map()` for utility purposes.

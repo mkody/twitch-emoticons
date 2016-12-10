@@ -1,6 +1,6 @@
 {
   "name": "twitch-emoticons",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Gets Twitch emotes and BTTV emotes from Twitch channels.",
   "main": "index.js",
   "keywords": [
