@@ -22,7 +22,7 @@ emoticons.channel('cirno_tv').then(channel => {
 })
 
 // Example for parsing text:
-let parsed = emoticons.parse('Hi <Kappa>, <PogChamp>!!!, 'html', 2, '<', '>');
+let parsed = emoticons.parse('Hi <Kappa>, <PogChamp>!!!', 'html', 2, '<', '>');
 console.log(parsed);
 // "Hi <img class="twitch-emote twitch-emote-2 src=https://static-cdn.jtvnw.net/emoticons/v1/25/3.0">, <img class="twitch-emote twitch-emote-2 src=https://static-cdn.jtvnw.net/emoticons/v1/88/3.0">!!!"
 ```
@@ -120,5 +120,4 @@ Returns an object with `channels`, `emotes`, and `bttvEmotes` Caches.
 Clears the caches completely.
 
 ##### \<Cache\>
-Extends Map.
-Has `find()`, `filter()`, and `map()` for utility purposes.
+Extends Map. Has `find()`, `filter()`, and `map()` for utility purposes.
