@@ -6,13 +6,13 @@ const emoticons = require('twitch-emoticons');
 // Example for getting Twitch emotes:
 emoticons.emote('Kappa').then(emote => {
     console.log(emote.toLink(0));
-    // https://static-cdn.jtvnw.net/emoticons/v1/25/1.0
+    // "https://static-cdn.jtvnw.net/emoticons/v1/25/1.0"
 });
 
 // Example for getting BTTV emotes:
 emoticons.emote('thefreaking2:gachiGASM').then(emote => {
     console.log(emote.toLink(1));
-    // https://cdn.betterttv.net/emote/55999813f0db38ef6c7c663e/2x
+    // "https://cdn.betterttv.net/emote/55999813f0db38ef6c7c663e/2x"
 });
 
 // Example for getting channels:
@@ -53,20 +53,20 @@ Returns an Emote object, if it is in the cache.
 `channel` Channel this emote belongs to. Will be null for non-global BTTV emotes.  
 `bttv` Whether or not this emote is a BTTV emote.
 
-##### \<Emote\>.toLink(size)
+##### \<Emote\>.toLink([size])
 `size` Size of the image, 0 to 2.  
 Returns a link to the emote's image.
 
 ### Channels
 *Methods related to getting a channel or the Channel class.*
 
-##### channel(channelName)
-`channelName` The name of the Twitch channel.  
+##### channel([channelName])
+`channelName` The name of the Twitch channel. Leave null for the global Twitch channel.  
 If the channel is not found in cache, twitch-emoticons will attempt to find it and cache it and its emotes (Twitch and BTTV).  
 Returns a Promise containing the Channel object.
 
-##### getChannel(emoteName)
-`channelName` The name of the Twitch channel.  
+##### getChannel([emoteName])
+`channelName` The name of the Twitch channel. Leave null for the global Twitch channel, if cached.  
 Returns a Channel object, if it is in the cache.
 
 ##### \<Channel\>
@@ -76,7 +76,7 @@ Returns a Channel object, if it is in the cache.
 ### Parsing
 *These are methods that parses text.*
 
-##### parse(text, type, size, start, end)
+##### parse(text[, type, size, start, end])
 `text` Text to parse.  
 `type` One of *html*, *markdown*, or *bbcode*.  
 `size` Size of the image, 0 to 2.  
@@ -85,19 +85,20 @@ Returns a Channel object, if it is in the cache.
 Only emotes that are cached will be formatted.  
 Returns the formatted string.
 
-##### parseAll(text, type, size, start, end)
+##### parseAll(text[, type, size, start, end])
 `text` Text to parse.  
 `type` One of *html*, *markdown*, or *bbcode*.  
 `size` Size of the image, 0 to 2.  
 `start` Character to open an emote.  
 `end` Character to close an emote.  
-Caution! This method goes through every word and checks the APIs for an emote. It is recommended that you use parse() instead.  
+Caution! This method goes through every word and checks the APIs for an emote.  
+It is recommended that you use parse() instead.  
 Returns a Promise containing the formatted string.
 
 ### Caching
 *These are methods that interact with the caches, where channels and emotes are stored.*
 
-##### loadChannel(channelName)
+##### loadChannel([channelName])
 `channelName` The name of the Twitch channel. Leave null for global Twitch emotes.  
 Caches a Twitch channel's emotes. This only includes Twitch emotes.  
 Returns a Promise containing the Channel object.
@@ -107,7 +108,7 @@ Returns a Promise containing the Channel object.
 Caches multiple Twitch channels' emotes. This only includes Twitch emotes.  
 Returns a Promise containing an array of Channel objects.
 
-##### loadBTTVChannel(channelName)
+##### loadBTTVChannel([channelName])
 `channelName` The name of the Twitch channel. Leave null for global BTTV emotes.  
 Caches a Twitch channel's emotes. This only includes BTTV emotes.  
 Returns a Promise containing the Channel object.

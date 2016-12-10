@@ -204,6 +204,8 @@ function loadChannel(channelName){
  */
 function loadChannels(channelNames){
     return new Promise((resolve, reject) => {
+        if (channelNames.length === 0) return reject('Channel names must be defined.');
+        
         getEmoteList().then(emoteRes => {
             let channels = [];
 
@@ -273,6 +275,8 @@ function loadBTTVChannel(channelName){
  */
 function loadByEmote(emoteName){
     return new Promise((resolve, reject) => {
+        if (!emoteName) return reject('Emote name must be defined.');
+
         getEmoteList().then(emoteRes => {
             let emote = _.find(emoteRes, (obj) => obj.code === emoteName);
 
@@ -341,6 +345,8 @@ function getChannel(name){
  */
 function emote(name){
     return new Promise((resolve, reject) => {
+        if (!name) return reject('Emote name must be defined.');
+
         let emoteObj = emotes.get(name);
         let bttvObj = bttv.get(name);
         if (emoteObj || bttvObj) return resolve(emoteObj || bttvObj);
@@ -373,6 +379,8 @@ function emote(name){
  * @param Emote object.
  */
 function getEmote(name){
+    if (!name) return null;
+
     let emoteObj = emotes.get(name);
     let bttvObj = bttv.get(name);
     if (emoteObj || bttvObj) return (emoteObj || bttvObj);
@@ -403,6 +411,8 @@ function getEmote(name){
  * @return The formatted string.
  */
 function parse(text, type = 'html', size = 0, start = '', end = start){
+    if (!text) return null;
+
     if (!/html|markdown|bbcode/i.test(type)) type = 'html';
     if (size < 0 || size > 2) size = 0;
 
@@ -442,6 +452,8 @@ function parseAll(text, type = 'html', size = 0, start = '', end = start){
     if (size < 0 || size > 2) size = 0;
 
     return new Promise((resolve, reject) => {
+        if (!text) return reject('text must be defined');
+
         let reg = new RegExp('(\\' + start + '[\\w\\d\\(\\)]+\\' + end + ')|' + PUNCTUATIONS, 'g');
         let words = text.match(reg);
         let promises = [];
