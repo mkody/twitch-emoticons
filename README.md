@@ -51,7 +51,10 @@ Returns an Emote object, if it is in the cache.
 `id` The emote id.  
 `name` Name of the emote.  
 `channel` Channel this emote belongs to. Will be null for non-global BTTV emotes.  
-`bttv` Whether or not this emote is a BTTV emote.
+`set` Set ID of the emote. For BTTV emotes, this would be the creator channel's name (does not guarantee that said channel has the emote).  
+`description` Description of the emote. Only available for Twitch global emotes.  
+`bttv` Whether or not this emote is a BTTV emote.  
+`gif` Whether or not this emote is a GIF.
 
 ##### \<Emote\>.toLink([size])
 `size` Size of the image, 0 to 2.  
@@ -71,26 +74,37 @@ Returns a Channel object, if it is in the cache.
 
 ##### \<Channel\>
 `name` The channel name.  
-`emotes` A Map of emotes this channel has.
+`emotes` A Cache of emotes this channel has.
 
 ### Parsing
 *These are methods that parses text.*
 
-##### parse(text[, type, size, start, end])
+- Parsing can parse strings to one of these types:
+`html` which includes a class for the emote, and the emote size.  
+`markdown` which has the emote name as the alt-text.  
+`bbcode` for message boards.  
+`plain` for just a link.  
+For custom formats, you can use {link}, {name}, and {size}.  
+For example, "[[[{link} {name}]]]" will output as "[[[https://static-cdn.jtvnw.net/emoticons/v1/25/1.0 Kappa]]]".
+This can be set as a string in the `custom` argument.  
+
+##### parse(text[, type, size, start, end, custom])
 `text` Text to parse.  
-`type` One of *html*, *markdown*, or *bbcode*.  
+`type` Type of parsing.  
 `size` Size of the image, 0 to 2.  
-`start` Character to open an emote.  
-`end` Character to close an emote.  
+`start` Character(s) to open an emote.  
+`end` Character(s) to close an emote.  
+`custom` If set, `type` is ignored and uses this custom format.  
 Only emotes that are cached will be formatted.  
 Returns the formatted string.
 
-##### parseAll(text[, type, size, start, end])
+##### parseAll(text[, type, size, start, end, custom])
 `text` Text to parse.  
-`type` One of *html*, *markdown*, or *bbcode*.  
+`type` Type of parsing.  
 `size` Size of the image, 0 to 2.  
-`start` Character to open an emote.  
-`end` Character to close an emote.  
+`start` Character(s) to open an emote.  
+`end` Character(s) to close an emote.  
+`custom` If set, `type` is ignored and uses this custom format.  
 Caution! This method goes through every word and checks the APIs for an emote.  
 It is recommended that you use parse() instead.  
 Returns a Promise containing the formatted string.
@@ -108,10 +122,20 @@ Returns a Promise containing the Channel object.
 Caches multiple Twitch channels' emotes. This only includes Twitch emotes.  
 Returns a Promise containing an array of Channel objects.
 
+##### loadAllChannels()
+Caches all Twitch channel emotes.  
+This takes a long time, but use it if you do not want to poll the Twitch Emotes API over and over.  
+Returns a Promise containing an array of Channel objects.
+
 ##### loadBTTVChannel([channelName])
 `channelName` The name of the Twitch channel. Leave null for global BTTV emotes.  
 Caches a Twitch channel's emotes. This only includes BTTV emotes.  
 Returns a Promise containing the Channel object.
+
+##### loadBTTVChannels(channelNames)
+`channelNames` Array of Twitch channel names.  
+Caches multiple Twitch channels' emotes. This only includes BTTV emotes.  
+Returns a Promise containing an array of Channel objects.
 
 ##### cache()
 This methods gets you a copy of the caches.  
@@ -122,3 +146,20 @@ Clears the caches completely.
 
 ##### \<Cache\>
 Extends Map. Has `find()`, `filter()`, and `map()` for utility purposes.
+
+### Changelog
+##### 1.5
+- Exposed Emote, Channel, and Cache classes
+- loadBTTVChannels()
+- loadAllChannels()
+- More properties for Emotes.
+- Parsing can now have a custom format.
+- Some other stuff.
+
+##### 1.0 - 1.4
+- Initial release and subsequent developments.
+- (Yes, I know this is a terrible changelog.)
+
+### More Info
+twitch-emoticons uses the [Twitch Emotes API](https://twitchemotes.com/) and the BetterTTV API.  
+Found a bug or something does not work as expected? Open up an issue on [Github](https://github.com/1Computer1/twitch-emoticons)!
