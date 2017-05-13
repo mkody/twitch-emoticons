@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>struct/EmoteParser.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BTTVEmote.html">BTTVEmote</a><ul class='methods'><li data-type='method'><a href="BTTVEmote.html#toLink">toLink</a></li></ul></li><li><a href="Channel.html">Channel</a><ul class='methods'><li data-type='method'><a href="Channel.html#fetchBTTVEmotes">fetchBTTVEmotes</a></li><li data-type='method'><a href="Channel.html#fetchFFZEmotes">fetchFFZEmotes</a></li></ul></li><li><a href="Collection.html">Collection</a><ul class='methods'><li data-type='method'><a href="Collection.html#filter">filter</a></li><li data-type='method'><a href="Collection.html#find">find</a></li><li data-type='method'><a href="Collection.html#map">map</a></li></ul></li><li><a href="Emote.html">Emote</a></li><li><a href="EmoteFetcher.html">EmoteFetcher</a><ul class='methods'><li data-type='method'><a href="EmoteFetcher.html#_cacheBTTVEmote">_cacheBTTVEmote</a></li><li data-type='method'><a href="EmoteFetcher.html#_cacheFFZEmote">_cacheFFZEmote</a></li><li data-type='method'><a href="EmoteFetcher.html#_cacheTwitchEmote">_cacheTwitchEmote</a></li><li data-type='method'><a href="EmoteFetcher.html#_getRawBTTVEmotes">_getRawBTTVEmotes</a></li><li data-type='method'><a href="EmoteFetcher.html#_getRawFFZEmotes">_getRawFFZEmotes</a></li><li data-type='method'><a href="EmoteFetcher.html#_getRawTwitchEmotes">_getRawTwitchEmotes</a></li><li data-type='method'><a href="EmoteFetcher.html#fetchBTTVEmotes">fetchBTTVEmotes</a></li><li data-type='method'><a href="EmoteFetcher.html#fetchFFZEmotes">fetchFFZEmotes</a></li><li data-type='method'><a href="EmoteFetcher.html#fetchTwitchEmotes">fetchTwitchEmotes</a></li></ul></li><li><a href="EmoteParser.html">EmoteParser</a><ul class='methods'><li data-type='method'><a href="EmoteParser.html#parse">parse</a></li></ul></li><li><a href="FFZEmote.html">FFZEmote</a><ul class='methods'><li data-type='method'><a href="FFZEmote.html#toLink">toLink</a></li></ul></li><li><a href="TwitchEmote.html">TwitchEmote</a><ul class='methods'><li data-type='method'><a href="TwitchEmote.html#toLink">toLink</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">struct/EmoteParser.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const Constants = require('../util/Constants');
+
+/**
+ * A parser to replace text with emotes.
+ * @class EmoteParser
+ */
+class EmoteParser {
+    /**
+     * Creates a new parser.
+     * @param {EmoteFetcher} fetcher - The fetcher to use the cache of.
+     * @param {Object} [options={}] - Options for the parser.
+     * @param {string} [options.template] - The template to be used.
+     * The strings that can be interpolated are:
+     * - `{link}` The link of the emote.
+     * - `{name}` The name of the emote.
+     * - `{size}` The size of the image.
+     * - `{creator}` The channel/owner name of the emote.
+     * @param {string} [options.type='markdown'] - The type of the parser.
+     * Can be one of `markdown`, `html`, `bbcode`, or `plain`.
+     * If the `template` option is provided, this is ignored.
+     * @param {RegExp} [options.match=/:(.+?):/g] - The regular expression that matches an emote.
+     * Must be a global regex, with one capture group for the emote code.
+     */
+    constructor(fetcher, options = {}) {
+        /**
+         * The emote fetcher being used.
+         * @type {EmoteFetcher}
+         */
+        this.fetcher = fetcher;
+
+        /**
+         * The parser options.
+         * @type {Object}
+         */
+        this.options = Object.assign({
+            template: '',
+            type: 'markdown',
+            match: /:(.+?):/g
+        }, options);
+
+        this._validateOptions(options);
+    }
+
+    _validateOptions(options) {
+        if (options.template &amp;&amp; typeof options.template !== 'string') {
+            throw new TypeError('Template must be a string');
+        }
+
+        if (!['markdown', 'html', 'bbcode', 'plain'].includes(options.type)) {
+            throw new TypeError('Parse type must be one of `markdown`, `html`, `bbcode`, or `plain`');
+        }
+
+        if (!(options.match instanceof RegExp) || !options.match.global) {
+            throw new TypeError('Match must be a global RegExp.');
+        }
+    }
+
+    /**
+     * Parses text.
+     * @param {string} text - Text to parse.
+     * @param {number} size - Size for emotes.
+     * @returns {string}
+     */
+    parse(text, size = 0) {
+        const parsed = text.replace(this.options.match, (matched, id) => {
+            const emote = this.fetcher.emotes.get(id);
+            if (!emote) return matched;
+
+            const template = this.options.template || Constants.Templates[this.options.type];
+            const link = emote.toLink(size);
+            const res = template
+                .replace(/{link}/g, link)
+                .replace(/{name}/g, emote.code)
+                .replace(/{size}/g, size)
+                .replace(/{creator}/g, emote.type === 'twitch' ? emote.channel.name || 'global' : emote.ownerName);
+
+            return res;
+        });
+
+        return parsed;
+    }
+}
+
+module.exports = EmoteParser;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
