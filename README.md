@@ -28,7 +28,7 @@ fetcher.fetchTwitchEmotes().then(() => {
 ### Links
 
 - [Github](https://github.com/1Computer1/twitch-emoticons)
-- [Documentation](https://github.com/1Computer1/twitch-emoticons/wiki)
+- [Documentation](https://1computer1.github.io/twitch-emoticons/)
 - [Changelog](https://github.com/1Computer1/twitch-emoticons/releases)
 
 This library uses the following:  
