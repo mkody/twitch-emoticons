@@ -48,6 +48,7 @@ class EmoteFetcher {
 
     /**
      * Gets the raw twitch emotes data.
+     * @private
      * @returns {Promise<Object>}
      */
     _getRawTwitchEmotes() {
@@ -56,6 +57,7 @@ class EmoteFetcher {
 
     /**
      * Converts and caches a raw twitch emote.
+     * @private
      * @param {string} id - ID of the emote.
      * @param {Object} data - Raw data.
      * @returns {TwitchEmote}
@@ -76,6 +78,7 @@ class EmoteFetcher {
 
     /**
      * Gets the raw BTTV emotes data for a channel.
+     * @private
      * @param {string} name - Name of the channel.
      * @returns {Promise<Object[]>}
      */
@@ -89,6 +92,7 @@ class EmoteFetcher {
 
     /**
      * Converts and caches a raw BTTV emote.
+     * @private
      * @param {string} name - Name of the channel.
      * @param {Object} data - Raw data.
      * @returns {BTTVEmote}
@@ -108,6 +112,7 @@ class EmoteFetcher {
 
     /**
      * Gets the raw FFZ emotes data for a channel.
+     * @private
      * @param {string} name - Name of the channel.
      * @returns {Promise<Object[]>}
      */
@@ -125,6 +130,7 @@ class EmoteFetcher {
 
     /**
      * Converts and caches a raw FFZ emote.
+     * @private
      * @param {string} name - Name of the channel.
      * @param {Object} data - Raw data.
      * @returns {FFZEmote}
