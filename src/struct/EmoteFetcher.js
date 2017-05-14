@@ -156,7 +156,7 @@ class EmoteFetcher {
      * @returns {Promise<Collection<string, TwitchEmote>>}
      */
     fetchTwitchEmotes(names) {
-        if (!Array.isArray(names)) names = [names];
+        if (names && !Array.isArray(names)) names = [names];
         return this._getRawTwitchEmotes().then(rawEmotes => {
             for (const key of Object.keys(rawEmotes)) {
                 const data = rawEmotes[key];
