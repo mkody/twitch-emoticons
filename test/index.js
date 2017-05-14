@@ -14,5 +14,5 @@ Promise.all([
     fetcher.fetchBTTVEmotes('11computer'),
     fetcher.fetchFFZEmotes('sylux98')
 ]).then(() => {
-    console.log(parser.parse(':PogChamp:\n:SourPls:\n:theCutest:\n:AWOOO:'));
+    console.log(parser.parse(':PogChamp:\n:cirBaka:\n:SourPls:\n:theCutest:\n:AWOOO:'));
 });

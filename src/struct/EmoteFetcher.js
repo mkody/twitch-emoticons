@@ -150,13 +150,19 @@ class EmoteFetcher {
 
     /**
      * Fetches and caches all twitch emotes.
+     * If channel names are specified, will only cache those channels.
+     * Use `null` for the global emotes channel.
+     * @param {string|string[]} [names] - Names of channels to cache.
      * @returns {Promise<Collection<string, TwitchEmote>>}
      */
-    fetchTwitchEmotes() {
+    fetchTwitchEmotes(names) {
+        if (!Array.isArray(names)) names = [names];
         return this._getRawTwitchEmotes().then(rawEmotes => {
             for (const key of Object.keys(rawEmotes)) {
                 const data = rawEmotes[key];
-                this._cacheTwitchEmote(key, data);
+                if (names === undefined || names.includes(data.channel)) {
+                    this._cacheTwitchEmote(key, data);
+                }
             }
 
             return this.emotes.filter(e => e.type === 'twitch');
@@ -165,6 +171,7 @@ class EmoteFetcher {
 
     /**
      * Fetches the BTTV emotes for a channel.
+     * Use `null` for the global emotes channel.
      * @param {string} [name=null] - Name of the channel.
      * @returns {Promise<Collection<string, BTTVEmote>>}
      */
