@@ -25,12 +25,6 @@ class Channel {
         this.name = name;
 
         /**
-         * The title of this channel.
-         * @type {?string}
-         */
-        this.title = null;
-
-        /**
          * Cached emotes belonging to this channel.
          * @type {Collection<string, Emote>}
          */
