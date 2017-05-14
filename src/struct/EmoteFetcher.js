@@ -13,15 +13,8 @@ const TwitchEmote = require('./TwitchEmote');
 class EmoteFetcher {
     /**
      * Creates a new fetcher.
-     * @param {Object} options - Options for the fetcher.
      */
-    constructor(options = {}) {
-        /**
-         * Options for the fetcher.
-         * @type {Object}
-         */
-        this.options = options;
-
+    constructor() {
         /**
          * Cached emotes.
          * Collectionped by emote code to Emote instance.
