@@ -3,6 +3,7 @@
   "version": "2.0.0",
   "description": "Gets Twitch emotes and BTTV emotes, as well as parsing text to emotes!",
   "main": "src/index.js",
+  "typings": "typings/index.d.ts",
   "keywords": [
     "emote",
     "emoticon",
