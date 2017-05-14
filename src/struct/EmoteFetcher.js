@@ -6,13 +6,9 @@ const FFZEmote = require('./FFZEmote');
 const request = require('snekfetch');
 const TwitchEmote = require('./TwitchEmote');
 
-/**
- * The fetcher that gets and caches emotes.
- * @class EmoteFetcher
- */
 class EmoteFetcher {
     /**
-     * Creates a new fetcher.
+     * Fetches and caches emotes.
      */
     constructor() {
         /**

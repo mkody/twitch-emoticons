@@ -1,12 +1,8 @@
 const Collection = require('../util/Collection');
 
-/**
- * A Twitch channel.
- * @class Channel
- */
 class Channel {
     /**
-     * Creates a new channel.
+     * A Twitch channel.
      * @param {EmoteFetcher} fetcher - The emote fetcher.
      * @param {string} name - The name of the channel.
      */

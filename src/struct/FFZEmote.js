@@ -1,13 +1,10 @@
 const Emote = require('./Emote');
 const Constants = require('../util/Constants');
 
-/**
- * An FFZ emote.
- * @class FFZEmote
- */
+/** @extends Emote */
 class FFZEmote extends Emote {
     /**
-     * Creates a new FFZ emote.
+     * An FFZ emote.
      * @param {Channel} channel - Channel this emote belongs to.
      * @param {string} id - ID of the emote.
      * @param {data} data - The raw emote data.

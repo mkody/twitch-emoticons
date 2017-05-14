@@ -1,12 +1,8 @@
 const Constants = require('../util/Constants');
 
-/**
- * A parser to replace text with emotes.
- * @class EmoteParser
- */
 class EmoteParser {
     /**
-     * Creates a new parser.
+     * A parser to replace text with emotes.
      * @param {EmoteFetcher} fetcher - The fetcher to use the cache of.
      * @param {Object} [options={}] - Options for the parser.
      * @param {string} [options.template] - The template to be used.

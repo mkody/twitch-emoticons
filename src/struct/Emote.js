@@ -1,10 +1,6 @@
-/**
- * Base class for emotes.
- * @class Emote
- */
 class Emote {
     /**
-     * Creates a new emote.
+     * Base class for emotes.
      * This constructor is not to be used.
      * @param {Channel} channel - Channel this emote belongs to.
      * @param {string} id - ID of the emote.

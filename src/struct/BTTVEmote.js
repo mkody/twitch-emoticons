@@ -1,13 +1,10 @@
 const Emote = require('./Emote');
 const Constants = require('../util/Constants');
 
-/**
- * A BTTV emote.
- * @class BTTVEmote
- */
+/** @extends Emote */
 class BTTVEmote extends Emote {
     /**
-     * Creates a new BTTV emote.
+     * A BTTV emote.
      * @param {Channel} channel - Channel this emote belongs to.
      * @param {string} id - ID of the emote.
      * @param {data} data - The raw emote data.

@@ -1,13 +1,10 @@
 const Emote = require('./Emote');
 const Constants = require('../util/Constants');
 
-/**
- * A Twitch emote.
- * @class TwitchEmote
- */
+/** @extends Emote */
 class TwitchEmote extends Emote {
     /**
-     * Creates a new Twitch emote.
+     * A Twitch emote.
      * @param {Channel} channel - Channel this emote belongs to.
      * @param {string} id - ID of the emote.
      * @param {data} data - The raw emote data.
