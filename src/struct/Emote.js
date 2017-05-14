@@ -37,7 +37,7 @@ class Emote {
 
         /**
          * The type of this emote.
-         * Either `twitch`, `bttv`, `ffz`.
+         * Either `twitch`, `bttv`, or `ffz`.
          * @type {string}
          */
         this.type = null;
@@ -56,6 +56,11 @@ class Emote {
         return null;
     }
 
+    /**
+     * Override for `toString`.
+     * Will give the emote's name.
+     * @returns {string}
+     */
     toString() {
         return this.code;
     }

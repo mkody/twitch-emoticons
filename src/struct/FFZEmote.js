@@ -42,6 +42,12 @@ class FFZEmote extends Emote {
          * @type {string[]}
          */
         this.sizes = Object.keys(data.urls);
+
+        /**
+         * The image type of the emote.
+         * @type {string}
+         */
+        this.imageType = 'png';
     }
 
     /**

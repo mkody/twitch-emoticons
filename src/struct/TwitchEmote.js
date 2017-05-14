@@ -17,6 +17,24 @@ class TwitchEmote extends Emote {
         this.type = 'twitch';
     }
 
+    /**
+     * The name of the emote creator's channel.
+     * Will be null for global emotes.
+     * @type {?string}
+     */
+    get ownerName() {
+        return this.channel.name;
+    }
+
+    /**
+     * The channel of this emote's creator.
+     * @readonly
+     * @type {Channel}
+     */
+    get owner() {
+        return this.channel;
+    }
+
     _setup(data) {
         super._setup(data);
 
@@ -31,6 +49,12 @@ class TwitchEmote extends Emote {
          * @type {?string}
          */
         this.description = data.description;
+
+        /**
+         * The image type of the emote.
+         * @type {string}
+         */
+        this.imageType = 'png';
     }
 
     /**

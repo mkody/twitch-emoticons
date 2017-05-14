@@ -72,7 +72,7 @@ class EmoteParser {
                 .replace(/{link}/g, link)
                 .replace(/{name}/g, emote.code)
                 .replace(/{size}/g, size)
-                .replace(/{creator}/g, emote.type === 'twitch' ? emote.channel.name || 'global' : emote.ownerName);
+                .replace(/{creator}/g, emote.ownerName || 'global');
 
             return res;
         });
