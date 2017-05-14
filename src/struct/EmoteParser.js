@@ -38,7 +38,7 @@ class EmoteParser {
             match: /:(.+?):/g
         }, options);
 
-        this._validateOptions(options);
+        this._validateOptions(this.options);
     }
 
     _validateOptions(options) {
