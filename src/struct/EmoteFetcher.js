@@ -41,7 +41,7 @@ class EmoteFetcher {
      * @returns {Promise<Object>}
      */
     _getRawTwitchEmotes() {
-        return request.get(Constants.Twitch.All).then(res => res.body.images);
+        return request.get(Constants.Twitch.All).then(res => res.body);
     }
 
     /**

@@ -1,6 +1,6 @@
 module.exports = {
     Twitch: {
-        All: 'https://twitchemotes.com/api_cache/v2/images.json',
+        All: 'https://twitchemotes.com/api_cache/v3/images.json',
         CDN: (id, size) => `https://static-cdn.jtvnw.net/emoticons/v1/${id}/${size + 1}.0`
     },
     BTTV: {
