@@ -150,9 +150,9 @@ class EmoteFetcher {
             for (const key of Object.keys(rawEmotes)) {
                 const data = rawEmotes[key];
                 if (names === null) {
-                  if (data.channel_name === null) {
-                    this._cacheTwitchEmote(key, data);
-                  }
+                    if (data.channel_name === null) {
+                        this._cacheTwitchEmote(key, data);
+                    }
                 } else if (names === undefined || names.includes(data.channel_name)) {
                     this._cacheTwitchEmote(key, data);
                 }
