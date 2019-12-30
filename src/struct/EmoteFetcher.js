@@ -36,30 +36,34 @@ class EmoteFetcher {
     }
 
     /**
-     * Gets the raw twitch emotes data.
+     * Gets the raw Twitch emotes data for a channel.
      * @private
-     * @returns {Promise<Object>}
+     * @param {int} id - Name of the channel.
+     * @returns {Promise<Object[]>}
      */
-    _getRawTwitchEmotes() {
-        return request.get(Constants.Twitch.All).then(res => res.body);
+    _getRawTwitchEmotes(id) {
+        const endpoint = !id
+        ? Constants.Twitch.Global
+        : Constants.Twitch.Channel(id); // eslint-disable-line new-cap
+
+        return request.get(endpoint).then(res => res.body);
     }
 
     /**
      * Converts and caches a raw twitch emote.
      * @private
-     * @param {string} id - ID of the emote.
+     * @param {string} name - Name of the channel.
      * @param {Object} data - Raw data.
      * @returns {TwitchEmote}
      */
-    _cacheTwitchEmote(id, data) {
-        let channel = this.channels.get(data.channel);
+    _cacheTwitchEmote(name, data) {
+        let channel = this.channels.get(name);
         if (!channel) {
-            channel = new Channel(this, data.channel);
-            this.channels.set(data.channel, channel);
+            channel = new Channel(this, name);
+            this.channels.set(name, channel);
         }
 
-        channel.title = data.channel_title;
-        const emote = new TwitchEmote(channel, id, data);
+        const emote = new TwitchEmote(channel, data.id, data);
         this.emotes.set(emote.code, emote);
         channel.emotes.set(emote.code, emote);
         return emote;
@@ -138,30 +142,21 @@ class EmoteFetcher {
     }
 
     /**
-     * Fetches and caches all twitch emotes.
-     * If channel names are specified, will only cache those channels.
+     * Fetches the Twitch emotes for a channel.
      * Use `null` for the global emotes channel.
-     * @param {string|string[]} [names] - Names of channels to cache.
+     * @param {int} [id=null] - ID of the channel.
      * @returns {Promise<Collection<string, TwitchEmote>>}
      */
-    fetchTwitchEmotes(names) {
-        if (names && !Array.isArray(names)) names = [names];
-        return this._getRawTwitchEmotes().then(rawEmotes => {
-            for (const key of Object.keys(rawEmotes)) {
-                const data = rawEmotes[key];
-                if (names === null) {
-                    if (data.channel_name === null) {
-                        this._cacheTwitchEmote(key, data);
-                    }
-                } else if (names === undefined || names.includes(data.channel_name)) {
-                    this._cacheTwitchEmote(key, data);
-                }
+    fetchTwitchEmotes(id = null) {
+        return this._getRawTwitchEmotes(id).then(rawEmotes => {
+            for (const data of rawEmotes.emotes) {
+                this._cacheTwitchEmote(rawEmotes.channel_name, data);
             }
 
-            return this.emotes.filter(e => e.type === 'twitch');
+            return this.channels.get(rawEmotes.channel_name).emotes.filter(e => e.type === 'twitch');
         });
     }
-
+    
     /**
      * Fetches the BTTV emotes for a channel.
      * Use `null` for the global emotes channel.

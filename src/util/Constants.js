@@ -1,6 +1,7 @@
 module.exports = {
     Twitch: {
-        All: 'https://twitchemotes.com/api_cache/v3/images.json',
+        Global: 'https://api.twitchemotes.com/api/v4/channels/0',
+        Channel: id => `https://api.twitchemotes.com/api/v4/channels/${id}`,
         CDN: (id, size) => `https://static-cdn.jtvnw.net/emoticons/v1/${id}/${size + 1}.0`
     },
     BTTV: {
@@ -13,7 +14,7 @@ module.exports = {
         CDN: (id, size) => `https://cdn.frankerfacez.com/emoticon/${id}/${size}`
     },
     Templates: {
-        html: '<img class="twitch-emote twitch-emote-{size} src={link}">',
+        html: '<img class="twitch-emote twitch-emote-{size}" src="{link}">',
         markdown: '![{name}]({link} "{name}")',
         bbcode: '[img]{link}[/img]',
         plain: '{link}'

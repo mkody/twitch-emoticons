@@ -13,7 +13,7 @@ const parser = new EmoteParser(fetcher, {
     match: /:(.+?):/g
 });
 
-fetcher.fetchTwitchEmotes().then(() => {
+fetcher.fetchTwitchEmotes(null).then(() => {
     const kappa = fetcher.emotes.get('Kappa').toLink();
     console.log(kappa);
     // https://static-cdn.jtvnw.net/emoticons/v1/25/1.0
