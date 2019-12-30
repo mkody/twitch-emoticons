@@ -156,7 +156,7 @@ class EmoteFetcher {
             return this.channels.get(rawEmotes.channel_name).emotes.filter(e => e.type === 'twitch');
         });
     }
-    
+
     /**
      * Fetches the BTTV emotes for a channel.
      * Use `null` for the global emotes channel.
