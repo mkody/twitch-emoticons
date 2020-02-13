@@ -46,7 +46,7 @@ class EmoteFetcher {
         ? Constants.Twitch.Global
         : Constants.Twitch.Channel(id); // eslint-disable-line new-cap
 
-        return request(endpoint).then(res => res.body);
+        return request(endpoint);
     }
 
     /**
@@ -80,7 +80,7 @@ class EmoteFetcher {
         ? Constants.BTTV.Global
         : Constants.BTTV.Channel(name); // eslint-disable-line new-cap
 
-        return request(endpoint).then(res => res.body.emotes);
+        return request(endpoint).then(body => body.emotes);
     }
 
     /**
@@ -110,10 +110,10 @@ class EmoteFetcher {
      * @returns {Promise<Object[]>}
      */
     _getRawFFZEmotes(name) {
-        return request(Constants.FFZ.Channel(name)).then(res => { // eslint-disable-line new-cap
+        return request(Constants.FFZ.Channel(name)).then(body => { // eslint-disable-line new-cap
             const emotes = [];
-            for (const key of Object.keys(res.body.sets)) {
-                const set = res.body.sets[key];
+            for (const key of Object.keys(body.sets)) {
+                const set = body.sets[key];
                 emotes.push(...set.emoticons);
             }
 
