@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="utf-8">
     <title>Channel - Documentation</title>
-
+    
+    
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
     <!--[if lt IE 9]>
@@ -11,6 +13,8 @@
     <![endif]-->
     <link type="text/css" rel="stylesheet" href="styles/prettify.css">
     <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
@@ -21,7 +25,8 @@
 
 <label for="nav-trigger" class="overlay"></label>
 
-<nav>
+<nav >
+    
     <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BTTVEmote.html">BTTVEmote</a><ul class='methods'><li data-type='method'><a href="BTTVEmote.html#toLink">toLink</a></li><li data-type='method'><a href="BTTVEmote.html#toString">toString</a></li></ul></li><li><a href="Channel.html">Channel</a><ul class='methods'><li data-type='method'><a href="Channel.html#fetchBTTVEmotes">fetchBTTVEmotes</a></li><li data-type='method'><a href="Channel.html#fetchFFZEmotes">fetchFFZEmotes</a></li></ul></li><li><a href="Collection.html">Collection</a><ul class='methods'><li data-type='method'><a href="Collection.html#filter">filter</a></li><li data-type='method'><a href="Collection.html#find">find</a></li><li data-type='method'><a href="Collection.html#map">map</a></li></ul></li><li><a href="Emote.html">Emote</a><ul class='methods'><li data-type='method'><a href="Emote.html#toString">toString</a></li></ul></li><li><a href="EmoteFetcher.html">EmoteFetcher</a><ul class='methods'><li data-type='method'><a href="EmoteFetcher.html#_cacheBTTVEmote">_cacheBTTVEmote</a></li><li data-type='method'><a href="EmoteFetcher.html#_cacheFFZEmote">_cacheFFZEmote</a></li><li data-type='method'><a href="EmoteFetcher.html#_cacheTwitchEmote">_cacheTwitchEmote</a></li><li data-type='method'><a href="EmoteFetcher.html#_getRawBTTVEmotes">_getRawBTTVEmotes</a></li><li data-type='method'><a href="EmoteFetcher.html#_getRawFFZEmotes">_getRawFFZEmotes</a></li><li data-type='method'><a href="EmoteFetcher.html#_getRawTwitchEmotes">_getRawTwitchEmotes</a></li><li data-type='method'><a href="EmoteFetcher.html#fetchBTTVEmotes">fetchBTTVEmotes</a></li><li data-type='method'><a href="EmoteFetcher.html#fetchFFZEmotes">fetchFFZEmotes</a></li><li data-type='method'><a href="EmoteFetcher.html#fetchTwitchEmotes">fetchTwitchEmotes</a></li></ul></li><li><a href="EmoteParser.html">EmoteParser</a><ul class='methods'><li data-type='method'><a href="EmoteParser.html#parse">parse</a></li></ul></li><li><a href="FFZEmote.html">FFZEmote</a><ul class='methods'><li data-type='method'><a href="FFZEmote.html#toLink">toLink</a></li><li data-type='method'><a href="FFZEmote.html#toString">toString</a></li></ul></li><li><a href="TwitchEmote.html">TwitchEmote</a><ul class='methods'><li data-type='method'><a href="TwitchEmote.html#toLink">toLink</a></li><li data-type='method'><a href="TwitchEmote.html#toString">toString</a></li></ul></li></ul>
 </nav>
 
@@ -47,9 +52,10 @@
 </header>
 
 <article>
-    <div class="container-overview">
     
+        <div class="container-overview">
         
+            
 
     
 
@@ -104,7 +110,7 @@
 
 
 
-<div class="description">
+<div class="description usertext">
     <p>A Twitch channel.</p>
 </div>
 
@@ -204,13 +210,19 @@
 
 
 
+
+
+
+        
+        </div>
     
-    </div>
 
     
 
     
 
+    
+    
     
 
      
@@ -272,7 +284,7 @@
 
 
 
-<div class="description">
+<div class="description usertext">
     <p>Cached emotes belonging to this channel.</p>
 </div>
 
@@ -345,7 +357,7 @@
 
 
 
-<div class="description">
+<div class="description usertext">
     <p>The emote fetcher.</p>
 </div>
 
@@ -418,7 +430,7 @@
 
 
 
-<div class="description">
+<div class="description usertext">
     <p>The name of this channel.<br>
 For the global channel, the name will be null.</p>
 </div>
@@ -502,9 +514,11 @@ For the global channel, the name will be null.</p>
 
 
 
-<div class="description">
+<div class="description usertext">
     <p>Fetches the BTTV emotes for this channel.</p>
 </div>
+
+
 
 
 
@@ -546,6 +560,7 @@ For the global channel, the name will be null.</p>
 </dl>
 
     
+
 
 
         
@@ -604,9 +619,11 @@ For the global channel, the name will be null.</p>
 
 
 
-<div class="description">
+<div class="description usertext">
     <p>Fetches the FFZ emotes for this channel.</p>
 </div>
+
+
 
 
 
@@ -650,6 +667,7 @@ For the global channel, the name will be null.</p>
     
 
 
+
         
     
 
@@ -663,6 +681,8 @@ For the global channel, the name will be null.</p>
 
 
 
+    
+    
 </div>
 
 <br class="clear">
@@ -672,6 +692,10 @@ For the global channel, the name will be null.</p>
 </footer>
 
 <script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
 <script src="scripts/linenumber.js"></script>
+
+
+
 </body>
 </html>

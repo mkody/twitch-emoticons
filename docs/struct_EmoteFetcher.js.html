@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="utf-8">
     <title>struct/EmoteFetcher.js - Documentation</title>
-
+    
+    
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
     <!--[if lt IE 9]>
@@ -11,6 +13,8 @@
     <![endif]-->
     <link type="text/css" rel="stylesheet" href="styles/prettify.css">
     <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
@@ -21,7 +25,8 @@
 
 <label for="nav-trigger" class="overlay"></label>
 
-<nav>
+<nav >
+    
     <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BTTVEmote.html">BTTVEmote</a><ul class='methods'><li data-type='method'><a href="BTTVEmote.html#toLink">toLink</a></li><li data-type='method'><a href="BTTVEmote.html#toString">toString</a></li></ul></li><li><a href="Channel.html">Channel</a><ul class='methods'><li data-type='method'><a href="Channel.html#fetchBTTVEmotes">fetchBTTVEmotes</a></li><li data-type='method'><a href="Channel.html#fetchFFZEmotes">fetchFFZEmotes</a></li></ul></li><li><a href="Collection.html">Collection</a><ul class='methods'><li data-type='method'><a href="Collection.html#filter">filter</a></li><li data-type='method'><a href="Collection.html#find">find</a></li><li data-type='method'><a href="Collection.html#map">map</a></li></ul></li><li><a href="Emote.html">Emote</a><ul class='methods'><li data-type='method'><a href="Emote.html#toString">toString</a></li></ul></li><li><a href="EmoteFetcher.html">EmoteFetcher</a><ul class='methods'><li data-type='method'><a href="EmoteFetcher.html#_cacheBTTVEmote">_cacheBTTVEmote</a></li><li data-type='method'><a href="EmoteFetcher.html#_cacheFFZEmote">_cacheFFZEmote</a></li><li data-type='method'><a href="EmoteFetcher.html#_cacheTwitchEmote">_cacheTwitchEmote</a></li><li data-type='method'><a href="EmoteFetcher.html#_getRawBTTVEmotes">_getRawBTTVEmotes</a></li><li data-type='method'><a href="EmoteFetcher.html#_getRawFFZEmotes">_getRawFFZEmotes</a></li><li data-type='method'><a href="EmoteFetcher.html#_getRawTwitchEmotes">_getRawTwitchEmotes</a></li><li data-type='method'><a href="EmoteFetcher.html#fetchBTTVEmotes">fetchBTTVEmotes</a></li><li data-type='method'><a href="EmoteFetcher.html#fetchFFZEmotes">fetchFFZEmotes</a></li><li data-type='method'><a href="EmoteFetcher.html#fetchTwitchEmotes">fetchTwitchEmotes</a></li></ul></li><li><a href="EmoteParser.html">EmoteParser</a><ul class='methods'><li data-type='method'><a href="EmoteParser.html#parse">parse</a></li></ul></li><li><a href="FFZEmote.html">FFZEmote</a><ul class='methods'><li data-type='method'><a href="FFZEmote.html#toLink">toLink</a></li><li data-type='method'><a href="FFZEmote.html#toString">toString</a></li></ul></li><li><a href="TwitchEmote.html">TwitchEmote</a><ul class='methods'><li data-type='method'><a href="TwitchEmote.html#toLink">toLink</a></li><li data-type='method'><a href="TwitchEmote.html#toString">toString</a></li></ul></li></ul>
 </nav>
 
@@ -42,8 +47,12 @@ const Channel = require('./Channel');
 const Collection = require('../util/Collection');
 const Constants = require('../util/Constants');
 const FFZEmote = require('./FFZEmote');
-const request = require('snekfetch');
+const request = require('request-promise');
 const TwitchEmote = require('./TwitchEmote');
+
+const options = {
+    json: true
+};
 
 class EmoteFetcher {
     /**
@@ -82,10 +91,10 @@ class EmoteFetcher {
      */
     _getRawTwitchEmotes(id) {
         const endpoint = !id
-        ? Constants.Twitch.Global
-        : Constants.Twitch.Channel(id); // eslint-disable-line new-cap
+            ? Constants.Twitch.Global
+            : Constants.Twitch.Channel(id); // eslint-disable-line new-cap
 
-        return request.get(endpoint).then(res => res.body);
+        return request({ uri: endpoint, ...options });
     }
 
     /**
@@ -116,10 +125,10 @@ class EmoteFetcher {
      */
     _getRawBTTVEmotes(name) {
         const endpoint = !name
-        ? Constants.BTTV.Global
-        : Constants.BTTV.Channel(name); // eslint-disable-line new-cap
+            ? Constants.BTTV.Global
+            : Constants.BTTV.Channel(name); // eslint-disable-line new-cap
 
-        return request.get(endpoint).then(res => res.body.emotes);
+        return request({ uri: endpoint, ...options }).then(body => body.emotes);
     }
 
     /**
@@ -149,10 +158,11 @@ class EmoteFetcher {
      * @returns {Promise&lt;Object[]>}
      */
     _getRawFFZEmotes(name) {
-        return request.get(Constants.FFZ.Channel(name)).then(res => { // eslint-disable-line new-cap
+        const endpoint = Constants.FFZ.Channel(name); // eslint-disable-line new-cap
+        return request({ uri: endpoint, ...options }).then(body => {
             const emotes = [];
-            for (const key of Object.keys(res.body.sets)) {
-                const set = res.body.sets[key];
+            for (const key of Object.keys(body.sets)) {
+                const set = body.sets[key];
                 emotes.push(...set.emoticons);
             }
 
@@ -195,7 +205,7 @@ class EmoteFetcher {
             return this.channels.get(rawEmotes.channel_name).emotes.filter(e => e.type === 'twitch');
         });
     }
-    
+
     /**
      * Fetches the BTTV emotes for a channel.
      * Use `null` for the global emotes channel.
@@ -236,6 +246,8 @@ module.exports = EmoteFetcher;
 
 
 
+    
+    
 </div>
 
 <br class="clear">
@@ -245,6 +257,10 @@ module.exports = EmoteFetcher;
 </footer>
 
 <script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
 <script src="scripts/linenumber.js"></script>
+
+
+
 </body>
 </html>
