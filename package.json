@@ -1,6 +1,6 @@
 {
   "name": "twitch-emoticons",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "Gets Twitch emotes and BTTV emotes, as well as parsing text to emotes!",
   "main": "src/index.js",
   "typings": "typings/index.d.ts",
@@ -20,13 +20,13 @@
     "request-promise": "^4.2.5"
   },
   "devDependencies": {
-    "docdash": "^0.4.0",
-    "eslint": "3.19.0",
-    "jsdoc": "^3.4.3"
+    "docdash": "^1.2.0",
+    "eslint": "6.8.0",
+    "jsdoc": "^3.6.3"
   },
   "scripts": {
-    "docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose",
-    "test": "npm run lint",
+    "docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose --package ''",
+    "test": "node test/index.js",
     "lint": "eslint ./src"
   },
   "repository": {
