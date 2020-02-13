@@ -6,6 +6,10 @@ const FFZEmote = require('./FFZEmote');
 const request = require('request-promise');
 const TwitchEmote = require('./TwitchEmote');
 
+const options = {
+    json: true
+}
+
 class EmoteFetcher {
     /**
      * Fetches and caches emotes.
@@ -46,7 +50,7 @@ class EmoteFetcher {
         ? Constants.Twitch.Global
         : Constants.Twitch.Channel(id); // eslint-disable-line new-cap
 
-        return request(endpoint);
+        return request({ uri: endpoint, ...options });
     }
 
     /**
@@ -80,7 +84,7 @@ class EmoteFetcher {
         ? Constants.BTTV.Global
         : Constants.BTTV.Channel(name); // eslint-disable-line new-cap
 
-        return request(endpoint).then(body => body.emotes);
+        return request({ uri: endpoint, ...options }).then(body => body.emotes);
     }
 
     /**
@@ -110,7 +114,8 @@ class EmoteFetcher {
      * @returns {Promise<Object[]>}
      */
     _getRawFFZEmotes(name) {
-        return request(Constants.FFZ.Channel(name)).then(body => { // eslint-disable-line new-cap
+        const endpoint = Constants.FFZ.Channel(name)
+        return request({ uri: endpoint, ...options }).then(body => { // eslint-disable-line new-cap
             const emotes = [];
             for (const key of Object.keys(body.sets)) {
                 const set = body.sets[key];
