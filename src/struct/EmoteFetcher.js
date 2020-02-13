@@ -3,7 +3,7 @@ const Channel = require('./Channel');
 const Collection = require('../util/Collection');
 const Constants = require('../util/Constants');
 const FFZEmote = require('./FFZEmote');
-const request = require('snekfetch');
+const request = require('request-promise');
 const TwitchEmote = require('./TwitchEmote');
 
 class EmoteFetcher {
@@ -46,7 +46,7 @@ class EmoteFetcher {
         ? Constants.Twitch.Global
         : Constants.Twitch.Channel(id); // eslint-disable-line new-cap
 
-        return request.get(endpoint).then(res => res.body);
+        return request(endpoint).then(res => res.body);
     }
 
     /**
@@ -80,7 +80,7 @@ class EmoteFetcher {
         ? Constants.BTTV.Global
         : Constants.BTTV.Channel(name); // eslint-disable-line new-cap
 
-        return request.get(endpoint).then(res => res.body.emotes);
+        return request(endpoint).then(res => res.body.emotes);
     }
 
     /**
@@ -110,7 +110,7 @@ class EmoteFetcher {
      * @returns {Promise<Object[]>}
      */
     _getRawFFZEmotes(name) {
-        return request.get(Constants.FFZ.Channel(name)).then(res => { // eslint-disable-line new-cap
+        return request(Constants.FFZ.Channel(name)).then(res => { // eslint-disable-line new-cap
             const emotes = [];
             for (const key of Object.keys(res.body.sets)) {
                 const set = res.body.sets[key];
