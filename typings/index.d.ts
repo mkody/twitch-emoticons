@@ -34,7 +34,7 @@ declare module 'twitch-emoticons' {
         public emotes: Collection<string, Emote>;
         public channels: Collection<string, Channel>;
 
-        public fetchTwitchEmotes(names?: string[]): Promise<Collection<string, TwitchEmote>>;
+        public fetchTwitchEmotes(id?: number): Promise<Collection<string, TwitchEmote>>;
         public fetchBTTVEmotes(name?: string): Promise<Collection<string, BTTVEmote>>;
         public fetchFFZEmotes(name: string): Promise<Collection<string, FFZEmote>>;
     }
@@ -62,9 +62,7 @@ declare module 'twitch-emoticons' {
         public constructor(channel: Channel, id: string, data: object);
 
         public set?: string;
-        public description?: string;
         public imageType: string;
-        public readonly ownerName?: Channel;
         public readonly owner: Channel;
     }
 
