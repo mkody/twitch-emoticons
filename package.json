@@ -14,7 +14,11 @@
     "tv",
     "parse"
   ],
-  "author": "1Computer",
+  "author": "MKody (André Fernandes) <gh@kdy.ch>",
+  "contrubutors": [
+    "1Computer",
+    "MKody"
+  ],
   "license": "MIT",
   "dependencies": {
     "request": "^2.88.2",
@@ -32,10 +36,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/1Computer1/twitch-emoticons.git"
+    "url": "https://github.com/mkody/twitch-emoticons.git"
   },
   "bugs": {
-    "url": "https://github.com/1Computer1/twitch-emoticons/issues"
+    "url": "https://github.com/mkody/twitch-emoticons/issues"
   },
-  "homepage": "https://github.com/1Computer1/twitch-emoticons"
+  "homepage": "https://github.com/mkody/twitch-emoticons"
 }
