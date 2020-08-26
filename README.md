@@ -4,7 +4,7 @@ Get a Twitch channel's Twitch emotes, BTTV emotes, and FFZ emotes!
 
 ### Install
 ```sh
-npm install @mkody/twitch-emoticons`
+npm install @mkody/twitch-emoticons
 # or
 yarn add @mkody/twitch-emoticons
 ```
