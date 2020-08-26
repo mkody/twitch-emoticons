@@ -1,5 +1,5 @@
 {
-  "name": "twitch-emoticons",
+  "name": "@mkody/twitch-emoticons",
   "version": "2.2.0",
   "description": "Gets Twitch emotes and BTTV emotes, as well as parsing text to emotes!",
   "main": "src/index.js",
@@ -14,7 +14,7 @@
     "tv",
     "parse"
   ],
-  "author": "MKody (André Fernandes) <gh@kdy.ch>",
+  "author": "MKody <gh@kdy.ch> (André Fernandes)",
   "contrubutors": [
     "1Computer",
     "MKody"
@@ -30,16 +30,20 @@
     "jsdoc": "^3.6.3"
   },
   "scripts": {
-    "docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose --package ''",
+    "docs": "jsdoc --configure .jsdoc.json --verbose --package ''",
     "test": "node test/index.js",
     "lint": "eslint ./src"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mkody/twitch-emoticons.git"
+    "url": "git+https://github.com/mkody/twitch-emoticons.git"
   },
   "bugs": {
     "url": "https://github.com/mkody/twitch-emoticons/issues"
   },
-  "homepage": "https://github.com/mkody/twitch-emoticons"
+  "homepage": "https://github.com/mkody/twitch-emoticons",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  }
 }

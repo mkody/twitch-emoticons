@@ -2,6 +2,13 @@
 
 Get a Twitch channel's Twitch emotes, BTTV emotes, and FFZ emotes!
 
+### Install
+```sh
+npm install @mkody/twitch-emoticons`
+# or
+yarn add @mkody/twitch-emoticons
+```
+
 ### Example
 
 ```js
@@ -31,7 +38,7 @@ fetcher.fetchTwitchEmotes(null).then(() => {
 - [Documentation](https://mkody.github.io/twitch-emoticons/)
 - [Changelog](https://github.com/mkody/twitch-emoticons/releases)
 
-This library uses the following:  
+This library uses the following:
 - [Twitch Emotes API](https://twitchemotes.com/apidocs)
 - [BetterTTV API](https://api.betterttv.net/)
 - [FrankerFaceZ API](http://www.frankerfacez.com/developers)
