@@ -1,4 +1,4 @@
-declare module 'twitch-emoticons' {
+declare module '@mkody/twitch-emoticons' {
     export class BTTVEmote extends Emote {
         public constructor(channel: Channel, id: string, data: any);
 
