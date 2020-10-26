@@ -5,8 +5,8 @@ module.exports = {
         CDN: (id, size) => `https://static-cdn.jtvnw.net/emoticons/v1/${id}/${size + 1}.0`
     },
     BTTV: {
-        Global: 'https://api.betterttv.net/2/emotes',
-        Channel: name => `https://api.betterttv.net/2/channels/${name}`,
+        Global: 'https://api.betterttv.net/3/cached/emotes/global',
+        Channel: id => `https://api.betterttv.net/3/cached/users/twitch/${id}`,
         CDN: (id, size) => `https://cdn.betterttv.net/emote/${id}/${size + 1}x`
     },
     FFZ: {
