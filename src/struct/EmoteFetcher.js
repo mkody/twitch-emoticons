@@ -84,7 +84,7 @@ class EmoteFetcher {
             ? Constants.BTTV.Global
             : Constants.BTTV.Channel(name); // eslint-disable-line new-cap
 
-        return request({ uri: endpoint, ...options }).then(body => body.emotes);
+        return request({ uri: endpoint, ...options }).then(body => body.sharedEmotes);
     }
 
     /**
