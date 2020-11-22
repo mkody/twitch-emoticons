@@ -29,8 +29,8 @@ class EmoteParser {
          * @type {Object}
          */
         this.options = Object.assign({
-            template: '',
-            type: 'markdown',
+            template: '<img class="twitch-emote twitch-emote-{size}" title="{name}" src="{link}">',
+            type: 'html',
             match: /:(.+?):/g
         }, options);
 
