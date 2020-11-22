@@ -64,7 +64,7 @@ class EmoteParser {
 
             const template = this.options.template || Constants.Templates[this.options.type];
             const link = emote.toLink(size);
-            const res = template
+            const res = '<img class="twitch-emote twitch-emote-{size}" title="{name}" src="{link}">'
                 .replace(/{link}/g, link)
                 .replace(/{name}/g, emote.code)
                 .replace(/{size}/g, size)
