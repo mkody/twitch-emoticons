@@ -14,7 +14,7 @@ module.exports = {
         CDN: (id, size) => `https://cdn.frankerfacez.com/emoticon/${id}/${size}`
     },
     Templates: {
-        html: '<img class="twitch-emote twitch-emote-{size}" src="{link}">',
+        html: '<img class="twitch-emote twitch-emote-{size}" title="{name}" src="{link}">',
         markdown: '![{name}]({link} "{name}")',
         bbcode: '[img]{link}[/img]',
         plain: '{link}'
