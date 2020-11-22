@@ -1,6 +1,6 @@
 {
-  "name": "@mkody/twitch-emoticons",
-  "version": "2.2.0",
+  "name": "@Atlas7005/twitch-emoticons",
+  "version": "2.2.1",
   "description": "Gets Twitch emotes and BTTV emotes, as well as parsing text to emotes!",
   "main": "src/index.js",
   "typings": "typings/index.d.ts",
@@ -14,10 +14,11 @@
     "tv",
     "parse"
   ],
-  "author": "MKody <gh@kdy.ch> (André Fernandes)",
+  "author": "MKody <gh@kdy.ch> (André Fernandes) & Atlas <atlas@twplayer.co>",
   "contrubutors": [
     "1Computer",
-    "MKody"
+    "MKody",
+    "Atlas700"
   ],
   "license": "MIT",
   "dependencies": {
@@ -36,12 +37,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mkody/twitch-emoticons.git"
+    "url": "git+https://github.com/atlas7005/twitch-emoticons.git"
   },
   "bugs": {
-    "url": "https://github.com/mkody/twitch-emoticons/issues"
+    "url": "https://github.com/atlas7005/twitch-emoticons/issues"
   },
-  "homepage": "https://github.com/mkody/twitch-emoticons",
+  "homepage": "https://github.com/atlas7005/twitch-emoticons",
   "directories": {
     "doc": "docs",
     "test": "test"
