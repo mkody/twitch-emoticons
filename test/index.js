@@ -19,7 +19,7 @@ const parser = new EmoteParser(fetcher, {
  *  - Channel BTTV emote (tppUrn)
  *  - Shared BTTV emote (MODS)
  *  - FFZ emote from user name (AWOOO)
- *  - FFZ emote from user ID (AWOOO)
+ *  - FFZ emote from user ID (SanaeSip)
  */
 Promise.all([
     fetcher.fetchTwitchEmotes(),
