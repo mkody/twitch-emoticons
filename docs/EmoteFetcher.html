@@ -404,7 +404,7 @@ Collectionped by emote code to Emote instance.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line97">line 97</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line103">line 103</a>
     </li></ul></dd>
     
 
@@ -581,7 +581,7 @@ Collectionped by emote code to Emote instance.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line136">line 136</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line149">line 149</a>
     </li></ul></dd>
     
 
@@ -923,7 +923,7 @@ Collectionped by emote code to Emote instance.</p>
 
     
 
-    <h4 class="name" id="_getRawBTTVEmotes"><span class="type-signature">(private) </span>_getRawBTTVEmotes<span class="signature">(name)</span><span class="type-signature"> &rarr; {Promise.&lt;Array.&lt;Object>>}</span></h4>
+    <h4 class="name" id="_getRawBTTVEmotes"><span class="type-signature">(private) </span>_getRawBTTVEmotes<span class="signature">(id<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;Array.&lt;Object>>}</span></h4>
 
     
 
@@ -935,7 +935,7 @@ Collectionped by emote code to Emote instance.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line82">line 82</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line83">line 83</a>
     </li></ul></dd>
     
 
@@ -975,7 +975,8 @@ Collectionped by emote code to Emote instance.</p>
 
 
 <div class="description usertext">
-    <p>Gets the raw BTTV emotes data for a channel.</p>
+    <p>Gets the raw BTTV emotes data for a channel.<br>
+Use <code>null</code> for the global emotes channel.</p>
 </div>
 
 
@@ -1001,7 +1002,11 @@ Collectionped by emote code to Emote instance.</p>
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
+        
+        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -1013,23 +1018,39 @@ Collectionped by emote code to Emote instance.</p>
 
         <tr>
             
-                <td class="name"><code>name</code></td>
+                <td class="name"><code>id</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">int</span>
 
 
             
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
 
+                
+
+                
+                </td>
             
 
-            <td class="description last"><p>Name of the channel.</p></td>
+            
+                <td class="default">
+                
+                    <code>null</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>ID of the channel.</p></td>
         </tr>
 
     
@@ -1077,7 +1098,7 @@ Collectionped by emote code to Emote instance.</p>
 
     
 
-    <h4 class="name" id="_getRawFFZEmotes"><span class="type-signature">(private) </span>_getRawFFZEmotes<span class="signature">(name)</span><span class="type-signature"> &rarr; {Promise.&lt;Array.&lt;Object>>}</span></h4>
+    <h4 class="name" id="_getRawFFZEmotes"><span class="type-signature">(private) </span>_getRawFFZEmotes<span class="signature">(id)</span><span class="type-signature"> &rarr; {Promise.&lt;Array.&lt;Object>>}</span></h4>
 
     
 
@@ -1089,7 +1110,7 @@ Collectionped by emote code to Emote instance.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line116">line 116</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line122">line 122</a>
     </li></ul></dd>
     
 
@@ -1167,12 +1188,15 @@ Collectionped by emote code to Emote instance.</p>
 
         <tr>
             
-                <td class="name"><code>name</code></td>
+                <td class="name"><code>id</code></td>
             
 
             <td class="type">
             
                 
+<span class="param-type">number</span>
+|
+
 <span class="param-type">string</span>
 
 
@@ -1183,7 +1207,7 @@ Collectionped by emote code to Emote instance.</p>
 
             
 
-            <td class="description last"><p>Name of the channel.</p></td>
+            <td class="description last"><p>ID or name of the channel.</p></td>
         </tr>
 
     
@@ -1397,7 +1421,7 @@ Collectionped by emote code to Emote instance.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line171">line 171</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line184">line 184</a>
     </li></ul></dd>
     
 
@@ -1572,7 +1596,7 @@ Use <code>null</code> for the global emotes channel.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line186">line 186</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line199">line 199</a>
     </li></ul></dd>
     
 
@@ -1726,7 +1750,7 @@ Use <code>null</code> for the global emotes channel.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line155">line 155</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line168">line 168</a>
     </li></ul></dd>
     
 
@@ -1904,7 +1928,7 @@ Use <code>null</code> for the global emotes channel.</p>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.5</a> using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
