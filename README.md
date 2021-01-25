@@ -18,7 +18,7 @@ yarn add @mkody/twitch-emoticons
 ### Example
 
 ```js
-const { EmoteFetcher, EmoteParser } = require('twitch-emoticons');
+const { EmoteFetcher, EmoteParser } = require('@mkody/twitch-emoticons');
 
 const fetcher = new EmoteFetcher();
 const parser = new EmoteParser(fetcher, {
