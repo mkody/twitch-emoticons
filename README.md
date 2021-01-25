@@ -2,6 +2,12 @@
 
 Get a Twitch channel's Twitch emotes, BTTV emotes, and FFZ emotes!
 
+### About this fork's 2.3.0+
+You must now use a Twitch user ID instead of the username to fetch user's emotes.  
+You can use [this page to quickly grab it](https://s.kdy.ch/twitchid/).
+
+_FFZ still supports names, but usage of the ID is recommended._
+
 ### Install
 ```sh
 npm install @mkody/twitch-emoticons
@@ -37,7 +43,6 @@ fetcher.fetchTwitchEmotes(null).then(() => {
 - [Github](https://github.com/mkody/twitch-emoticons)
 - [Documentation](https://mkody.github.io/twitch-emoticons/)
 - [Changelog](https://github.com/mkody/twitch-emoticons/releases)
-- [Grab a Twitch user's ID](https://s.kdy.ch/twitchid/)
 
 This library uses the following:
 - [Twitch Emotes API](https://twitchemotes.com/apidocs)
