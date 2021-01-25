@@ -25,10 +25,10 @@ fetcher.fetchTwitchEmotes(null).then(() => {
     console.log(kappa);
     // https://static-cdn.jtvnw.net/emoticons/v1/25/1.0
 
-    const text = 'Hello :PogChamp:!';
+    const text = 'Hello :CoolCat:!';
     const parsed = parser.parse(text);
     console.log(parsed);
-    // Hello ![PogChamp](https://static-cdn.jtvnw.net/emoticons/v1/88/1.0 "PogChamp")!
+    // Hello ![CoolCat](https://static-cdn.jtvnw.net/emoticons/v1/58127/1.0 "CoolCat")!
 });
 ```
 

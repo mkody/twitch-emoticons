@@ -29,10 +29,10 @@ class BTTVEmote extends Emote {
 
         /**
          * The name of the emote creator's channel.
-         * Will be null for global emotes.
+         * Will be null for global or channel emotes.
          * @type {?string}
          */
-        this.ownerName = data.channel;
+        this.ownerName = 'user' in data ? data.user.name : null;
 
         /**
          * The image type of the emote.

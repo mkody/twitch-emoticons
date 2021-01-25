@@ -75,16 +75,22 @@ class EmoteFetcher {
 
     /**
      * Gets the raw BTTV emotes data for a channel.
+     * Use `null` for the global emotes channel.
      * @private
-     * @param {string} name - Name of the channel.
+     * @param {int} [id=null] - ID of the channel.
      * @returns {Promise<Object[]>}
      */
-    _getRawBTTVEmotes(name) {
-        const endpoint = !name
+    _getRawBTTVEmotes(id) {
+        const endpoint = !id
             ? Constants.BTTV.Global
-            : Constants.BTTV.Channel(name); // eslint-disable-line new-cap
+            : Constants.BTTV.Channel(id); // eslint-disable-line new-cap
 
-        return request({ uri: endpoint, ...options }).then(body => body.emotes);
+        return request({ uri: endpoint, ...options }).then(body => {
+            // Global emotes
+            if (body instanceof Array) return body;
+            // Channel emotes
+            return [...body.channelEmotes, ...body.sharedEmotes];
+        });
     }
 
     /**
@@ -110,11 +116,18 @@ class EmoteFetcher {
     /**
      * Gets the raw FFZ emotes data for a channel.
      * @private
-     * @param {string} name - Name of the channel.
+     * @param {(number|string)} id - ID or name of the channel.
      * @returns {Promise<Object[]>}
      */
-    _getRawFFZEmotes(name) {
-        const endpoint = Constants.FFZ.Channel(name); // eslint-disable-line new-cap
+    _getRawFFZEmotes(id) {
+        let endpoint;
+
+        if (typeof id === 'number') {
+            endpoint = Constants.FFZ.Channel(id); // eslint-disable-line new-cap
+        } else {
+            endpoint = Constants.FFZ.ChannelName(id); // eslint-disable-line new-cap
+        }
+
         return request({ uri: endpoint, ...options }).then(body => {
             const emotes = [];
             for (const key of Object.keys(body.sets)) {
