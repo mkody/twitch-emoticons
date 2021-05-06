@@ -63,6 +63,11 @@
 <p>You must now use a Twitch user ID instead of the username to fetch user's emotes.<br>
 You can use <a href="https://s.kdy.ch/twitchid/">this page to quickly grab it</a>.</p>
 <p><em>FFZ still supports names, but usage of the ID is recommended.</em></p>
+<h3>Note about Twitch emotes</h3>
+<p>We've seen twitchemotes.com's API returning &quot;channel not found&quot; at multiple occasions (as of early May 2021).<br>
+A fallback system to a static json for the global emotes is in place, but if their service is down or not working you will not be able to fetch the list of emotes from a specific channel.<br>
+If you have an alternative API or some quick code to get them from Twitch directly, feel free to share in Issue #8.</p>
+<p>BetterTTV and FrankerFaceZ are still working fine.</p>
 <h3>Install</h3>
 <pre class="prettyprint source lang-sh"><code>npm install @mkody/twitch-emoticons
 # or
