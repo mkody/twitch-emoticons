@@ -3,11 +3,11 @@ const Channel = require('./Channel');
 const Collection = require('../util/Collection');
 const Constants = require('../util/Constants');
 const FFZEmote = require('./FFZEmote');
-const request = require('request-promise');
+const got = require('got');
 const TwitchEmote = require('./TwitchEmote');
 
 const options = {
-    json: true
+    responseType: 'json'
 };
 
 class EmoteFetcher {
@@ -50,7 +50,16 @@ class EmoteFetcher {
             ? Constants.Twitch.Global
             : Constants.Twitch.Channel(id); // eslint-disable-line new-cap
 
-        return request({ uri: endpoint, ...options });
+        return got(endpoint, options)
+            .then(req => req.json())
+            .catch(err => {
+                if (!id) {
+                    // If fetching global didn't work, try with fallback
+                    return got(Constants.Twitch.GlobalFallback, options).json();
+                } else {
+                    throw err;
+                }
+            });
     }
 
     /**
@@ -85,11 +94,11 @@ class EmoteFetcher {
             ? Constants.BTTV.Global
             : Constants.BTTV.Channel(id); // eslint-disable-line new-cap
 
-        return request({ uri: endpoint, ...options }).then(body => {
+        return got(endpoint, options).then(req => {
             // Global emotes
-            if (body instanceof Array) return body;
+            if (req.body instanceof Array) return req.body;
             // Channel emotes
-            return [...body.channelEmotes, ...body.sharedEmotes];
+            return [...req.body.channelEmotes, ...req.body.sharedEmotes];
         });
     }
 
@@ -128,10 +137,10 @@ class EmoteFetcher {
             endpoint = Constants.FFZ.ChannelName(id); // eslint-disable-line new-cap
         }
 
-        return request({ uri: endpoint, ...options }).then(body => {
+        return got(endpoint, options).then(req => {
             const emotes = [];
-            for (const key of Object.keys(body.sets)) {
-                const set = body.sets[key];
+            for (const key of Object.keys(req.body.sets)) {
+                const set = req.body.sets[key];
                 emotes.push(...set.emoticons);
             }
 

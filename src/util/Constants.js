@@ -1,6 +1,7 @@
 module.exports = {
     Twitch: {
         Global: 'https://api.twitchemotes.com/api/v4/channels/0',
+        GlobalFallback: 'https://s.kdy.ch/global.json',
         Channel: id => `https://api.twitchemotes.com/api/v4/channels/${id}`,
         CDN: (id, size) => `https://static-cdn.jtvnw.net/emoticons/v1/${id}/${size + 1}.0`
     },

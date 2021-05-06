@@ -21,8 +21,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "request": "^2.88.2",
-    "request-promise": "^4.2.5"
+    "got": "^11.8.2"
   },
   "devDependencies": {
     "docdash": "^1.2.0",

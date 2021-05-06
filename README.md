@@ -8,6 +8,13 @@ You can use [this page to quickly grab it](https://s.kdy.ch/twitchid/).
 
 _FFZ still supports names, but usage of the ID is recommended._
 
+### Note about Twitch emotes
+We've seen twitchemotes.com's API returning "channel not found" at multiple occasions (as of early May 2021).  
+A fallback system to a static json for the global emotes is in place, but if their service is down or not working you will not be able to fetch the list of emotes from a specific channel.  
+If you have an alternative API or some quick code to get them from Twitch directly, feel free to share in Issue #8.
+
+BetterTTV and FrankerFaceZ are still working fine.
+
 ### Install
 ```sh
 npm install @mkody/twitch-emoticons
