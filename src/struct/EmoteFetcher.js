@@ -51,7 +51,7 @@ class EmoteFetcher {
             : Constants.Twitch.Channel(id); // eslint-disable-line new-cap
 
         return got(endpoint, options)
-            .then(req => req.json())
+            .then(req => req.body)
             .catch(err => {
                 if (!id) {
                     // If fetching global didn't work, try with fallback
