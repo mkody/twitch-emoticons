@@ -55,7 +55,7 @@ class EmoteFetcher {
             .catch(err => {
                 if (!id) {
                     // If fetching global didn't work, try with fallback
-                    return got(Constants.Twitch.GlobalFallback, options).json();
+                    return got(Constants.Twitch.GlobalFallback, options).body;
                 } else {
                     throw err;
                 }
