@@ -21,6 +21,8 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "@twurple/api": "^5.0.5",
+    "@twurple/auth": "^5.0.5",
     "got": "^11.8.2"
   },
   "devDependencies": {

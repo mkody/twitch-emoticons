@@ -5,6 +5,8 @@ const Constants = require('../util/Constants');
 const FFZEmote = require('./FFZEmote');
 const got = require('got');
 const TwitchEmote = require('./TwitchEmote');
+const { ApiClient } = require('@twurple/api');
+const { ClientCredentialsAuthProvider } = require('@twurple/auth');
 
 const options = {
     responseType: 'json'
@@ -13,8 +15,19 @@ const options = {
 class EmoteFetcher {
     /**
      * Fetches and caches emotes.
+     * @param {string} clientId The client id for the twitch api.
+     * @param {string} clientSecret The client secret for the twitch api.
      */
-    constructor() {
+    constructor(clientId, clientSecret) {
+        if (clientId && clientSecret) {
+            const authProvider = new ClientCredentialsAuthProvider(clientId, clientSecret);
+
+            /**
+             * Twitch api client.
+             */
+            this.apiClient = new ApiClient({ authProvider });
+        }
+
         /**
          * Cached emotes.
          * Collectionped by emote code to Emote instance.
@@ -46,20 +59,15 @@ class EmoteFetcher {
      * @returns {Promise<Object[]>}
      */
     _getRawTwitchEmotes(id) {
-        const endpoint = !id
-            ? Constants.Twitch.Global
-            : Constants.Twitch.Channel(id); // eslint-disable-line new-cap
+        if (!this.apiClient) {
+            throw new Error('Client id or client secret not provided.');
+        }
 
-        return got(endpoint, options)
-            .then(req => req.json())
-            .catch(err => {
-                if (!id) {
-                    // If fetching global didn't work, try with fallback
-                    return got(Constants.Twitch.GlobalFallback, options).json();
-                } else {
-                    throw err;
-                }
-            });
+        if (id) {
+            return this.apiClient.chat.getChannelEmotes(id);
+        } else {
+            return this.apiClient.chat.getGlobalEmotes();
+        }
     }
 
     /**
@@ -176,11 +184,11 @@ class EmoteFetcher {
      */
     fetchTwitchEmotes(id = null) {
         return this._getRawTwitchEmotes(id).then(rawEmotes => {
-            for (const data of rawEmotes.emotes) {
-                this._cacheTwitchEmote(rawEmotes.channel_name, data);
+            for (const emote of rawEmotes) {
+                this._cacheTwitchEmote(id, { code: emote.name, id: emote.id });
             }
 
-            return this.channels.get(rawEmotes.channel_name).emotes.filter(e => e.type === 'twitch');
+            return this.channels.get(id).emotes.filter(e => e.type === 'twitch');
         });
     }
 

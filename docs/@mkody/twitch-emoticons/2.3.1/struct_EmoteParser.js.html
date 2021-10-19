@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Home - Documentation</title>
+    <title>struct/EmoteParser.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -32,88 +32,99 @@
 
 <div id="main">
     
+    <h1 class="page-title">struct/EmoteParser.js</h1>
+    
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const Constants = require('../util/Constants');
 
+class EmoteParser {
+    /**
+     * A parser to replace text with emotes.
+     * @param {EmoteFetcher} fetcher - The fetcher to use the cache of.
+     * @param {Object} [options={}] - Options for the parser.
+     * @param {string} [options.template] - The template to be used.
+     * The strings that can be interpolated are:
+     * - `{link}` The link of the emote.
+     * - `{name}` The name of the emote.
+     * - `{size}` The size of the image.
+     * - `{creator}` The channel/owner name of the emote.
+     * @param {string} [options.type='markdown'] - The type of the parser.
+     * Can be one of `markdown`, `html`, `bbcode`, or `plain`.
+     * If the `template` option is provided, this is ignored.
+     * @param {RegExp} [options.match=/:(.+?):/g] - The regular expression that matches an emote.
+     * Must be a global regex, with one capture group for the emote code.
+     */
+    constructor(fetcher, options = {}) {
+        /**
+         * The emote fetcher being used.
+         * @type {EmoteFetcher}
+         */
+        this.fetcher = fetcher;
 
-    <section class="package">
-        <h3> </h3>		
-    </section>
+        /**
+         * The parser options.
+         * @type {Object}
+         */
+        this.options = Object.assign({
+            template: '',
+            type: 'markdown',
+            match: /:(.+?):/g
+        }, options);
 
+        this._validateOptions(this.options);
+    }
 
+    _validateOptions(options) {
+        if (options.template &amp;&amp; typeof options.template !== 'string') {
+            throw new TypeError('Template must be a string');
+        }
 
+        if (!['markdown', 'html', 'bbcode', 'plain'].includes(options.type)) {
+            throw new TypeError('Parse type must be one of `markdown`, `html`, `bbcode`, or `plain`');
+        }
 
+        if (!(options.match instanceof RegExp) || !options.match.global) {
+            throw new TypeError('Match must be a global RegExp.');
+        }
+    }
 
+    /**
+     * Parses text.
+     * @param {string} text - Text to parse.
+     * @param {number} size - Size for emotes.
+     * @returns {string}
+     */
+    parse(text, size = 0) {
+        const parsed = text.replace(this.options.match, (matched, id) => {
+            const emote = this.fetcher.emotes.get(id);
+            if (!emote) return matched;
 
+            const template = this.options.template || Constants.Templates[this.options.type];
+            const link = emote.toLink(size);
+            const res = template
+                .replace(/{link}/g, link)
+                .replace(/{name}/g, emote.code)
+                .replace(/{size}/g, size)
+                .replace(/{creator}/g, emote.ownerName || 'global');
 
+            return res;
+        });
 
+        return parsed;
+    }
+}
 
-    
-
-
-
-    <section class="readme usertext">
-        <article><h1>twitch-emoticons</h1>
-<p>Get a Twitch channel's Twitch emotes, BTTV emotes, and FFZ emotes!</p>
-<h3>About this fork's 2.3.0+</h3>
-<p>You must now use a Twitch user ID instead of the username to fetch user's emotes.<br>
-You can use <a href="https://s.kdy.ch/twitchid/">this page to quickly grab it</a>.</p>
-<p><em>FFZ still supports names, but usage of the ID is recommended.</em></p>
-<h3>Note about Twitch emotes</h3>
-<p>You are now able to use the official Twitch API to get emotes if you provide your own client id and client secret.<br>
-To get a client and secret create a Twitch app <a href="https://dev.twitch.tv/console/apps/create">here</a>, it's free.</p>
-<p>The following problems only apply if you don't provide them and prefer to use the old system.<br>
-We've seen twitchemotes.com's API returning &quot;channel not found&quot; at multiple occasions (as of early May 2021).<br>
-A fallback system to a static json for the global emotes is in place, but if their service is down or not working you will not be able to fetch the list of emotes from a specific channel.<br>
-If you have an alternative API or some quick code to get them from Twitch directly, feel free to share in Issue <a href="https://github.com/mkody/twitch-emoticons/issues/8">#8</a>.</p>
-<p>BetterTTV and FrankerFaceZ are working fine anyways and independent from the Twitch API.</p>
-<h3>Install</h3>
-<pre class="prettyprint source lang-sh"><code>npm install @mkody/twitch-emoticons
-# or
-yarn add @mkody/twitch-emoticons
+module.exports = EmoteParser;
 </code></pre>
-<h3>Example</h3>
-<pre class="prettyprint source lang-js"><code>const { EmoteFetcher, EmoteParser } = require('@mkody/twitch-emoticons');
-
-const clientId = '&lt;your client id>';
-const clientSecret = '&lt;your client secret>';
-
-const fetcher = new EmoteFetcher(clientId, clientSecret);
-const parser = new EmoteParser(fetcher, {
-    type: 'markdown',
-    match: /:(.+?):/g
-});
-
-fetcher.fetchTwitchEmotes(null).then(() => {
-    const kappa = fetcher.emotes.get('Kappa').toLink();
-    console.log(kappa);
-    // https://static-cdn.jtvnw.net/emoticons/v1/25/1.0
-
-    const text = 'Hello :CoolCat:!';
-    const parsed = parser.parse(text);
-    console.log(parsed);
-    // Hello ![CoolCat](https://static-cdn.jtvnw.net/emoticons/v1/58127/1.0 &quot;CoolCat&quot;)!
-});
-</code></pre>
-<h3>Links</h3>
-<ul>
-<li><a href="https://github.com/mkody/twitch-emoticons">Github</a></li>
-<li><a href="https://mkody.github.io/twitch-emoticons/">Documentation</a></li>
-<li><a href="https://github.com/mkody/twitch-emoticons/releases">Changelog</a></li>
-</ul>
-<p>This library uses the following:</p>
-<ul>
-<li><a href="https://twitchemotes.com/apidocs">Twitch Emotes API</a></li>
-<li><a href="https://betterttv.com/">BetterTTV API</a></li>
-<li><a href="http://www.frankerfacez.com/developers">FrankerFaceZ API</a></li>
-</ul></article>
+        </article>
     </section>
-
-
 
 
 

@@ -9,11 +9,10 @@ You can use [this page to quickly grab it](https://s.kdy.ch/twitchid/).
 _FFZ still supports names, but usage of the ID is recommended._
 
 ### Note about Twitch emotes
-We've seen twitchemotes.com's API returning "channel not found" at multiple occasions (as of early May 2021).  
-A fallback system to a static json for the global emotes is in place, but if their service is down or not working you will not be able to fetch the list of emotes from a specific channel.  
-If you have an alternative API or some quick code to get them from Twitch directly, feel free to share in Issue #8.
+You now need to use the official Twitch API to get emotes. For this you need to provide your client id and client secret.
+To get a client and secret create a Twitch app [here](https://dev.twitch.tv/console/apps/create), it's free.
 
-BetterTTV and FrankerFaceZ are still working fine.
+If you are only using BetterTTV and FrankerFaceZ you don't need to provide anything as they are independent from the Twitch API.
 
 ### Install
 ```sh
@@ -27,7 +26,10 @@ yarn add @mkody/twitch-emoticons
 ```js
 const { EmoteFetcher, EmoteParser } = require('@mkody/twitch-emoticons');
 
-const fetcher = new EmoteFetcher();
+const clientId = '<your client id>';
+const clientSecret = '<your client secret>';
+
+const fetcher = new EmoteFetcher(clientId, clientSecret);
 const parser = new EmoteParser(fetcher, {
     type: 'markdown',
     match: /:(.+?):/g
