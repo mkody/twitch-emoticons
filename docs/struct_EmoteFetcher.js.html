@@ -63,7 +63,7 @@ class EmoteFetcher {
      * @param {string} clientSecret The client secret for the twitch api.
      */
     constructor(clientId, clientSecret) {
-        if (clientId &amp;&amp; clientSecret) {
+        if (clientId !== undefined &amp;&amp; clientSecret !== undefined) {
             const authProvider = new ClientCredentialsAuthProvider(clientId, clientSecret);
 
             /**
