@@ -8,7 +8,7 @@ You can use [this page to quickly grab it](https://s.kdy.ch/twitchid/).
 
 _FFZ still supports names, but usage of the ID is recommended._
 
-### Note about Twitch emotes
+### About this fork's 2.4.0+
 You now need to use the official Twitch API to get emotes. For this you need to provide your client id and client secret.
 To get a client and secret create a Twitch app [here](https://dev.twitch.tv/console/apps/create), it's free.
 

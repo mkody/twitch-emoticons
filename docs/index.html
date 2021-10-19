@@ -41,7 +41,7 @@
 
 
     <section class="package">
-        <h3>@mkody/twitch-emoticons 2.3.2</h3>		
+        <h3> </h3>		
     </section>
 
 
@@ -64,13 +64,9 @@
 You can use <a href="https://s.kdy.ch/twitchid/">this page to quickly grab it</a>.</p>
 <p><em>FFZ still supports names, but usage of the ID is recommended.</em></p>
 <h3>Note about Twitch emotes</h3>
-<p>You are now able to use the official Twitch API to get emotes if you provide your own client id and client secret.<br>
+<p>You now need to use the official Twitch API to get emotes. For this you need to provide your client id and client secret.<br>
 To get a client and secret create a Twitch app <a href="https://dev.twitch.tv/console/apps/create">here</a>, it's free.</p>
-<p>The following problems only apply if you don't provide them and prefer to use the old system.<br>
-We've seen twitchemotes.com's API returning &quot;channel not found&quot; at multiple occasions (as of early May 2021).<br>
-A fallback system to a static json for the global emotes is in place, but if their service is down or not working you will not be able to fetch the list of emotes from a specific channel.<br>
-If you have an alternative API or some quick code to get them from Twitch directly, feel free to share in Issue <a href="https://github.com/mkody/twitch-emoticons/issues/8">#8</a>.</p>
-<p>BetterTTV and FrankerFaceZ are working fine anyways and independent from the Twitch API.</p>
+<p>If you are only using BetterTTV and FrankerFaceZ you don't need to provide anything as they are independent from the Twitch API.</p>
 <h3>Install</h3>
 <pre class="prettyprint source lang-sh"><code>npm install @mkody/twitch-emoticons
 # or
