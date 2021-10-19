@@ -6,7 +6,6 @@ const { EmoteFetcher, EmoteParser } = require('../src/index.js');
 
 /**
  * If environement variables are set, test Twitch fetching.
- * Else it has to throw an error.
  *
  * Tests:
  * - Fetch emotes
@@ -44,17 +43,21 @@ if (env.TWITCH_ID !== undefined && env.TWITCH_SECRET !== undefined) {
     });
 } else {
     console.log('Notice: Twitch client id/secret missing.');
-    const twitchFetcher = new EmoteFetcher();
+}
 
-    try {
-        assert.throws(() => {
-            twitchFetcher.fetchTwitchEmotes();
-        }, new Error('Client id or client secret not provided.'));
-        console.log('Twitch emotes test was successful.');
-    } catch (err) {
-        console.error('Twitch emotes test failed!');
-        console.error(err);
-    }
+/*
+ * Code should throw if we try to fetch Twitch emotes without a Client ID and Secret
+ */
+const twitchFaultyFetcher = new EmoteFetcher();
+
+try {
+    assert.throws(() => {
+        twitchFaultyFetcher.fetchTwitchEmotes();
+    }, new Error('Client id or client secret not provided.'));
+    console.log('Twitch emotes test (without API keys) was successful.');
+} catch (err) {
+    console.error('Twitch emotes test (without API keys) failed!');
+    console.error(err);
 }
 
 /**
