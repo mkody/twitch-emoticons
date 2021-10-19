@@ -6,16 +6,16 @@ const { EmoteFetcher, EmoteParser } = require('../src/index.js');
 
 /**
  * If environement variables are set, test Twitch fetching.
- * If not it has to throws an error.
+ * Else it has to throw an error.
  *
  * Tests:
  * - Fetch emotes
- *  - Global Twitch
- *  - Channel Twitch (twitchplayspokemon)
+ *  - Twitch Global
+ *  - Twitch Channel (twitchplayspokemon)
  * - Link to Kappa
  * - Parse to Markdown
- *  - Global Twitch emote (CoolCat)
- *  - User Twitch emote (tppD)
+ *  - Twitch Global emote (CoolCat)
+ *  - Twitch Channel emote (tppD)
  */
 if (env.TWITCH_ID !== undefined && env.TWITCH_SECRET !== undefined) {
     const twitchFetcher = new EmoteFetcher(env.TWITCH_ID, env.TWITCH_SECRET);
@@ -50,6 +50,7 @@ if (env.TWITCH_ID !== undefined && env.TWITCH_SECRET !== undefined) {
         assert.throws(() => {
             twitchFetcher.fetchTwitchEmotes();
         }, new Error('Client id or client secret not provided.'));
+        console.log('Twitch emotes test was successful.');
     } catch (err) {
         console.error('Twitch emotes test failed!');
         console.error(err);
@@ -59,15 +60,15 @@ if (env.TWITCH_ID !== undefined && env.TWITCH_SECRET !== undefined) {
 /**
  * Tests:
  * - Fetch emotes
- *  - Global BTTV
- *  - Channel BTTV (twitchplayspokemon)
- *  - FFZ user via user name (sylux98)
- *  - FFZ user via user ID (shizuka_natsume)
+ *  - BTTV Global
+ *  - BTTV Channel (twitchplayspokemon)
+ *  - FFZ via user name (sylux98)
+ *  - FFZ via user ID (shizuka_natsume)
  *
  * - Parse to Markdown
- *  - Global BTTV emote (SourPls)
- *  - Channel BTTV emote (tppUrn)
- *  - Shared BTTV emote (MODS)
+ *  - BTTV Global emote (SourPls)
+ *  - BTTV Channel emote (tppUrn)
+ *  - BTTV Shared emote (MODS)
  *  - FFZ emote from user name (AWOOO)
  *  - FFZ emote from user ID (SanaeSip)
  */

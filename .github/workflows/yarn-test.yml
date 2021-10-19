@@ -13,3 +13,6 @@ jobs:
       - run: yarn
       - run: yarn lint
       - run: yarn test
+        env:
+          TWITCH_ID: ${{ secrets.TWITCH_ID }}
+          TWITCH_SECRET: ${{ secrets.TWITCH_SECRET }}
