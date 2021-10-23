@@ -31,6 +31,8 @@ declare module '@mkody/twitch-emoticons' {
     }
 
     export class EmoteFetcher {
+        public constructor(clientId?: string, clientSecret?: string);
+
         public emotes: Collection<string, Emote>;
         public channels: Collection<string, Channel>;
 

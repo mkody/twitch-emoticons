@@ -54,6 +54,5 @@ fetcher.fetchTwitchEmotes(null).then(() => {
 - [Changelog](https://github.com/mkody/twitch-emoticons/releases)
 
 This library uses the following:
-- [Twitch Emotes API](https://twitchemotes.com/apidocs)
 - [BetterTTV API](https://betterttv.com/)
 - [FrankerFaceZ API](http://www.frankerfacez.com/developers)
