@@ -5,7 +5,7 @@ const { env } = require('process');
 const { EmoteFetcher, EmoteParser } = require('../src/index.js');
 
 /**
- * If environement variables are set, test Twitch fetching.
+ * If environement variables are set, test Twitch fetching and parsing.
  *
  * Tests:
  * - Fetch emotes
@@ -61,43 +61,70 @@ try {
 }
 
 /**
+ * Test BetterTTV fetching and parsing.
+ *
  * Tests:
  * - Fetch emotes
  *  - BTTV Global
  *  - BTTV Channel (twitchplayspokemon)
- *  - FFZ via user name (sylux98)
- *  - FFZ via user ID (shizuka_natsume)
- *
  * - Parse to Markdown
  *  - BTTV Global emote (SourPls)
  *  - BTTV Channel emote (tppUrn)
  *  - BTTV Shared emote (MODS)
- *  - FFZ emote from user name (AWOOO)
- *  - FFZ emote from user ID (SanaeSip)
  */
-const fetcher = new EmoteFetcher();
-const parser = new EmoteParser(fetcher, {
+const bttvFetcher = new EmoteFetcher();
+const bttvParser = new EmoteParser(bttvFetcher, {
     type: 'markdown',
     match: /:(.+?):/g
 });
 
 Promise.all([
-    fetcher.fetchBTTVEmotes(),
-    fetcher.fetchBTTVEmotes(56648155),
-    fetcher.fetchFFZEmotes('sylux98'),
-    fetcher.fetchFFZEmotes(13638332)
+    bttvFetcher.fetchBTTVEmotes(),
+    bttvFetcher.fetchBTTVEmotes(56648155)
 ]).then(() => {
-    const text = parser.parse(':SourPls:\n:tppUrn:\n:MODS:\n:AWOOO:\n:SanaeSip:');
+    const text = bttvParser.parse(':SourPls:\n:tppUrn:\n:MODS:');
     assert.strictEqual(text, [
         '![SourPls](https://cdn.betterttv.net/emote/566ca38765dbbdab32ec0560/1x "SourPls")',
         '![tppUrn](https://cdn.betterttv.net/emote/5f5f7d5f68d9d86c020e8672/1x "tppUrn")',
-        '![MODS](https://cdn.betterttv.net/emote/5f2c4f9e65fe924464ef6d61/1x "MODS")',
+        '![MODS](https://cdn.betterttv.net/emote/5f2c4f9e65fe924464ef6d61/1x "MODS")'
+    ].join('\n'));
+}).then(() => {
+    console.log('BTTV emotes test was successful.');
+}).catch(err => {
+    console.error('BTTV emotes test failed!');
+    console.error(err);
+});
+
+
+/**
+ * Test FrankerFaceZ fetching and parsing.
+ *
+ * Tests:
+ * - Fetch emotes
+ *  - FFZ via user name (sylux98)
+ *  - FFZ via user ID (shizuka_natsume)
+ * - Parse to Markdown
+ *  - FFZ emote from user name (AWOOO)
+ *  - FFZ emote from user ID (SanaeSip)
+ */
+const ffzFetcher = new EmoteFetcher();
+const ffzParser = new EmoteParser(ffzFetcher, {
+    type: 'markdown',
+    match: /:(.+?):/g
+});
+
+Promise.all([
+    ffzFetcher.fetchFFZEmotes('sylux98'),
+    ffzFetcher.fetchFFZEmotes(13638332)
+]).then(() => {
+    const text = ffzParser.parse(':AWOOO:\n:SanaeSip:');
+    assert.strictEqual(text, [
         '![AWOOO](https://cdn.frankerfacez.com/emote/67/1 "AWOOO")',
         '![SanaeSip](https://cdn.frankerfacez.com/emote/305078/1 "SanaeSip")'
     ].join('\n'));
 }).then(() => {
-    console.log('BTTV/FFZ emotes test was successful.');
+    console.log('FFZ emotes test was successful.');
 }).catch(err => {
-    console.error('BTTV/FFZ emotes test failed!');
+    console.error('FFZ emotes test failed!');
     console.error(err);
 });
