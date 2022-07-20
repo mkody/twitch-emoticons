@@ -1,18 +1,19 @@
 {
     "name": "@mkody/twitch-emoticons",
-    "version": "2.4.1",
-    "description": "Gets Twitch emotes and BTTV emotes, as well as parsing text to emotes!",
+    "version": "2.5.0",
+    "description": "Gets Twitch, BTTV and FFZ emotes as well as parsing text to emotes!",
     "main": "src/index.js",
     "typings": "typings/index.d.ts",
     "keywords": [
+        "better",
+        "bttv",
+        "emoji",
         "emote",
         "emoticon",
-        "emoji",
-        "bttv",
-        "better",
-        "twitch",
+        "ffz",
+        "parse",
         "tv",
-        "parse"
+        "twitch"
     ],
     "author": "MKody <gh@kdy.ch> (André Fernandes)",
     "contrubutors": [

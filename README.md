@@ -1,6 +1,6 @@
 # twitch-emoticons
 
-Get a Twitch channel's Twitch emotes, BTTV emotes, and FFZ emotes!
+Gets Twitch, BTTV and FFZ emotes as well as parsing text to emotes!
 
 ### About this fork's 2.3.0+
 You must now use a Twitch user ID instead of the username to fetch user's emotes.  
