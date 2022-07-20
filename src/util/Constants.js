@@ -1,6 +1,6 @@
 module.exports = {
     Twitch: {
-        CDN: (id, size) => `https://static-cdn.jtvnw.net/emoticons/v1/${id}/${size + 1}.0`
+        CDN: (id, size) => `https://static-cdn.jtvnw.net/emoticons/v2/${id}/default/dark/${size + 1}.0`
     },
     BTTV: {
         Global: 'https://api.betterttv.net/3/cached/emotes/global',

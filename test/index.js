@@ -28,7 +28,7 @@ if (env.TWITCH_ID !== undefined && env.TWITCH_SECRET !== undefined) {
         twitchFetcher.fetchTwitchEmotes(56648155)
     ]).then(() => {
         const kappa = twitchFetcher.emotes.get('Kappa');
-        assert.strictEqual(kappa.toLink(2), 'https://static-cdn.jtvnw.net/emoticons/v1/25/3.0');
+        assert.strictEqual(kappa.toLink(2), 'https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/1.0');
 
         const text = twitchParser.parse(':CoolCat:\n:tppD:');
         assert.strictEqual(text, [
