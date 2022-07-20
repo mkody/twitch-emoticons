@@ -28,12 +28,12 @@ if (env.TWITCH_ID !== undefined && env.TWITCH_SECRET !== undefined) {
         twitchFetcher.fetchTwitchEmotes(56648155)
     ]).then(() => {
         const kappa = twitchFetcher.emotes.get('Kappa');
-        assert.strictEqual(kappa.toLink(2), 'https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/1.0');
+        assert.strictEqual(kappa.toLink(2), 'https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/3.0');
 
         const text = twitchParser.parse(':CoolCat:\n:tppD:');
         assert.strictEqual(text, [
-            '![CoolCat](https://static-cdn.jtvnw.net/emoticons/v1/58127/1.0 "CoolCat")',
-            '![tppD](https://static-cdn.jtvnw.net/emoticons/v1/307609315/1.0 "tppD")'
+            '![CoolCat](https://static-cdn.jtvnw.net/emoticons/v2/58127/default/dark/1.0 "CoolCat")',
+            '![tppD](https://static-cdn.jtvnw.net/emoticons/v2/307609315/default/dark/1.0 "tppD")'
         ].join('\n'));
     }).then(() => {
         console.log('Twitch emotes test was successful.');
