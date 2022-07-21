@@ -33,7 +33,7 @@ class Emote {
 
         /**
          * The type of this emote.
-         * Either `twitch`, `bttv`, or `ffz`.
+         * Either `twitch`, `bttv`, `ffz`, or '7tv'.
          * @type {string}
          */
         this.type = null;

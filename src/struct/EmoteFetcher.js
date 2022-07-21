@@ -3,6 +3,8 @@ const Channel = require('./Channel');
 const Collection = require('../util/Collection');
 const Constants = require('../util/Constants');
 const FFZEmote = require('./FFZEmote');
+const SevenTVEmote = require('./SevenTVEmote');
+
 const got = require('got');
 const TwitchEmote = require('./TwitchEmote');
 const { ApiClient } = require('@twurple/api');
@@ -44,7 +46,7 @@ class EmoteFetcher {
     }
 
     /**
-     * The global channel for both Twitch and BTTV.
+     * The global channel for Twitch, BTTV and 7TV.
      * @readonly
      * @type {?Channel}
      */
@@ -55,7 +57,7 @@ class EmoteFetcher {
     /**
      * Gets the raw Twitch emotes data for a channel.
      * @private
-     * @param {int} id - Name of the channel.
+     * @param {int} id - ID of the channel.
      * @returns {Promise<Object[]>}
      */
     _getRawTwitchEmotes(id) {
@@ -73,15 +75,15 @@ class EmoteFetcher {
     /**
      * Converts and caches a raw twitch emote.
      * @private
-     * @param {string} name - Name of the channel.
+     * @param {int} channel_id - ID of the channel.
      * @param {Object} data - Raw data.
      * @returns {TwitchEmote}
      */
-    _cacheTwitchEmote(name, data) {
-        let channel = this.channels.get(name);
+    _cacheTwitchEmote(channel_id, data) {
+        let channel = this.channels.get(channel_id);
         if (!channel) {
-            channel = new Channel(this, name);
-            this.channels.set(name, channel);
+            channel = new Channel(this, channel_id);
+            this.channels.set(channel_id, channel);
         }
 
         const emote = new TwitchEmote(channel, data.id, data);
@@ -113,15 +115,15 @@ class EmoteFetcher {
     /**
      * Converts and caches a raw BTTV emote.
      * @private
-     * @param {string} name - Name of the channel.
+     * @param {int} channel_id - ID of the channel.
      * @param {Object} data - Raw data.
      * @returns {BTTVEmote}
      */
-    _cacheBTTVEmote(name, data) {
-        let channel = this.channels.get(name);
+    _cacheBTTVEmote(channel_id, data) {
+        let channel = this.channels.get(channel_id);
         if (!channel) {
-            channel = new Channel(this, name);
-            this.channels.set(name, channel);
+            channel = new Channel(this, channel_id);
+            this.channels.set(channel_id, channel);
         }
 
         const emote = new BTTVEmote(channel, data.id, data);
@@ -133,17 +135,11 @@ class EmoteFetcher {
     /**
      * Gets the raw FFZ emotes data for a channel.
      * @private
-     * @param {(number|string)} id - ID or name of the channel.
+     * @param {int} id - ID of the channel.
      * @returns {Promise<Object[]>}
      */
     _getRawFFZEmotes(id) {
-        let endpoint;
-
-        if (typeof id === 'number') {
-            endpoint = Constants.FFZ.Channel(id); // eslint-disable-line new-cap
-        } else {
-            endpoint = Constants.FFZ.ChannelName(id); // eslint-disable-line new-cap
-        }
+        const endpoint = Constants.FFZ.Channel(id); // eslint-disable-line new-cap
 
         return got(endpoint, options).then(req => {
             const emotes = [];
@@ -159,15 +155,15 @@ class EmoteFetcher {
     /**
      * Converts and caches a raw FFZ emote.
      * @private
-     * @param {string} name - Name of the channel.
+     * @param {int} channel_id - ID of the channel.
      * @param {Object} data - Raw data.
      * @returns {FFZEmote}
      */
-    _cacheFFZEmote(name, data) {
-        let channel = this.channels.get(name);
+    _cacheFFZEmote(channel_id, data) {
+        let channel = this.channels.get(channel_id);
         if (!channel) {
-            channel = new Channel(this, name);
-            this.channels.set(name, channel);
+            channel = new Channel(this, channel_id);
+            this.channels.set(channel_id, channel);
         }
 
         const emote = new FFZEmote(channel, data.id, data);
@@ -177,49 +173,98 @@ class EmoteFetcher {
     }
 
     /**
+     * Gets the raw 7TV emotes data for a channel.
+     * @private
+     * @param {int} [id=null] - ID of the channel.
+     * @returns {Promise<Object[]>}
+     */
+    _getRawSevenTVEmotes(id) {
+        const endpoint = !id
+            ? Constants.SEVENTV.Global
+            : Constants.SEVENTV.Channel(id); // eslint-disable-line new-cap
+
+        return got(endpoint, options).then(req => req.body);
+    }
+
+    /**
+     * Converts and caches a raw 7TV emote.
+     * @private
+     * @param {int} channel_id - ID of the channel.
+     * @param {Object} data - Raw data.
+     * @returns {SevenTVEmote}
+     */
+    _cacheSevenTVEmote(channel_id, data) {
+        let channel = this.channels.get(channel_id);
+        if (!channel) {
+            channel = new Channel(this, channel_id);
+            this.channels.set(channel_id, channel);
+        }
+
+        const emote = new SevenTVEmote(channel, data.id, data);
+        this.emotes.set(emote.code, emote);
+        channel.emotes.set(emote.code, emote);
+        return emote;
+    }
+
+    /**
      * Fetches the Twitch emotes for a channel.
      * Use `null` for the global emotes channel.
-     * @param {int} [id=null] - ID of the channel.
+     * @param {int} [channel=null] - ID of the channel.
      * @returns {Promise<Collection<string, TwitchEmote>>}
      */
-    fetchTwitchEmotes(id = null) {
-        return this._getRawTwitchEmotes(id).then(rawEmotes => {
+    fetchTwitchEmotes(channel = null) {
+        return this._getRawTwitchEmotes(channel).then(rawEmotes => {
             for (const emote of rawEmotes) {
-                this._cacheTwitchEmote(id, { code: emote.name, id: emote.id });
+                this._cacheTwitchEmote(channel, { code: emote.name, id: emote.id });
             }
 
-            return this.channels.get(id).emotes.filter(e => e.type === 'twitch');
+            return this.channels.get(channel).emotes.filter(e => e.type === 'twitch');
         });
     }
 
     /**
      * Fetches the BTTV emotes for a channel.
      * Use `null` for the global emotes channel.
-     * @param {string} [name=null] - Name of the channel.
+     * @param {int} [channel=null] - ID of the channel.
      * @returns {Promise<Collection<string, BTTVEmote>>}
      */
-    fetchBTTVEmotes(name = null) {
-        return this._getRawBTTVEmotes(name).then(rawEmotes => {
+    fetchBTTVEmotes(channel = null) {
+        return this._getRawBTTVEmotes(channel).then(rawEmotes => {
             for (const data of rawEmotes) {
-                this._cacheBTTVEmote(name, data);
+                this._cacheBTTVEmote(channel, data);
             }
 
-            return this.channels.get(name).emotes.filter(e => e.type === 'bttv');
+            return this.channels.get(channel).emotes.filter(e => e.type === 'bttv');
         });
     }
 
     /**
      * Fetches the FFZ emotes for a channel.
-     * @param {string} name - Name of the channel.
+     * @param {int} channel - ID of the channel.
      * @returns {Promise<Collection<string, FFZEmote>>}
      */
-    fetchFFZEmotes(name) {
-        return this._getRawFFZEmotes(name).then(rawEmotes => {
+    fetchFFZEmotes(channel) {
+        return this._getRawFFZEmotes(channel).then(rawEmotes => {
             for (const data of rawEmotes) {
-                this._cacheFFZEmote(name, data);
+                this._cacheFFZEmote(channel, data);
             }
 
-            return this.channels.get(name).emotes.filter(e => e.type === 'ffz');
+            return this.channels.get(channel).emotes.filter(e => e.type === 'ffz');
+        });
+    }
+
+    /**
+     * Fetches the 7TV emotes for a channel.
+     * @param {int} [channel=null] - ID of the channel.
+     * @returns {Promise<Collection<string, SevenTVEmote>>}
+     */
+    fetchSevenTVEmotes(channel = null) {
+        return this._getRawSevenTVEmotes(channel).then(rawEmotes => {
+            for (const data of rawEmotes) {
+                this._cacheSevenTVEmote(channel, data);
+            }
+
+            return this.channels.get(channel).emotes.filter(e => e.type === '7tv');
         });
     }
 }

@@ -101,8 +101,8 @@ Promise.all([
  *
  * Tests:
  * - Fetch emotes
- *  - FFZ via user name (sylux98)
- *  - FFZ via user ID (shizuka_natsume)
+ *  - FFZ Channel (sylux98)
+ *  - FFZ Channel (shizuka_natsume)
  * - Parse to Markdown
  *  - FFZ emote from user name (AWOOO)
  *  - FFZ emote from user ID (SanaeSip)
@@ -114,7 +114,7 @@ const ffzParser = new EmoteParser(ffzFetcher, {
 });
 
 Promise.all([
-    ffzFetcher.fetchFFZEmotes('sylux98'),
+    ffzFetcher.fetchFFZEmotes(21490561),
     ffzFetcher.fetchFFZEmotes(13638332)
 ]).then(() => {
     const text = ffzParser.parse(':AWOOO:\n:SanaeSip:');
@@ -126,5 +126,40 @@ Promise.all([
     console.log('FFZ emotes test was successful.');
 }).catch(err => {
     console.error('FFZ emotes test failed!');
+    console.error(err);
+});
+
+/**
+ * Test 7TV fetching and parsing.
+ *
+ * Tests:
+ * - Fetch emotes
+ *  - 7TV Global
+ *  - 7TV Channel (0kody)
+ * - Parse to Markdown
+ *  - 7TV Global emote (EZ)
+ *  - 7TV Global emote (Clap)
+ *  - 7TV Channel emote (modCheck)
+ */
+const sevenFetcher = new EmoteFetcher();
+const sevenParser = new EmoteParser(sevenFetcher, {
+    type: 'markdown',
+    match: /:(.+?):/g
+});
+
+Promise.all([
+    sevenFetcher.fetchSevenTVEmotes(),
+    sevenFetcher.fetchSevenTVEmotes(44317909)
+]).then(() => {
+    const text = sevenParser.parse(':EZ:\n:Clap:\n:modCheck:');
+    assert.strictEqual(text, [
+        '![EZ](https://cdn.7tv.app/emote/60dd13426ef5a66f4134f804/1x "EZ")',
+        '![Clap](https://cdn.7tv.app/emote/603cb71c73d7a5001441f995/1x "Clap")',
+        '![modCheck](https://cdn.7tv.app/emote/60abf171870d317bef23d399/1x "modCheck")'
+    ].join('\n'));
+}).then(() => {
+    console.log('7TV emotes test was successful.');
+}).catch(err => {
+    console.error('7TV emotes test failed!');
     console.error(err);
 });

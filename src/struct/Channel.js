@@ -4,9 +4,9 @@ class Channel {
     /**
      * A Twitch channel.
      * @param {EmoteFetcher} fetcher - The emote fetcher.
-     * @param {string} name - The name of the channel.
+     * @param {int} id - ID of the channel.
      */
-    constructor(fetcher, name) {
+    constructor(fetcher, id) {
         /**
          * The emote fetcher.
          * @type {EmoteFetcher}
@@ -14,11 +14,11 @@ class Channel {
         this.fetcher = fetcher;
 
         /**
-         * The name of this channel.
-         * For the global channel, the name will be null.
-         * @type {?string}
+         * The ID of this channel.
+         * For the global channel, the ID will be null.
+         * @type {?int}
          */
-        this.name = name;
+        this.channel_id = id;
 
         /**
          * Cached emotes belonging to this channel.
@@ -32,7 +32,7 @@ class Channel {
      * @returns {Promise<Collection<string, BTTVEmote>>}
      */
     fetchBTTVEmotes() {
-        return this.fetcher.fetchBTTVEmotes(this.name);
+        return this.fetcher.fetchBTTVEmotes(this.id);
     }
 
     /**
@@ -40,7 +40,15 @@ class Channel {
      * @returns {Promise<Collection<string, FFZEmote>>}
      */
     fetchFFZEmotes() {
-        return this.fetcher.fetchFFZEmotes(this.name);
+        return this.fetcher.fetchFFZEmotes(this.id);
+    }
+
+    /**
+     * Fetches the 7TV emotes for this channel.
+     * @returns {Promise<Collection<string, SevenTVEmote>>}
+     */
+    fetchSevenTVEmotes() {
+        return this.fetcher.fetchSevenTVEmotes(this.id);
     }
 }
 

@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>struct/Channel.js - Documentation</title>
+    <title>struct/SevenTVEmote.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -32,7 +32,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">struct/Channel.js</h1>
+    <h1 class="page-title">struct/SevenTVEmote.js</h1>
     
 
     
@@ -42,61 +42,71 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const Collection = require('../util/Collection');
+            <pre class="prettyprint source linenums"><code>const Emote = require('./Emote');
+const Constants = require('../util/Constants');
 
-class Channel {
+/** @extends Emote */
+class SevenTV extends Emote {
     /**
-     * A Twitch channel.
-     * @param {EmoteFetcher} fetcher - The emote fetcher.
-     * @param {int} id - ID of the channel.
+     * A 7TV emote.
+     * @param {Channel} channel - Channel this emote belongs to.
+     * @param {string} id - ID of the emote.
+     * @param {data} data - The raw emote data.
      */
-    constructor(fetcher, id) {
-        /**
-         * The emote fetcher.
-         * @type {EmoteFetcher}
-         */
-        this.fetcher = fetcher;
-
-        /**
-         * The ID of this channel.
-         * For the global channel, the ID will be null.
-         * @type {?int}
-         */
-        this.channel_id = id;
-
-        /**
-         * Cached emotes belonging to this channel.
-         * @type {Collection&lt;string, Emote>}
-         */
-        this.emotes = new Collection();
+    constructor(channel, id, data) {
+        super(channel, id, data);
+        this.type = '7tv';
     }
 
     /**
-     * Fetches the BTTV emotes for this channel.
-     * @returns {Promise&lt;Collection&lt;string, BTTVEmote>>}
+     * The channel of this emote's creator.
+     * Not guaranteed to contain the emote, or be cached.
+     * @readonly
+     * @type {?Channel}
      */
-    fetchBTTVEmotes() {
-        return this.fetcher.fetchBTTVEmotes(this.id);
+    get owner() {
+        return this.fetcher.channels.get(this.ownerName);
+    }
+
+    _setup(data) {
+        super._setup(data);
+        this.code = data.name;
+
+        /**
+         * The name of the emote creator's channel.
+         * @type {string}
+         */
+        this.ownerName = data.owner.login;
+
+        /**
+         * Available image sizes.
+         * @type {string[]}
+         */
+        this.sizes = data.urls.map(el => el[0]);
+
+        /**
+         * The image type of the emote.
+         * @type {string}
+         */
+        if (data.mime.includes('image/')) {
+            this.imageType = data.mime.split('/')[1];
+        } else {
+            this.imageType = 'png';
+        }
     }
 
     /**
-     * Fetches the FFZ emotes for this channel.
-     * @returns {Promise&lt;Collection&lt;string, FFZEmote>>}
+     * Gets the image link of the emote.
+     * @param {number} size - The size of the image.
+     * @returns {string}
      */
-    fetchFFZEmotes() {
-        return this.fetcher.fetchFFZEmotes(this.id);
-    }
-
-    /**
-     * Fetches the 7TV emotes for this channel.
-     * @returns {Promise&lt;Collection&lt;string, SevenTVEmote>>}
-     */
-    fetchSevenTVEmotes() {
-        return this.fetcher.fetchSevenTVEmotes(this.id);
+    toLink(size = 0) {
+        size = this.sizes[size];
+        return Constants.SEVENTV.CDN(this.id, size); // eslint-disable-line new-cap
     }
 }
 
-module.exports = Channel;
+module.exports = SevenTV;
 </code></pre>
         </article>
     </section>

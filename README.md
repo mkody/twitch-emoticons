@@ -1,18 +1,14 @@
 # twitch-emoticons
 
-Gets Twitch, BTTV and FFZ emotes as well as parsing text to emotes!
+Gets Twitch, BTTV, FFZ and 7TV emotes as well as parsing text to emotes!
 
-### About this fork's 2.3.0+
+### Migrating from upstream
 You must now use a Twitch user ID instead of the username to fetch user's emotes.  
 You can use [this page to quickly grab it](https://s.kdy.ch/twitchid/).
 
-_FFZ still supports names, but usage of the ID is recommended._
+To fetch Twitch emotes you need to get a client and secret from Twitch [here](https://dev.twitch.tv/console/apps/create), it's free.
 
-### About this fork's 2.4.0+
-You now need to use the official Twitch API to get emotes. For this you need to provide your client id and client secret.
-To get a client and secret create a Twitch app [here](https://dev.twitch.tv/console/apps/create), it's free.
-
-If you are only using BetterTTV and FrankerFaceZ you don't need to provide anything as they are independent from the Twitch API.
+If you are only using BetterTTV, FrankerFaceZ and 7TV you don't need to provide anything as they are independent from the Twitch API.
 
 ### Install
 ```sh
@@ -38,12 +34,12 @@ const parser = new EmoteParser(fetcher, {
 fetcher.fetchTwitchEmotes(null).then(() => {
     const kappa = fetcher.emotes.get('Kappa').toLink();
     console.log(kappa);
-    // https://static-cdn.jtvnw.net/emoticons/v1/25/1.0
+    // https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/1.0
 
     const text = 'Hello :CoolCat:!';
     const parsed = parser.parse(text);
     console.log(parsed);
-    // Hello ![CoolCat](https://static-cdn.jtvnw.net/emoticons/v1/58127/1.0 "CoolCat")!
+    // Hello ![CoolCat](https://static-cdn.jtvnw.net/emoticons/v2/58127/default/dark/1.0 "CoolCat")!
 });
 ```
 
@@ -55,4 +51,5 @@ fetcher.fetchTwitchEmotes(null).then(() => {
 
 This library uses the following:
 - [BetterTTV API](https://betterttv.com/)
-- [FrankerFaceZ API](http://www.frankerfacez.com/developers)
+- [FrankerFaceZ API](https://www.frankerfacez.com/developers)
+- [7TV API](https://7tv.app/)
