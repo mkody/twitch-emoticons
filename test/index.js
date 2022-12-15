@@ -134,7 +134,7 @@ Promise.all([
  *
  * Tests:
  * - Fetch emotes
- *  - 7TV Global
+ *  - 7TV Global (in AVIF format)
  *  - 7TV Channel (0kody)
  * - Parse to Markdown
  *  - 7TV Global emote (EZ)
