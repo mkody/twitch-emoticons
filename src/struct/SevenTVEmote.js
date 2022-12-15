@@ -2,7 +2,7 @@ const Emote = require('./Emote');
 const Constants = require('../util/Constants');
 
 /** @extends Emote */
-class SevenTV extends Emote {
+class SevenTVEmote extends Emote {
     /**
      * A 7TV emote.
      * @param {Channel} channel - Channel this emote belongs to.
@@ -62,4 +62,4 @@ class SevenTV extends Emote {
     }
 }
 
-module.exports = SevenTV;
+module.exports = SevenTVEmote;

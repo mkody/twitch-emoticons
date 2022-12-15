@@ -6,9 +6,8 @@ Gets Twitch, BTTV, FFZ and 7TV emotes as well as parsing text to emotes!
 You must now use a Twitch user ID instead of the username to fetch user's emotes.  
 You can use [this page to quickly grab it](https://s.kdy.ch/twitchid/).
 
-To fetch Twitch emotes you need to get a client and secret from Twitch [here](https://dev.twitch.tv/console/apps/create), it's free.
-
-If you are only using BetterTTV, FrankerFaceZ and 7TV you don't need to provide anything as they are independent from the Twitch API.
+To fetch Twitch emotes you need to get a client and secret from Twitch [here](https://dev.twitch.tv/console/apps/create), it's free.  
+If you are only using BetterTTV, FrankerFaceZ and 7TV you don't need to provide Twitch app keys as they are independent from the Twitch API.
 
 ### Install
 ```sh

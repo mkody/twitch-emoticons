@@ -161,5 +161,6 @@ Promise.all([
     console.log('7TV emotes test was successful.');
 }).catch(err => {
     console.error('7TV emotes test failed!');
+    console.error('(Note that they might be different during certain events like Halloween.)');
     console.error(err);
 });

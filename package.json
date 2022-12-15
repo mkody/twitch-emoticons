@@ -23,17 +23,17 @@
     ],
     "license": "MIT",
     "dependencies": {
-        "@twurple/api": "^5.1.7",
-        "@twurple/auth": "^5.1.7",
-        "got": "^11.8.5"
+        "@twurple/api": "^5.2.7",
+        "@twurple/auth": "^5.2.7",
+        "got": "^11.8.6"
     },
     "devDependencies": {
-        "docdash": "^1.2.0",
-        "eslint": "^8.20.0",
-        "jsdoc": "^3.6.11"
+        "docdash": "^2.0.0",
+        "eslint": "^8.29.0",
+        "jsdoc": "^4.0.0"
     },
     "scripts": {
-        "docs": "jsdoc --configure .jsdoc.json --verbose --package ''",
+        "docs": "jsdoc --configure .jsdoc.json --verbose",
         "test": "node test/index.js",
         "lint": "eslint ./src ./test"
     },

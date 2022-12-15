@@ -30,5 +30,10 @@
     "plugins": ["plugins/markdown"],
     "markdown": {
         "hardwrap": true
+    },
+    "docdash": {
+        "scopeInOutputPath": false,
+        "nameInOutputPath": false,
+        "versionInOutputPath": false
     }
 }
