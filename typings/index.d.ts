@@ -30,7 +30,7 @@ declare module '@mkody/twitch-emoticons' {
         public fetchTwitchEmotes(id?: number): Promise<Collection<string, TwitchEmote>>;
         public fetchBTTVEmotes(id?: number): Promise<Collection<string, BTTVEmote>>;
         public fetchFFZEmotes(id: number): Promise<Collection<string, FFZEmote>>;
-        public fetchSevenTVEmotes(id?: number): Promise<Collection<string, SevenTVEmote>>;
+        public fetchSevenTVEmotes(id?: number, format?: 'webp' | 'avif'): Promise<Collection<string, SevenTVEmote>>;
     }
 
     export class EmoteParser {
