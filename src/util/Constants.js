@@ -8,9 +8,9 @@ module.exports = {
         CDN: (id, size) => `https://cdn.betterttv.net/emote/${id}/${size + 1}x`
     },
     SEVENTV: {
-        Global: 'https://api.7tv.app/v2/emotes/global',
-        Channel: id => `https://api.7tv.app/v2/users/${id}/emotes`,
-        CDN: (id, size) => `https://cdn.7tv.app/emote/${id}/${size}x`
+        Global: 'https://7tv.io/v3/emote-sets/global',
+        Channel: id => `https://7tv.io/v3/users/twitch/${id}`,
+        CDN: (id, size) => `https://cdn.7tv.app/emote/${id}/${size}`
     },
     FFZ: {
         Channel: id => `https://api.frankerfacez.com/v1/room/id/${id}`,

@@ -909,7 +909,7 @@ Collectionped by emote code to Emote instance.</p>
 
     
 
-    <h4 class="name" id="_cacheSevenTVEmote"><span class="type-signature type-signature-private">(private) </span>_cacheSevenTVEmote<span class="signature">(channel_id, data)</span><span class="type-signature"> &rarr; {<a href="SevenTVEmote.html">SevenTVEmote</a>}</span></h4>
+    <h4 class="name" id="_cacheSevenTVEmote"><span class="type-signature type-signature-private">(private) </span>_cacheSevenTVEmote<span class="signature">(channel_id, data, format)</span><span class="type-signature"> &rarr; {<a href="SevenTVEmote.html">SevenTVEmote</a>}</span></h4>
 
     
 
@@ -925,7 +925,7 @@ Collectionped by emote code to Emote instance.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line196">line 196</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line197">line 197</a>
     </li></ul></dd>
     
 
@@ -1039,6 +1039,30 @@ Collectionped by emote code to Emote instance.</p>
             
 
             <td class="description last"><p>Raw data.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>format</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The type file format to use (webp/avif).</p></td>
         </tr>
 
     
@@ -1939,7 +1963,7 @@ Use <code>null</code> for the global emotes channel.</p></li></ul></dd>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line231">line 231</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line233">line 233</a>
     </li></ul></dd>
     
 
@@ -2113,7 +2137,7 @@ Use <code>null</code> for the global emotes channel.</p></li></ul></dd>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line246">line 246</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line248">line 248</a>
     </li></ul></dd>
     
 
@@ -2251,7 +2275,7 @@ Use <code>null</code> for the global emotes channel.</p></li></ul></dd>
 
     
 
-    <h4 class="name" id="fetchSevenTVEmotes"><span class="type-signature"></span>fetchSevenTVEmotes<span class="signature">(channel<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;<a href="Collection.html">Collection</a>.&lt;string, <a href="SevenTVEmote.html">SevenTVEmote</a>>>}</span></h4>
+    <h4 class="name" id="fetchSevenTVEmotes"><span class="type-signature"></span>fetchSevenTVEmotes<span class="signature">(channel<span class="signature-attributes">opt</span>, format<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;<a href="Collection.html">Collection</a>.&lt;string, <a href="SevenTVEmote.html">SevenTVEmote</a>>>}</span></h4>
 
     
 
@@ -2267,7 +2291,7 @@ Use <code>null</code> for the global emotes channel.</p></li></ul></dd>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line261">line 261</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line264">line 264</a>
     </li></ul></dd>
     
 
@@ -2380,6 +2404,49 @@ Use <code>null</code> for the global emotes channel.</p></li></ul></dd>
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>format</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'webp'</span>
+|
+
+<span class="param-type">'avif'</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>'webp'</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>The type file format to use (webp/avif).</p></td>
+        </tr>
+
+    
     </tbody>
 </table>
 
@@ -2442,7 +2509,7 @@ Use <code>null</code> for the global emotes channel.</p></li></ul></dd>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line215">line 215</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line217">line 217</a>
     </li></ul></dd>
     
 

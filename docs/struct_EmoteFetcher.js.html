@@ -238,12 +238,14 @@ class EmoteFetcher {
      * @private
      * @param {int} channel_id - ID of the channel.
      * @param {Object} data - Raw data.
+     * @param {string} format - The type file format to use (webp/avif).
      * @returns {SevenTVEmote}
      */
-    _cacheSevenTVEmote(channel_id, data) {
+    _cacheSevenTVEmote(channel_id, data, format) {
         let channel = this.channels.get(channel_id);
         if (!channel) {
             channel = new Channel(this, channel_id);
+            channel.format = format;
             this.channels.set(channel_id, channel);
         }
 
@@ -303,12 +305,21 @@ class EmoteFetcher {
     /**
      * Fetches the 7TV emotes for a channel.
      * @param {int} [channel=null] - ID of the channel.
+     * @param {('webp'|'avif')} [format='webp'] - The type file format to use (webp/avif).
      * @returns {Promise&lt;Collection&lt;string, SevenTVEmote>>}
      */
-    fetchSevenTVEmotes(channel = null) {
+    fetchSevenTVEmotes(channel = null, format = 'webp') {
         return this._getRawSevenTVEmotes(channel).then(rawEmotes => {
-            for (const data of rawEmotes) {
-                this._cacheSevenTVEmote(channel, data);
+            if ('emotes' in rawEmotes) {
+                // From an emote set (like "global")
+                for (const data of rawEmotes.emotes) {
+                    this._cacheSevenTVEmote(channel, data.data, format);
+                }
+            } else {
+                // From users
+                for (const data of rawEmotes.emote_set.emotes) {
+                    this._cacheSevenTVEmote(channel, data.data, format);
+                }
             }
 
             return this.channels.get(channel).emotes.filter(e => e.type === '7tv');

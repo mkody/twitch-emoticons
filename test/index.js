@@ -148,14 +148,14 @@ const sevenParser = new EmoteParser(sevenFetcher, {
 });
 
 Promise.all([
-    sevenFetcher.fetchSevenTVEmotes(),
+    sevenFetcher.fetchSevenTVEmotes(null, 'avif'),
     sevenFetcher.fetchSevenTVEmotes(44317909)
 ]).then(() => {
     const text = sevenParser.parse(':EZ:\n:Clap:\n:modCheck:');
     assert.strictEqual(text, [
-        '![EZ](https://cdn.7tv.app/emote/60dd13426ef5a66f4134f804/1x "EZ")',
-        '![Clap](https://cdn.7tv.app/emote/603cb71c73d7a5001441f995/1x "Clap")',
-        '![modCheck](https://cdn.7tv.app/emote/60abf171870d317bef23d399/1x "modCheck")'
+        '![EZ](https://cdn.7tv.app/emote/60dd13426ef5a66f4134f804/1x.avif "EZ")',
+        '![Clap](https://cdn.7tv.app/emote/603cb71c73d7a5001441f995/1x.avif "Clap")',
+        '![modCheck](https://cdn.7tv.app/emote/60abf171870d317bef23d399/1x.webp "modCheck")'
     ].join('\n'));
 }).then(() => {
     console.log('7TV emotes test was successful.');

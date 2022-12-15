@@ -32,23 +32,21 @@ class SevenTVEmote extends Emote {
          * The name of the emote creator's channel.
          * @type {string}
          */
-        this.ownerName = data.owner.login;
+        this.ownerName = data.owner.display_name;
 
         /**
          * Available image sizes.
          * @type {string[]}
          */
-        this.sizes = data.urls.map(el => el[0]);
+        this.sizes = data.host.files
+            .filter(el => el.format === this.channel.format.toUpperCase())
+            .map(el => el.name);
 
         /**
          * The image type of the emote.
          * @type {string}
          */
-        if (data.mime.includes('image/')) {
-            this.imageType = data.mime.split('/')[1];
-        } else {
-            this.imageType = 'png';
-        }
+        this.imageType = this.channel.format;
     }
 
     /**
