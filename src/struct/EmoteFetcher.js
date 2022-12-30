@@ -198,9 +198,9 @@ class EmoteFetcher {
         let channel = this.channels.get(channel_id);
         if (!channel) {
             channel = new Channel(this, channel_id);
-            channel.format = format;
             this.channels.set(channel_id, channel);
         }
+        channel.format = format;
 
         const emote = new SevenTVEmote(channel, data.id, data);
         this.emotes.set(emote.code, emote);
