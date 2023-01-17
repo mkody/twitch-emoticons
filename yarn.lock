@@ -192,15 +192,24 @@
     "@twurple/common" "5.3.3"
     tslib "^2.0.3"
 
-"@twurple/auth@^5.2.7":
-  version "5.2.7"
-  resolved "https://registry.yarnpkg.com/@twurple/auth/-/auth-5.2.7.tgz#6e3a77200e87c93bc174dee85dc46d7c3606eb9a"
-  integrity sha512-HBRhrdrNqhUfBx0zK/ju2mx6GcG4RfRFh7mnK4o45ftuSp9fIvtOs1ucNZ3VkkhOuNuB7yUfLWjBhGSgz175+g==
+"@twurple/auth@^5.3.0":
+  version "5.3.3"
+  resolved "https://registry.yarnpkg.com/@twurple/auth/-/auth-5.3.3.tgz#24c131b5be621f9b091e8d44fdb2f623944a21b8"
+  integrity sha512-fsQlD+Q/iWbXq7Q8wHOtzTI5kc+zZlUHnmUQDJ9SQYz4yLsiQIFOvP4toYCVg70tm1Mr2XM9pPWGXK5O1AKaMQ==
   dependencies:
     "@d-fischer/logger" "^4.0.0"
-    "@d-fischer/shared-utils" "^3.2.0"
-    "@twurple/api-call" "^5.2.7"
-    "@twurple/common" "^5.2.7"
+    "@d-fischer/shared-utils" "^3.4.0"
+    "@twurple/api-call" "5.3.3"
+    "@twurple/common" "5.3.3"
+    tslib "^2.0.3"
+
+"@twurple/common@5.3.3":
+  version "5.3.3"
+  resolved "https://registry.yarnpkg.com/@twurple/common/-/common-5.3.3.tgz#98de258bbeaee0194ad1de62416a6103e9cb5256"
+  integrity sha512-psG/poqbALn9I+94NN2JqCHfQAq2gboZCik2okYnzjw6yt+OVwCuzq0MpWxUfxNYlAqqY02DZ+IB3817ln8e4g==
+  dependencies:
+    "@d-fischer/shared-utils" "^3.4.0"
+    klona "^2.0.4"
     tslib "^2.0.3"
 
 "@twurple/common@5.3.3":
