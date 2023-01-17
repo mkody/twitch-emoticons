@@ -153,8 +153,8 @@ Promise.all([
 ]).then(() => {
     const text = sevenParser.parse(':EZ:\n:Clap:\n:modCheck:');
     assert.strictEqual(text, [
-        '![EZ](https://cdn.7tv.app/emote/60dd13426ef5a66f4134f804/1x.avif "EZ")',
-        '![Clap](https://cdn.7tv.app/emote/603cb71c73d7a5001441f995/1x.avif "Clap")',
+        '![EZ](https://cdn.7tv.app/emote/63071b80942ffb69e13d700f/1x.avif "EZ")',
+        '![Clap](https://cdn.7tv.app/emote/62fc0a0c4a75fd54bd3520a9/1x.avif "Clap")',
         '![modCheck](https://cdn.7tv.app/emote/60abf171870d317bef23d399/1x.webp "modCheck")'
     ].join('\n'));
 }).then(() => {
