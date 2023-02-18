@@ -159,6 +159,18 @@
     "@types/node-fetch" "^2.5.7"
     tslib "^2.0.3"
 
+"@twurple/api-call@5.3.4":
+  version "5.3.4"
+  resolved "https://registry.yarnpkg.com/@twurple/api-call/-/api-call-5.3.4.tgz#232484dde96ff125204cde4ca9a5bd4d9de6d1c7"
+  integrity sha512-LSMdS1+K59PwPCcNtphpILnoUBo7xxkJYq0heppQW0F8lu8ANz34NvjjmlV5vZg5NF+VpfAztiYZIi/gRuVgvw==
+  dependencies:
+    "@d-fischer/cross-fetch" "^4.0.2"
+    "@d-fischer/qs" "^7.0.2"
+    "@d-fischer/shared-utils" "^3.4.0"
+    "@twurple/common" "5.3.4"
+    "@types/node-fetch" "^2.5.7"
+    tslib "^2.0.3"
+
 "@twurple/api@^5.3.3":
   version "5.3.3"
   resolved "https://registry.yarnpkg.com/@twurple/api/-/api-5.3.3.tgz#6b79e0f1a7332e67151235c61eee0fb134222ed6"
@@ -173,21 +185,30 @@
     "@twurple/common" "5.3.3"
     tslib "^2.0.3"
 
-"@twurple/auth@^5.3.3":
-  version "5.3.3"
-  resolved "https://registry.yarnpkg.com/@twurple/auth/-/auth-5.3.3.tgz#24c131b5be621f9b091e8d44fdb2f623944a21b8"
-  integrity sha512-fsQlD+Q/iWbXq7Q8wHOtzTI5kc+zZlUHnmUQDJ9SQYz4yLsiQIFOvP4toYCVg70tm1Mr2XM9pPWGXK5O1AKaMQ==
+"@twurple/auth@^5.3.4":
+  version "5.3.4"
+  resolved "https://registry.yarnpkg.com/@twurple/auth/-/auth-5.3.4.tgz#e31c834278bd7995a30c978fdd81d4ccda8d1fa8"
+  integrity sha512-qoChaHplRLJQsQaz6bFstR+/6VpnyUUj69jbqcXsJEUsetXWjhLT3cp0JDVKs8r4qMjZptr4XYq8kfHFZJhbHg==
   dependencies:
     "@d-fischer/logger" "^4.0.0"
     "@d-fischer/shared-utils" "^3.4.0"
-    "@twurple/api-call" "5.3.3"
-    "@twurple/common" "5.3.3"
+    "@twurple/api-call" "5.3.4"
+    "@twurple/common" "5.3.4"
     tslib "^2.0.3"
 
 "@twurple/common@5.3.3":
   version "5.3.3"
   resolved "https://registry.yarnpkg.com/@twurple/common/-/common-5.3.3.tgz#98de258bbeaee0194ad1de62416a6103e9cb5256"
   integrity sha512-psG/poqbALn9I+94NN2JqCHfQAq2gboZCik2okYnzjw6yt+OVwCuzq0MpWxUfxNYlAqqY02DZ+IB3817ln8e4g==
+  dependencies:
+    "@d-fischer/shared-utils" "^3.4.0"
+    klona "^2.0.4"
+    tslib "^2.0.3"
+
+"@twurple/common@5.3.4":
+  version "5.3.4"
+  resolved "https://registry.yarnpkg.com/@twurple/common/-/common-5.3.4.tgz#b68f919ad7945811760c8091ab6e60913e0317b8"
+  integrity sha512-vMpuhoNAlETwOSJDUYrxYBahAaLJWOn0lEs+eeCea32Z6cefvs/qXsQ3p2Kl9aY3bic+wGhHW0uB4Os7ZS3hHA==
   dependencies:
     "@d-fischer/shared-utils" "^3.4.0"
     klona "^2.0.4"
