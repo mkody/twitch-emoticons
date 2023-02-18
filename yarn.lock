@@ -185,15 +185,15 @@
     "@twurple/common" "5.3.4"
     tslib "^2.0.3"
 
-"@twurple/auth@^5.3.3":
-  version "5.3.3"
-  resolved "https://registry.yarnpkg.com/@twurple/auth/-/auth-5.3.3.tgz#24c131b5be621f9b091e8d44fdb2f623944a21b8"
-  integrity sha512-fsQlD+Q/iWbXq7Q8wHOtzTI5kc+zZlUHnmUQDJ9SQYz4yLsiQIFOvP4toYCVg70tm1Mr2XM9pPWGXK5O1AKaMQ==
+"@twurple/auth@^5.3.4":
+  version "5.3.4"
+  resolved "https://registry.yarnpkg.com/@twurple/auth/-/auth-5.3.4.tgz#e31c834278bd7995a30c978fdd81d4ccda8d1fa8"
+  integrity sha512-qoChaHplRLJQsQaz6bFstR+/6VpnyUUj69jbqcXsJEUsetXWjhLT3cp0JDVKs8r4qMjZptr4XYq8kfHFZJhbHg==
   dependencies:
     "@d-fischer/logger" "^4.0.0"
     "@d-fischer/shared-utils" "^3.4.0"
-    "@twurple/api-call" "5.3.3"
-    "@twurple/common" "5.3.3"
+    "@twurple/api-call" "5.3.4"
+    "@twurple/common" "5.3.4"
     tslib "^2.0.3"
 
 "@twurple/common@5.3.3":
