@@ -147,18 +147,6 @@
   dependencies:
     defer-to-connect "^2.0.0"
 
-"@twurple/api-call@5.3.3":
-  version "5.3.3"
-  resolved "https://registry.yarnpkg.com/@twurple/api-call/-/api-call-5.3.3.tgz#4348883b02032fc77b09a39654ee466eda0d8bf0"
-  integrity sha512-dCUFgmsl5F9bDBtSz7uhi399lRagDDDHMmWYe2dTkxrg9q5a/aneSFaTWH8wckJKgoq9jsb+WbfZQ1oeyk6cjQ==
-  dependencies:
-    "@d-fischer/cross-fetch" "^4.0.2"
-    "@d-fischer/qs" "^7.0.2"
-    "@d-fischer/shared-utils" "^3.4.0"
-    "@twurple/common" "5.3.3"
-    "@types/node-fetch" "^2.5.7"
-    tslib "^2.0.3"
-
 "@twurple/api-call@5.3.4":
   version "5.3.4"
   resolved "https://registry.yarnpkg.com/@twurple/api-call/-/api-call-5.3.4.tgz#232484dde96ff125204cde4ca9a5bd4d9de6d1c7"
@@ -194,15 +182,6 @@
     "@d-fischer/shared-utils" "^3.4.0"
     "@twurple/api-call" "5.3.4"
     "@twurple/common" "5.3.4"
-    tslib "^2.0.3"
-
-"@twurple/common@5.3.3":
-  version "5.3.3"
-  resolved "https://registry.yarnpkg.com/@twurple/common/-/common-5.3.3.tgz#98de258bbeaee0194ad1de62416a6103e9cb5256"
-  integrity sha512-psG/poqbALn9I+94NN2JqCHfQAq2gboZCik2okYnzjw6yt+OVwCuzq0MpWxUfxNYlAqqY02DZ+IB3817ln8e4g==
-  dependencies:
-    "@d-fischer/shared-utils" "^3.4.0"
-    klona "^2.0.4"
     tslib "^2.0.3"
 
 "@twurple/common@5.3.4":
@@ -626,10 +605,10 @@ eslint-visitor-keys@^3.3.0:
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-3.3.0.tgz#f6480fa6b1f30efe2d1968aa8ac745b862469826"
   integrity sha512-mQ+suqKJVyeuwGYHAdjMFqjCyfl8+Ldnxuyp3ldiMBFKkvytrXUZWaiPCEav8qDHKty44bD+qV1IP4T+w+xXRA==
 
-eslint@^8.32.0:
-  version "8.32.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-8.32.0.tgz#d9690056bb6f1a302bd991e7090f5b68fbaea861"
-  integrity sha512-nETVXpnthqKPFyuY2FNjz/bEd6nbosRgKbkgS/y1C7LJop96gYHWpiguLecMHQ2XCPxn77DS0P+68WzG6vkZSQ==
+eslint@^8.33.0:
+  version "8.34.0"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-8.34.0.tgz#fe0ab0ef478104c1f9ebc5537e303d25a8fb22d6"
+  integrity sha512-1Z8iFsucw+7kSqXNZVslXS8Ioa4u2KM7GPwuKtkTFAqZ/cHMcEaR+1+Br0wLlot49cNxIiZk5wp8EAbPcYZxTg==
   dependencies:
     "@eslint/eslintrc" "^1.4.1"
     "@humanwhocodes/config-array" "^0.11.8"
