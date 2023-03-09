@@ -32,7 +32,7 @@
     "devDependencies": {
         "docdash": "^2.0.1",
         "eslint": "^8.33.0",
-        "jsdoc": "^4.0.0"
+        "jsdoc": "^4.0.1"
     },
     "scripts": {
         "docs": "jsdoc --configure .jsdoc.json --verbose",
