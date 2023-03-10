@@ -8,7 +8,7 @@ const SevenTVEmote = require('./SevenTVEmote');
 const got = require('got');
 const TwitchEmote = require('./TwitchEmote');
 const { ApiClient } = require('@twurple/api');
-const { ClientCredentialsAuthProvider } = require('@twurple/auth');
+const { AppTokenAuthProvider } = require('@twurple/auth');
 
 const options = {
     responseType: 'json'
@@ -22,7 +22,7 @@ class EmoteFetcher {
      */
     constructor(clientId, clientSecret) {
         if (clientId !== undefined && clientSecret !== undefined) {
-            const authProvider = new ClientCredentialsAuthProvider(clientId, clientSecret);
+            const authProvider = new AppTokenAuthProvider(clientId, clientSecret);
 
             /**
              * Twitch api client.
