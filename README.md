@@ -125,6 +125,7 @@ fetcher.fetchSevenTVEmotes(24377667, 'avif');
 - [Changelog](https://github.com/mkody/twitch-emoticons/releases)
 
 This library uses the following:
+- [Twurple](https://twurple.js.org/) and the [Twitch API](https://dev.twitch.tv/)
 - [BetterTTV API](https://betterttv.com/)
 - [FrankerFaceZ API](https://www.frankerfacez.com/developers)
 - [7TV API](https://7tv.app/)
