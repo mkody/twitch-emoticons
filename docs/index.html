@@ -135,11 +135,11 @@ Promise.all([
 ]).then(() => {
     const globalEmotes = parser.parse('EZ Clap way too easy LUL now for the last bost monkaS');
     console.log(globalEmotes);
-    // &lt;img class=&quot;emote&quot; alt=&quot;EZ&quot; src=&quot;https://cdn.7tv.app/emote/6320bf2ad461b9ebf9413812/1x.webp&quot;> &lt;img class=&quot;emote&quot; alt=&quot;Clap&quot; src=&quot;https://cdn.7tv.app/emote/636b877aada75990352334c7/1x.webp&quot;> way too easy &lt;img class=&quot;emote&quot; alt=&quot;LUL&quot; src=&quot;https://static-cdn.jtvnw.net/emoticons/v2/425618/default/dark/1.0&quot;> now for the last bost &lt;img class=&quot;emote&quot; alt=&quot;monkaS&quot; src=&quot;https://cdn.betterttv.net/emote/56e9f494fff3cc5c35e5287e/1x&quot;>
+    // &lt;img class=&quot;emote&quot; alt=&quot;EZ&quot; src=&quot;https://cdn.7tv.app/emote/6320bf2ad461b9ebf9413812/1x.webp&quot;> &lt;img class=&quot;emote&quot; alt=&quot;Clap&quot; src=&quot;https://cdn.7tv.app/emote/636b877aada75990352334c7/1x.webp&quot;> way too easy &lt;img class=&quot;emote&quot; alt=&quot;LUL&quot; src=&quot;https://static-cdn.jtvnw.net/emoticons/v2/425618/default/dark/1.0&quot;> now for the last bost &lt;img class=&quot;emote&quot; alt=&quot;monkaS&quot; src=&quot;https://cdn.betterttv.net/emote/56e9f494fff3cc5c35e5287e/1x.webp&quot;>
 
     const channelEmotes = parser.parse('KEKW that was 3Head TeriPoint');
     console.log(channelEmotes);
-    // &lt;img class=&quot;emote&quot; alt=&quot;KEKW&quot; src=&quot;https://cdn.betterttv.net/emote/5e9c6c187e090362f8b0b9e8/1x&quot;> that was &lt;img class=&quot;emote&quot; alt=&quot;3Head&quot; src=&quot;https://cdn.frankerfacez.com/emote/274406/1&quot;> &lt;img class=&quot;emote&quot; alt=&quot;TeriPoint&quot; src=&quot;https://cdn.7tv.app/emote/61dc299b600369a98b38ebef/1x.webp&quot;>
+    // &lt;img class=&quot;emote&quot; alt=&quot;KEKW&quot; src=&quot;https://cdn.betterttv.net/emote/5e9c6c187e090362f8b0b9e8/1x.webp&quot;> that was &lt;img class=&quot;emote&quot; alt=&quot;3Head&quot; src=&quot;https://cdn.frankerfacez.com/emote/274406/1&quot;> &lt;img class=&quot;emote&quot; alt=&quot;TeriPoint&quot; src=&quot;https://cdn.7tv.app/emote/61dc299b600369a98b38ebef/1x.webp&quot;>
 }).catch(err => {
     console.error('Error loading emotes...');
     console.error(err);
@@ -171,6 +171,7 @@ fetcher.fetchSevenTVEmotes(24377667, 'avif');
 </ul>
 <p>This library uses the following:</p>
 <ul>
+<li><a href="https://twurple.js.org/">Twurple</a> and the <a href="https://dev.twitch.tv/">Twitch API</a></li>
 <li><a href="https://betterttv.com/">BetterTTV API</a></li>
 <li><a href="https://www.frankerfacez.com/developers">FrankerFaceZ API</a></li>
 <li><a href="https://7tv.app/">7TV API</a></li>

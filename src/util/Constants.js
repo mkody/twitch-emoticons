@@ -5,7 +5,7 @@ module.exports = {
     BTTV: {
         Global: 'https://api.betterttv.net/3/cached/emotes/global',
         Channel: id => `https://api.betterttv.net/3/cached/users/twitch/${id}`,
-        CDN: (id, size) => `https://cdn.betterttv.net/emote/${id}/${size + 1}x`
+        CDN: (id, size) => `https://cdn.betterttv.net/emote/${id}/${size + 1}x.webp`
     },
     SEVENTV: {
         Global: 'https://7tv.io/v3/emote-sets/global',

@@ -85,11 +85,11 @@ Promise.all([
 ]).then(() => {
     const globalEmotes = parser.parse('EZ Clap way too easy LUL now for the last bost monkaS');
     console.log(globalEmotes);
-    // <img class="emote" alt="EZ" src="https://cdn.7tv.app/emote/6320bf2ad461b9ebf9413812/1x.webp"> <img class="emote" alt="Clap" src="https://cdn.7tv.app/emote/636b877aada75990352334c7/1x.webp"> way too easy <img class="emote" alt="LUL" src="https://static-cdn.jtvnw.net/emoticons/v2/425618/default/dark/1.0"> now for the last bost <img class="emote" alt="monkaS" src="https://cdn.betterttv.net/emote/56e9f494fff3cc5c35e5287e/1x">
+    // <img class="emote" alt="EZ" src="https://cdn.7tv.app/emote/6320bf2ad461b9ebf9413812/1x.webp"> <img class="emote" alt="Clap" src="https://cdn.7tv.app/emote/636b877aada75990352334c7/1x.webp"> way too easy <img class="emote" alt="LUL" src="https://static-cdn.jtvnw.net/emoticons/v2/425618/default/dark/1.0"> now for the last bost <img class="emote" alt="monkaS" src="https://cdn.betterttv.net/emote/56e9f494fff3cc5c35e5287e/1x.webp">
 
     const channelEmotes = parser.parse('KEKW that was 3Head TeriPoint');
     console.log(channelEmotes);
-    // <img class="emote" alt="KEKW" src="https://cdn.betterttv.net/emote/5e9c6c187e090362f8b0b9e8/1x"> that was <img class="emote" alt="3Head" src="https://cdn.frankerfacez.com/emote/274406/1"> <img class="emote" alt="TeriPoint" src="https://cdn.7tv.app/emote/61dc299b600369a98b38ebef/1x.webp">
+    // <img class="emote" alt="KEKW" src="https://cdn.betterttv.net/emote/5e9c6c187e090362f8b0b9e8/1x.webp"> that was <img class="emote" alt="3Head" src="https://cdn.frankerfacez.com/emote/274406/1"> <img class="emote" alt="TeriPoint" src="https://cdn.7tv.app/emote/61dc299b600369a98b38ebef/1x.webp">
 }).catch(err => {
     console.error('Error loading emotes...');
     console.error(err);

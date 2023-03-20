@@ -84,9 +84,9 @@ Promise.all([
 ]).then(() => {
     const text = bttvParser.parse(':SourPls:\n:tppUrn:\n:MODS:');
     assert.strictEqual(text, [
-        '![SourPls](https://cdn.betterttv.net/emote/566ca38765dbbdab32ec0560/1x "SourPls")',
-        '![tppUrn](https://cdn.betterttv.net/emote/5f5f7d5f68d9d86c020e8672/1x "tppUrn")',
-        '![MODS](https://cdn.betterttv.net/emote/5f2c4f9e65fe924464ef6d61/1x "MODS")'
+        '![SourPls](https://cdn.betterttv.net/emote/566ca38765dbbdab32ec0560/1x.webp "SourPls")',
+        '![tppUrn](https://cdn.betterttv.net/emote/5f5f7d5f68d9d86c020e8672/1x.webp "tppUrn")',
+        '![MODS](https://cdn.betterttv.net/emote/5f2c4f9e65fe924464ef6d61/1x.webp "MODS")'
     ].join('\n'));
 }).then(() => {
     console.log('BTTV emotes test was successful.');
