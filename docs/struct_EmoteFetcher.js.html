@@ -264,7 +264,9 @@ class EmoteFetcher {
     fetchTwitchEmotes(channel = null) {
         return this._getRawTwitchEmotes(channel).then(rawEmotes => {
             for (const emote of rawEmotes) {
-                this._cacheTwitchEmote(channel, { code: emote.name, id: emote.id });
+                this._cacheTwitchEmote(channel, {
+                    code: emote.name, id: emote.id, formats: emote.formats
+                });
             }
 
             return this.channels.get(channel).emotes.filter(e => e.type === 'twitch');

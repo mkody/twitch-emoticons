@@ -35,10 +35,16 @@ class BTTVEmote extends Emote {
         this.ownerName = 'user' in data ? data.user.name : null;
 
         /**
+         * If emote is animated.
+         * @type {boolean}
+         */
+        this.animated = data.animated;
+
+        /**
          * The image type of the emote.
          * @type {string}
          */
-        this.imageType = data.imageType;
+        this.imageType = 'webp';
     }
 
     /**

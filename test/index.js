@@ -101,11 +101,12 @@ Promise.all([
  *
  * Tests:
  * - Fetch emotes
- *  - FFZ Channel (sylux98)
+ *  - FFZ Channel (0kody)
  *  - FFZ Channel (shizuka_natsume)
  * - Parse to Markdown
- *  - FFZ emote from user name (AWOOO)
- *  - FFZ emote from user ID (SanaeSip)
+ *  - FFZ emote (5Head)
+ *  - FFZ animated emote (MikuSway)
+ *  - FFZ emote (SanaeSip)
  */
 const ffzFetcher = new EmoteFetcher();
 const ffzParser = new EmoteParser(ffzFetcher, {
@@ -114,12 +115,13 @@ const ffzParser = new EmoteParser(ffzFetcher, {
 });
 
 Promise.all([
-    ffzFetcher.fetchFFZEmotes(21490561),
+    ffzFetcher.fetchFFZEmotes(44317909),
     ffzFetcher.fetchFFZEmotes(13638332)
 ]).then(() => {
-    const text = ffzParser.parse(':AWOOO:\n:SanaeSip:');
+    const text = ffzParser.parse(':5Head:\n:MikuSway:\n:SanaeSip:');
     assert.strictEqual(text, [
-        '![AWOOO](https://cdn.frankerfacez.com/emote/67/1 "AWOOO")',
+        '![5Head](https://cdn.frankerfacez.com/emote/239504/1 "5Head")',
+        '![MikuSway](https://cdn.frankerfacez.com/emote/723102/animated/1.webp "MikuSway")',
         '![SanaeSip](https://cdn.frankerfacez.com/emote/305078/1 "SanaeSip")'
     ].join('\n'));
 }).then(() => {

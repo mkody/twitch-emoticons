@@ -14,7 +14,8 @@ module.exports = {
     },
     FFZ: {
         Channel: id => `https://api.frankerfacez.com/v1/room/id/${id}`,
-        CDN: (id, size) => `https://cdn.frankerfacez.com/emote/${id}/${size}`
+        CDN: (id, size) => `https://cdn.frankerfacez.com/emote/${id}/${size}`,
+        CDNAnimated: (id, size) => `https://cdn.frankerfacez.com/emote/${id}/animated/${size}.webp`
     },
     Templates: {
         html: '<img alt="{name}" title="{name}" class="twitch-emote twitch-emote-{size}" src="{link}">',

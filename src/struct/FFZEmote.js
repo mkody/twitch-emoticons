@@ -38,13 +38,19 @@ class FFZEmote extends Emote {
          * Available image sizes.
          * @type {string[]}
          */
-        this.sizes = Object.keys(data.urls);
+        this.sizes = 'animated' in data ? Object.keys(data.animated) : Object.keys(data.urls);
+
+        /**
+         * If emote is animated.
+         * @type {boolean}
+         */
+        this.animated = 'animated' in data;
 
         /**
          * The image type of the emote.
          * @type {string}
          */
-        this.imageType = 'png';
+        this.imageType = 'animated' in data ? 'webp' : 'png';
     }
 
     /**
@@ -54,6 +60,7 @@ class FFZEmote extends Emote {
      */
     toLink(size = 0) {
         size = this.sizes[size];
+        if (this.animated) return Constants.FFZ.CDNAnimated(this.id, size); // eslint-disable-line new-cap
         return Constants.FFZ.CDN(this.id, size); // eslint-disable-line new-cap
     }
 }

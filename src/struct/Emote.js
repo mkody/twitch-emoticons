@@ -37,6 +37,7 @@ class Emote {
          * @type {string}
          */
         this.type = null;
+
         this._setup(data);
     }
 

@@ -47,7 +47,8 @@ declare module '@mkody/twitch-emoticons' {
         public constructor(channel: Channel, id: string, data: object);
 
         public set?: string;
-        public imageType: string;
+        public animated: boolean;
+        public imageType: 'png' | 'gif';
         public readonly owner: Channel;
 
         public toLink(size: number): string;
@@ -57,7 +58,8 @@ declare module '@mkody/twitch-emoticons' {
         public constructor(channel: Channel, id: string, data: any);
 
         public ownerName: string;
-        public imageType: string;
+        public animated: boolean;
+        public imageType: 'webp';
         public readonly owner?: Channel;
 
         public toLink(size: number): string;
@@ -68,7 +70,8 @@ declare module '@mkody/twitch-emoticons' {
 
         public ownerName: string;
         public sizes: string[];
-        public imageType: string;
+        public animated: boolean;
+        public imageType: 'png' | 'webp';
         public readonly owner?: Channel;
 
         public toLink(size: number): string;
@@ -79,7 +82,8 @@ declare module '@mkody/twitch-emoticons' {
 
         public ownerName: string;
         public sizes: string[];
-        public imageType: string;
+        public animated: boolean;
+        public imageType: 'webp' | 'avif';
         public readonly owner?: Channel;
 
         public toLink(size: number): string;

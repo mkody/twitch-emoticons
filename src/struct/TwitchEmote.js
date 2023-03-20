@@ -33,10 +33,16 @@ class TwitchEmote extends Emote {
         this.set = data.emoticon_set;
 
         /**
+         * If emote is animated.
+         * @type {boolean}
+         */
+        this.animated = 'animated' in data.formats;
+
+        /**
          * The image type of the emote.
          * @type {string}
          */
-        this.imageType = 'png';
+        this.imageType = 'animated' in data.formats ? 'gif' : 'png';
     }
 
     /**
