@@ -101,12 +101,15 @@ Promise.all([
  *
  * Tests:
  * - Fetch emotes
+ *  - FFZ Global
  *  - FFZ Channel (0kody)
  *  - FFZ Channel (shizuka_natsume)
  * - Parse to Markdown
- *  - FFZ emote (5Head)
- *  - FFZ animated emote (MikuSway)
- *  - FFZ emote (SanaeSip)
+ *  - FFZ Global emote (CatBag)
+ *  - FFZ Channel emote (5Head)
+ *  - FFZ Channel animated emote (MikuSway)
+ *  - FFZ Channel emote (SanaeSip)
+ *  - FFZ modifier (ffzHyper)
  */
 const ffzFetcher = new EmoteFetcher();
 const ffzParser = new EmoteParser(ffzFetcher, {
@@ -115,14 +118,17 @@ const ffzParser = new EmoteParser(ffzFetcher, {
 });
 
 Promise.all([
+    ffzFetcher.fetchFFZEmotes(),
     ffzFetcher.fetchFFZEmotes(44317909),
     ffzFetcher.fetchFFZEmotes(13638332)
 ]).then(() => {
-    const text = ffzParser.parse(':5Head:\n:MikuSway:\n:SanaeSip:');
+    const text = ffzParser.parse(':CatBag:\n:5Head:\n:MikuSway:\n:SanaeSip: :ffzHyper:');
     assert.strictEqual(text, [
+        '![CatBag](https://cdn.frankerfacez.com/emote/25927/1 "CatBag")',
         '![5Head](https://cdn.frankerfacez.com/emote/239504/1 "5Head")',
         '![MikuSway](https://cdn.frankerfacez.com/emote/723102/animated/1.webp "MikuSway")',
-        '![SanaeSip](https://cdn.frankerfacez.com/emote/305078/1 "SanaeSip")'
+        // Note the trailing space as ffZHyper is removed but not the space before
+        '![SanaeSip](https://cdn.frankerfacez.com/emote/305078/1 "SanaeSip") '
     ].join('\n'));
 }).then(() => {
     console.log('FFZ emotes test was successful.');

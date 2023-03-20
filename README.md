@@ -63,8 +63,10 @@ const clientSecret = '<your client secret>';
 
 const fetcher = new EmoteFetcher(clientId, clientSecret);
 const parser = new EmoteParser(fetcher, {
-    template: '<img class="emote" alt="{name}" src="{link}">', // Custom HTML format
-    match: /(\w+)+?/g // Match without :colons:
+    // Custom HTML format
+    template: '<img class="emote" alt="{name}" src="{link}">',
+    // Match without :colons:
+    match: /(\w+)+?/g
 });
 
 Promise.all([
@@ -80,12 +82,14 @@ Promise.all([
     fetcher.fetchSevenTVEmotes(),
     // 7TV channel
     fetcher.fetchSevenTVEmotes(channelId),
+    // FFZ global
+    fetcher.fetchFFZEmotes(),
     // FFZ channel
     fetcher.fetchFFZEmotes(channelId)
 ]).then(() => {
-    const globalEmotes = parser.parse('EZ Clap way too easy LUL now for the last bost monkaS');
+    const globalEmotes = parser.parse('EZ Clap way too easy LUL now for the last boss monkaS LaterSooner');
     console.log(globalEmotes);
-    // <img class="emote" alt="EZ" src="https://cdn.7tv.app/emote/6320bf2ad461b9ebf9413812/1x.webp"> <img class="emote" alt="Clap" src="https://cdn.7tv.app/emote/636b877aada75990352334c7/1x.webp"> way too easy <img class="emote" alt="LUL" src="https://static-cdn.jtvnw.net/emoticons/v2/425618/default/dark/1.0"> now for the last bost <img class="emote" alt="monkaS" src="https://cdn.betterttv.net/emote/56e9f494fff3cc5c35e5287e/1x.webp">
+    // <img class="emote" alt="EZ" src="https://cdn.7tv.app/emote/63071b80942ffb69e13d700f/1x.webp"> <img class="emote" alt="Clap" src="https://cdn.7tv.app/emote/62fc0a0c4a75fd54bd3520a9/1x.webp"> way too easy <img class="emote" alt="LUL" src="https://static-cdn.jtvnw.net/emoticons/v2/425618/default/dark/1.0"> now for the last boss <img class="emote" alt="monkaS" src="https://cdn.betterttv.net/emote/56e9f494fff3cc5c35e5287e/1x.webp"> <img class="emote" alt="LaterSooner" src="https://cdn.frankerfacez.com/emote/149346/1">
 
     const channelEmotes = parser.parse('KEKW that was 3Head TeriPoint');
     console.log(channelEmotes);
@@ -126,6 +130,6 @@ fetcher.fetchSevenTVEmotes(24377667, 'avif');
 
 This library uses the following:
 - [Twurple](https://twurple.js.org/) and the [Twitch API](https://dev.twitch.tv/)
-- [BetterTTV API](https://betterttv.com/)
-- [FrankerFaceZ API](https://www.frankerfacez.com/developers)
-- [7TV API](https://7tv.app/)
+- [BetterTTV API](https://betterttv.com/developers/api)
+- [FrankerFaceZ API](https://api.frankerfacez.com/docs/)
+- [7TV API](https://7tv.io/)

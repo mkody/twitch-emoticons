@@ -51,6 +51,12 @@ class FFZEmote extends Emote {
          * @type {string}
          */
         this.imageType = 'animated' in data ? 'webp' : 'png';
+
+        /**
+         * If the emote is a modifier and should be hidden.
+         * @type {boolean}
+         */
+        this.modifier = data.modifier && (data.modifier_flags & 1) !== 0;
     }
 
     /**

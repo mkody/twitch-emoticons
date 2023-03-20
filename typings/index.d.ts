@@ -72,6 +72,7 @@ declare module '@mkody/twitch-emoticons' {
         public sizes: string[];
         public animated: boolean;
         public imageType: 'png' | 'webp';
+        public modifier: boolean;
         public readonly owner?: Channel;
 
         public toLink(size: number): string;

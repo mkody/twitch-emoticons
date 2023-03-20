@@ -61,6 +61,7 @@ class EmoteParser {
         const parsed = text.replace(this.options.match, (matched, id) => {
             const emote = this.fetcher.emotes.get(id);
             if (!emote) return matched;
+            if (emote.modifier) return '';
 
             const template = this.options.template || Constants.Templates[this.options.type];
             const link = emote.toLink(size);

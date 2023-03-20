@@ -43,6 +43,12 @@ class EmoteFetcher {
          * @type {Collection<string, Channel>}
          */
         this.channels = new Collection();
+
+        /**
+         * Save if we fetched FFZ's modifier emotes once.
+         * @type {boolean}
+         */
+        this.ffzModifiersFetched = false;
     }
 
     /**
@@ -133,6 +139,20 @@ class EmoteFetcher {
     }
 
     /**
+     * Gets the raw FFZ emote data from a set.
+     * @private
+     * @param {int} id - ID of the set.
+     * @returns {Promise<Object[]>}
+     */
+    _getRawFFZEmoteSet(id) {
+        const endpoint = Constants.FFZ.Set(id); // eslint-disable-line new-cap
+
+        return got(endpoint, options).then(req => {
+            return req.body.set.emoticons;
+        });
+    }
+
+    /**
      * Gets the raw FFZ emotes data for a channel.
      * @private
      * @param {int} id - ID of the channel.
@@ -180,8 +200,8 @@ class EmoteFetcher {
      */
     _getRawSevenTVEmotes(id) {
         const endpoint = !id
-            ? Constants.SEVENTV.Global
-            : Constants.SEVENTV.Channel(id); // eslint-disable-line new-cap
+            ? Constants.SevenTV.Global
+            : Constants.SevenTV.Channel(id); // eslint-disable-line new-cap
 
         return got(endpoint, options).then(req => req.body);
     }
@@ -244,10 +264,32 @@ class EmoteFetcher {
 
     /**
      * Fetches the FFZ emotes for a channel.
-     * @param {int} channel - ID of the channel.
+     * @param {int} [channel=null] - ID of the channel.
      * @returns {Promise<Collection<string, FFZEmote>>}
      */
-    fetchFFZEmotes(channel) {
+    async fetchFFZEmotes(channel) {
+        // Fetch modifier emotes at least once
+        if (!this.ffzModifiersFetched) {
+            this.ffzModifiersFetched = true;
+
+            await this._getRawFFZEmoteSet(Constants.FFZ.sets.Modifiers).then(rawEmotes => {
+                for (const data of rawEmotes) {
+                    this._cacheFFZEmote(null, data);
+                }
+            });
+        }
+
+        // If no channel specified, fetch the Global set
+        if (!channel) {
+            return this._getRawFFZEmoteSet(Constants.FFZ.sets.Global).then(rawEmotes => {
+                for (const data of rawEmotes) {
+                    this._cacheFFZEmote(channel, data);
+                }
+
+                return this.channels.get(channel).emotes.filter(e => e.type === 'ffz');
+            });
+        }
+
         return this._getRawFFZEmotes(channel).then(rawEmotes => {
             for (const data of rawEmotes) {
                 this._cacheFFZEmote(channel, data);

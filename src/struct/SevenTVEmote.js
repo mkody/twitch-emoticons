@@ -62,7 +62,7 @@ class SevenTVEmote extends Emote {
      */
     toLink(size = 0) {
         size = this.sizes[size];
-        return Constants.SEVENTV.CDN(this.id, size); // eslint-disable-line new-cap
+        return Constants.SevenTV.CDN(this.id, size); // eslint-disable-line new-cap
     }
 }
 
