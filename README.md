@@ -1,3 +1,9 @@
+## WARNING
+
+The `fork` branch you're on is no longer supported, **[please switch to master](https://github.com/mkody/twitch-emoticons/tree/master)**.
+
+---
+
 # twitch-emoticons
 
 Gets Twitch, BTTV, FFZ and 7TV emotes as well as parsing text to emotes!
