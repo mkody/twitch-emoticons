@@ -57,7 +57,7 @@ declare module '@mkody/twitch-emoticons' {
     export class BTTVEmote extends Emote {
         public constructor(channel: Channel, id: string, data: any);
 
-        public ownerName: string;
+        public ownerName: string | null;
         public animated: boolean;
         public imageType: 'webp';
         public readonly owner?: Channel;
@@ -68,7 +68,7 @@ declare module '@mkody/twitch-emoticons' {
     export class FFZEmote extends Emote {
         public constructor(channel: Channel, id: string, data: object);
 
-        public ownerName: string;
+        public ownerName: string | null;
         public sizes: string[];
         public animated: boolean;
         public imageType: 'png' | 'webp';
@@ -81,7 +81,7 @@ declare module '@mkody/twitch-emoticons' {
     export class SevenTVEmote extends Emote {
         public constructor(channel: Channel, id: string, data: object);
 
-        public ownerName: string;
+        public ownerName: string | null;
         public sizes: string[];
         public animated: boolean;
         public imageType: 'webp' | 'avif';

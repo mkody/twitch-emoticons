@@ -30,9 +30,9 @@ class FFZEmote extends Emote {
 
         /**
          * The name of the emote creator's channel.
-         * @type {string}
+         * @type {?string}
          */
-        this.ownerName = data.owner.name;
+        this.ownerName = 'owner' in data ? data.owner.name : null;
 
         /**
          * Available image sizes.
