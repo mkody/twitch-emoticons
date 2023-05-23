@@ -51,15 +51,11 @@ const Collection = require('../util/Collection');
 const Constants = require('../util/Constants');
 const FFZEmote = require('./FFZEmote');
 const SevenTVEmote = require('./SevenTVEmote');
-
-const got = require('got');
 const TwitchEmote = require('./TwitchEmote');
+
+const axios = require('axios');
 const { ApiClient } = require('@twurple/api');
 const { AppTokenAuthProvider } = require('@twurple/auth');
-
-const options = {
-    responseType: 'json'
-};
 
 class EmoteFetcher {
     /**
@@ -157,11 +153,11 @@ class EmoteFetcher {
             ? Constants.BTTV.Global
             : Constants.BTTV.Channel(id); // eslint-disable-line new-cap
 
-        return got(endpoint, options).then(req => {
+        return axios.get(endpoint).then(req => {
             // Global emotes
-            if (req.body instanceof Array) return req.body;
+            if (req.data instanceof Array) return req.data;
             // Channel emotes
-            return [...req.body.channelEmotes, ...req.body.sharedEmotes];
+            return [...req.data.channelEmotes, ...req.data.sharedEmotes];
         });
     }
 
@@ -194,8 +190,8 @@ class EmoteFetcher {
     _getRawFFZEmoteSet(id) {
         const endpoint = Constants.FFZ.Set(id); // eslint-disable-line new-cap
 
-        return got(endpoint, options).then(req => {
-            return req.body.set.emoticons;
+        return axios.get(endpoint).then(req => {
+            return req.data.set.emoticons;
         });
     }
 
@@ -208,10 +204,10 @@ class EmoteFetcher {
     _getRawFFZEmotes(id) {
         const endpoint = Constants.FFZ.Channel(id); // eslint-disable-line new-cap
 
-        return got(endpoint, options).then(req => {
+        return axios.get(endpoint).then(req => {
             const emotes = [];
-            for (const key of Object.keys(req.body.sets)) {
-                const set = req.body.sets[key];
+            for (const key of Object.keys(req.data.sets)) {
+                const set = req.data.sets[key];
                 emotes.push(...set.emoticons);
             }
 
@@ -250,7 +246,7 @@ class EmoteFetcher {
             ? Constants.SevenTV.Global
             : Constants.SevenTV.Channel(id); // eslint-disable-line new-cap
 
-        return got(endpoint, options).then(req => req.body);
+        return axios.get(endpoint).then(req => req.data);
     }
 
     /**

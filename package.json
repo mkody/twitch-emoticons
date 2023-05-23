@@ -27,7 +27,7 @@
     "dependencies": {
         "@twurple/api": "^6.2.1",
         "@twurple/auth": "^6.2.1",
-        "got": "^11.8.6"
+        "axios": "^1.4.0"
     },
     "devDependencies": {
         "docdash": "^2.0.1",
@@ -51,7 +51,7 @@
         "doc": "docs",
         "test": "test"
     },
-    "engines" : { 
-        "node" : ">=16.0.0"
+    "engines": {
+        "node": ">=16.0.0"
     }
 }
