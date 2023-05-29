@@ -318,6 +318,36 @@ class EmoteFetcher {
             return this.channels.get(channel).emotes.filter(e => e.type === '7tv');
         });
     }
+
+    /**
+     * Override for `fromJSON`.
+     * @param {Object} [json=null] - Emote JSON
+     * @returns {Emote[]}
+     */
+    fromJSON(json = null) {
+        const emotes = [];
+        const classMap = {
+            bttv: { class: BTTVEmote, cache: () => this._cacheBTTVEmote },
+            ffz: { class: FFZEmote, cache: () => this._cacheFFZEmote },
+            '7tv': { class: SevenTVEmote, cache: () => this._cacheSevenTVEmote },
+            twitch: { class: TwitchEmote, cache: () => this._cacheTwitchEmote }
+        };
+        for (const emoteJSON of json) {
+            const { type } = emoteJSON;
+            const emoteClass = classMap[type].class;
+
+            if (!emoteClass) {
+                console.log(`Unknown type: ${type}`);
+                continue;
+            }
+
+            classMap[type].cache(emoteJSON.channel_id);
+
+            const emote = emoteClass.fromJSON(emoteJSON, this.channels.get(emoteJSON.channel_id));
+            emotes.push(emote);
+        }
+        return emotes;
+    }
 }
 
 module.exports = EmoteFetcher;

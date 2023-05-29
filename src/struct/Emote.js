@@ -61,6 +61,19 @@ class Emote {
     toString() {
         return this.code;
     }
+
+    /**
+     * Override for `toJSON`.
+     * Will result in a JSON representation of an Emote
+     * @returns {Object}
+     */
+    toJSON() {
+        return {
+            code: this.code,
+            id: this.id,
+            channel_id: this.channel.channel_id
+        };
+    }
 }
 
 module.exports = Emote;

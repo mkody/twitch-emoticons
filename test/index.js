@@ -35,6 +35,8 @@ if (env.TWITCH_ID !== undefined && env.TWITCH_SECRET !== undefined) {
             '![CoolCat](https://static-cdn.jtvnw.net/emoticons/v2/58127/default/dark/1.0 "CoolCat")',
             '![tppD](https://static-cdn.jtvnw.net/emoticons/v2/307609315/default/dark/1.0 "tppD")'
         ].join('\n'));
+        const emotes_json = twitchFetcher.emotes.map(emote => emote.toJSON());
+        assert.deepStrictEqual(emotes_json, twitchFetcher.fromJSON(emotes_json).map(emote => emote.toJSON()));
     }).then(() => {
         console.log('Twitch emotes test was successful.');
     }).catch(err => {
@@ -88,6 +90,8 @@ Promise.all([
         '![tppUrn](https://cdn.betterttv.net/emote/5f5f7d5f68d9d86c020e8672/1x.webp "tppUrn")',
         '![MODS](https://cdn.betterttv.net/emote/5f2c4f9e65fe924464ef6d61/1x.webp "MODS")'
     ].join('\n'));
+    const emotes_json = bttvFetcher.emotes.map(emote => emote.toJSON());
+    assert.deepStrictEqual(emotes_json, bttvFetcher.fromJSON(emotes_json).map(emote => emote.toJSON()));
 }).then(() => {
     console.log('BTTV emotes test was successful.');
 }).catch(err => {
@@ -130,6 +134,8 @@ Promise.all([
         // Note the trailing space as ffZHyper is removed but not the space before
         '![SanaeSip](https://cdn.frankerfacez.com/emote/305078/1 "SanaeSip") '
     ].join('\n'));
+    const emotes_json = ffzFetcher.emotes.map(emote => emote.toJSON());
+    assert.deepStrictEqual(emotes_json, ffzFetcher.fromJSON(emotes_json).map(emote => emote.toJSON()));
 }).then(() => {
     console.log('FFZ emotes test was successful.');
 }).catch(err => {
@@ -165,6 +171,8 @@ Promise.all([
         '![Clap](https://cdn.7tv.app/emote/62fc0a0c4a75fd54bd3520a9/1x.avif "Clap")',
         '![modCheck](https://cdn.7tv.app/emote/60abf171870d317bef23d399/1x.webp "modCheck")'
     ].join('\n'));
+    const emotes_json = sevenFetcher.emotes.map(emote => emote.toJSON());
+    assert.deepStrictEqual(emotes_json, sevenFetcher.fromJSON(emotes_json).map(emote => emote.toJSON()));
 }).then(() => {
     console.log('7TV emotes test was successful.');
 }).catch(err => {

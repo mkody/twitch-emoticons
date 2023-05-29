@@ -53,6 +53,35 @@ class TwitchEmote extends Emote {
     toLink(size = 0) {
         return Constants.Twitch.CDN(this.id, size); // eslint-disable-line new-cap
     }
+
+    /**
+     * Override for `toJSON`.
+     * Will result in a JSON representation of a TwitchEmote
+     * @returns {Object}
+     */
+    toJSON() {
+        return Object.assign({}, super.toJSON(), {
+            animated: this.animated,
+            set: this.set,
+            type: this.type
+        });
+    }
+
+    /**
+     * Converts a JSON into a TwitchEmote
+     * @param {JSON} [emoteJSON] - JSON representation of this emote
+     * @param {Channel} [channel=null] - Channel this emote belongs to.
+     * @returns {TwitchEmote}
+     */
+    static fromJSON(emoteJSON, channel = null) {
+        return new TwitchEmote(channel, emoteJSON.id,
+            {
+                code: emoteJSON.code,
+                animated: emoteJSON.animated,
+                emoticon_set: emoteJSON.set,
+                formats: emoteJSON.animated ? { animated: emoteJSON.animated } : {}
+            });
+    }
 }
 
 module.exports = TwitchEmote;
