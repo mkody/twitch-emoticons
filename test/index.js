@@ -15,6 +15,7 @@ const { EmoteFetcher, EmoteParser } = require('../src/index.js');
  * - Parse to Markdown
  *  - Twitch Global emote (CoolCat)
  *  - Twitch Channel emote (tppD)
+ * - fromJSON and toJSON conversion
  */
 if (env.TWITCH_ID !== undefined && env.TWITCH_SECRET !== undefined) {
     const twitchFetcher = new EmoteFetcher(env.TWITCH_ID, env.TWITCH_SECRET);
@@ -73,6 +74,7 @@ try {
  *  - BTTV Global emote (SourPls)
  *  - BTTV Channel emote (tppUrn)
  *  - BTTV Shared emote (MODS)
+ * - fromJSON and toJSON conversion
  */
 const bttvFetcher = new EmoteFetcher();
 const bttvParser = new EmoteParser(bttvFetcher, {
@@ -114,6 +116,7 @@ Promise.all([
  *  - FFZ Channel animated emote (MikuSway)
  *  - FFZ Channel emote (SanaeSip)
  *  - FFZ modifier (ffzHyper)
+ * - fromJSON and toJSON conversion
  */
 const ffzFetcher = new EmoteFetcher();
 const ffzParser = new EmoteParser(ffzFetcher, {
@@ -154,6 +157,7 @@ Promise.all([
  *  - 7TV Global emote (EZ)
  *  - 7TV Global emote (Clap)
  *  - 7TV Channel emote (modCheck)
+ * - fromJSON and toJSON conversion
  */
 const sevenFetcher = new EmoteFetcher();
 const sevenParser = new EmoteParser(sevenFetcher, {
