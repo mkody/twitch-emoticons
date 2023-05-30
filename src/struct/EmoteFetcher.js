@@ -327,10 +327,10 @@ class EmoteFetcher {
     fromJSON(json) {
         const emotes = [];
         const classMap = {
-            bttv: { class: BTTVEmote, cache: () => this._cacheBTTVEmote },
-            ffz: { class: FFZEmote, cache: () => this._cacheFFZEmote },
-            '7tv': { class: SevenTVEmote, cache: () => this._cacheSevenTVEmote },
-            twitch: { class: TwitchEmote, cache: () => this._cacheTwitchEmote }
+            bttv: { class: BTTVEmote, cache: channel_id => this._cacheBTTVEmote(channel_id) },
+            ffz: { class: FFZEmote, cache: channel_id => this._cacheFFZEmote(channel_id) },
+            '7tv': { class: SevenTVEmote, cache: channel_id => this._cacheSevenTVEmote(channel_id) },
+            twitch: { class: TwitchEmote, cache: channel_id => this._cacheTwitchEmote(channel_id) }
         };
         for (const emoteJSON of json) {
             const { type } = emoteJSON;
