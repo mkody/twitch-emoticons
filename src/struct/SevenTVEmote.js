@@ -75,7 +75,8 @@ class SevenTVEmote extends Emote {
             animated: this.animated,
             sizes: this.sizes,
             ownerName: this.ownerName,
-            type: this.type
+            type: this.type,
+            imageType: this.imageType
         });
     }
 

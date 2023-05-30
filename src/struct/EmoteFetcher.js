@@ -79,16 +79,12 @@ class EmoteFetcher {
      * @private
      * @param {int} channel_id - ID of the channel.
      * @param {Object} data - Raw data.
+     * @param {TwitchEmote} [existing_emote=null] - Existing emote to cache.
      * @returns {TwitchEmote}
      */
-    _cacheTwitchEmote(channel_id, data) {
-        let channel = this.channels.get(channel_id);
-        if (!channel) {
-            channel = new Channel(this, channel_id);
-            this.channels.set(channel_id, channel);
-        }
-
-        const emote = new TwitchEmote(channel, data.id, data);
+    _cacheTwitchEmote(channel_id, data, existing_emote = null) {
+        const channel = this._setupChannel(channel_id);
+        const emote = existing_emote || new TwitchEmote(channel, data.id, data);
         this.emotes.set(emote.code, emote);
         channel.emotes.set(emote.code, emote);
         return emote;
@@ -119,16 +115,12 @@ class EmoteFetcher {
      * @private
      * @param {int} channel_id - ID of the channel.
      * @param {Object} data - Raw data.
+     * @param {BTTVEmote} [existing_emote=null] - Existing emote to cache.
      * @returns {BTTVEmote}
      */
-    _cacheBTTVEmote(channel_id, data) {
-        let channel = this.channels.get(channel_id);
-        if (!channel) {
-            channel = new Channel(this, channel_id);
-            this.channels.set(channel_id, channel);
-        }
-
-        const emote = new BTTVEmote(channel, data.id, data);
+    _cacheBTTVEmote(channel_id, data, existing_emote = null) {
+        const channel = this._setupChannel(channel_id);
+        const emote = existing_emote || new BTTVEmote(channel, data.id, data);
         this.emotes.set(emote.code, emote);
         channel.emotes.set(emote.code, emote);
         return emote;
@@ -173,16 +165,12 @@ class EmoteFetcher {
      * @private
      * @param {int} channel_id - ID of the channel.
      * @param {Object} data - Raw data.
+     * @param {FFZEmote} [existing_emote=null] - Existing emote to cache.
      * @returns {FFZEmote}
      */
-    _cacheFFZEmote(channel_id, data) {
-        let channel = this.channels.get(channel_id);
-        if (!channel) {
-            channel = new Channel(this, channel_id);
-            this.channels.set(channel_id, channel);
-        }
-
-        const emote = new FFZEmote(channel, data.id, data);
+    _cacheFFZEmote(channel_id, data, existing_emote = null) {
+        const channel = this._setupChannel(channel_id);
+        const emote = existing_emote || new FFZEmote(channel, data.id, data);
         this.emotes.set(emote.code, emote);
         channel.emotes.set(emote.code, emote);
         return emote;
@@ -208,17 +196,12 @@ class EmoteFetcher {
      * @param {int} channel_id - ID of the channel.
      * @param {Object} data - Raw data.
      * @param {string} format - The type file format to use (webp/avif).
+     * @param {SevenTVEmote} [existing_emote=null] - Existing emote to cache.
      * @returns {SevenTVEmote}
      */
-    _cacheSevenTVEmote(channel_id, data, format) {
-        let channel = this.channels.get(channel_id);
-        if (!channel) {
-            channel = new Channel(this, channel_id);
-            this.channels.set(channel_id, channel);
-        }
-        channel.format = format;
-
-        const emote = new SevenTVEmote(channel, data.id, data);
+    _cacheSevenTVEmote(channel_id, data, format, existing_emote = null) {
+        const channel = this._setupChannel(channel_id, format);
+        const emote = existing_emote || new SevenTVEmote(channel, data.id, data);
         this.emotes.set(emote.code, emote);
         channel.emotes.set(emote.code, emote);
         return emote;
@@ -327,10 +310,10 @@ class EmoteFetcher {
     fromJSON(json) {
         const emotes = [];
         const classMap = {
-            bttv: { class: BTTVEmote, cache: channel_id => this._cacheBTTVEmote(channel_id) },
-            ffz: { class: FFZEmote, cache: channel_id => this._cacheFFZEmote(channel_id) },
-            '7tv': { class: SevenTVEmote, cache: channel_id => this._cacheSevenTVEmote(channel_id) },
-            twitch: { class: TwitchEmote, cache: channel_id => this._cacheTwitchEmote(channel_id) }
+            bttv: { class: BTTVEmote, cache: (emoteJSON, channel_id, existing_emote) => this._cacheBTTVEmote(channel_id, null, existing_emote) },
+            ffz: { class: FFZEmote, cache: (emoteJSON, channel_id, existing_emote) => this._cacheFFZEmote(channel_id, null, existing_emote) },
+            '7tv': { class: SevenTVEmote, cache: (emoteJSON, channel_id, existing_emote) => this._cacheSevenTVEmote(channel_id, null, emoteJSON.imageType, existing_emote) },
+            twitch: { class: TwitchEmote, cache: (emoteJSON, channel_id, existing_emote) => this._cacheTwitchEmote(channel_id, null, existing_emote) }
         };
         for (const emoteJSON of json) {
             const { type } = emoteJSON;
@@ -341,12 +324,29 @@ class EmoteFetcher {
                 continue;
             }
 
-            classMap[type].cache(emoteJSON.channel_id);
-
+            this._setupChannel(emoteJSON.channel_id, emoteJSON.format)
             const emote = emoteClass.fromJSON(emoteJSON, this.channels.get(emoteJSON.channel_id));
+            classMap[type].cache(emoteJSON, emoteJSON.channel_id, emote);
             emotes.push(emote);
         }
         return emotes;
+    }
+
+    /**
+     * Sets up a channel
+     * @private
+     * @param {int} channel_id - ID of the channel.
+     * @param {string} [format=null] - The type file format to use (webp/avif).
+     * @returns {Channel}
+     */
+    _setupChannel(channel_id, format = null) {
+        let channel = this.channels.get(channel_id);
+        if (!channel) {
+            channel = new Channel(this, channel_id);
+            this.channels.set(channel_id, channel);
+        }
+        if (format) channel.format = format;
+        return channel;
     }
 }
 
