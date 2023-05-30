@@ -317,13 +317,12 @@ class EmoteFetcher {
         };
         for (const emoteJSON of json) {
             const { type } = emoteJSON;
-            const emoteClass = classMap[type].class;
-
-            if (!emoteClass) {
+            if (!Object.keys(classMap).includes(type)) {
                 console.log(`Unknown type: ${type}`);
                 continue;
             }
 
+            const emoteClass = classMap[type].class;
             this._setupChannel(emoteJSON.channel_id, type === '7tv' ? emoteJSON.imageType : null);
             const emote = emoteClass.fromJSON(emoteJSON, this.channels.get(emoteJSON.channel_id));
             classMap[type].cache(emoteJSON, emoteJSON.channel_id, emote);
