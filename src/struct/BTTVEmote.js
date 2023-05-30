@@ -76,7 +76,14 @@ class BTTVEmote extends Emote {
      * @returns {BTTVEmote}
      */
     static fromJSON(emoteJSON, channel = null) {
-        return new BTTVEmote(channel, emoteJSON.id, { code: emoteJSON.code, animated: emoteJSON.animated, user: { name: emoteJSON.ownerName } });
+        return new BTTVEmote(channel, emoteJSON.id,
+            {
+                code: emoteJSON.code,
+                animated: emoteJSON.animated,
+                user: {
+                    name: emoteJSON.ownerName
+                }
+            });
     }
 }
 

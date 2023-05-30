@@ -320,11 +320,11 @@ class EmoteFetcher {
     }
 
     /**
-     * Override for `fromJSON`.
-     * @param {Object} [json=null] - Emote JSON
+     * Converts emote JSONs to emotes
+     * @param {Object} [json] - Emote JSON
      * @returns {Emote[]}
      */
-    fromJSON(json = null) {
+    fromJSON(json) {
         const emotes = [];
         const classMap = {
             bttv: { class: BTTVEmote, cache: () => this._cacheBTTVEmote },
