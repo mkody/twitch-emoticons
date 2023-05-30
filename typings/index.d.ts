@@ -90,6 +90,17 @@ declare module '@mkody/twitch-emoticons' {
         public toLink(size: number): string;
     }
 
+    export interface EmoteJSON {
+        code: string,
+        id: string,
+        channel_id: string,
+        type: 'twitch' | 'bttv' | 'ffz' | '7tv'
+        animated?: boolean,
+        ownerName?: string,
+        sizes?: string[],
+        set?: string
+    }
+
     export class Collection<K, V> extends Map<K, V> {
         public find(propOrFunc: string | ((item: K, index: number, coll: this) => boolean), value?: any): K;
         public filter(func: (item: K, index: number, coll: this) => boolean): Collection<K, V>;
