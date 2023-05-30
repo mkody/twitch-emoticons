@@ -324,7 +324,7 @@ class EmoteFetcher {
                 continue;
             }
 
-            this._setupChannel(emoteJSON.channel_id, emoteJSON.format)
+            this._setupChannel(emoteJSON.channel_id, type === '7tv' ? emoteJSON.imageType : null);
             const emote = emoteClass.fromJSON(emoteJSON, this.channels.get(emoteJSON.channel_id));
             classMap[type].cache(emoteJSON, emoteJSON.channel_id, emote);
             emotes.push(emote);
