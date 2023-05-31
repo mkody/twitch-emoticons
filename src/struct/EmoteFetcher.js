@@ -57,6 +57,23 @@ class EmoteFetcher {
     }
 
     /**
+     * Sets up a channel
+     * @private
+     * @param {int} channel_id - ID of the channel.
+     * @param {string} [format=null] - The type file format to use (webp/avif).
+     * @returns {Channel}
+     */
+    _setupChannel(channel_id, format = null) {
+        let channel = this.channels.get(channel_id);
+        if (!channel) {
+            channel = new Channel(this, channel_id);
+            this.channels.set(channel_id, channel);
+        }
+        if (format) channel.format = format;
+        return channel;
+    }
+
+    /**
      * Gets the raw Twitch emotes data for a channel.
      * @private
      * @param {int} id - ID of the channel.
@@ -329,23 +346,6 @@ class EmoteFetcher {
             emotes.push(emote);
         }
         return emotes;
-    }
-
-    /**
-     * Sets up a channel
-     * @private
-     * @param {int} channel_id - ID of the channel.
-     * @param {string} [format=null] - The type file format to use (webp/avif).
-     * @returns {Channel}
-     */
-    _setupChannel(channel_id, format = null) {
-        let channel = this.channels.get(channel_id);
-        if (!channel) {
-            channel = new Channel(this, channel_id);
-            this.channels.set(channel_id, channel);
-        }
-        if (format) channel.format = format;
-        return channel;
     }
 }
 
