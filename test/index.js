@@ -4,8 +4,10 @@ const assert = require('assert');
 const { env } = require('process');
 const { EmoteFetcher, EmoteParser } = require('../src/index.js');
 
+let returnCode = 0;
+
 /**
- * If environement variables are set, test Twitch fetching and parsing.
+ * Test Twitch fetching and parsing if environment variables are set.
  *
  * Tests:
  * - Fetch emotes
@@ -17,50 +19,67 @@ const { EmoteFetcher, EmoteParser } = require('../src/index.js');
  *  - Twitch Channel emote (tppD)
  * - fromJSON and toJSON conversion
  */
-if (env.TWITCH_ID !== undefined && env.TWITCH_SECRET !== undefined) {
-    const twitchFetcher = new EmoteFetcher(env.TWITCH_ID, env.TWITCH_SECRET);
-    const twitchParser = new EmoteParser(twitchFetcher, {
+async function testTwitch() {
+    if (env.TWITCH_ID === undefined || env.TWITCH_SECRET === undefined
+        || env.TWITCH_ID === '' || env.TWITCH_SECRET === '') {
+        console.log('Notice: Twitch client id/secret missing.');
+        return;
+    }
+
+    const emoteFetcher = new EmoteFetcher(env.TWITCH_ID, env.TWITCH_SECRET);
+    const emoteParser = new EmoteParser(emoteFetcher, {
         type: 'markdown',
         match: /:(.+?):/g
     });
 
-    Promise.all([
-        twitchFetcher.fetchTwitchEmotes(),
-        twitchFetcher.fetchTwitchEmotes(56648155)
-    ]).then(() => {
-        const kappa = twitchFetcher.emotes.get('Kappa');
-        assert.strictEqual(kappa.toLink(2), 'https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/3.0');
+    try {
+        await Promise.all([
+            emoteFetcher.fetchTwitchEmotes(),
+            emoteFetcher.fetchTwitchEmotes(56648155)
+        ]);
 
-        const text = twitchParser.parse(':CoolCat:\n:tppD:');
-        assert.strictEqual(text, [
-            '![CoolCat](https://static-cdn.jtvnw.net/emoticons/v2/58127/default/dark/1.0 "CoolCat")',
-            '![tppD](https://static-cdn.jtvnw.net/emoticons/v2/307609315/default/dark/1.0 "tppD")'
-        ].join('\n'));
-        const emotes_json = twitchFetcher.emotes.map(emote => emote.toJSON());
-        assert.deepStrictEqual(emotes_json, twitchFetcher.fromJSON(emotes_json).map(emote => emote.toJSON()));
-    }).then(() => {
+        const kappaEmote = emoteFetcher.emotes.get('Kappa');
+        assert.strictEqual(
+            kappaEmote.toLink(2),
+            'https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/3.0'
+        );
+
+        const text = emoteParser.parse(':CoolCat:\n:tppD:');
+        assert.strictEqual(
+            text,
+            [
+                '![CoolCat](https://static-cdn.jtvnw.net/emoticons/v2/58127/default/dark/1.0 "CoolCat")',
+                '![tppD](https://static-cdn.jtvnw.net/emoticons/v2/307609315/default/dark/1.0 "tppD")'
+            ].join('\n')
+        );
+
         console.log('Twitch emotes test was successful.');
-    }).catch(err => {
+    } catch (err) {
         console.error('Twitch emotes test failed!');
         console.error(err);
-    });
-} else {
-    console.log('Notice: Twitch client id/secret missing.');
+        returnCode = 1;
+    }
 }
 
 /*
- * Code should throw if we try to fetch Twitch emotes without a Client ID and Secret
- */
-const twitchFaultyFetcher = new EmoteFetcher();
+* Test for a throw if we try to fetch Twitch emotes without a Client ID and Secret
+*/
+function testTwitchFaulty() {
+    const emoteFetcher = new EmoteFetcher();
 
-try {
-    assert.throws(() => {
-        twitchFaultyFetcher.fetchTwitchEmotes();
-    }, new Error('Client id or client secret not provided.'));
-    console.log('Twitch emotes test (without API keys) was successful.');
-} catch (err) {
-    console.error('Twitch emotes test (without API keys) failed!');
-    console.error(err);
+    try {
+        assert.throws(
+            () => {
+                emoteFetcher.fetchTwitchEmotes();
+            },
+            new Error('Client id or client secret not provided.')
+        );
+        console.log('Twitch emotes test (without API keys) was successful.');
+    } catch (err) {
+        console.error('Twitch emotes test (without API keys) failed!');
+        console.error(err);
+        returnCode = 1;
+    }
 }
 
 /**
@@ -76,31 +95,36 @@ try {
  *  - BTTV Shared emote (MODS)
  * - fromJSON and toJSON conversion
  */
-const bttvFetcher = new EmoteFetcher();
-const bttvParser = new EmoteParser(bttvFetcher, {
-    type: 'markdown',
-    match: /:(.+?):/g
-});
+async function testBTTV() {
+    const emoteFetcher = new EmoteFetcher();
+    const emoteParser = new EmoteParser(emoteFetcher, {
+        type: 'markdown',
+        match: /:(.+?):/g
+    });
 
-Promise.all([
-    bttvFetcher.fetchBTTVEmotes(),
-    bttvFetcher.fetchBTTVEmotes(56648155)
-]).then(() => {
-    const text = bttvParser.parse(':SourPls:\n:tppUrn:\n:MODS:');
-    assert.strictEqual(text, [
-        '![SourPls](https://cdn.betterttv.net/emote/566ca38765dbbdab32ec0560/1x.webp "SourPls")',
-        '![tppUrn](https://cdn.betterttv.net/emote/5f5f7d5f68d9d86c020e8672/1x.webp "tppUrn")',
-        '![MODS](https://cdn.betterttv.net/emote/5f2c4f9e65fe924464ef6d61/1x.webp "MODS")'
-    ].join('\n'));
-    const emotes_json = bttvFetcher.emotes.map(emote => emote.toJSON());
-    assert.deepStrictEqual(emotes_json, bttvFetcher.fromJSON(emotes_json).map(emote => emote.toJSON()));
-}).then(() => {
-    console.log('BTTV emotes test was successful.');
-}).catch(err => {
-    console.error('BTTV emotes test failed!');
-    console.error(err);
-});
+    try {
+        await Promise.all([
+            emoteFetcher.fetchBTTVEmotes(),
+            emoteFetcher.fetchBTTVEmotes(56648155)
+        ]);
 
+        const text = emoteParser.parse(':SourPls:\n:tppUrn:\n:MODS:');
+        assert.strictEqual(
+            text,
+            [
+                '![SourPls](https://cdn.betterttv.net/emote/566ca38765dbbdab32ec0560/1x.webp "SourPls")',
+                '![tppUrn](https://cdn.betterttv.net/emote/5f5f7d5f68d9d86c020e8672/1x.webp "tppUrn")',
+                '![MODS](https://cdn.betterttv.net/emote/5f2c4f9e65fe924464ef6d61/1x.webp "MODS")'
+            ].join('\n')
+        );
+
+        console.log('BTTV emotes test was successful.');
+    } catch (err) {
+        console.error('BTTV emotes test failed!');
+        console.error(err);
+        returnCode = 1;
+    }
+}
 
 /**
  * Test FrankerFaceZ fetching and parsing.
@@ -118,33 +142,39 @@ Promise.all([
  *  - FFZ modifier (ffzHyper)
  * - fromJSON and toJSON conversion
  */
-const ffzFetcher = new EmoteFetcher();
-const ffzParser = new EmoteParser(ffzFetcher, {
-    type: 'markdown',
-    match: /:(.+?):/g
-});
+async function testFFZ() {
+    const emoteFetcher = new EmoteFetcher();
+    const emoteParser = new EmoteParser(emoteFetcher, {
+        type: 'markdown',
+        match: /:(.+?):/g
+    });
 
-Promise.all([
-    ffzFetcher.fetchFFZEmotes(),
-    ffzFetcher.fetchFFZEmotes(44317909),
-    ffzFetcher.fetchFFZEmotes(13638332)
-]).then(() => {
-    const text = ffzParser.parse(':CatBag:\n:5Head:\n:MikuSway:\n:SanaeSip: :ffzHyper:');
-    assert.strictEqual(text, [
-        '![CatBag](https://cdn.frankerfacez.com/emote/25927/1 "CatBag")',
-        '![5Head](https://cdn.frankerfacez.com/emote/239504/1 "5Head")',
-        '![MikuSway](https://cdn.frankerfacez.com/emote/723102/animated/1.webp "MikuSway")',
-        // Note the trailing space as ffZHyper is removed but not the space before
-        '![SanaeSip](https://cdn.frankerfacez.com/emote/305078/1 "SanaeSip") '
-    ].join('\n'));
-    const emotes_json = ffzFetcher.emotes.map(emote => emote.toJSON());
-    assert.deepStrictEqual(emotes_json, ffzFetcher.fromJSON(emotes_json).map(emote => emote.toJSON()));
-}).then(() => {
-    console.log('FFZ emotes test was successful.');
-}).catch(err => {
-    console.error('FFZ emotes test failed!');
-    console.error(err);
-});
+    try {
+        await Promise.all([
+            emoteFetcher.fetchFFZEmotes(),
+            emoteFetcher.fetchFFZEmotes(44317909),
+            emoteFetcher.fetchFFZEmotes(13638332)
+        ]);
+
+        const text = emoteParser.parse(':CatBag:\n:5Head:\n:MikuSway:\n:SanaeSip: :ffzHyper:');
+        assert.strictEqual(
+            text,
+            [
+                '![CatBag](https://cdn.frankerfacez.com/emote/25927/1 "CatBag")',
+                '![5Head](https://cdn.frankerfacez.com/emote/239504/1 "5Head")',
+                '![MikuSway](https://cdn.frankerfacez.com/emote/723102/animated/1.webp "MikuSway")',
+                // Note the trailing space as ffZHyper is removed but not the space before
+                '![SanaeSip](https://cdn.frankerfacez.com/emote/305078/1 "SanaeSip") '
+            ].join('\n')
+        );
+
+        console.log('FFZ emotes test was successful.');
+    } catch (err) {
+        console.error('FFZ emotes test failed!');
+        console.error(err);
+        returnCode = 1;
+    }
+}
 
 /**
  * Test 7TV fetching and parsing.
@@ -159,28 +189,85 @@ Promise.all([
  *  - 7TV Channel emote (modCheck)
  * - fromJSON and toJSON conversion
  */
-const sevenFetcher = new EmoteFetcher();
-const sevenParser = new EmoteParser(sevenFetcher, {
-    type: 'markdown',
-    match: /:(.+?):/g
-});
+async function testSevenTV() {
+    const emoteFetcher = new EmoteFetcher();
+    const emoteParser = new EmoteParser(emoteFetcher, {
+        type: 'markdown',
+        match: /:(.+?):/g
+    });
 
+    try {
+        await Promise.all([
+            emoteFetcher.fetchSevenTVEmotes(null, 'avif'),
+            emoteFetcher.fetchSevenTVEmotes(44317909)
+        ]);
+
+        const text = emoteParser.parse(':EZ:\n:Clap:\n:modCheck:');
+        assert.strictEqual(
+            text, [
+                '![EZ](https://cdn.7tv.app/emote/63071b80942ffb69e13d700f/1x.avif "EZ")',
+                '![Clap](https://cdn.7tv.app/emote/62fc0a0c4a75fd54bd3520a9/1x.avif "Clap")',
+                '![modCheck](https://cdn.7tv.app/emote/60abf171870d317bef23d399/1x.webp "modCheck")'
+            ].join('\n')
+        );
+
+        console.log('7TV emotes test was successful.');
+    } catch (err) {
+        console.error('7TV emotes test failed!');
+        console.error('(Note that they might be different during certain events like Halloween.)');
+        console.error(err);
+        returnCode = 1;
+    }
+}
+
+async function testJSONConversion() {
+    const emoteFetcher = new EmoteFetcher();
+
+    const emoteFetch = [
+        emoteFetcher.fetchBTTVEmotes(),
+        emoteFetcher.fetchBTTVEmotes(56648155),
+        emoteFetcher.fetchFFZEmotes(),
+        emoteFetcher.fetchFFZEmotes(44317909),
+        emoteFetcher.fetchFFZEmotes(13638332),
+        emoteFetcher.fetchSevenTVEmotes(null, 'avif'),
+        emoteFetcher.fetchSevenTVEmotes(44317909)
+    ];
+
+    if (env.TWITCH_ID && env.TWITCH_SECRET) {
+        emoteFetch.push(
+            emoteFetcher.fetchTwitchEmotes(),
+            emoteFetcher.fetchTwitchEmotes(56648155)
+        );
+    }
+
+    try {
+        await Promise.all(emoteFetch);
+
+        const emotes_json = emoteFetcher.emotes.map(emote => emote.toJSON());
+        assert.deepStrictEqual(emotes_json, emoteFetcher.fromJSON(emotes_json).map(emote => emote.toJSON()));
+
+        console.log('JSON conversion test was successful.');
+    } catch (err) {
+        console.error('JSON conversion test failed!');
+        console.error(err);
+        returnCode = 1;
+    }
+}
+
+
+/**
+* Execute our tests and exit with our final code.
+*/
 Promise.all([
-    sevenFetcher.fetchSevenTVEmotes(null, 'avif'),
-    sevenFetcher.fetchSevenTVEmotes(44317909)
+    testTwitch(),
+    testTwitchFaulty(),
+    testBTTV(),
+    testFFZ(),
+    testSevenTV(),
+    testJSONConversion()
 ]).then(() => {
-    const text = sevenParser.parse(':EZ:\n:Clap:\n:modCheck:');
-    assert.strictEqual(text, [
-        '![EZ](https://cdn.7tv.app/emote/63071b80942ffb69e13d700f/1x.avif "EZ")',
-        '![Clap](https://cdn.7tv.app/emote/62fc0a0c4a75fd54bd3520a9/1x.avif "Clap")',
-        '![modCheck](https://cdn.7tv.app/emote/60abf171870d317bef23d399/1x.webp "modCheck")'
-    ].join('\n'));
-    const emotes_json = sevenFetcher.emotes.map(emote => emote.toJSON());
-    assert.deepStrictEqual(emotes_json, sevenFetcher.fromJSON(emotes_json).map(emote => emote.toJSON()));
-}).then(() => {
-    console.log('7TV emotes test was successful.');
+    process.exit(returnCode);
 }).catch(err => {
-    console.error('7TV emotes test failed!');
-    console.error('(Note that they might be different during certain events like Halloween.)');
     console.error(err);
+    process.exit(1);
 });
