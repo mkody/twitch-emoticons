@@ -87,7 +87,7 @@ class FFZEmote extends Emote {
 
     /**
      * Converts a JSON into a FFZEmote
-     * @param {JSON} [emoteJSON] - JSON representation of this emote
+     * @param {EmoteJSON} [emoteJSON] - JSON representation of this emote
      * @param {Channel} [channel=null] - Channel this emote belongs to.
      * @returns {FFZEmote}
      */

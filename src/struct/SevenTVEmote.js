@@ -82,7 +82,7 @@ class SevenTVEmote extends Emote {
 
     /**
      * Converts a JSON into a SevenTVEmote
-     * @param {JSON} [emoteJSON] - JSON representation of this emote
+     * @param {EmoteJSON} [emoteJSON] - JSON representation of this emote
      * @param {Channel} [channel] - Channel this emote belongs to.
      * @returns {SevenTVEmote}
      */
