@@ -17,7 +17,6 @@ let returnCode = 0;
  * - Parse to Markdown
  *  - Twitch Global emote (CoolCat)
  *  - Twitch Channel emote (tppD)
- * - fromJSON and toJSON conversion
  */
 async function testTwitch() {
     if (env.TWITCH_ID === undefined || env.TWITCH_SECRET === undefined
@@ -93,7 +92,6 @@ function testTwitchFaulty() {
  *  - BTTV Global emote (SourPls)
  *  - BTTV Channel emote (tppUrn)
  *  - BTTV Shared emote (MODS)
- * - fromJSON and toJSON conversion
  */
 async function testBTTV() {
     const emoteFetcher = new EmoteFetcher();
@@ -140,7 +138,6 @@ async function testBTTV() {
  *  - FFZ Channel animated emote (MikuSway)
  *  - FFZ Channel emote (SanaeSip)
  *  - FFZ modifier (ffzHyper)
- * - fromJSON and toJSON conversion
  */
 async function testFFZ() {
     const emoteFetcher = new EmoteFetcher();
@@ -187,7 +184,6 @@ async function testFFZ() {
  *  - 7TV Global emote (EZ)
  *  - 7TV Global emote (Clap)
  *  - 7TV Channel emote (modCheck)
- * - fromJSON and toJSON conversion
  */
 async function testSevenTV() {
     const emoteFetcher = new EmoteFetcher();
@@ -220,6 +216,12 @@ async function testSevenTV() {
     }
 }
 
+/**
+ * Test toJSON and fromJSON functionality.
+ *
+ * Tests:
+ * - Converting all emote types to JSON and back
+ */
 async function testJSONConversion() {
     const emoteFetcher = new EmoteFetcher();
 
