@@ -93,7 +93,10 @@ class FFZEmote extends Emote {
      */
     static fromJSON(emoteJSON, channel = null) {
         // Need to convert sizes array to object, e.g. [1, 2, 4] -> { 1: '1', 2: '2', 4: '4' }
-        const sizes_obj = emoteJSON.sizes.reduce((acc,curr) => (acc[curr]=curr,acc), {});
+        const sizes_obj = emoteJSON.sizes.reduce((acc, curr) => {
+            acc[curr] = curr;
+            return acc;
+        }, {});
         return new FFZEmote(channel, emoteJSON.id,
             {
                 code: emoteJSON.code,
