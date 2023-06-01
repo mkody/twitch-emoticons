@@ -320,29 +320,29 @@ class EmoteFetcher {
     }
 
     /**
-     * Converts emote JSONs to emotes
-     * @param {Object} [json] - Emote JSON
+     * Converts emote Objects to emotes
+     * @param {Object} [json] - Emote Object
      * @returns {Emote[]}
      */
-    fromJSON(json) {
+    fromObject(json) {
         const emotes = [];
         const classMap = {
-            bttv: { class: BTTVEmote, cache: (emoteJSON, channel_id, existing_emote) => this._cacheBTTVEmote(channel_id, null, existing_emote) },
-            ffz: { class: FFZEmote, cache: (emoteJSON, channel_id, existing_emote) => this._cacheFFZEmote(channel_id, null, existing_emote) },
-            '7tv': { class: SevenTVEmote, cache: (emoteJSON, channel_id, existing_emote) => this._cacheSevenTVEmote(channel_id, null, emoteJSON.imageType, existing_emote) },
-            twitch: { class: TwitchEmote, cache: (emoteJSON, channel_id, existing_emote) => this._cacheTwitchEmote(channel_id, null, existing_emote) }
+            bttv: { class: BTTVEmote, cache: (emoteObject, channel_id, existing_emote) => this._cacheBTTVEmote(channel_id, null, existing_emote) },
+            ffz: { class: FFZEmote, cache: (emoteObject, channel_id, existing_emote) => this._cacheFFZEmote(channel_id, null, existing_emote) },
+            '7tv': { class: SevenTVEmote, cache: (emoteObject, channel_id, existing_emote) => this._cacheSevenTVEmote(channel_id, null, emoteObject.imageType, existing_emote) },
+            twitch: { class: TwitchEmote, cache: (emoteObject, channel_id, existing_emote) => this._cacheTwitchEmote(channel_id, null, existing_emote) }
         };
-        for (const emoteJSON of json) {
-            const { type } = emoteJSON;
+        for (const emoteObject of json) {
+            const { type } = emoteObject;
             if (!Object.keys(classMap).includes(type)) {
                 console.log(`Unknown type: ${type}`);
                 continue;
             }
 
             const emoteClass = classMap[type].class;
-            this._setupChannel(emoteJSON.channel_id, type === '7tv' ? emoteJSON.imageType : null);
-            const emote = emoteClass.fromJSON(emoteJSON, this.channels.get(emoteJSON.channel_id));
-            classMap[type].cache(emoteJSON, emoteJSON.channel_id, emote);
+            this._setupChannel(emoteObject.channel_id, type === '7tv' ? emoteObject.imageType : null);
+            const emote = emoteClass.fromObject(emoteObject, this.channels.get(emoteObject.channel_id));
+            classMap[type].cache(emoteObject, emoteObject.channel_id, emote);
             emotes.push(emote);
         }
         return emotes;

@@ -71,12 +71,12 @@ class FFZEmote extends Emote {
     }
 
     /**
-     * Override for `toJSON`.
-     * Will result in a JSON representation of a FFZEmote
+     * Override for `toObject`.
+     * Will result in an Object representation of a FFZEmote
      * @returns {Object}
      */
-    toJSON() {
-        return Object.assign({}, super.toJSON(), {
+    toObject() {
+        return Object.assign({}, super.toObject(), {
             animated: this.animated,
             sizes: this.sizes,
             ownerName: this.ownerName,
@@ -86,26 +86,26 @@ class FFZEmote extends Emote {
     }
 
     /**
-     * Converts a JSON into a FFZEmote
-     * @param {Object} [emoteJSON] - JSON representation of this emote
+     * Converts an emote Object into a FFZEmote
+     * @param {Object} [emoteObject] - Object representation of this emote
      * @param {Channel} [channel=null] - Channel this emote belongs to.
      * @returns {FFZEmote}
      */
-    static fromJSON(emoteJSON, channel = null) {
+    static fromObject(emoteObject, channel = null) {
         // Need to convert sizes array to object, e.g. [1, 2, 4] -> { 1: '1', 2: '2', 4: '4' }
-        const sizes_obj = emoteJSON.sizes.reduce((acc, curr) => {
+        const sizes_obj = emoteObject.sizes.reduce((acc, curr) => {
             acc[curr] = curr;
             return acc;
         }, {});
-        return new FFZEmote(channel, emoteJSON.id,
+        return new FFZEmote(channel, emoteObject.id,
             {
-                code: emoteJSON.code,
-                name: emoteJSON.code,
+                code: emoteObject.code,
+                name: emoteObject.code,
                 urls: sizes_obj,
-                ...(emoteJSON.animated ? { animated: sizes_obj } : {}),
-                owner: { name: emoteJSON.ownerName },
-                modifier: emoteJSON.modifier,
-                modifier_flags: emoteJSON.modifier
+                ...(emoteObject.animated ? { animated: sizes_obj } : {}),
+                owner: { name: emoteObject.ownerName },
+                modifier: emoteObject.modifier,
+                modifier_flags: emoteObject.modifier
             });
     }
 }

@@ -31,7 +31,7 @@ declare module '@mkody/twitch-emoticons' {
         public fetchBTTVEmotes(id?: number): Promise<Collection<string, BTTVEmote>>;
         public fetchFFZEmotes(id: number): Promise<Collection<string, FFZEmote>>;
         public fetchSevenTVEmotes(id?: number, format?: 'webp' | 'avif'): Promise<Collection<string, SevenTVEmote>>;
-        public fromJSON(json: EmoteJSON[]): Emote[];
+        public fromObject(json: EmoteObject[]): Emote[];
     }
 
     export class EmoteParser {
@@ -53,7 +53,7 @@ declare module '@mkody/twitch-emoticons' {
         public readonly owner: Channel;
 
         public toLink(size: number): string;
-        public toJSON(): EmoteJSON;
+        public toObject(): EmoteObject;
     }
 
     export class BTTVEmote extends Emote {
@@ -65,7 +65,7 @@ declare module '@mkody/twitch-emoticons' {
         public readonly owner?: Channel;
 
         public toLink(size: number): string;
-        public toJSON(): EmoteJSON;
+        public toObject(): EmoteObject;
     }
 
     export class FFZEmote extends Emote {
@@ -79,7 +79,7 @@ declare module '@mkody/twitch-emoticons' {
         public readonly owner?: Channel;
 
         public toLink(size: number): string;
-        public toJSON(): EmoteJSON;
+        public toObject(): EmoteObject;
     }
 
     export class SevenTVEmote extends Emote {
@@ -92,10 +92,10 @@ declare module '@mkody/twitch-emoticons' {
         public readonly owner?: Channel;
 
         public toLink(size: number): string;
-        public toJSON(): EmoteJSON;
+        public toObject(): EmoteObject;
     }
 
-    export interface EmoteJSON {
+    export interface EmoteObject {
         code: string,
         id: string,
         channel_id: string,

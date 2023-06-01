@@ -55,12 +55,12 @@ class TwitchEmote extends Emote {
     }
 
     /**
-     * Override for `toJSON`.
-     * Will result in a JSON representation of a TwitchEmote
+     * Override for `toObject`.
+     * Will result in an Object representation of a TwitchEmote
      * @returns {Object}
      */
-    toJSON() {
-        return Object.assign({}, super.toJSON(), {
+    toObject() {
+        return Object.assign({}, super.toObject(), {
             animated: this.animated,
             set: this.set,
             type: this.type
@@ -68,18 +68,18 @@ class TwitchEmote extends Emote {
     }
 
     /**
-     * Converts a JSON into a TwitchEmote
-     * @param {Object} [emoteJSON] - JSON representation of this emote
+     * Converts an emote Object into a TwitchEmote
+     * @param {Object} [emoteObject] - Object representation of this emote
      * @param {Channel} [channel=null] - Channel this emote belongs to.
      * @returns {TwitchEmote}
      */
-    static fromJSON(emoteJSON, channel = null) {
-        return new TwitchEmote(channel, emoteJSON.id,
+    static fromObject(emoteObject, channel = null) {
+        return new TwitchEmote(channel, emoteObject.id,
             {
-                code: emoteJSON.code,
-                animated: emoteJSON.animated,
-                emoticon_set: emoteJSON.set,
-                formats: emoteJSON.animated ? { animated: emoteJSON.animated } : {}
+                code: emoteObject.code,
+                animated: emoteObject.animated,
+                emoticon_set: emoteObject.set,
+                formats: emoteObject.animated ? { animated: emoteObject.animated } : {}
             });
     }
 }

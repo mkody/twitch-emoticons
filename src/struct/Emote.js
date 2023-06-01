@@ -63,11 +63,11 @@ class Emote {
     }
 
     /**
-     * Override for `toJSON`.
-     * Will result in a JSON representation of an Emote
+     * Override for `toObject`.
+     * Will result in an Object representation of an Emote
      * @returns {Object}
      */
-    toJSON() {
+    toObject() {
         return {
             code: this.code,
             id: this.id,

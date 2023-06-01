@@ -217,12 +217,12 @@ async function testSevenTV() {
 }
 
 /**
- * Test toJSON and fromJSON functionality.
+ * Test toObject and fromObject functionality.
  *
  * Tests:
- * - Converting all emote types to JSON and back
+ * - Converting all emote types to Object and back
  */
-async function testJSONConversion() {
+async function testObjectConversion() {
     const emoteFetcher = new EmoteFetcher();
 
     const emoteFetch = [
@@ -245,12 +245,12 @@ async function testJSONConversion() {
     try {
         await Promise.all(emoteFetch);
 
-        const emotes_json = emoteFetcher.emotes.map(emote => emote.toJSON());
-        assert.deepStrictEqual(emotes_json, emoteFetcher.fromJSON(emotes_json).map(emote => emote.toJSON()));
+        const emotes_obj = emoteFetcher.emotes.map(emote => emote.toObject());
+        assert.deepStrictEqual(emotes_obj, emoteFetcher.fromObject(emotes_obj).map(emote => emote.toObject()));
 
-        console.log('JSON conversion test was successful.');
+        console.log('Object conversion test was successful.');
     } catch (err) {
-        console.error('JSON conversion test failed!');
+        console.error('Object conversion test failed!');
         console.error(err);
         returnCode = 1;
     }
@@ -266,7 +266,7 @@ Promise.all([
     testBTTV(),
     testFFZ(),
     testSevenTV(),
-    testJSONConversion()
+    testObjectConversion()
 ]).then(() => {
     process.exit(returnCode);
 }).catch(err => {

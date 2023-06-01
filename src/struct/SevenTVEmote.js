@@ -66,12 +66,12 @@ class SevenTVEmote extends Emote {
     }
 
     /**
-     * Override for `toJSON`.
-     * Will result in a JSON representation of a SevenTVEmote
+     * Override for `toObject`.
+     * Will result in an Object representation of a SevenTVEmote
      * @returns {Object}
      */
-    toJSON() {
-        return Object.assign({}, super.toJSON(), {
+    toObject() {
+        return Object.assign({}, super.toObject(), {
             animated: this.animated,
             sizes: this.sizes,
             ownerName: this.ownerName,
@@ -81,20 +81,20 @@ class SevenTVEmote extends Emote {
     }
 
     /**
-     * Converts a JSON into a SevenTVEmote
-     * @param {Object} [emoteJSON] - JSON representation of this emote
+     * Converts an emote Object into a SevenTVEmote
+     * @param {Object} [emoteObject] - Object representation of this emote
      * @param {Channel} [channel] - Channel this emote belongs to.
      * @returns {SevenTVEmote}
      */
-    static fromJSON(emoteJSON, channel) {
-        const sizes = emoteJSON.sizes.map(size => { return { format: channel.format.toUpperCase(), name: size }; });
-        return new SevenTVEmote(channel, emoteJSON.id,
+    static fromObject(emoteObject, channel) {
+        const sizes = emoteObject.sizes.map(size => { return { format: channel.format.toUpperCase(), name: size }; });
+        return new SevenTVEmote(channel, emoteObject.id,
             {
-                code: emoteJSON.code,
-                name: emoteJSON.code,
-                animated: emoteJSON.animated,
+                code: emoteObject.code,
+                name: emoteObject.code,
+                animated: emoteObject.animated,
                 owner: {
-                    display_name: emoteJSON.ownerName
+                    display_name: emoteObject.ownerName
                 },
                 host: {
                     files: sizes
