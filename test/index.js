@@ -220,10 +220,11 @@ async function testSevenTV() {
  * Test toObject and fromObject functionality.
  *
  * Tests:
+ * - Converting select emotes from each type to Object
  * - Converting all emote types to Object and back
  */
 async function testObjectConversion() {
-    const emoteFetcher = new EmoteFetcher();
+    const emoteFetcher = new EmoteFetcher(env.TWITCH_ID, env.TWITCH_SECRET);
 
     const emoteFetch = [
         emoteFetcher.fetchBTTVEmotes(),
@@ -244,6 +245,139 @@ async function testObjectConversion() {
 
     try {
         await Promise.all(emoteFetch);
+
+        assert.deepStrictEqual(emoteFetcher.emotes.get('SourPls').toObject(), {
+            id: '566ca38765dbbdab32ec0560',
+            type: 'bttv',
+            code: 'SourPls',
+            ownerName: null,
+            animated: true,
+            channel_id: null
+        });
+
+        assert.deepStrictEqual(emoteFetcher.emotes.get('tppUrn').toObject(), {
+            id: '5f5f7d5f68d9d86c020e8672',
+            type: 'bttv',
+            code: 'tppUrn',
+            ownerName: null,
+            animated: false,
+            channel_id: 56648155
+        });
+
+        assert.deepStrictEqual(emoteFetcher.emotes.get('MODS').toObject(), {
+            id: '5f2c4f9e65fe924464ef6d61',
+            type: 'bttv',
+            code: 'MODS',
+            ownerName: 'bearrrr_',
+            animated: true,
+            channel_id: 56648155
+        });
+
+        assert.deepStrictEqual(emoteFetcher.emotes.get('CatBag').toObject(), {
+            id: 25927,
+            type: 'ffz',
+            code: 'CatBag',
+            ownerName: 'wolsk',
+            animated: false,
+            modifier: false,
+            channel_id: undefined,
+            sizes: ['1', '2', '4']
+        });
+
+        assert.deepStrictEqual(emoteFetcher.emotes.get('5Head').toObject(), {
+            id: 239504,
+            type: 'ffz',
+            code: '5Head',
+            ownerName: 'sublimedtv',
+            animated: false,
+            modifier: false,
+            channel_id: 44317909,
+            sizes: ['1', '2', '4']
+        });
+
+        assert.deepStrictEqual(emoteFetcher.emotes.get('MikuSway').toObject(), {
+            id: 723102,
+            type: 'ffz',
+            code: 'MikuSway',
+            ownerName: 'brin____',
+            animated: true,
+            modifier: false,
+            channel_id: 44317909,
+            sizes: ['1', '2', '4']
+        });
+
+        assert.deepStrictEqual(emoteFetcher.emotes.get('SanaeSip').toObject(), {
+            id: 305078,
+            type: 'ffz',
+            code: 'SanaeSip',
+            ownerName: 'shizuka_natsume',
+            animated: false,
+            modifier: false,
+            channel_id: 13638332,
+            sizes: ['1', '2', '4']
+        });
+
+        assert.deepStrictEqual(emoteFetcher.emotes.get('EZ').toObject(), {
+            id: '63071b80942ffb69e13d700f',
+            type: '7tv',
+            code: 'EZ',
+            ownerName: 'Kh4N_02',
+            animated: false,
+            channel_id: null,
+            sizes: ['1x.avif', '2x.avif', '3x.avif', '4x.avif'],
+            imageType: 'avif'
+        });
+
+        assert.deepStrictEqual(emoteFetcher.emotes.get('Clap').toObject(), {
+            id: '62fc0a0c4a75fd54bd3520a9',
+            type: '7tv',
+            code: 'Clap',
+            ownerName: 'sunkhaskasis',
+            animated: true,
+            channel_id: null,
+            sizes: ['1x.avif', '2x.avif', '3x.avif', '4x.avif'],
+            imageType: 'avif'
+        });
+
+        assert.deepStrictEqual(emoteFetcher.emotes.get('modCheck').toObject(), {
+            id: '60abf171870d317bef23d399',
+            type: '7tv',
+            code: 'modCheck',
+            ownerName: 'Laden',
+            animated: true,
+            channel_id: 44317909,
+            sizes: ['1x.webp', '2x.webp', '3x.webp', '4x.webp'],
+            imageType: 'webp'
+        });
+
+        if (env.TWITCH_ID && env.TWITCH_SECRET) {
+            assert.deepStrictEqual(emoteFetcher.emotes.get('Kappa').toObject(), {
+                id: '25',
+                type: 'twitch',
+                code: 'Kappa',
+                animated: false,
+                channel_id: null,
+                set: undefined
+            });
+
+            assert.deepStrictEqual(emoteFetcher.emotes.get('CoolCat').toObject(), {
+                id: '58127',
+                type: 'twitch',
+                code: 'CoolCat',
+                animated: false,
+                channel_id: null,
+                set: undefined
+            });
+
+            assert.deepStrictEqual(emoteFetcher.emotes.get('tppD').toObject(), {
+                id: '307609315',
+                type: 'twitch',
+                code: 'tppD',
+                animated: false,
+                channel_id: 56648155,
+                set: undefined
+            });
+        }
 
         const emotes_obj = emoteFetcher.emotes.map(emote => emote.toObject());
         assert.deepStrictEqual(emotes_obj, emoteFetcher.fromObject(emotes_obj).map(emote => emote.toObject()));
