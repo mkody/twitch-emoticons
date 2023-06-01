@@ -71,7 +71,7 @@ class BTTVEmote extends Emote {
 
     /**
      * Converts a JSON into a BTTVEmote
-     * @param {EmoteJSON} [emoteJSON] - JSON representation of this emote
+     * @param {Object} [emoteJSON] - JSON representation of this emote
      * @param {Channel} [channel=null] - Channel this emote belongs to.
      * @returns {BTTVEmote}
      */

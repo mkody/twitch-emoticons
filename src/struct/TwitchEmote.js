@@ -69,7 +69,7 @@ class TwitchEmote extends Emote {
 
     /**
      * Converts a JSON into a TwitchEmote
-     * @param {EmoteJSON} [emoteJSON] - JSON representation of this emote
+     * @param {Object} [emoteJSON] - JSON representation of this emote
      * @param {Channel} [channel=null] - Channel this emote belongs to.
      * @returns {TwitchEmote}
      */
