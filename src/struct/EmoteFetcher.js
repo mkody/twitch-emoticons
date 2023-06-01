@@ -335,8 +335,7 @@ class EmoteFetcher {
         for (const emoteObject of json) {
             const { type } = emoteObject;
             if (!Object.keys(classMap).includes(type)) {
-                console.log(`Unknown type: ${type}`);
-                continue;
+                throw new TypeError(`Unknown type: ${type}`);
             }
 
             const emoteClass = classMap[type].class;
