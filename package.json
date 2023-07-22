@@ -31,7 +31,7 @@
     },
     "devDependencies": {
         "docdash": "^2.0.1",
-        "eslint": "^8.42.0",
+        "eslint": "^8.44.0",
         "jsdoc": "^4.0.2"
     },
     "scripts": {
