@@ -25,13 +25,13 @@
     ],
     "license": "MIT",
     "dependencies": {
-        "@twurple/api": "^6.2.1",
-        "@twurple/auth": "^6.2.1",
+        "@twurple/api": "^7.0.1",
+        "@twurple/auth": "^7.0.1",
         "axios": "^1.4.0"
     },
     "devDependencies": {
         "docdash": "^2.0.1",
-        "eslint": "^8.44.0",
+        "eslint": "^8.45.0",
         "jsdoc": "^4.0.2"
     },
     "scripts": {
