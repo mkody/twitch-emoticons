@@ -31,6 +31,7 @@ declare module '@mkody/twitch-emoticons' {
         public fetchBTTVEmotes(id?: number): Promise<Collection<string, BTTVEmote>>;
         public fetchFFZEmotes(id: number): Promise<Collection<string, FFZEmote>>;
         public fetchSevenTVEmotes(id?: number, format?: 'webp' | 'avif'): Promise<Collection<string, SevenTVEmote>>;
+        public fromObject(json: EmoteObject[]): Emote[];
     }
 
     export class EmoteParser {
@@ -52,6 +53,7 @@ declare module '@mkody/twitch-emoticons' {
         public readonly owner: Channel;
 
         public toLink(size: number): string;
+        public toObject(): EmoteObject;
     }
 
     export class BTTVEmote extends Emote {
@@ -63,6 +65,7 @@ declare module '@mkody/twitch-emoticons' {
         public readonly owner?: Channel;
 
         public toLink(size: number): string;
+        public toObject(): EmoteObject;
     }
 
     export class FFZEmote extends Emote {
@@ -76,6 +79,7 @@ declare module '@mkody/twitch-emoticons' {
         public readonly owner?: Channel;
 
         public toLink(size: number): string;
+        public toObject(): EmoteObject;
     }
 
     export class SevenTVEmote extends Emote {
@@ -88,6 +92,19 @@ declare module '@mkody/twitch-emoticons' {
         public readonly owner?: Channel;
 
         public toLink(size: number): string;
+        public toObject(): EmoteObject;
+    }
+
+    export interface EmoteObject {
+        code: string,
+        id: string,
+        channel_id: string,
+        type: 'twitch' | 'bttv' | 'ffz' | '7tv'
+        animated?: boolean,
+        ownerName?: string,
+        sizes?: string[],
+        set?: string,
+        imageType?: string
     }
 
     export class Collection<K, V> extends Map<K, V> {

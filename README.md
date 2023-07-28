@@ -110,16 +110,36 @@ const { EmoteFetcher } = require('@mkody/twitch-emoticons');
 const fetcher = new EmoteFetcher();
 
 // Fetch global emotes in AVIF (channel id has to be `null` for global)
-fetcher.fetchSevenTVEmotes(null, 'avif');
+await fetcher.fetchSevenTVEmotes(null, 'avif');
 
 // Fetch 0kody's emotes with the package's default format (WEBP)
-fetcher.fetchSevenTVEmotes(44317909);
+await fetcher.fetchSevenTVEmotes(44317909);
 
 // ... which is currently the same as
-fetcher.fetchSevenTVEmotes(44317909, 'webp');
+await fetcher.fetchSevenTVEmotes(44317909, 'webp');
 
 // Fetch Anatole's emotes in AVIF
-fetcher.fetchSevenTVEmotes(24377667, 'avif');
+await fetcher.fetchSevenTVEmotes(24377667, 'avif');
+```
+
+#### Export and import emote data
+
+This can be useful to save the emotes in a cache or for offline content.  
+(For offline content, you'll still need to download emotes and proxy their URLs.)
+
+```js
+const { EmoteFetcher } = require('@mkody/twitch-emoticons');
+const fetcher = new EmoteFetcher();
+
+// First fetch some emotes
+await fetcher.fetchSevenTVEmotes(null, 'avif');
+
+// Then you can use .toObject() on an `Emote` to export its data.
+// Here's a map to get them all in a single array.
+const emotes = fetcher.emotes.map(emote => emote.toObject());
+
+// Later, with or without a fresh `EmoteFetcher`, you can use .fromObject() on the fetcher.
+fetcher.fromObject(emotes);
 ```
 
 ### Links
