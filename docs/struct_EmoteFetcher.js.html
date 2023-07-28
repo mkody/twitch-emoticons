@@ -372,10 +372,10 @@ class EmoteFetcher {
 
     /**
      * Converts emote Objects to emotes
-     * @param {Object} [json] - Emote Object
+     * @param {Object} [emotesArray] - An array of emote objects
      * @returns {Emote[]}
      */
-    fromObject(json) {
+    fromObject(emotesArray) {
         const emotes = [];
         const classMap = {
             bttv: { class: BTTVEmote, cache: (emoteObject, channel_id, existing_emote) => this._cacheBTTVEmote(channel_id, null, existing_emote) },
@@ -383,7 +383,7 @@ class EmoteFetcher {
             '7tv': { class: SevenTVEmote, cache: (emoteObject, channel_id, existing_emote) => this._cacheSevenTVEmote(channel_id, null, emoteObject.imageType, existing_emote) },
             twitch: { class: TwitchEmote, cache: (emoteObject, channel_id, existing_emote) => this._cacheTwitchEmote(channel_id, null, existing_emote) }
         };
-        for (const emoteObject of json) {
+        for (const emoteObject of emotesArray) {
             const { type } = emoteObject;
             if (!Object.keys(classMap).includes(type)) {
                 throw new TypeError(`Unknown type: ${type}`);
