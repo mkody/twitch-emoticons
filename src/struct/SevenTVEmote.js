@@ -64,6 +64,43 @@ class SevenTVEmote extends Emote {
         size = this.sizes[size];
         return Constants.SevenTV.CDN(this.id, size); // eslint-disable-line new-cap
     }
+
+    /**
+     * Override for `toObject`.
+     * Will result in an Object representation of a SevenTVEmote
+     * @returns {Object}
+     */
+    toObject() {
+        return Object.assign({}, super.toObject(), {
+            animated: this.animated,
+            sizes: this.sizes,
+            ownerName: this.ownerName,
+            type: this.type,
+            imageType: this.imageType
+        });
+    }
+
+    /**
+     * Converts an emote Object into a SevenTVEmote
+     * @param {Object} [emoteObject] - Object representation of this emote
+     * @param {Channel} [channel] - Channel this emote belongs to.
+     * @returns {SevenTVEmote}
+     */
+    static fromObject(emoteObject, channel) {
+        const sizes = emoteObject.sizes.map(size => { return { format: channel.format.toUpperCase(), name: size }; });
+        return new SevenTVEmote(channel, emoteObject.id,
+            {
+                code: emoteObject.code,
+                name: emoteObject.code,
+                animated: emoteObject.animated,
+                owner: {
+                    display_name: emoteObject.ownerName
+                },
+                host: {
+                    files: sizes
+                }
+            });
+    }
 }
 
 module.exports = SevenTVEmote;

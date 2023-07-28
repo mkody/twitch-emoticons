@@ -69,6 +69,45 @@ class FFZEmote extends Emote {
         if (this.animated) return Constants.FFZ.CDNAnimated(this.id, size); // eslint-disable-line new-cap
         return Constants.FFZ.CDN(this.id, size); // eslint-disable-line new-cap
     }
+
+    /**
+     * Override for `toObject`.
+     * Will result in an Object representation of a FFZEmote
+     * @returns {Object}
+     */
+    toObject() {
+        return Object.assign({}, super.toObject(), {
+            animated: this.animated,
+            sizes: this.sizes,
+            ownerName: this.ownerName,
+            type: this.type,
+            modifier: this.modifier
+        });
+    }
+
+    /**
+     * Converts an emote Object into a FFZEmote
+     * @param {Object} [emoteObject] - Object representation of this emote
+     * @param {Channel} [channel=null] - Channel this emote belongs to.
+     * @returns {FFZEmote}
+     */
+    static fromObject(emoteObject, channel = null) {
+        // Need to convert sizes array to object, e.g. [1, 2, 4] -> { 1: '1', 2: '2', 4: '4' }
+        const sizes_obj = emoteObject.sizes.reduce((acc, curr) => {
+            acc[curr] = curr;
+            return acc;
+        }, {});
+        return new FFZEmote(channel, emoteObject.id,
+            {
+                code: emoteObject.code,
+                name: emoteObject.code,
+                urls: sizes_obj,
+                ...(emoteObject.animated ? { animated: sizes_obj } : {}),
+                owner: { name: emoteObject.ownerName },
+                modifier: emoteObject.modifier,
+                modifier_flags: emoteObject.modifier
+            });
+    }
 }
 
 module.exports = FFZEmote;

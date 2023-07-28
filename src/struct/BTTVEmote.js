@@ -55,6 +55,36 @@ class BTTVEmote extends Emote {
     toLink(size = 0) {
         return Constants.BTTV.CDN(this.id, size); // eslint-disable-line new-cap
     }
+
+    /**
+     * Override for `toObject`.
+     * Will result in an Object representation of a BTTVEmote
+     * @returns {Object}
+     */
+    toObject() {
+        return Object.assign({}, super.toObject(), {
+            animated: this.animated,
+            ownerName: this.ownerName,
+            type: this.type
+        });
+    }
+
+    /**
+     * Converts an emote Object into a BTTVEmote
+     * @param {Object} [emoteObject] - Object representation of this emote
+     * @param {Channel} [channel=null] - Channel this emote belongs to.
+     * @returns {BTTVEmote}
+     */
+    static fromObject(emoteObject, channel = null) {
+        return new BTTVEmote(channel, emoteObject.id,
+            {
+                code: emoteObject.code,
+                animated: emoteObject.animated,
+                user: {
+                    name: emoteObject.ownerName
+                }
+            });
+    }
 }
 
 module.exports = BTTVEmote;
