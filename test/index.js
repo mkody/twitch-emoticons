@@ -299,7 +299,7 @@ async function testObjectConversion() {
             id: 723102,
             type: 'ffz',
             code: 'MikuSway',
-            ownerName: 'brin____',
+            ownerName: 'brian6932',
             animated: true,
             modifier: false,
             channel_id: 44317909,
