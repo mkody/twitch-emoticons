@@ -49,6 +49,18 @@ fetcher.fetchTwitchEmotes(null).then(() => {
 });
 ```
 
+#### Bring your own `@twurple/api`
+
+If you already use [Twurple](https://twurple.js.org/) in your project and manage authentification
+(i.e. with user tokens), you can reuse it in this project by skipping the first two paramters and
+setting `apiClient` with your [ApiClient](https://twurple.js.org/reference/api/classes/ApiClient.html) object.
+
+```js
+const fetcher = new EmoteFetcher(null, null, {
+    apiClient: yourOwnTwurpleApiClientHere
+});
+```
+
 #### All providers, global + channel, custom template and match pattern
 
 ```js

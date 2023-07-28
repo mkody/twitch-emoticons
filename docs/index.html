@@ -44,7 +44,7 @@
 
 
     <section class="package">
-        <h3>@mkody/twitch-emoticons 2.7.1</h3>		
+        <h3>@mkody/twitch-emoticons 2.8.0</h3>		
     </section>
 
 
@@ -99,6 +99,14 @@ fetcher.fetchTwitchEmotes(null).then(() => {
     const parsed = parser.parse(text);
     console.log(parsed);
     // Hello ![CoolCat](https://static-cdn.jtvnw.net/emoticons/v2/58127/default/dark/1.0 &quot;CoolCat&quot;)!
+});
+</code></pre>
+<h4>Bring your own <code>@twurple/api</code></h4>
+<p>If you already use <a href="https://twurple.js.org/">Twurple</a> in your project and manage authentification<br>
+(i.e. with user tokens), you can reuse it in this project by skipping the first two paramters and<br>
+setting <code>apiClient</code> with your <a href="https://twurple.js.org/reference/api/classes/ApiClient.html">ApiClient</a> object.</p>
+<pre class="prettyprint source lang-js"><code>const fetcher = new EmoteFetcher(null, null, {
+    apiClient: yourOwnTwurpleApiClientHere
 });
 </code></pre>
 <h4>All providers, global + channel, custom template and match pattern</h4>

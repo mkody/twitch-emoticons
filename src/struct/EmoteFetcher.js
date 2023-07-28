@@ -15,9 +15,13 @@ class EmoteFetcher {
      * Fetches and caches emotes.
      * @param {string} clientId The client id for the twitch api.
      * @param {string} clientSecret The client secret for the twitch api.
-     */
-    constructor(clientId, clientSecret) {
-        if (clientId !== undefined && clientSecret !== undefined) {
+     * @param {Object} options Additional options.
+     * @param {ApiClient} options.apiClient - Bring your own Twurple ApiClient.
+    */
+    constructor(clientId, clientSecret, options) {
+        if (options && options.apiClient) {
+            this.apiClient = options.apiClient;
+        } else if (clientId !== undefined && clientSecret !== undefined) {
             const authProvider = new AppTokenAuthProvider(clientId, clientSecret);
 
             /**

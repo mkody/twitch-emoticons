@@ -149,7 +149,7 @@ class FFZEmote extends Emote {
                 code: emoteObject.code,
                 name: emoteObject.code,
                 urls: sizes_obj,
-                ...(emoteObject.animated ? { animated: sizes_obj } : {}),
+                ...emoteObject.animated ? { animated: sizes_obj } : {},
                 owner: { name: emoteObject.ownerName },
                 modifier: emoteObject.modifier,
                 modifier_flags: emoteObject.modifier
