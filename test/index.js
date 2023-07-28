@@ -210,20 +210,19 @@ async function testSevenTV() {
         console.log('7TV emotes test was successful.');
     } catch (err) {
         console.error('7TV emotes test failed!');
-        console.error('(Note that they might be different during certain events like Halloween.)');
+        console.error('(Note that emotes might have been updated.)');
         console.error(err);
         returnCode = 1;
     }
 }
 
 /**
- * Test toObject and fromObject functionality.
+ * Test toObject functionality.
  *
  * Tests:
  * - Converting select emotes from each type to Object
- * - Converting all emote types to Object and back
  */
-async function testObjectConversion() {
+async function testToObject() {
     const emoteFetcher = new EmoteFetcher(env.TWITCH_ID, env.TWITCH_SECRET);
 
     const emoteFetch = [
@@ -379,17 +378,90 @@ async function testObjectConversion() {
             });
         }
 
-        const emotes_obj = emoteFetcher.emotes.map(emote => emote.toObject());
-        assert.deepStrictEqual(emotes_obj, emoteFetcher.fromObject(emotes_obj).map(emote => emote.toObject()));
-
-        console.log('Object conversion test was successful.');
+        console.log('toObject test was successful.');
     } catch (err) {
-        console.error('Object conversion test failed!');
+        console.error('toObject test failed!');
+        console.error('(Note that emotes might have been updated.)');
         console.error(err);
         returnCode = 1;
     }
 }
 
+
+/**
+ * Test fromOobject functionality.
+ *
+ * Tests:
+ * - Converting select emotes from each type from Object
+ * - Testing parser output
+ */
+function testFromObject() {
+    const emoteFetcher = new EmoteFetcher();
+    const emoteParser = new EmoteParser(emoteFetcher, {
+        type: 'markdown',
+        match: /(\w+)+?/g
+    });
+
+    const emotes_obj = [
+        {
+            code: 'tppD',
+            id: '307609315',
+            channel_id: 56648155,
+            animated: false,
+            set: undefined,
+            type: 'twitch'
+        },
+        {
+            code: 'SourPls',
+            id: '566ca38765dbbdab32ec0560',
+            channel_id: null,
+            animated: true,
+            ownerName: null,
+            type: 'bttv'
+        },
+        {
+            code: 'modCheck',
+            id: '60abf171870d317bef23d399',
+            channel_id: 44317909,
+            animated: true,
+            sizes: ['1x.webp', '2x.webp', '3x.webp', '4x.webp'],
+            ownerName: 'Laden',
+            type: '7tv',
+            imageType: 'webp'
+        },
+        {
+            code: 'MikuSway',
+            id: 723102,
+            channel_id: 44317909,
+            animated: true,
+            sizes: ['1', '2', '4'],
+            ownerName: 'brian6932',
+            type: 'ffz',
+            modifier: false
+        }
+    ];
+
+    try {
+        emoteFetcher.fromObject(emotes_obj);
+
+        const text = emoteParser.parse('tppD SourPls modCheck MikuSway');
+        assert.strictEqual(
+            text,
+            [
+                '![tppD](https://static-cdn.jtvnw.net/emoticons/v2/307609315/default/dark/1.0 "tppD")',
+                '![SourPls](https://cdn.betterttv.net/emote/566ca38765dbbdab32ec0560/1x.webp "SourPls")',
+                '![modCheck](https://cdn.7tv.app/emote/60abf171870d317bef23d399/1x.webp "modCheck")',
+                '![MikuSway](https://cdn.frankerfacez.com/emote/723102/animated/1.webp "MikuSway")'
+            ].join(' ')
+        );
+
+        console.log('fromObject test was successful.');
+    } catch (err) {
+        console.error('fromObject test failed!');
+        console.error(err);
+        returnCode = 1;
+    }
+}
 
 /**
 * Execute our tests and exit with our final code.
@@ -400,7 +472,8 @@ Promise.all([
     testBTTV(),
     testFFZ(),
     testSevenTV(),
-    testObjectConversion()
+    testToObject(),
+    testFromObject()
 ]).then(() => {
     process.exit(returnCode);
 }).catch(err => {
