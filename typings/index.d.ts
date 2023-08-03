@@ -22,7 +22,13 @@ declare module '@mkody/twitch-emoticons' {
     }
 
     export class EmoteFetcher {
-        public constructor(clientId?: string, clientSecret?: string);
+        public constructor(
+            clientId?: string,
+            clientSecret?: string,
+            options?: {
+                apiClient?: object
+            }
+        );
 
         public emotes: Collection<string, Emote>;
         public channels: Collection<string, Channel>;
@@ -35,11 +41,14 @@ declare module '@mkody/twitch-emoticons' {
     }
 
     export class EmoteParser {
-        public constructor(fetcher: EmoteFetcher, options: {
-            template?: string,
-            type?: string,
-            match?: RegExp
-        });
+        public constructor(
+            fetcher: EmoteFetcher, 
+            options: {
+                template?: string,
+                type?: string,
+                match?: RegExp
+            }
+        );
 
         public parse(text: string, size?: number): string;
     }
