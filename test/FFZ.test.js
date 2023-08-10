@@ -1,5 +1,5 @@
-const { describe, expect, test, beforeAll } = require('@jest/globals');
-const { EmoteFetcher, EmoteParser } = require('../src/index.js');
+const { describe, expect, test } = require('@jest/globals');
+const { EmoteFetcher, EmoteParser, Collection } = require('../src/index.js');
 
 describe('Test FFZ emotes', () => {
     describe('Test global emotes', () => {
@@ -9,8 +9,8 @@ describe('Test FFZ emotes', () => {
             match: /:(.+?):/g
         });
 
-        beforeAll(() => {
-            return emoteFetcher.fetchFFZEmotes();
+        test('Execute fetchFFZEmotes without any parameters', async() => {
+            expect(await emoteFetcher.fetchFFZEmotes()).toBeInstanceOf(Collection);
         });
 
         test('Get emote (CatBag)', () => {
@@ -31,8 +31,8 @@ describe('Test FFZ emotes', () => {
             match: /:(.+?):/g
         });
 
-        beforeAll(() => {
-            return emoteFetcher.fetchFFZEmotes(44317909);
+        test('Execute fetchFFZEmotes with user ID', async() => {
+            expect(await emoteFetcher.fetchFFZEmotes(44317909)).toBeInstanceOf(Collection);
         });
 
         test('Get emote (5Head)', () => {
@@ -53,8 +53,8 @@ describe('Test FFZ emotes', () => {
             match: /:(.+?):/g
         });
 
-        beforeAll(() => {
-            return emoteFetcher.fetchFFZEmotes(44317909);
+        test('Execute fetchFFZEmotes with user ID', async() => {
+            expect(await emoteFetcher.fetchFFZEmotes(44317909)).toBeInstanceOf(Collection);
         });
 
         test('Get animated emote (MikuSway)', () => {

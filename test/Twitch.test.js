@@ -1,6 +1,6 @@
-const { describe, expect, test, beforeAll } = require('@jest/globals');
+const { describe, expect, test } = require('@jest/globals');
 const { env } = require('process');
-const { EmoteFetcher, EmoteParser } = require('../src/index.js');
+const { EmoteFetcher, EmoteParser, Collection } = require('../src/index.js');
 
 describe('Test Twitch emotes', () => {
     test('Test failing when environment variables are not set', () => {
@@ -24,8 +24,8 @@ describe('Test Twitch emotes', () => {
                 match: /:(.+?):/g
             });
 
-            beforeAll(() => {
-                return emoteFetcher.fetchTwitchEmotes();
+            test('Execute fetchTwitchEmotes without any parameters', async() => {
+                expect(await emoteFetcher.fetchTwitchEmotes()).toBeInstanceOf(Collection);
             });
 
             test('Get emote (Kappa)', () => {
@@ -46,8 +46,8 @@ describe('Test Twitch emotes', () => {
                 match: /:(.+?):/g
             });
 
-            beforeAll(() => {
-                return emoteFetcher.fetchTwitchEmotes(56648155);
+            test('Execute fetchTwitchEmotes with user ID', async() => {
+                expect(await emoteFetcher.fetchTwitchEmotes(56648155)).toBeInstanceOf(Collection);
             });
 
             test('Get emote (tppD)', () => {

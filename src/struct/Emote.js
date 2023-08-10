@@ -54,6 +54,7 @@ class Emote {
      * @param {number} size - The size of the image.
      * @returns {string}
      */
+    /* c8 ignore next 3*/
     toLink() {
         return null;
     }
@@ -63,6 +64,7 @@ class Emote {
      * Will give the emote's name.
      * @returns {string}
      */
+    /* c8 ignore next 3*/
     toString() {
         return this.code;
     }

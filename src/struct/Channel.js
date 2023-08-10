@@ -27,6 +27,9 @@ class Channel {
         this.emotes = new Collection();
     }
 
+    /* There are tests that those are returning Collections, but c8 doesn't get it. */
+    /* c8 ignore start */
+
     /**
      * Fetches the BTTV emotes for this channel.
      * @returns {Promise<Collection<string, BTTVEmote>>}
@@ -50,6 +53,8 @@ class Channel {
     fetchSevenTVEmotes() {
         return this.fetcher.fetchSevenTVEmotes(this.id);
     }
+
+    /* c8 ignore end */
 }
 
 module.exports = Channel;

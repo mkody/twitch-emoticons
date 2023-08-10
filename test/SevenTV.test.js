@@ -1,5 +1,5 @@
-const { describe, expect, test, beforeAll } = require('@jest/globals');
-const { EmoteFetcher, EmoteParser } = require('../src/index.js');
+const { describe, expect, test } = require('@jest/globals');
+const { EmoteFetcher, EmoteParser, Collection } = require('../src/index.js');
 
 describe('Test 7TV emotes', () => {
     describe('Test global emotes (WEBP)', () => {
@@ -9,8 +9,8 @@ describe('Test 7TV emotes', () => {
             match: /:(.+?):/g
         });
 
-        beforeAll(() => {
-            return emoteFetcher.fetchSevenTVEmotes(null, 'webp');
+        test('Execute fetchSevenTVEmotes with the WEBP format', async() => {
+            expect(await emoteFetcher.fetchSevenTVEmotes(null, 'webp')).toBeInstanceOf(Collection);
         });
 
         test('Get emote (EZ)', () => {
@@ -31,8 +31,8 @@ describe('Test 7TV emotes', () => {
             match: /:(.+?):/g
         });
 
-        beforeAll(() => {
-            return emoteFetcher.fetchSevenTVEmotes(null, 'avif');
+        test('Execute fetchSevenTVEmotes with the AVIF format', async() => {
+            expect(await emoteFetcher.fetchSevenTVEmotes(null, 'avif')).toBeInstanceOf(Collection);
         });
 
         test('Get emote (Clap)', () => {
@@ -53,8 +53,8 @@ describe('Test 7TV emotes', () => {
             match: /:(.+?):/g
         });
 
-        beforeAll(() => {
-            return emoteFetcher.fetchSevenTVEmotes(44317909);
+        test('Execute fetchSevenTVEmotes with user ID', async() => {
+            expect(await emoteFetcher.fetchSevenTVEmotes(44317909)).toBeInstanceOf(Collection);
         });
 
         test('Get emote (modCheck)', () => {

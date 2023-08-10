@@ -1,5 +1,5 @@
-const { describe, expect, test, beforeAll } = require('@jest/globals');
-const { EmoteFetcher, EmoteParser } = require('../src/index.js');
+const { describe, expect, test } = require('@jest/globals');
+const { EmoteFetcher, EmoteParser, Collection } = require('../src/index.js');
 
 describe('Test BTTV emotes', () => {
     describe('Test global emotes', () => {
@@ -9,8 +9,8 @@ describe('Test BTTV emotes', () => {
             match: /:(.+?):/g
         });
 
-        beforeAll(() => {
-            return emoteFetcher.fetchBTTVEmotes();
+        test('Execute fetchBTTVEmotes without any parameters', async() => {
+            expect(await emoteFetcher.fetchBTTVEmotes()).toBeInstanceOf(Collection);
         });
 
         test('Get emote (SourPls)', () => {
@@ -31,8 +31,8 @@ describe('Test BTTV emotes', () => {
             match: /:(.+?):/g
         });
 
-        beforeAll(() => {
-            return emoteFetcher.fetchBTTVEmotes(56648155);
+        test('Execute fetchBTTVEmotes with user ID', async() => {
+            expect(await emoteFetcher.fetchBTTVEmotes(56648155)).toBeInstanceOf(Collection);
         });
 
         test('Get emote (tppUrn)', () => {
