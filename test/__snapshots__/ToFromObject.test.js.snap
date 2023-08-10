@@ -1,0 +1,143 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test toObject 7TV Global Emote (AVIF) 1`] = `
+{
+  "animated": false,
+  "channel_id": null,
+  "code": "EZ",
+  "id": "63071b80942ffb69e13d700f",
+  "imageType": "avif",
+  "ownerName": "Kh4N_02",
+  "sizes": [
+    "1x.avif",
+    "2x.avif",
+    "3x.avif",
+    "4x.avif",
+  ],
+  "type": "7tv",
+}
+`;
+
+exports[`Test toObject 7TV User Emote 1`] = `
+{
+  "animated": true,
+  "channel_id": 44317909,
+  "code": "modCheck",
+  "id": "60abf171870d317bef23d399",
+  "imageType": "webp",
+  "ownerName": "Laden",
+  "sizes": [
+    "1x.webp",
+    "2x.webp",
+    "3x.webp",
+    "4x.webp",
+  ],
+  "type": "7tv",
+}
+`;
+
+exports[`Test toObject BTTV Global Emote 1`] = `
+{
+  "animated": true,
+  "channel_id": null,
+  "code": "SourPls",
+  "id": "566ca38765dbbdab32ec0560",
+  "ownerName": null,
+  "type": "bttv",
+}
+`;
+
+exports[`Test toObject BTTV User Animated Emote 1`] = `
+{
+  "animated": true,
+  "channel_id": 56648155,
+  "code": "MODS",
+  "id": "5f2c4f9e65fe924464ef6d61",
+  "ownerName": "bearrrr_",
+  "type": "bttv",
+}
+`;
+
+exports[`Test toObject BTTV User Emote 1`] = `
+{
+  "animated": false,
+  "channel_id": 56648155,
+  "code": "tppUrn",
+  "id": "5f5f7d5f68d9d86c020e8672",
+  "ownerName": null,
+  "type": "bttv",
+}
+`;
+
+exports[`Test toObject FFZ Global Emote 1`] = `
+{
+  "animated": false,
+  "channel_id": undefined,
+  "code": "CatBag",
+  "id": 25927,
+  "modifier": false,
+  "ownerName": "wolsk",
+  "sizes": [
+    "1",
+    "2",
+    "4",
+  ],
+  "type": "ffz",
+}
+`;
+
+exports[`Test toObject FFZ User Animated Emote 1`] = `
+{
+  "animated": true,
+  "channel_id": 44317909,
+  "code": "MikuSway",
+  "id": 723102,
+  "modifier": false,
+  "ownerName": "brian6932",
+  "sizes": [
+    "1",
+    "2",
+    "4",
+  ],
+  "type": "ffz",
+}
+`;
+
+exports[`Test toObject FFZ User Emote 1`] = `
+{
+  "animated": false,
+  "channel_id": 13638332,
+  "code": "SanaeSip",
+  "id": 305078,
+  "modifier": false,
+  "ownerName": "shizuka_natsume",
+  "sizes": [
+    "1",
+    "2",
+    "4",
+  ],
+  "type": "ffz",
+}
+`;
+
+exports[`Test toObject Twitch Global Emote 1`] = `
+{
+  "animated": false,
+  "channel_id": null,
+  "code": "Kappa",
+  "id": "25",
+  "set": undefined,
+  "type": "twitch",
+}
+`;
+
+exports[`Test toObject Twitch User Emote 1`] = `
+{
+  "animated": false,
+  "channel_id": 56648155,
+  "code": "tppD",
+  "id": "307609315",
+  "set": undefined,
+  "type": "twitch",
+}
+`;
