@@ -49,6 +49,11 @@ class Emote {
         this.code = data.code;
     }
 
+    /**
+     * Gets the image link of the emote.
+     * @param {number} size - The size of the image.
+     * @returns {string}
+     */
     toLink() {
         return null;
     }
