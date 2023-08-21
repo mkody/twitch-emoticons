@@ -267,7 +267,7 @@ class EmoteFetcher {
      * @param {int} [channel=null] - ID of the channel.
      * @returns {Promise<Collection<string, FFZEmote>>}
      */
-    async fetchFFZEmotes(channel) {
+    async fetchFFZEmotes(channel = null) {
         // Fetch modifier emotes at least once
         if (!this.ffzModifiersFetched) {
             this.ffzModifiersFetched = true;
