@@ -33,6 +33,7 @@
     "devDependencies": {
         "@jest/globals": "^29.6.2",
         "docdash": "^2.0.1",
+        "esbuild": "^0.19.2",
         "eslint": "^8.46.0",
         "jest": "^29.6.2",
         "jsdoc": "^4.0.2"
@@ -40,7 +41,8 @@
     "scripts": {
         "docs": "jsdoc --configure .jsdoc.json --verbose",
         "test": "jest",
-        "lint": "eslint ./src ./test"
+        "lint": "eslint ./src ./test",
+        "build": "esbuild ./src/index.js --bundle --format=esm --outfile=./dist/TwitchEmoticons.js"
     },
     "repository": {
         "type": "git",
