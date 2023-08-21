@@ -42,7 +42,7 @@
         "docs": "jsdoc --configure .jsdoc.json --verbose",
         "test": "jest",
         "lint": "eslint ./src ./test",
-        "build": "esbuild ./src/index.js --bundle --format=esm --outfile=./dist/TwitchEmoticons.js"
+        "build": "esbuild ./src/index.js --bundle --minify --keep-names --sourcemap --format=esm --outfile=./dist/TwitchEmoticons.min.js"
     },
     "repository": {
         "type": "git",
