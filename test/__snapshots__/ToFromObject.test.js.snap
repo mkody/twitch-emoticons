@@ -72,7 +72,7 @@ exports[`Test toObject BTTV User Emote 1`] = `
 exports[`Test toObject FFZ Global Emote 1`] = `
 {
   "animated": false,
-  "channel_id": undefined,
+  "channel_id": null,
   "code": "CatBag",
   "id": 25927,
   "modifier": false,
