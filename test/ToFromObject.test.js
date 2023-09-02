@@ -57,12 +57,32 @@ describe('Test toObject', () => {
     } else {
         test('Twitch Global Emote', async() => {
             await emoteFetcher.fetchTwitchEmotes();
-            expect(emoteFetcher.emotes.get('Kappa').toObject()).toMatchSnapshot();
+            // Use inline to not fail when the environment variables are not set
+            expect(emoteFetcher.emotes.get('Kappa').toObject()).toMatchInlineSnapshot(`
+{
+  "animated": false,
+  "channel_id": null,
+  "code": "Kappa",
+  "id": "25",
+  "set": undefined,
+  "type": "twitch",
+}
+`);
         });
 
         test('Twitch User Emote', async() => {
             await emoteFetcher.fetchTwitchEmotes(56648155);
-            expect(emoteFetcher.emotes.get('tppD').toObject()).toMatchSnapshot();
+            // Use inline to not fail when the environment variables are not set
+            expect(emoteFetcher.emotes.get('tppD').toObject()).toMatchInlineSnapshot(`
+{
+  "animated": false,
+  "channel_id": 56648155,
+  "code": "tppD",
+  "id": "307609315",
+  "set": undefined,
+  "type": "twitch",
+}
+`);
         });
     }
 });
