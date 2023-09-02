@@ -119,25 +119,3 @@ exports[`Test toObject FFZ User Emote 1`] = `
   "type": "ffz",
 }
 `;
-
-exports[`Test toObject Twitch Global Emote 1`] = `
-{
-  "animated": false,
-  "channel_id": null,
-  "code": "Kappa",
-  "id": "25",
-  "set": undefined,
-  "type": "twitch",
-}
-`;
-
-exports[`Test toObject Twitch User Emote 1`] = `
-{
-  "animated": false,
-  "channel_id": 56648155,
-  "code": "tppD",
-  "id": "307609315",
-  "set": undefined,
-  "type": "twitch",
-}
-`;
