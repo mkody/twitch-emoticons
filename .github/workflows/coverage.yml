@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: ArtiomTr/jest-coverage-report-action@v2
         with:
           package-manager: yarn

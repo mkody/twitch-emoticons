@@ -1,16 +1,19 @@
 name: Yarn Test
 
-on: [push, pull_request]
+on: [ push ]
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
+
       - run: yarn install --frozen-lockfile
+
       - run: yarn test
         env:
           TWITCH_ID: ${{ secrets.TWITCH_ID }}
