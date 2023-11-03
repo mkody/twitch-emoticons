@@ -39,10 +39,11 @@
         "jsdoc": "^4.0.2"
     },
     "scripts": {
+        "all": "pnpm run docs && pnpm run lint && pnpm run build && pnpm run test",
+        "build": "esbuild ./src/index.js --bundle --minify --keep-names --sourcemap --format=esm --outfile=./dist/TwitchEmoticons.min.js",
         "docs": "jsdoc --configure .jsdoc.json --verbose",
-        "test": "jest",
         "lint": "eslint ./src ./test",
-        "build": "esbuild ./src/index.js --bundle --minify --keep-names --sourcemap --format=esm --outfile=./dist/TwitchEmoticons.min.js"
+        "test": "jest"
     },
     "repository": {
         "type": "git",
@@ -57,6 +58,8 @@
         "test": "test"
     },
     "engines": {
-        "node": ">=16.0.0"
-    }
+        "node": ">=16.0.0",
+        "pnpm": ">=8"
+    },
+    "packageManager": "pnpm@8.10.2"
 }

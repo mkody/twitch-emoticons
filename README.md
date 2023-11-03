@@ -13,6 +13,8 @@ If you are only using BetterTTV, FrankerFaceZ and 7TV you don't need to provide 
 ```sh
 npm install @mkody/twitch-emoticons
 # or
+pnpm install @mkody/twitch-emoticons
+# or
 yarn add @mkody/twitch-emoticons
 ```
 
