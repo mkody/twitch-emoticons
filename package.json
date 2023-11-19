@@ -26,15 +26,15 @@
     ],
     "license": "MIT",
     "dependencies": {
-        "@twurple/api": "^7.0.4",
-        "@twurple/auth": "^7.0.4",
-        "axios": "^1.6.0"
+        "@twurple/api": "^7.0.5",
+        "@twurple/auth": "^7.0.5",
+        "axios": "^1.6.2"
     },
     "devDependencies": {
         "@jest/globals": "^29.7.0",
         "docdash": "^2.0.2",
-        "esbuild": "^0.19.5",
-        "eslint": "^8.52.0",
+        "esbuild": "^0.19.6",
+        "eslint": "^8.54.0",
         "jest": "^29.7.0",
         "jsdoc": "^4.0.2"
     },
