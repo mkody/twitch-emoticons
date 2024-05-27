@@ -1,7 +1,7 @@
 const Emote = require('./Emote');
 const Constants = require('../util/Constants');
 
-/** @extends Emote */
+/** @augments Emote */
 class BTTVEmote extends Emote {
     /**
      * A BTTV emote.
@@ -59,7 +59,7 @@ class BTTVEmote extends Emote {
     /**
      * Override for `toObject`.
      * Will result in an Object representation of a BTTVEmote
-     * @returns {Object}
+     * @returns {object}
      */
     toObject() {
         return Object.assign({}, super.toObject(), {
@@ -71,7 +71,7 @@ class BTTVEmote extends Emote {
 
     /**
      * Converts an emote Object into a BTTVEmote
-     * @param {Object} [emoteObject] - Object representation of this emote
+     * @param {object} [emoteObject] - Object representation of this emote
      * @param {Channel} [channel=null] - Channel this emote belongs to.
      * @returns {BTTVEmote}
      */

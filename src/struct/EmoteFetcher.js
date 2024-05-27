@@ -15,9 +15,9 @@ class EmoteFetcher {
      * Fetches and caches emotes.
      * @param {string} clientId The client id for the twitch api.
      * @param {string} clientSecret The client secret for the twitch api.
-     * @param {Object} options Additional options.
+     * @param {object} options Additional options.
      * @param {ApiClient} options.apiClient - Bring your own Twurple ApiClient.
-    */
+     */
     constructor(clientId, clientSecret, options) {
         if (options && options.apiClient) {
             this.apiClient = options.apiClient;
@@ -81,7 +81,7 @@ class EmoteFetcher {
      * Gets the raw Twitch emotes data for a channel.
      * @private
      * @param {int} id - ID of the channel.
-     * @returns {Promise<Object[]>}
+     * @returns {Promise<object[]>}
      */
     _getRawTwitchEmotes(id) {
         if (!this.apiClient) {
@@ -99,7 +99,7 @@ class EmoteFetcher {
      * Converts and caches a raw twitch emote.
      * @private
      * @param {int} channel_id - ID of the channel.
-     * @param {Object} data - Raw data.
+     * @param {object} data - Raw data.
      * @param {TwitchEmote} [existing_emote=null] - Existing emote to cache.
      * @returns {TwitchEmote}
      */
@@ -116,7 +116,7 @@ class EmoteFetcher {
      * Use `null` for the global emotes channel.
      * @private
      * @param {int} [id=null] - ID of the channel.
-     * @returns {Promise<Object[]>}
+     * @returns {Promise<object[]>}
      */
     _getRawBTTVEmotes(id) {
         const endpoint = !id
@@ -135,7 +135,7 @@ class EmoteFetcher {
      * Converts and caches a raw BTTV emote.
      * @private
      * @param {int} channel_id - ID of the channel.
-     * @param {Object} data - Raw data.
+     * @param {object} data - Raw data.
      * @param {BTTVEmote} [existing_emote=null] - Existing emote to cache.
      * @returns {BTTVEmote}
      */
@@ -151,7 +151,7 @@ class EmoteFetcher {
      * Gets the raw FFZ emote data from a set.
      * @private
      * @param {int} id - ID of the set.
-     * @returns {Promise<Object[]>}
+     * @returns {Promise<object[]>}
      */
     _getRawFFZEmoteSet(id) {
         const endpoint = Constants.FFZ.Set(id); // eslint-disable-line new-cap
@@ -165,7 +165,7 @@ class EmoteFetcher {
      * Gets the raw FFZ emotes data for a channel.
      * @private
      * @param {int} id - ID of the channel.
-     * @returns {Promise<Object[]>}
+     * @returns {Promise<object[]>}
      */
     _getRawFFZEmotes(id) {
         const endpoint = Constants.FFZ.Channel(id); // eslint-disable-line new-cap
@@ -185,7 +185,7 @@ class EmoteFetcher {
      * Converts and caches a raw FFZ emote.
      * @private
      * @param {int} channel_id - ID of the channel.
-     * @param {Object} data - Raw data.
+     * @param {object} data - Raw data.
      * @param {FFZEmote} [existing_emote=null] - Existing emote to cache.
      * @returns {FFZEmote}
      */
@@ -201,7 +201,7 @@ class EmoteFetcher {
      * Gets the raw 7TV emotes data for a channel.
      * @private
      * @param {int} [id=null] - ID of the channel.
-     * @returns {Promise<Object[]>}
+     * @returns {Promise<object[]>}
      */
     _getRawSevenTVEmotes(id) {
         const endpoint = !id
@@ -215,7 +215,7 @@ class EmoteFetcher {
      * Converts and caches a raw 7TV emote.
      * @private
      * @param {int} channel_id - ID of the channel.
-     * @param {Object} data - Raw data.
+     * @param {object} data - Raw data.
      * @param {string} format - The type file format to use (webp/avif).
      * @param {SevenTVEmote} [existing_emote=null] - Existing emote to cache.
      * @returns {SevenTVEmote}
@@ -325,7 +325,7 @@ class EmoteFetcher {
 
     /**
      * Converts emote Objects to emotes
-     * @param {Object} [emotesArray] - An array of emote objects
+     * @param {object} [emotesArray] - An array of emote objects
      * @returns {Emote[]}
      */
     fromObject(emotesArray) {

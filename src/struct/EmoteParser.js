@@ -4,7 +4,7 @@ class EmoteParser {
     /**
      * A parser to replace text with emotes.
      * @param {EmoteFetcher} fetcher - The fetcher to use the cache of.
-     * @param {Object} [options={}] - Options for the parser.
+     * @param {object} [options={}] - Options for the parser.
      * @param {string} [options.template] - The template to be used.
      * The strings that can be interpolated are:
      * - `{link}` The link of the emote.
@@ -26,7 +26,7 @@ class EmoteParser {
 
         /**
          * The parser options.
-         * @type {Object}
+         * @type {object}
          */
         this.options = Object.assign({
             template: '',

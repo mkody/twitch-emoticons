@@ -72,7 +72,7 @@ class Emote {
     /**
      * Override for `toObject`.
      * Will result in an Object representation of an Emote
-     * @returns {Object}
+     * @returns {object}
      */
     toObject() {
         return {
