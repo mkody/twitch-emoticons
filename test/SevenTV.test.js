@@ -15,12 +15,12 @@ describe('Test 7TV emotes', () => {
 
         test('Get emote (EZ)', () => {
             const emote = emoteFetcher.emotes.get('EZ');
-            expect(emote.toLink(2)).toBe('https://cdn.7tv.app/emote/61525bba20eaf897465aab47/3x.webp');
+            expect(emote.toLink(2)).toBe('https://cdn.7tv.app/emote/01FGMVCKMG00021TQRJX35NAT7/3x.webp');
         });
 
         test('Parse string with emote (EZ)', () => {
             const text = emoteParser.parse('This is a test string with :EZ: in it.');
-            expect(text).toBe('This is a test string with ![EZ](https://cdn.7tv.app/emote/61525bba20eaf897465aab47/1x.webp "EZ") in it.');
+            expect(text).toBe('This is a test string with ![EZ](https://cdn.7tv.app/emote/01FGMVCKMG00021TQRJX35NAT7/1x.webp "EZ") in it.');
         });
     });
 
@@ -37,12 +37,12 @@ describe('Test 7TV emotes', () => {
 
         test('Get emote (Clap)', () => {
             const emote = emoteFetcher.emotes.get('Clap');
-            expect(emote.toLink(2)).toBe('https://cdn.7tv.app/emote/634885e1e417daf82c4d7247/3x.avif');
+            expect(emote.toLink(2)).toBe('https://cdn.7tv.app/emote/01GF9MNXQ8000E85YTZ0P4TWJ7/3x.avif');
         });
 
         test('Parse string with emote (Clap)', () => {
             const text = emoteParser.parse('This is a test string with :Clap: in it.');
-            expect(text).toBe('This is a test string with ![Clap](https://cdn.7tv.app/emote/634885e1e417daf82c4d7247/1x.avif "Clap") in it.');
+            expect(text).toBe('This is a test string with ![Clap](https://cdn.7tv.app/emote/01GF9MNXQ8000E85YTZ0P4TWJ7/1x.avif "Clap") in it.');
         });
     });
 
@@ -59,12 +59,12 @@ describe('Test 7TV emotes', () => {
 
         test('Get emote (modCheck)', () => {
             const emote = emoteFetcher.emotes.get('modCheck');
-            expect(emote.toLink(2)).toBe('https://cdn.7tv.app/emote/60abf171870d317bef23d399/3x.webp');
+            expect(emote.toLink(2)).toBe('https://cdn.7tv.app/emote/01F6FTE8B80008E39HFFQJ7MWS/3x.webp');
         });
 
         test('Parse string with emote (modCheck)', () => {
             const text = emoteParser.parse('This is a test string with :modCheck: in it.');
-            expect(text).toBe('This is a test string with ![modCheck](https://cdn.7tv.app/emote/60abf171870d317bef23d399/1x.webp "modCheck") in it.');
+            expect(text).toBe('This is a test string with ![modCheck](https://cdn.7tv.app/emote/01F6FTE8B80008E39HFFQJ7MWS/1x.webp "modCheck") in it.');
         });
     });
 });

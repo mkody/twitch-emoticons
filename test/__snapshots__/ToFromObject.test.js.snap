@@ -5,7 +5,7 @@ exports[`Test toObject 7TV Global Emote (AVIF) 1`] = `
   "animated": false,
   "channel_id": null,
   "code": "EZ",
-  "id": "61525bba20eaf897465aab47",
+  "id": "01FGMVCKMG00021TQRJX35NAT7",
   "imageType": "avif",
   "ownerName": "PsycloneTM",
   "sizes": [
@@ -23,7 +23,7 @@ exports[`Test toObject 7TV User Emote 1`] = `
   "animated": true,
   "channel_id": 44317909,
   "code": "modCheck",
-  "id": "60abf171870d317bef23d399",
+  "id": "01F6FTE8B80008E39HFFQJ7MWS",
   "imageType": "webp",
   "ownerName": "Laden",
   "sizes": [
