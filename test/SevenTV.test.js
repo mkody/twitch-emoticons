@@ -57,14 +57,15 @@ describe('Test 7TV emotes', () => {
             expect(await emoteFetcher.fetchSevenTVEmotes(44317909)).toBeInstanceOf(Collection);
         });
 
-        test('Get emote (modCheck)', () => {
-            const emote = emoteFetcher.emotes.get('modCheck');
-            expect(emote.toLink(2)).toBe('https://cdn.7tv.app/emote/01F6FTE8B80008E39HFFQJ7MWS/3x.webp');
+        // YABE was picked as it has been renamed from "fubukiYabe" on this channel
+        test('Get emote (YABE)', () => {
+            const emote = emoteFetcher.emotes.get('YABE');
+            expect(emote.toLink(2)).toBe('https://cdn.7tv.app/emote/01FFNN7CG00009CAK0J14696HH/3x.webp');
         });
 
-        test('Parse string with emote (modCheck)', () => {
-            const text = emoteParser.parse('This is a test string with :modCheck: in it.');
-            expect(text).toBe('This is a test string with ![modCheck](https://cdn.7tv.app/emote/01F6FTE8B80008E39HFFQJ7MWS/1x.webp "modCheck") in it.');
+        test('Parse string with emote (YABE)', () => {
+            const text = emoteParser.parse('This is a test string with :YABE: in it.');
+            expect(text).toBe('This is a test string with ![YABE](https://cdn.7tv.app/emote/01FFNN7CG00009CAK0J14696HH/1x.webp "YABE") in it.');
         });
     });
 });

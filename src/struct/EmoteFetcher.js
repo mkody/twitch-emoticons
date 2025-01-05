@@ -310,12 +310,12 @@ class EmoteFetcher {
             if ('emotes' in rawEmotes) {
                 // From an emote set (like "global")
                 for (const data of rawEmotes.emotes) {
-                    this._cacheSevenTVEmote(channel, data.data, format);
+                    this._cacheSevenTVEmote(channel, data, format);
                 }
             } else {
                 // From users
                 for (const data of rawEmotes.emote_set.emotes) {
-                    this._cacheSevenTVEmote(channel, data.data, format);
+                    this._cacheSevenTVEmote(channel, data, format);
                 }
             }
 

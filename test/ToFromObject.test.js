@@ -48,7 +48,8 @@ describe('Test toObject', () => {
 
     test('7TV User Emote', async() => {
         await emoteFetcher.fetchSevenTVEmotes(44317909);
-        expect(emoteFetcher.emotes.get('modCheck').toObject()).toMatchSnapshot();
+        // YABE was picked as it has been renamed from "fubukiYabe" on this channel
+        expect(emoteFetcher.emotes.get('YABE').toObject()).toMatchSnapshot();
     });
 
     if (env.TWITCH_ID === undefined || env.TWITCH_SECRET === undefined

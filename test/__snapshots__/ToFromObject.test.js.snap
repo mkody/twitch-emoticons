@@ -22,10 +22,10 @@ exports[`Test toObject 7TV User Emote 1`] = `
 {
   "animated": true,
   "channel_id": 44317909,
-  "code": "modCheck",
-  "id": "01F6FTE8B80008E39HFFQJ7MWS",
+  "code": "YABE",
+  "id": "01FFNN7CG00009CAK0J14696HH",
   "imageType": "webp",
-  "ownerName": "Laden",
+  "ownerName": "jenji333",
   "sizes": [
     "1x.webp",
     "2x.webp",
