@@ -18,6 +18,9 @@ importers:
         specifier: ^1.7.9
         version: 1.7.9
     devDependencies:
+      '@eslint/js':
+        specifier: ^9.20.0
+        version: 9.20.0
       '@jest/globals':
         specifier: ^29.7.0
         version: 29.7.0
