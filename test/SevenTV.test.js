@@ -15,12 +15,12 @@ describe('Test 7TV emotes', () => {
 
         test('Get emote (EZ)', () => {
             const emote = emoteFetcher.emotes.get('EZ');
-            expect(emote.toLink(2)).toBe('https://cdn.7tv.app/emote/01GB9W6V0000098BZVD7GKTW0F/3x.webp');
+            expect(emote.toLink(2)).toBe('https://cdn.7tv.app/emote/01GB4CK01800090V9B3D8CGEEX/3x.webp');
         });
 
         test('Parse string with emote (EZ)', () => {
             const text = emoteParser.parse('This is a test string with :EZ: in it.');
-            expect(text).toBe('This is a test string with ![EZ](https://cdn.7tv.app/emote/01GB9W6V0000098BZVD7GKTW0F/1x.webp "EZ") in it.');
+            expect(text).toBe('This is a test string with ![EZ](https://cdn.7tv.app/emote/01GB4CK01800090V9B3D8CGEEX/1x.webp "EZ") in it.');
         });
     });
 

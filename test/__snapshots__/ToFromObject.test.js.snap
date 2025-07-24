@@ -1,13 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Test toObject 7TV Global Emote (AVIF) 1`] = `
 {
   "animated": false,
   "channel_id": null,
   "code": "EZ",
-  "id": "01GB9W6V0000098BZVD7GKTW0F",
+  "id": "01GB4CK01800090V9B3D8CGEEX",
   "imageType": "avif",
-  "ownerName": "Kh4N_02",
+  "ownerName": "TrippyColour",
   "sizes": [
     "1x.avif",
     "2x.avif",
