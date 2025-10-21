@@ -5,6 +5,7 @@ class Emote {
      * @param {Channel} channel - Channel this emote belongs to.
      * @param {string} id - ID of the emote.
      * @param {data} data - The raw emote data.
+     * @throws {Error} When trying to use the base Emote class directly.
      */
     constructor(channel, id, data) {
         if (new.target.name === Emote.name) {

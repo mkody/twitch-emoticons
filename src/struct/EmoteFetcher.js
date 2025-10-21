@@ -65,6 +65,7 @@ class EmoteFetcher {
      * @private
      * @param {int} channel_id - ID of the channel.
      * @param {string} [format=null] - The type file format to use (webp/avif).
+     * @throws {Error} When Twitch Client ID or Client Secret were not provided.
      * @returns {Channel}
      */
     _setupChannel(channel_id, format = null) {
@@ -326,6 +327,7 @@ class EmoteFetcher {
     /**
      * Converts emote Objects to emotes
      * @param {object} [emotesArray] - An array of emote objects
+     * @throws {TypeError} When an emote has an unknown type.
      * @returns {Emote[]}
      */
     fromObject(emotesArray) {

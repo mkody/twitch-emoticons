@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/reject-function-type, jsdoc/reject-any-type */
 /**
  * An extended Map with utility methods.
  * @class Collection
