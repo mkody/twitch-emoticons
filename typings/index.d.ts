@@ -45,7 +45,7 @@ declare module '@mkody/twitch-emoticons' {
             fetcher: EmoteFetcher, 
             options: {
                 template?: string,
-                type?: string,
+                type?: 'html' | 'markdown' | 'bbcode' | 'plain',
                 match?: RegExp
             }
         );
