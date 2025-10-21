@@ -21,17 +21,24 @@
         "encoding": "utf8",
         "private": true,
         "recurse": true,
-        "template": "./node_modules/docdash",
-        "docdash": {
-            "static": false,
-            "sort": false
-        }
+        "verbose": true,
+        "template": "./node_modules/docdash"
     },
     "plugins": ["plugins/markdown"],
     "markdown": {
         "hardwrap": true
     },
     "docdash": {
+        "sort": false,
+        "private": false,
+        "menu": {
+            "GitHub": {
+                "href":"https://github.com/mkody/twitch-emoticons",
+                "target":"_blank",
+                "class":"menu-item",
+                "id":"github_link"
+            }
+        },
         "scopeInOutputPath": false,
         "nameInOutputPath": false,
         "versionInOutputPath": false

@@ -45,7 +45,7 @@
     "scripts": {
         "all": "pnpm run lint && pnpm run test && pnpm run build && pnpm run docs",
         "build": "esbuild ./src/index.js --bundle --minify --keep-names --sourcemap --format=esm --outfile=./dist/TwitchEmoticons.min.js",
-        "docs": "jsdoc --configure .jsdoc.json --verbose",
+        "docs": "jsdoc --configure .jsdoc.json",
         "lint": "eslint ./src ./test",
         "test": "jest"
     },
