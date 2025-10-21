@@ -7,16 +7,20 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     permissions:
-      contents: write
+      contents: read
       id-token: write
 
     steps:
-      - uses: actions/checkout@v5
+      - name: Checkout
+        uses: actions/checkout@v5
 
-      - uses: pnpm/action-setup@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
 
-      - uses: actions/setup-node@v6
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
         with:
           node-version-file: '.nvmrc'
           registry-url: 'https://registry.npmjs.org'
@@ -25,15 +29,19 @@ jobs:
       - name: Update npm
         run: npm install -g npm@latest
 
-      - run: pnpm install
+      - name: Install dependencies
+        run: pnpm install
 
-      - run: pnpm test
+      - name: Run tests
+        run: pnpm test
         env:
           TWITCH_ID: ${{ secrets.TWITCH_ID }}
           TWITCH_SECRET: ${{ secrets.TWITCH_SECRET }}
 
-      - run: pnpm build
+      - name: Build
+        run: pnpm build
 
-      - run: npm publish
+      - name: Publish
+        run: npm publish
         # env:
         #   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -8,11 +8,15 @@ on:
 jobs:
   coverage:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v5
+      - name: Checkout
+        uses: actions/checkout@v5
 
-      - uses: pnpm/action-setup@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
 
-      - uses: ArtiomTr/jest-coverage-report-action@v2
+      - name: Check coverage
+        uses: ArtiomTr/jest-coverage-report-action@v2
         with:
           package-manager: pnpm
