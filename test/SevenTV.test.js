@@ -15,12 +15,12 @@ describe('Test 7TV emotes', () => {
 
         test('Get emote (EZ)', () => {
             const emote = emoteFetcher.emotes.get('EZ');
-            expect(emote.toLink(2)).toBe('https://cdn.7tv.app/emote/01K6WWG0R4T5A9FVNN4TWCWXA7/3x.webp');
+            expect(emote.toLink(2)).toBe('https://cdn.7tv.app/emote/01GB4CK01800090V9B3D8CGEEX/3x.webp');
         });
 
         test('Parse string with emote (EZ)', () => {
             const text = emoteParser.parse('This is a test string with :EZ: in it.');
-            expect(text).toBe('This is a test string with ![EZ](https://cdn.7tv.app/emote/01K6WWG0R4T5A9FVNN4TWCWXA7/1x.webp "EZ") in it.');
+            expect(text).toBe('This is a test string with ![EZ](https://cdn.7tv.app/emote/01GB4CK01800090V9B3D8CGEEX/1x.webp "EZ") in it.');
         });
     });
 
@@ -37,12 +37,12 @@ describe('Test 7TV emotes', () => {
 
         test('Get emote (Clap)', () => {
             const emote = emoteFetcher.emotes.get('Clap');
-            expect(emote.toLink(2)).toBe('https://cdn.7tv.app/emote/01GF9MNXQ8000E85YTZ0P4TWJ7/3x.avif');
+            expect(emote.toLink(2)).toBe('https://cdn.7tv.app/emote/01GAM8EFQ00004MXFXAJYKA859/3x.avif');
         });
 
         test('Parse string with emote (Clap)', () => {
             const text = emoteParser.parse('This is a test string with :Clap: in it.');
-            expect(text).toBe('This is a test string with ![Clap](https://cdn.7tv.app/emote/01GF9MNXQ8000E85YTZ0P4TWJ7/1x.avif "Clap") in it.');
+            expect(text).toBe('This is a test string with ![Clap](https://cdn.7tv.app/emote/01GAM8EFQ00004MXFXAJYKA859/1x.avif "Clap") in it.');
         });
     });
 

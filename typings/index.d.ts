@@ -117,8 +117,8 @@ declare module '@mkody/twitch-emoticons' {
     }
 
     export class Collection<K, V> extends Map<K, V> {
-        public find(propOrFunc: string | ((item: K, index: number, coll: this) => boolean), value?: any): K;
-        public filter(func: (item: K, index: number, coll: this) => boolean): Collection<K, V>;
-        public map(func: (item: K, index: number, coll: this) => any): Array<any>;
+        public find(propOrFunc: string | ((item: V, index: number, coll: this) => boolean), value?: any): V;
+        public filter(func: (item: V, index: number, coll: this) => boolean): Collection<K, V>;
+        public map(func: (item: V, index: number, coll: this) => any): Array<any>;
     }
 }
