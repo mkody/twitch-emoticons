@@ -12,29 +12,33 @@ import { AppTokenAuthProvider } from '@twurple/auth';
 class EmoteFetcher {
     /**
      * Fetches and caches emotes.
-     * @param {string} clientId The client id for the twitch api.
-     * @param {string} clientSecret The client secret for the twitch api.
-     * @param {object} options Additional options.
-     * @param {ApiClient} options.apiClient - Bring your own Twurple ApiClient.
-     * @param {string} options.twitchBackgroundColor - Background color for Twitch emotes ('light' or 'dark'). Defaults to 'dark'.
+     * @param {object} [options={}] Fetcher's options.
+     * @param {string} [options.twitchAppID] Your app ID for the Twitch API.
+     * @param {string} [options.twitchAppSecret] Your app secret for the Twitch API.
+     * @param {ApiClient} [options.apiClient] - Bring your own Twurple ApiClient.
+     * @param {'light' | 'dark'} [options.twitchBackgroundColor='dark'] - Background color for Twitch emotes.
      */
-    constructor(clientId, clientSecret, options) {
-        if (options && options.apiClient) {
-            this.apiClient = options.apiClient;
-        } else if (clientId !== undefined && clientSecret !== undefined) {
-            const authProvider = new AppTokenAuthProvider(clientId, clientSecret);
-
+    constructor(options = {}) {
+        if (options.apiClient) {
             /**
-             * Twitch api client.
+             * Provided Twitch ApiClient.
+             * @type {ApiClient}
+             */
+            this.apiClient = options.apiClient;
+        } else if (options.twitchAppID && options.twitchAppSecret) {
+            const authProvider = new AppTokenAuthProvider(options.twitchAppID, options.twitchAppSecret);
+            /**
+             * Twitch API client.
+             * @type {ApiClient}
              */
             this.apiClient = new ApiClient({ authProvider });
         }
 
         /**
          * Background color preference for Twitch emotes.
-         * @type {string}
+         * @type {'light' | 'dark'}
          */
-        this.twitchBackgroundColor = (options && options.twitchBackgroundColor) || 'dark';
+        this.twitchBackgroundColor = options.twitchBackgroundColor || 'dark';
 
         /**
          * Cached emotes.

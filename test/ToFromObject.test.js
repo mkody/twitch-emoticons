@@ -8,7 +8,10 @@ describe('Test toObject', () => {
     beforeEach(() => {
         // Make a fresh EmoteFetcher object before each tests
         // This prevents surprises in case there's an emote name used in multiple sources
-        emoteFetcher = new EmoteFetcher(env.TWITCH_ID, env.TWITCH_SECRET);
+        emoteFetcher = new EmoteFetcher({
+            twitchAppID: env.TWITCH_ID,
+            twitchAppSecret: env.TWITCH_SECRET
+        });
     });
 
     test('BTTV Global Emote', async() => {

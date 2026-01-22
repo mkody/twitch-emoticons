@@ -62,11 +62,17 @@
     <section class="readme usertext">
         <article><h1>twitch-emoticons</h1>
 <p>Gets Twitch, BTTV, FFZ and 7TV emotes as well as parsing text to emotes!</p>
-<h3>3.x notes</h3>
+<h3>Migrate to 3.x</h3>
 <p>This release introduces some breaking changes!</p>
 <ul>
-<li>Node 20 is required, we've set the minimum to 20.19.</li>
+<li>Node.js 20 is required, we've set the minimum to 20.19.</li>
 <li>This project uses ESM imports. Begone <code>require(...)</code>, welcome <code>import {...} from '...'</code>.</li>
+<li>The initialisation of <code>EmoteFetcher</code> changed to only use an object as the first parameter.
+<ul>
+<li>API keys for Twitch must now be set with <code>twitchAppID</code> and <code>twitchAppSecret</code> keys.</li>
+<li>The previously-available <code>apiClient</code> is now set in this object too.</li>
+</ul>
+</li>
 <li><em>More to come for the final release, as this is still a work in progress.</em></li>
 </ul>
 <h3>Pre-requisites</h3>
@@ -85,14 +91,15 @@ yarn add @mkody/twitch-emoticons
 <h4>Basic Twitch emote parsing</h4>
 <pre class="prettyprint source lang-js"><code>import { EmoteFetcher, EmoteParser } from '@mkody/twitch-emoticons';
 
-// Your Twitch app keys
-const clientId = '&lt;your client id>';
-const clientSecret = '&lt;your client secret>';
-
-const fetcher = new EmoteFetcher(clientId, clientSecret);
+const fetcher = new EmoteFetcher({
+    // Your Twitch app keys
+    twitchAppID: '&lt;your app ID>',
+    twitchAppSecret: '&lt;your app secret>'
+});
 const parser = new EmoteParser(fetcher, {
-    type: 'markdown',
-    match: /:(.+?):/g
+    type: 'markdown', // Can be `markdown` (default), `html`, `bbcode`, or `plain`.
+    match: /:(.+?):/g // This is the default, which means your emotes must be between colons (:Kappa:).
+                      // Use /(\w+)+?/g to check on every word, like in regular Twitch chat.
 });
 
 fetcher.fetchTwitchEmotes(null).then(() => {
@@ -108,9 +115,9 @@ fetcher.fetchTwitchEmotes(null).then(() => {
 </code></pre>
 <h4>Bring your own <code>@twurple/api</code></h4>
 <p>If you already use <a href="https://twurple.js.org/">Twurple</a> in your project and manage authentification<br>
-(i.e. with user tokens), you can reuse it in this project by skipping the first two paramters and<br>
-setting <code>apiClient</code> with your <a href="https://twurple.js.org/reference/api/classes/ApiClient.html">ApiClient</a> object.</p>
-<pre class="prettyprint source lang-js"><code>const fetcher = new EmoteFetcher(null, null, {
+(i.e. with user tokens), you can reuse it in this project by setting <code>apiClient</code> with your<br>
+<a href="https://twurple.js.org/reference/api/classes/ApiClient.html">ApiClient</a> object.</p>
+<pre class="prettyprint source lang-js"><code>const fetcher = new EmoteFetcher({
     apiClient: yourOwnTwurpleApiClientHere
 });
 </code></pre>
@@ -120,11 +127,11 @@ setting <code>apiClient</code> with your <a href="https://twurple.js.org/referen
 // Your channel ID
 const channelId = 44317909;
 
-// Your Twitch app keys
-const clientId = '&lt;your client id>';
-const clientSecret = '&lt;your client secret>';
-
-const fetcher = new EmoteFetcher(clientId, clientSecret);
+const fetcher = new EmoteFetcher({
+    // Your Twitch app keys
+    twitchAppID: '&lt;your app ID>',
+    twitchAppSecret: '&lt;your app secret>'
+});
 const parser = new EmoteParser(fetcher, {
     // Custom HTML format
     template: '&lt;img class=&quot;emote&quot; alt=&quot;{name}&quot; src=&quot;{link}&quot;>',
@@ -168,13 +175,19 @@ By default, emotes are fetched for dark backgrounds, but you can specify a prefe
 <pre class="prettyprint source lang-js"><code>import { EmoteFetcher, EmoteParser } from '@mkody/twitch-emoticons';
 
 // For dark backgrounds (default)
-const fetcherDark = new EmoteFetcher(clientId, clientSecret, {
-    twitchBackgroundColor: 'dark'
+const fetcherDark = new EmoteFetcher({
+    // Your Twitch app keys
+    twitchAppID: '&lt;your app ID>',
+    twitchAppSecret: '&lt;your app secret>',
+    twitchBackgroundColor: 'dark' // &lt;- Here!
 });
 
 // For light backgrounds
-const fetcherLight = new EmoteFetcher(clientId, clientSecret, {
-    twitchBackgroundColor: 'light'
+const fetcherLight = new EmoteFetcher({
+    // Your Twitch app keys
+    twitchAppID: '&lt;your app ID>',
+    twitchAppSecret: '&lt;your app secret>',
+    twitchBackgroundColor: 'light' // &lt;- Here!
 });
 
 fetcherLight.fetchTwitchEmotes(null).then(() => {
@@ -185,7 +198,7 @@ fetcherLight.fetchTwitchEmotes(null).then(() => {
 </code></pre>
 <p>It is also possible to pick the prefered background color when using<br>
 the <code>Emote</code>'s <code>toLink()</code> method:</p>
-<pre class="prettyprint source lang-js"><code>const fetcher = new EmoteFetcher(clientId, clientSecret);
+<pre class="prettyprint source lang-js"><code>const fetcher = new EmoteFetcher({ twitchAppID, twitchAppSecret });
 fetcher.fetchTwitchEmotes(null).then(() => {
     // Do note that the first parameter is the size, so either set `null` or use it properly
     const kappa = fetcher.emotes.get('Kappa').toLink(null, 'light');
@@ -197,7 +210,7 @@ fetcher.fetchTwitchEmotes(null).then(() => {
 <pre class="prettyprint source lang-js"><code>// Do note that the second parameter is the size, so either set `null` or use it properly
 const kappa = parser.parse('Kappa', null, 'light');
 console.log(kappa);
-// 
+// ![Kappa](https://static-cdn.jtvnw.net/emoticons/v2/25/default/light/1.0 &quot;Kappa&quot;)!
 </code></pre>
 <h4>7TV formats</h4>
 <p>7TV v3 delivers emotes in either WEBP or AVIF.<br>

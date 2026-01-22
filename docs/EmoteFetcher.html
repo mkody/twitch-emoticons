@@ -64,7 +64,7 @@
 
     
 
-    <h4 class="name" id="EmoteFetcher"><span class="type-signature"></span>new EmoteFetcher<span class="signature">(clientId, clientSecret, options)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="EmoteFetcher"><span class="type-signature"></span>new EmoteFetcher<span class="signature">(options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
 
     
 
@@ -80,7 +80,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line22">line 22</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line21">line 21</a>
     </li></ul></dd>
     
 
@@ -140,7 +140,11 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
+        
+        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -148,54 +152,6 @@
     </thead>
 
     <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>clientId</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The client id for the twitch api.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>clientSecret</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The client secret for the twitch api.</p></td>
-        </tr>
-
     
 
         <tr>
@@ -214,10 +170,26 @@
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
 
+                
+
+                
+                </td>
             
 
-            <td class="description last"><p>Additional options.</p>
+            
+                <td class="default">
+                
+                    <code>{}</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>Fetcher's options.</p>
                 <h6>Properties</h6>
                 
 
@@ -231,7 +203,11 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
+        
+        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -239,6 +215,82 @@
     </thead>
 
     <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>twitchAppID</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>Your app ID for the Twitch API.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>twitchAppSecret</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>Your app secret for the Twitch API.</p></td>
+        </tr>
+
     
 
         <tr>
@@ -257,7 +309,21 @@
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
 
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last"><p>Bring your own Twurple ApiClient.</p></td>
@@ -273,7 +339,10 @@
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">'light'</span>
+|
+
+<span class="param-type">'dark'</span>
 
 
 
@@ -281,10 +350,26 @@
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
 
+                
+
+                
+                </td>
             
 
-            <td class="description last"><p>Background color for Twitch emotes ('light' or 'dark'). Defaults to 'dark'.</p></td>
+            
+                <td class="default">
+                
+                    <code>'dark'</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>Background color for Twitch emotes.</p></td>
         </tr>
 
     
@@ -337,7 +422,7 @@
 
         
             
-<h4 class="name" id="apiClient"><span class="type-signature"></span>apiClient<span class="type-signature"></span></h4>
+<h4 class="name" id="apiClient"><span class="type-signature"></span>apiClient<span class="type-signature"> :ApiClient</span></h4>
 
 
 
@@ -346,13 +431,13 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Twitch api client.</p></li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li><p>Provided Twitch ApiClient.</p></li></ul></dd>
     
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line31">line 31</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line27">line 27</a>
     </li></ul></dd>
     
 
@@ -392,10 +477,21 @@
 
 
 <div class="description usertext">
-    <p>Twitch api client.</p>
+    <p>Provided Twitch ApiClient.</p>
 </div>
 
 
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">ApiClient</span>
+
+
+
+        </li>
+    </ul>
 
 
 
@@ -404,7 +500,85 @@
 
         
             
-<h4 class="name" id="twitchBackgroundColor"><span class="type-signature"></span>twitchBackgroundColor<span class="type-signature"> :string</span></h4>
+<h4 class="name" id="apiClient"><span class="type-signature"></span>apiClient<span class="type-signature"> :ApiClient</span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Twitch API client.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line34">line 34</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Twitch API client.</p>
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">ApiClient</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="twitchBackgroundColor"><span class="type-signature"></span>twitchBackgroundColor<span class="type-signature"> :'light'|'dark'</span></h4>
 
 
 
@@ -419,7 +593,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line38">line 38</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line41">line 41</a>
     </li></ul></dd>
     
 
@@ -468,7 +642,10 @@
     <ul>
         <li>
             
-<span class="param-type">string</span>
+<span class="param-type">'light'</span>
+|
+
+<span class="param-type">'dark'</span>
 
 
 
@@ -498,7 +675,7 @@ Collectionped by emote code to Emote instance.</p></li></ul></dd>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line45">line 45</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line48">line 48</a>
     </li></ul></dd>
     
 
@@ -578,7 +755,7 @@ Collectionped by name to Channel instance.</p></li></ul></dd>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line52">line 52</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line55">line 55</a>
     </li></ul></dd>
     
 
@@ -657,7 +834,7 @@ Collectionped by name to Channel instance.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line58">line 58</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line61">line 61</a>
     </li></ul></dd>
     
 
@@ -735,7 +912,7 @@ Collectionped by name to Channel instance.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line66">line 66</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line69">line 69</a>
     </li></ul></dd>
     
 
@@ -823,7 +1000,7 @@ Collectionped by name to Channel instance.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line78">line 78</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line81">line 81</a>
     </li></ul></dd>
     
 
@@ -1063,7 +1240,7 @@ Collectionped by name to Channel instance.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line94">line 94</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line97">line 97</a>
     </li></ul></dd>
     
 
@@ -1217,7 +1394,7 @@ Collectionped by name to Channel instance.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line114">line 114</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line117">line 117</a>
     </li></ul></dd>
     
 
@@ -1464,7 +1641,7 @@ Use <code>null</code> for the global emotes channel.</p></li></ul></dd>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line129">line 129</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line132">line 132</a>
     </li></ul></dd>
     
 
@@ -1638,7 +1815,7 @@ Use <code>null</code> for the global emotes channel.</p></li></ul></dd>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line150">line 150</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line159">line 159</a>
     </li></ul></dd>
     
 
@@ -1884,7 +2061,7 @@ Use <code>null</code> for the global emotes channel.</p></li></ul></dd>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line164">line 164</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line173">line 173</a>
     </li></ul></dd>
     
 
@@ -2038,7 +2215,7 @@ Use <code>null</code> for the global emotes channel.</p></li></ul></dd>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line178">line 178</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line189">line 189</a>
     </li></ul></dd>
     
 
@@ -2192,7 +2369,7 @@ Use <code>null</code> for the global emotes channel.</p></li></ul></dd>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line200">line 200</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line213">line 213</a>
     </li></ul></dd>
     
 
@@ -2438,7 +2615,7 @@ Use <code>null</code> for the global emotes channel.</p></li></ul></dd>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line214">line 214</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line227">line 227</a>
     </li></ul></dd>
     
 
@@ -2612,7 +2789,7 @@ Use <code>null</code> for the global emotes channel.</p></li></ul></dd>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line231">line 231</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line244">line 244</a>
     </li></ul></dd>
     
 
@@ -2895,7 +3072,7 @@ Use <code>null</code> for the global emotes channel.</p></li></ul></dd>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line245">line 245</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line258">line 258</a>
     </li></ul></dd>
     
 
@@ -3070,7 +3247,7 @@ Use <code>null</code> for the global emotes channel.</p></li></ul></dd>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line263">line 263</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line276">line 276</a>
     </li></ul></dd>
     
 
@@ -3244,7 +3421,7 @@ Use <code>null</code> for the global emotes channel.</p></li></ul></dd>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line278">line 278</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line291">line 291</a>
     </li></ul></dd>
     
 
@@ -3418,7 +3595,7 @@ Use <code>null</code> for the global emotes channel.</p></li></ul></dd>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line316">line 316</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line329">line 329</a>
     </li></ul></dd>
     
 
@@ -3635,7 +3812,7 @@ Use <code>null</code> for the global emotes channel.</p></li></ul></dd>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line340">line 340</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line353">line 353</a>
     </li></ul></dd>
     
 

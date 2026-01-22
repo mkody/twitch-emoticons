@@ -18,7 +18,10 @@ describe('Test Twitch emotes', () => {
         test.todo('Notice: Twitch client id/secret missing, not testing fetching and parsing.');
     } else {
         describe('Test global emotes', () => {
-            const emoteFetcher = new EmoteFetcher(env.TWITCH_ID, env.TWITCH_SECRET);
+            const emoteFetcher = new EmoteFetcher({
+                twitchAppID: env.TWITCH_ID,
+                twitchAppSecret: env.TWITCH_SECRET
+            });
             const emoteParser = new EmoteParser(emoteFetcher, {
                 type: 'markdown',
                 match: /:(.+?):/g
@@ -40,7 +43,10 @@ describe('Test Twitch emotes', () => {
         });
 
         describe('Test user emotes', () => {
-            const emoteFetcher = new EmoteFetcher(env.TWITCH_ID, env.TWITCH_SECRET);
+            const emoteFetcher = new EmoteFetcher({
+                twitchAppID: env.TWITCH_ID,
+                twitchAppSecret: env.TWITCH_SECRET
+            });
             const emoteParser = new EmoteParser(emoteFetcher, {
                 type: 'markdown',
                 match: /:(.+?):/g
@@ -63,12 +69,19 @@ describe('Test Twitch emotes', () => {
 
         describe('Test background color preference', () => {
             test('Default background should be dark', () => {
-                const emoteFetcher = new EmoteFetcher(env.TWITCH_ID, env.TWITCH_SECRET);
+                const emoteFetcher = new EmoteFetcher({
+                    twitchAppID: env.TWITCH_ID,
+                    twitchAppSecret: env.TWITCH_SECRET
+                });
                 expect(emoteFetcher.twitchBackgroundColor).toBe('dark');
             });
 
             test('Light background option', async() => {
-                const emoteFetcher = new EmoteFetcher(env.TWITCH_ID, env.TWITCH_SECRET, { twitchBackgroundColor: 'light' });
+                const emoteFetcher = new EmoteFetcher({
+                    twitchAppID: env.TWITCH_ID,
+                    twitchAppSecret: env.TWITCH_SECRET,
+                    twitchBackgroundColor: 'light'
+                });
                 expect(emoteFetcher.twitchBackgroundColor).toBe('light');
 
                 await emoteFetcher.fetchTwitchEmotes();
@@ -77,7 +90,11 @@ describe('Test Twitch emotes', () => {
             });
 
             test('Dark background option explicitly set', async() => {
-                const emoteFetcher = new EmoteFetcher(env.TWITCH_ID, env.TWITCH_SECRET, { twitchBackgroundColor: 'dark' });
+                const emoteFetcher = new EmoteFetcher({
+                    twitchAppID: env.TWITCH_ID,
+                    twitchAppSecret: env.TWITCH_SECRET,
+                    twitchBackgroundColor: 'dark'
+                });
                 expect(emoteFetcher.twitchBackgroundColor).toBe('dark');
 
                 await emoteFetcher.fetchTwitchEmotes();
@@ -86,7 +103,11 @@ describe('Test Twitch emotes', () => {
             });
 
             test('Override background color in .toLink()', async() => {
-                const emoteFetcher = new EmoteFetcher(env.TWITCH_ID, env.TWITCH_SECRET, { twitchBackgroundColor: 'light' });
+                const emoteFetcher = new EmoteFetcher({
+                    twitchAppID: env.TWITCH_ID,
+                    twitchAppSecret: env.TWITCH_SECRET,
+                    twitchBackgroundColor: 'light'
+                });
                 // Make sure it's light at first
                 expect(emoteFetcher.twitchBackgroundColor).toBe('light');
 
@@ -97,7 +118,11 @@ describe('Test Twitch emotes', () => {
             });
 
             test('Parse string with light background emote', async() => {
-                const emoteFetcher = new EmoteFetcher(env.TWITCH_ID, env.TWITCH_SECRET, { twitchBackgroundColor: 'light' });
+                const emoteFetcher = new EmoteFetcher({
+                    twitchAppID: env.TWITCH_ID,
+                    twitchAppSecret: env.TWITCH_SECRET,
+                    twitchBackgroundColor: 'light'
+                });
                 const emoteParser = new EmoteParser(emoteFetcher, {
                     type: 'markdown',
                     match: /:(.+?):/g
@@ -109,7 +134,10 @@ describe('Test Twitch emotes', () => {
             });
 
             test('Override background color in .parse()', async() => {
-                const emoteFetcher = new EmoteFetcher(env.TWITCH_ID, env.TWITCH_SECRET);
+                const emoteFetcher = new EmoteFetcher({
+                    twitchAppID: env.TWITCH_ID,
+                    twitchAppSecret: env.TWITCH_SECRET
+                });
                 const emoteParser = new EmoteParser(emoteFetcher, {
                     type: 'markdown',
                     match: /:(.+?):/g

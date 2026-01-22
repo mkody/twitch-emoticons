@@ -121,7 +121,7 @@ class EmoteParser {
      * Parses text.
      * @param {string} text - Text to parse.
      * @param {number} size - Size for emotes.
-     * @param {string} [backgroundColor] - Only for Twitch emotes: the background color, either 'dark' or 'light'. Defaults to the fetcher's twitchBackgroundColor or 'dark'.
+     * @param {'light' | 'dark'} [backgroundColor] - Only for Twitch emotes: the preferred background color. Defaults to the fetcher's twitchBackgroundColor or 'dark'.
      * @returns {string}
      */
     parse(text, size = 0, backgroundColor) {

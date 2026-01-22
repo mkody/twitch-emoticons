@@ -23,9 +23,9 @@ declare module '@mkody/twitch-emoticons' {
 
     export class EmoteFetcher {
         public constructor(
-            clientId?: string,
-            clientSecret?: string,
             options?: {
+                twitchAppID?: string,
+                twitchAppSecret?: string,
                 apiClient?: object,
                 twitchBackgroundColor?: 'light' | 'dark'
             }
@@ -33,7 +33,7 @@ declare module '@mkody/twitch-emoticons' {
 
         public emotes: Collection<string, Emote>;
         public channels: Collection<string, Channel>;
-        public twitchBackgroundColor: string;
+        public twitchBackgroundColor: 'light' | 'dark';
 
         public fetchTwitchEmotes(id?: number): Promise<Collection<string, TwitchEmote>>;
         public fetchBTTVEmotes(id?: number): Promise<Collection<string, BTTVEmote>>;
@@ -52,7 +52,7 @@ declare module '@mkody/twitch-emoticons' {
             }
         );
 
-        public parse(text: string, size?: number): string;
+        public parse(text: string, size?: number, backgroundColor?: 'light' | 'dark'): string;
     }
 
     export class TwitchEmote extends Emote {
@@ -63,7 +63,7 @@ declare module '@mkody/twitch-emoticons' {
         public imageType: 'png' | 'gif';
         public readonly owner: Channel;
 
-        public toLink(size: number): string;
+        public toLink(size: number, backgroundColor?: 'light' | 'dark'): string;
         public toObject(): EmoteObject;
     }
 
