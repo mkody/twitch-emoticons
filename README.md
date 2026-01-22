@@ -91,11 +91,15 @@ const channelId = 44317909;
 const fetcher = new EmoteFetcher({
     // Your Twitch app keys
     twitchAppID: '<your app ID>',
-    twitchAppSecret: '<your app secret>'
+    twitchAppSecret: '<your app secret>',
+    forceStatic: false,
+    twitchBackgroundColor: 'dark'
 });
 const parser = new EmoteParser(fetcher, {
     // Custom HTML format
     template: '<img class="emote" alt="{name}" src="{link}">',
+    // Otherwise, just use our provided template
+    // type: 'html',
     // Match without :colons:
     match: /(\w+)+?/g
 });
@@ -148,6 +152,10 @@ const fetcherDark = new EmoteFetcher({
 });
 ```
 
+> [!NOTE]
+> **Q:** Why set this to the `EmoteFetcher` and not `EmoteParser`?  
+> **A:** Because `Emote.toLink()` (that you get from the fetcher) needs that info!
+
 It is also possible to force that using the `Emote`'s `toLink()` method:
 
 ```js
@@ -169,8 +177,9 @@ console.log(kappa);
 // ![Kappa](https://static-cdn.jtvnw.net/emoticons/v2/25/static/dark/1.0 "Kappa")!
 ```
 
-**NOTE:** Forcing static images might make the `imageType` of the `Emote` not match with your expectations!  
-(Twitch: `gif` => `png`; BTTV: `webp` => `png`.)
+> [!WARNING]
+> Forcing static images might make the `imageType` of the `Emote` not match with your expectations!  
+> (Twitch: `gif` => `png`; BTTV: `webp` => `png`.)
 
 
 #### Twitch background color preference
@@ -203,6 +212,10 @@ fetcherLight.fetchTwitchEmotes(null).then(() => {
     // https://static-cdn.jtvnw.net/emoticons/v2/25/default/light/1.0
 });
 ```
+
+> [!NOTE]
+> **Q:** Why set this to the `EmoteFetcher` and not `EmoteParser`?  
+> **A:** Because `Emote.toLink()` (that you get from the fetcher) needs that info!
 
 It is also possible to force that using the `Emote`'s `toLink()` method:
 
@@ -254,8 +267,7 @@ await fetcher.fetchSevenTVEmotes(24377667, 'avif');
 
 #### Export and import emote data
 
-This can be useful to save the emotes in a cache or for offline content.  
-(For offline content, you'll still need to download emotes and proxy their URLs.)
+This can be useful to save the emotes in a cache or for offline content.
 
 ```js
 import { EmoteFetcher } from '@mkody/twitch-emoticons';
@@ -271,6 +283,9 @@ const emotes = fetcher.emotes.map(emote => emote.toObject());
 // Later, with or without a fresh `EmoteFetcher`, you can use .fromObject() on the fetcher.
 fetcher.fromObject(emotes);
 ```
+
+> [!NOTE]
+> For offline content, you'll still need to download emotes and proxy their URLs.
 
 
 ### Links
