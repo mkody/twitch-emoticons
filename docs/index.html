@@ -183,6 +183,22 @@ fetcherLight.fetchTwitchEmotes(null).then(() => {
     // https://static-cdn.jtvnw.net/emoticons/v2/25/default/light/1.0
 });
 </code></pre>
+<p>It is also possible to pick the prefered background color when using<br>
+the <code>Emote</code>'s <code>toLink()</code> method:</p>
+<pre class="prettyprint source lang-js"><code>const fetcher = new EmoteFetcher(clientId, clientSecret);
+fetcher.fetchTwitchEmotes(null).then(() => {
+    // Do note that the first parameter is the size, so either set `null` or use it properly
+    const kappa = fetcher.emotes.get('Kappa').toLink(null, 'light');
+    console.log(kappa);
+    // https://static-cdn.jtvnw.net/emoticons/v2/25/default/light/1.0
+});
+</code></pre>
+<p>Or when using the <code>EmoteParser</code>'s <code>parse()</code>:</p>
+<pre class="prettyprint source lang-js"><code>// Do note that the second parameter is the size, so either set `null` or use it properly
+const kappa = parser.parse('Kappa', null, 'light');
+console.log(kappa);
+// 
+</code></pre>
 <h4>7TV formats</h4>
 <p>7TV v3 delivers emotes in either WEBP or AVIF.<br>
 By default we'll return WEBP emotes but you can override this.</p>

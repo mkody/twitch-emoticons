@@ -48,11 +48,11 @@ class TwitchEmote extends Emote {
     /**
      * Gets the image link of the emote.
      * @param {number} size - The size of the image, 0, 1, or 2.
+     * @param {string} [backgroundColor] - The background color, either 'dark' or 'light'. Defaults to the fetcher's twitchBackgroundColor or 'dark'.
      * @returns {string}
      */
-    toLink(size = 0) {
-        // @TODO: Make it possible to overwrite background color per emote
-        const background = this.channel && this.channel.fetcher ? this.channel.fetcher.twitchBackgroundColor : 'dark';
+    toLink(size = 0, backgroundColor) {
+        const background = backgroundColor || (this.channel && this.channel.fetcher ? this.channel.fetcher.twitchBackgroundColor : 'dark');
         return Constants.Twitch.CDN(this.id, size, background); // eslint-disable-line new-cap
     }
 

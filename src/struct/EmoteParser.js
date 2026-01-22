@@ -74,16 +74,17 @@ class EmoteParser {
      * Parses text.
      * @param {string} text - Text to parse.
      * @param {number} size - Size for emotes.
+     * @param {string} [backgroundColor] - Only for Twitch emotes: the background color, either 'dark' or 'light'. Defaults to the fetcher's twitchBackgroundColor or 'dark'.
      * @returns {string}
      */
-    parse(text, size = 0) {
+    parse(text, size = 0, backgroundColor) {
         const parsed = text.replace(this.options.match, (matched, id) => {
             const emote = this.fetcher.emotes.get(id);
             if (!emote) return matched;
             if (emote.modifier) return '';
 
             const template = this.options.template || Constants.Templates[this.options.type];
-            const link = emote.toLink(size);
+            const link = emote.toLink(size, backgroundColor);
             const res = template
                 .replace(/{link}/g, link)
                 .replace(/{name}/g, emote.code)

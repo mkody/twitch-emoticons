@@ -85,6 +85,17 @@ describe('Test Twitch emotes', () => {
                 expect(emote.toLink(2)).toBe('https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/3.0');
             });
 
+            test('Override background color in .toLink()', async() => {
+                const emoteFetcher = new EmoteFetcher(env.TWITCH_ID, env.TWITCH_SECRET, { twitchBackgroundColor: 'light' });
+                // Make sure it's light at first
+                expect(emoteFetcher.twitchBackgroundColor).toBe('light');
+
+                await emoteFetcher.fetchTwitchEmotes();
+                const emote = emoteFetcher.emotes.get('Kappa');
+                // And now override to dark
+                expect(emote.toLink(2, 'dark')).toBe('https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/3.0');
+            });
+
             test('Parse string with light background emote', async() => {
                 const emoteFetcher = new EmoteFetcher(env.TWITCH_ID, env.TWITCH_SECRET, { twitchBackgroundColor: 'light' });
                 const emoteParser = new EmoteParser(emoteFetcher, {
@@ -94,6 +105,18 @@ describe('Test Twitch emotes', () => {
 
                 await emoteFetcher.fetchTwitchEmotes();
                 const text = emoteParser.parse('This is a test string with :CoolCat: in it.');
+                expect(text).toBe('This is a test string with ![CoolCat](https://static-cdn.jtvnw.net/emoticons/v2/58127/default/light/1.0 "CoolCat") in it.');
+            });
+
+            test('Override background color in .parse()', async() => {
+                const emoteFetcher = new EmoteFetcher(env.TWITCH_ID, env.TWITCH_SECRET);
+                const emoteParser = new EmoteParser(emoteFetcher, {
+                    type: 'markdown',
+                    match: /:(.+?):/g
+                });
+
+                await emoteFetcher.fetchTwitchEmotes();
+                const text = emoteParser.parse('This is a test string with :CoolCat: in it.', null, 'light');
                 expect(text).toBe('This is a test string with ![CoolCat](https://static-cdn.jtvnw.net/emoticons/v2/58127/default/light/1.0 "CoolCat") in it.');
             });
         });

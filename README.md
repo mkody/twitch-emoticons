@@ -45,8 +45,9 @@ const clientSecret = '<your client secret>';
 
 const fetcher = new EmoteFetcher(clientId, clientSecret);
 const parser = new EmoteParser(fetcher, {
-    type: 'markdown',
-    match: /:(.+?):/g
+    type: 'markdown', // Can be `markdown` (default), `html`, `bbcode`, or `plain`.
+    match: /:(.+?):/g // This is the default, which means your emotes must be between colons (:Kappa:).
+                      // Use /(\w+)+?/g to check on every word, like in regular Twitch chat.
 });
 
 fetcher.fetchTwitchEmotes(null).then(() => {
@@ -150,6 +151,27 @@ fetcherLight.fetchTwitchEmotes(null).then(() => {
     console.log(kappa);
     // https://static-cdn.jtvnw.net/emoticons/v2/25/default/light/1.0
 });
+```
+
+It is also possible to pick the prefered background color when using
+the `Emote`'s `toLink()` method:
+
+```js
+const fetcher = new EmoteFetcher(clientId, clientSecret);
+fetcher.fetchTwitchEmotes(null).then(() => {
+    // Do note that the first parameter is the size, so either set `null` or use it properly
+    const kappa = fetcher.emotes.get('Kappa').toLink(null, 'light');
+    console.log(kappa);
+    // https://static-cdn.jtvnw.net/emoticons/v2/25/default/light/1.0
+});
+```
+
+Or when using the `EmoteParser`'s `parse()`:
+```js
+// Do note that the second parameter is the size, so either set `null` or use it properly
+const kappa = parser.parse('Kappa', null, 'light');
+console.log(kappa);
+// ![Kappa](https://static-cdn.jtvnw.net/emoticons/v2/25/default/light/1.0 "Kappa")!
 ```
 
 
