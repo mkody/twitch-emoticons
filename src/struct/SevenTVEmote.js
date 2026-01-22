@@ -1,5 +1,5 @@
-const Emote = require('./Emote');
-const Constants = require('../util/Constants');
+import Emote from './Emote.js';
+import Constants from '../util/Constants.js';
 
 /** @augments Emote */
 class SevenTVEmote extends Emote {
@@ -105,4 +105,4 @@ class SevenTVEmote extends Emote {
     }
 }
 
-module.exports = SevenTVEmote;
+export default SevenTVEmote;

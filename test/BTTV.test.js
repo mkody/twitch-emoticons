@@ -1,5 +1,5 @@
-const { describe, expect, test } = require('@jest/globals');
-const { EmoteFetcher, EmoteParser, Collection } = require('../src/index.js');
+import { describe, expect, test } from '@jest/globals';
+import { EmoteFetcher, EmoteParser, Collection } from '../src/index.js';
 
 describe('Test BTTV emotes', () => {
     describe('Test global emotes', () => {

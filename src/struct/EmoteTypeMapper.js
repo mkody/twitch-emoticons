@@ -1,7 +1,7 @@
-const BTTVEmote = require('./BTTVEmote');
-const FFZEmote = require('./FFZEmote');
-const SevenTVEmote = require('./SevenTVEmote');
-const TwitchEmote = require('./TwitchEmote');
+import BTTVEmote from './BTTVEmote.js';
+import FFZEmote from './FFZEmote.js';
+import SevenTVEmote from './SevenTVEmote.js';
+import TwitchEmote from './TwitchEmote.js';
 
 class EmoteTypeMapper {
     static getClassByType(type) {
@@ -10,4 +10,4 @@ class EmoteTypeMapper {
     }
 }
 
-module.exports = EmoteTypeMapper;
+export default EmoteTypeMapper;

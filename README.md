@@ -2,14 +2,27 @@
 
 Gets Twitch, BTTV, FFZ and 7TV emotes as well as parsing text to emotes!
 
-### Migrating from upstream
-You must now use a Twitch user ID instead of the username to fetch user's emotes.  
-You can use [this page to quickly grab it](https://s.kdy.ch/twitchid/).
+
+### 3.x notes
+
+This release introduces some breaking changes!
+
+- Node 20 is required, we've set the minimum to 20.19.
+- This project uses ESM imports. Begone `require(...)`, welcome `import {...} from '...'`.
+- *More to come for the final release, as this is still a work in progress.*
+
+
+### Pre-requisites
 
 To fetch Twitch emotes you need to get a client and secret from Twitch [here](https://dev.twitch.tv/console/apps/create), it's free.  
-If you are only using BetterTTV, FrankerFaceZ and 7TV you don't need to provide Twitch app keys as they are independent from the Twitch API.
+If you are only using BetterTTV, FrankerFaceZ and 7TV you don't need to provide Twitch app keys, as they are independent from the Twitch API.
+
+You must use a Twitch user ID instead of the username to fetch users' emotes.  
+You can use [this page to quickly grab them from a username](https://s.kdy.ch/twitchid/).
+
 
 ### Install
+
 ```sh
 npm install @mkody/twitch-emoticons
 # or
@@ -18,16 +31,13 @@ pnpm install @mkody/twitch-emoticons
 yarn add @mkody/twitch-emoticons
 ```
 
+
 ### Examples
 
 #### Basic Twitch emote parsing
 
 ```js
-// With ESM import
-import TwitchEmoticons from '@mkody/twitch-emoticons';
-const { EmoteFetcher, EmoteParser } = TwitchEmoticons;
-// ... or require()
-const { EmoteFetcher, EmoteParser } = require('@mkody/twitch-emoticons');
+import { EmoteFetcher, EmoteParser } from '@mkody/twitch-emoticons';
 
 // Your Twitch app keys
 const clientId = '<your client id>';
@@ -51,6 +61,7 @@ fetcher.fetchTwitchEmotes(null).then(() => {
 });
 ```
 
+
 #### Bring your own `@twurple/api`
 
 If you already use [Twurple](https://twurple.js.org/) in your project and manage authentification
@@ -63,10 +74,11 @@ const fetcher = new EmoteFetcher(null, null, {
 });
 ```
 
+
 #### All providers, global + channel, custom template and match pattern
 
 ```js
-const { EmoteFetcher, EmoteParser } = require('@mkody/twitch-emoticons');
+import { EmoteFetcher, EmoteParser } from '@mkody/twitch-emoticons';
 
 // Your channel ID
 const channelId = 44317909;
@@ -114,13 +126,14 @@ Promise.all([
 });
 ```
 
+
 #### 7TV formats
 
 7TV v3 delivers emotes in either WEBP or AVIF.  
 By default we'll return WEBP emotes but you can override this.
 
 ```js
-const { EmoteFetcher } = require('@mkody/twitch-emoticons');
+import { EmoteFetcher } from '@mkody/twitch-emoticons';
 const fetcher = new EmoteFetcher();
 
 // Fetch global emotes in AVIF (channel id has to be `null` for global)
@@ -136,13 +149,14 @@ await fetcher.fetchSevenTVEmotes(44317909, 'webp');
 await fetcher.fetchSevenTVEmotes(24377667, 'avif');
 ```
 
+
 #### Export and import emote data
 
 This can be useful to save the emotes in a cache or for offline content.  
 (For offline content, you'll still need to download emotes and proxy their URLs.)
 
 ```js
-const { EmoteFetcher } = require('@mkody/twitch-emoticons');
+import { EmoteFetcher } from '@mkody/twitch-emoticons';
 const fetcher = new EmoteFetcher();
 
 // First fetch some emotes
@@ -155,6 +169,7 @@ const emotes = fetcher.emotes.map(emote => emote.toObject());
 // Later, with or without a fresh `EmoteFetcher`, you can use .fromObject() on the fetcher.
 fetcher.fromObject(emotes);
 ```
+
 
 ### Links
 

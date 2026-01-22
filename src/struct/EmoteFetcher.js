@@ -1,14 +1,14 @@
-const BTTVEmote = require('./BTTVEmote');
-const Channel = require('./Channel');
-const Collection = require('../util/Collection');
-const Constants = require('../util/Constants');
-const FFZEmote = require('./FFZEmote');
-const SevenTVEmote = require('./SevenTVEmote');
-const TwitchEmote = require('./TwitchEmote');
+import BTTVEmote from './BTTVEmote.js';
+import Channel from './Channel.js';
+import Collection from '../util/Collection.js';
+import Constants from '../util/Constants.js';
+import FFZEmote from './FFZEmote.js';
+import SevenTVEmote from './SevenTVEmote.js';
+import TwitchEmote from './TwitchEmote.js';
 
-const axios = require('axios');
-const { ApiClient } = require('@twurple/api');
-const { AppTokenAuthProvider } = require('@twurple/auth');
+import axios from 'axios';
+import { ApiClient } from '@twurple/api';
+import { AppTokenAuthProvider } from '@twurple/auth';
 
 class EmoteFetcher {
     /**
@@ -354,4 +354,4 @@ class EmoteFetcher {
     }
 }
 
-module.exports = EmoteFetcher;
+export default EmoteFetcher;

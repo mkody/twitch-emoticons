@@ -1,4 +1,4 @@
-const Collection = require('../util/Collection');
+import Collection from '../util/Collection.js';
 
 class Channel {
     /**
@@ -57,4 +57,4 @@ class Channel {
     /* c8 ignore end */
 }
 
-module.exports = Channel;
+export default Channel;

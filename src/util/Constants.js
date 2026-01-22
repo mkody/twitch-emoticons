@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     Twitch: {
         CDN: (id, size) => `https://static-cdn.jtvnw.net/emoticons/v2/${id}/default/dark/${size + 1}.0`
     },
