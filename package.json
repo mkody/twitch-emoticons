@@ -28,8 +28,7 @@
     "license": "MIT",
     "dependencies": {
         "@twurple/api": "^8.0.3",
-        "@twurple/auth": "^8.0.3",
-        "axios": "^1.13.2"
+        "@twurple/auth": "^8.0.3"
     },
     "devDependencies": {
         "@eslint/js": "^9.39.2",

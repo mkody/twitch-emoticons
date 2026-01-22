@@ -6,7 +6,6 @@ import FFZEmote from './FFZEmote.js';
 import SevenTVEmote from './SevenTVEmote.js';
 import TwitchEmote from './TwitchEmote.js';
 
-import axios from 'axios';
 import { ApiClient } from '@twurple/api';
 import { AppTokenAuthProvider } from '@twurple/auth';
 
@@ -131,12 +130,18 @@ class EmoteFetcher {
             ? Constants.BTTV.Global
             : Constants.BTTV.Channel(id); // eslint-disable-line new-cap
 
-        return axios.get(endpoint).then(req => {
-            // Global emotes
-            if (req.data instanceof Array) return req.data;
-            // Channel emotes
-            return [...req.data.channelEmotes, ...req.data.sharedEmotes];
-        });
+        return fetch(endpoint)
+            .then(response => response.json())
+            .then(data => {
+                // Global emotes
+                if (data instanceof Array) return data;
+                // Channel emotes
+                if (data && data.channelEmotes && data.sharedEmotes) {
+                    return [...data.channelEmotes, ...data.sharedEmotes];
+                }
+                // Fallback - in case the response format is unexpected
+                return data || [];
+            });
     }
 
     /**
@@ -164,9 +169,11 @@ class EmoteFetcher {
     _getRawFFZEmoteSet(id) {
         const endpoint = Constants.FFZ.Set(id); // eslint-disable-line new-cap
 
-        return axios.get(endpoint).then(req => {
-            return req.data.set.emoticons;
-        });
+        return fetch(endpoint)
+            .then(response => response.json())
+            .then(data => {
+                return data.set.emoticons;
+            });
     }
 
     /**
@@ -178,15 +185,17 @@ class EmoteFetcher {
     _getRawFFZEmotes(id) {
         const endpoint = Constants.FFZ.Channel(id); // eslint-disable-line new-cap
 
-        return axios.get(endpoint).then(req => {
-            const emotes = [];
-            for (const key of Object.keys(req.data.sets)) {
-                const set = req.data.sets[key];
-                emotes.push(...set.emoticons);
-            }
+        return fetch(endpoint)
+            .then(response => response.json())
+            .then(data => {
+                const emotes = [];
+                for (const key of Object.keys(data.sets)) {
+                    const set = data.sets[key];
+                    emotes.push(...set.emoticons);
+                }
 
-            return emotes;
-        });
+                return emotes;
+            });
     }
 
     /**
@@ -216,7 +225,7 @@ class EmoteFetcher {
             ? Constants.SevenTV.Global
             : Constants.SevenTV.Channel(id); // eslint-disable-line new-cap
 
-        return axios.get(endpoint).then(req => req.data);
+        return fetch(endpoint).then(response => response.json());
     }
 
     /**
