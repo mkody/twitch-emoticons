@@ -51,7 +51,9 @@ class TwitchEmote extends Emote {
      * @returns {string}
      */
     toLink(size = 0) {
-        return Constants.Twitch.CDN(this.id, size); // eslint-disable-line new-cap
+        // @TODO: Make it possible to overwrite background color per emote
+        const background = this.channel && this.channel.fetcher ? this.channel.fetcher.twitchBackgroundColor : 'dark';
+        return Constants.Twitch.CDN(this.id, size, background); // eslint-disable-line new-cap
     }
 
     /**

@@ -162,6 +162,27 @@ Promise.all([
     console.error(err);
 });
 </code></pre>
+<h4>Twitch background color preference</h4>
+<p>Twitch emotes can be optimized for light or dark backgrounds.<br>
+By default, emotes are fetched for dark backgrounds, but you can specify a preference:</p>
+<pre class="prettyprint source lang-js"><code>import { EmoteFetcher, EmoteParser } from '@mkody/twitch-emoticons';
+
+// For dark backgrounds (default)
+const fetcherDark = new EmoteFetcher(clientId, clientSecret, {
+    twitchBackgroundColor: 'dark'
+});
+
+// For light backgrounds
+const fetcherLight = new EmoteFetcher(clientId, clientSecret, {
+    twitchBackgroundColor: 'light'
+});
+
+fetcherLight.fetchTwitchEmotes(null).then(() => {
+    const kappa = fetcherLight.emotes.get('Kappa').toLink();
+    console.log(kappa);
+    // https://static-cdn.jtvnw.net/emoticons/v2/25/default/light/1.0
+});
+</code></pre>
 <h4>7TV formats</h4>
 <p>7TV v3 delivers emotes in either WEBP or AVIF.<br>
 By default we'll return WEBP emotes but you can override this.</p>

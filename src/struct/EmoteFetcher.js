@@ -17,6 +17,7 @@ class EmoteFetcher {
      * @param {string} clientSecret The client secret for the twitch api.
      * @param {object} options Additional options.
      * @param {ApiClient} options.apiClient - Bring your own Twurple ApiClient.
+     * @param {string} options.twitchBackgroundColor - Background color for Twitch emotes ('light' or 'dark'). Defaults to 'dark'.
      */
     constructor(clientId, clientSecret, options) {
         if (options && options.apiClient) {
@@ -29,6 +30,12 @@ class EmoteFetcher {
              */
             this.apiClient = new ApiClient({ authProvider });
         }
+
+        /**
+         * Background color preference for Twitch emotes.
+         * @type {string}
+         */
+        this.twitchBackgroundColor = (options && options.twitchBackgroundColor) || 'dark';
 
         /**
          * Cached emotes.

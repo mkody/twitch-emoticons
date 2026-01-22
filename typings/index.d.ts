@@ -26,12 +26,14 @@ declare module '@mkody/twitch-emoticons' {
             clientId?: string,
             clientSecret?: string,
             options?: {
-                apiClient?: object
+                apiClient?: object,
+                twitchBackgroundColor?: 'light' | 'dark'
             }
         );
 
         public emotes: Collection<string, Emote>;
         public channels: Collection<string, Channel>;
+        public twitchBackgroundColor: string;
 
         public fetchTwitchEmotes(id?: number): Promise<Collection<string, TwitchEmote>>;
         public fetchBTTVEmotes(id?: number): Promise<Collection<string, BTTVEmote>>;
