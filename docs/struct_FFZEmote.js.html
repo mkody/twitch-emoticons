@@ -45,8 +45,8 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const Emote = require('./Emote');
-const Constants = require('../util/Constants');
+            <pre class="prettyprint source linenums"><code>import Emote from './Emote.js';
+import Constants from '../util/Constants.js';
 
 /** @augments Emote */
 class FFZEmote extends Emote {
@@ -157,7 +157,7 @@ class FFZEmote extends Emote {
     }
 }
 
-module.exports = FFZEmote;
+export default FFZEmote;
 </code></pre>
         </article>
     </section>

@@ -1,6 +1,6 @@
-const { describe, expect, test, beforeEach } = require('@jest/globals');
-const { env } = require('process');
-const { EmoteFetcher, EmoteParser } = require('../src/index.js');
+import { describe, expect, test, beforeEach } from '@jest/globals';
+import { env } from 'process';
+import { EmoteFetcher, EmoteParser } from '../src/index.js';
 
 describe('Test toObject', () => {
     let emoteFetcher;

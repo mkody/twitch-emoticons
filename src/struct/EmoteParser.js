@@ -1,4 +1,4 @@
-const Constants = require('../util/Constants');
+import Constants from '../util/Constants.js';
 
 class EmoteParser {
     /**
@@ -97,4 +97,4 @@ class EmoteParser {
     }
 }
 
-module.exports = EmoteParser;
+export default EmoteParser;

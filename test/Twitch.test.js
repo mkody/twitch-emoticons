@@ -1,6 +1,6 @@
-const { describe, expect, test } = require('@jest/globals');
-const { env } = require('process');
-const { EmoteFetcher, EmoteParser, Collection } = require('../src/index.js');
+import { describe, expect, test } from '@jest/globals';
+import { env } from 'process';
+import { EmoteFetcher, EmoteParser, Collection } from '../src/index.js';
 
 describe('Test Twitch emotes', () => {
     test('Test failing when environment variables are not set', () => {

@@ -45,8 +45,8 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const Emote = require('./Emote');
-const Constants = require('../util/Constants');
+            <pre class="prettyprint source linenums"><code>import Emote from './Emote.js';
+import Constants from '../util/Constants.js';
 
 /** @augments Emote */
 class SevenTVEmote extends Emote {
@@ -152,7 +152,7 @@ class SevenTVEmote extends Emote {
     }
 }
 
-module.exports = SevenTVEmote;
+export default SevenTVEmote;
 </code></pre>
         </article>
     </section>

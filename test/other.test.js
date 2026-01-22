@@ -1,5 +1,5 @@
-const { describe, expect, test } = require('@jest/globals');
-const { Emote, EmoteFetcher, EmoteParser } = require('../src/index.js');
+import { describe, expect, test } from '@jest/globals';
+import { Emote, EmoteFetcher, EmoteParser } from '../src/index.js';
 
 describe('Emote class', () => {
     test('Base Emote class should not be used by itself', () => {
