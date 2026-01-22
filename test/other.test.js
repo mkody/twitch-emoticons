@@ -12,6 +12,28 @@ describe('Emote class', () => {
     });
 });
 
+
+describe('Setting a static preference', () => {
+    test('Default should be non-static (animated)', () => {
+        const emoteFetcher = new EmoteFetcher();
+        expect(emoteFetcher.forceStatic).toBe(false);
+    });
+
+    test('Static option disabled', () => {
+        const emoteFetcher = new EmoteFetcher({
+            forceStatic: false
+        });
+        expect(emoteFetcher.forceStatic).toBe(false);
+    });
+
+    test('Static option enabled', () => {
+        const emoteFetcher = new EmoteFetcher({
+            forceStatic: true
+        });
+        expect(emoteFetcher.forceStatic).toBe(true);
+    });
+});
+
 describe('EmoteParser\'s _validateOptions', () => {
     const fetcher = new EmoteFetcher();
 

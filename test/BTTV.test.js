@@ -45,4 +45,23 @@ describe('Test BTTV emotes', () => {
             expect(text).toBe('This is a test string with ![tppUrn](https://cdn.betterttv.net/emote/5f5f7d5f68d9d86c020e8672/1x.webp "tppUrn") in it.');
         });
     });
+
+    describe('Test static preference', () => {
+        const emoteFetcher = new EmoteFetcher();
+        const emoteParser = new EmoteParser(emoteFetcher, {
+            type: 'markdown',
+            match: /:(.+?):/g
+        });
+
+        test('Override forcing static in .toLink()', async() => {
+            await emoteFetcher.fetchBTTVEmotes();
+            const emote = emoteFetcher.emotes.get('SourPls');
+            expect(emote.toLink(2, true)).toBe('https://cdn.betterttv.net/emote/566ca38765dbbdab32ec0560/3x.png');
+        });
+
+        test('Override forcing static in .parse()', () => {
+            const text = emoteParser.parse('This is a test string with :SourPls: in it.', null, true);
+            expect(text).toBe('This is a test string with ![SourPls](https://cdn.betterttv.net/emote/566ca38765dbbdab32ec0560/1x.png "SourPls") in it.');
+        });
+    });
 });

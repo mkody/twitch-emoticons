@@ -27,12 +27,14 @@ declare module '@mkody/twitch-emoticons' {
                 twitchAppID?: string,
                 twitchAppSecret?: string,
                 apiClient?: object,
+                forceStatic?: boolean,
                 twitchBackgroundColor?: 'light' | 'dark'
             }
         );
 
         public emotes: Collection<string, Emote>;
         public channels: Collection<string, Channel>;
+        public forceStatic: boolean;
         public twitchBackgroundColor: 'light' | 'dark';
 
         public fetchTwitchEmotes(id?: number): Promise<Collection<string, TwitchEmote>>;
@@ -52,7 +54,7 @@ declare module '@mkody/twitch-emoticons' {
             }
         );
 
-        public parse(text: string, size?: number, backgroundColor?: 'light' | 'dark'): string;
+        public parse(text: string, size?: number, forceStatic?: boolean, backgroundColor?: 'light' | 'dark'): string;
     }
 
     export class TwitchEmote extends Emote {
@@ -63,7 +65,7 @@ declare module '@mkody/twitch-emoticons' {
         public imageType: 'png' | 'gif';
         public readonly owner: Channel;
 
-        public toLink(size: number, backgroundColor?: 'light' | 'dark'): string;
+        public toLink(size: number, forceStatic?: boolean, backgroundColor?: 'light' | 'dark'): string;
         public toObject(): EmoteObject;
     }
 
@@ -75,7 +77,7 @@ declare module '@mkody/twitch-emoticons' {
         public imageType: 'webp';
         public readonly owner?: Channel;
 
-        public toLink(size: number): string;
+        public toLink(size: number, forceStatic?: boolean): string;
         public toObject(): EmoteObject;
     }
 
@@ -89,7 +91,7 @@ declare module '@mkody/twitch-emoticons' {
         public modifier: boolean;
         public readonly owner?: Channel;
 
-        public toLink(size: number): string;
+        public toLink(size: number, forceStatic?: boolean): string;
         public toObject(): EmoteObject;
     }
 
@@ -102,7 +104,7 @@ declare module '@mkody/twitch-emoticons' {
         public imageType: 'webp' | 'avif';
         public readonly owner?: Channel;
 
-        public toLink(size: number): string;
+        public toLink(size: number, forceStatic?: boolean): string;
         public toObject(): EmoteObject;
     }
 

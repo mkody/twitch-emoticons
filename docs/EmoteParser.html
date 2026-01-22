@@ -969,7 +969,7 @@ Must be a global regex, with one capture group for the emote code.</p></td>
 
     
 
-    <h4 class="name" id="parse"><span class="type-signature"></span>parse<span class="signature">(text, size, backgroundColor<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    <h4 class="name" id="parse"><span class="type-signature"></span>parse<span class="signature">(text, size, forceStatic<span class="signature-attributes">opt</span>, backgroundColor<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {string}</span></h4>
 
     
 
@@ -985,7 +985,7 @@ Must be a global regex, with one capture group for the emote code.</p></td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteParser.js.html">struct/EmoteParser.js</a>, <a href="struct_EmoteParser.js.html#line80">line 80</a>
+        <a href="struct_EmoteParser.js.html">struct/EmoteParser.js</a>, <a href="struct_EmoteParser.js.html#line81">line 81</a>
     </li></ul></dd>
     
 
@@ -1135,6 +1135,44 @@ Must be a global regex, with one capture group for the emote code.</p></td>
 
         <tr>
             
+                <td class="name"><code>forceStatic</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>Whether to force the emote to be static (non-animated). Defaults to the fetcher's forceStatic or <code>false</code>.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>backgroundColor</code></td>
             
 
@@ -1169,7 +1207,7 @@ Must be a global regex, with one capture group for the emote code.</p></td>
                 </td>
             
 
-            <td class="description last"><p>Only for Twitch emotes: the preferred background color. Defaults to the fetcher's twitchBackgroundColor or 'dark'.</p></td>
+            <td class="description last"><p>Only for Twitch emotes: the preferred background color. Defaults to the fetcher's twitchBackgroundColor or <code>dark</code>.</p></td>
         </tr>
 
     

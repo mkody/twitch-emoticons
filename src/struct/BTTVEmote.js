@@ -50,10 +50,11 @@ class BTTVEmote extends Emote {
     /**
      * Gets the image link of the emote.
      * @param {number} size - The size of the image, 0, 1, or 2.
+     * @param {boolean} [forceStatic] - Whether to force the emote to be static (non-animated). Defaults to the fetcher's forceStatic or `false`.
      * @returns {string}
      */
-    toLink(size = 0) {
-        return Constants.BTTV.CDN(this.id, size); // eslint-disable-line new-cap
+    toLink(size = 0, forceStatic) {
+        return Constants.BTTV.CDN(this.id, size, forceStatic); // eslint-disable-line new-cap
     }
 
     /**

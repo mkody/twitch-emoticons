@@ -68,4 +68,23 @@ describe('Test 7TV emotes', () => {
             expect(text).toBe('This is a test string with ![YABE](https://cdn.7tv.app/emote/01FFNN7CG00009CAK0J14696HH/1x.webp "YABE") in it.');
         });
     });
+
+    describe('Override static preference', () => {
+        const emoteFetcher = new EmoteFetcher();
+        const emoteParser = new EmoteParser(emoteFetcher, {
+            type: 'markdown',
+            match: /:(.+?):/g
+        });
+
+        test('Forcing static in .toLink()', async() => {
+            await emoteFetcher.fetchSevenTVEmotes(44317909);
+            const emote = emoteFetcher.emotes.get('YABE');
+            expect(emote.toLink(2, true)).toBe('https://cdn.7tv.app/emote/01FFNN7CG00009CAK0J14696HH/3x_static.webp');
+        });
+
+        test('Forcing static in .parse()', () => {
+            const text = emoteParser.parse('This is a test string with :YABE: in it.', null, true);
+            expect(text).toBe('This is a test string with ![YABE](https://cdn.7tv.app/emote/01FFNN7CG00009CAK0J14696HH/1x_static.webp "YABE") in it.');
+        });
+    });
 });

@@ -68,4 +68,23 @@ describe('Test FFZ emotes', () => {
             expect(text).toBe('This is a test string with ![monkaEyes](https://cdn.frankerfacez.com/emote/268204/1 "monkaEyes")  in it.');
         });
     });
+
+    describe('Override static preference', () => {
+        const emoteFetcher = new EmoteFetcher();
+        const emoteParser = new EmoteParser(emoteFetcher, {
+            type: 'markdown',
+            match: /:(.+?):/g
+        });
+
+        test('Forcing static in .toLink()', async() => {
+            await emoteFetcher.fetchFFZEmotes(44317909);
+            const emote = emoteFetcher.emotes.get('MikuSway');
+            expect(emote.toLink(2, true)).toBe('https://cdn.frankerfacez.com/emote/723102/4');
+        });
+
+        test('Forcing static in .parse()', () => {
+            const text = emoteParser.parse('This is a test string with :MikuSway: in it.', null, true);
+            expect(text).toBe('This is a test string with ![MikuSway](https://cdn.frankerfacez.com/emote/723102/1 "MikuSway") in it.');
+        });
+    });
 });

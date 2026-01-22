@@ -73,6 +73,7 @@
 <li>The previously-available <code>apiClient</code> is now set in this object too.</li>
 </ul>
 </li>
+<li>If you've exported 7TV emotes, do note that the <code>sizes</code> array changed to not include the leading <code>x.&lt;format&gt;</code>.</li>
 <li><em>More to come for the final release, as this is still a work in progress.</em></li>
 </ul>
 <h3>Pre-requisites</h3>
@@ -169,12 +170,39 @@ Promise.all([
     console.error(err);
 });
 </code></pre>
+<h4>Force static images</h4>
+<p>All providers let you ask to only get static versions of their emotes.</p>
+<p>By default, we allow animated emotes to be used,<br>
+but you can override this at the <code>EmoteFetcher</code> level:</p>
+<pre class="prettyprint source lang-js"><code>const fetcherDark = new EmoteFetcher({
+    // Your Twitch app keys
+    twitchAppID: '&lt;your app ID>',
+    twitchAppSecret: '&lt;your app secret>',
+    forceStatic: true // &lt;- Here!
+});
+</code></pre>
+<p>It is also possible to force that using the <code>Emote</code>'s <code>toLink()</code> method:</p>
+<pre class="prettyprint source lang-js"><code>const fetcher = new EmoteFetcher({ twitchAppID, twitchAppSecret });
+fetcher.fetchTwitchEmotes(null).then(() => {
+    // Do note that the first parameter is the size, so either set `null` or use it properly
+    const kappa = fetcher.emotes.get('Kappa').toLink(null, true);
+    console.log(kappa);
+    // https://static-cdn.jtvnw.net/emoticons/v2/25/static/dark/1.0
+});
+</code></pre>
+<p>Or when using the <code>EmoteParser</code>'s <code>parse()</code>:</p>
+<pre class="prettyprint source lang-js"><code>// Do note that the second parameter is the size, so either set `null` or use it properly
+const kappa = parser.parse('Kappa', null, true);
+console.log(kappa);
+// ![Kappa](https://static-cdn.jtvnw.net/emoticons/v2/25/static/dark/1.0 &quot;Kappa&quot;)!
+</code></pre>
+<p><strong>NOTE:</strong> Forcing static images might make the <code>imageType</code> of the <code>Emote</code> not match with your expectations!<br>
+(Twitch: <code>gif</code> =&gt; <code>png</code>; BTTV: <code>webp</code> =&gt; <code>png</code>.)</p>
 <h4>Twitch background color preference</h4>
-<p>Twitch emotes can be optimized for light or dark backgrounds.<br>
-By default, emotes are fetched for dark backgrounds, but you can specify a preference:</p>
-<pre class="prettyprint source lang-js"><code>import { EmoteFetcher, EmoteParser } from '@mkody/twitch-emoticons';
-
-// For dark backgrounds (default)
+<p>Some Twitch emotes are optimized for light or dark backgrounds.</p>
+<p>By default, emotes are fetched for dark backgrounds,<br>
+but you can specify a preference at the <code>EmoteFetcher</code> level:</p>
+<pre class="prettyprint source lang-js"><code>// For dark backgrounds (default)
 const fetcherDark = new EmoteFetcher({
     // Your Twitch app keys
     twitchAppID: '&lt;your app ID>',
@@ -196,25 +224,26 @@ fetcherLight.fetchTwitchEmotes(null).then(() => {
     // https://static-cdn.jtvnw.net/emoticons/v2/25/default/light/1.0
 });
 </code></pre>
-<p>It is also possible to pick the prefered background color when using<br>
-the <code>Emote</code>'s <code>toLink()</code> method:</p>
+<p>It is also possible to force that using the <code>Emote</code>'s <code>toLink()</code> method:</p>
 <pre class="prettyprint source lang-js"><code>const fetcher = new EmoteFetcher({ twitchAppID, twitchAppSecret });
 fetcher.fetchTwitchEmotes(null).then(() => {
     // Do note that the first parameter is the size, so either set `null` or use it properly
-    const kappa = fetcher.emotes.get('Kappa').toLink(null, 'light');
+    // And the second is if you want to force the static version, so either set `null`/`false` or use it properly
+    const kappa = fetcher.emotes.get('Kappa').toLink(null, false, 'light');
     console.log(kappa);
     // https://static-cdn.jtvnw.net/emoticons/v2/25/default/light/1.0
 });
 </code></pre>
 <p>Or when using the <code>EmoteParser</code>'s <code>parse()</code>:</p>
 <pre class="prettyprint source lang-js"><code>// Do note that the second parameter is the size, so either set `null` or use it properly
-const kappa = parser.parse('Kappa', null, 'light');
+// And the third is if you want to force the static version, so either set `null`/`false` or use it properly
+const kappa = parser.parse('Kappa', null, false, 'light');
 console.log(kappa);
 // ![Kappa](https://static-cdn.jtvnw.net/emoticons/v2/25/default/light/1.0 &quot;Kappa&quot;)!
 </code></pre>
 <h4>7TV formats</h4>
-<p>7TV v3 delivers emotes in either WEBP or AVIF.<br>
-By default we'll return WEBP emotes but you can override this.</p>
+<p>7TV v3 delivers emotes in either WEBP or AVIF.</p>
+<p>By default we'll return WEBP emotes but you can override this.</p>
 <pre class="prettyprint source lang-js"><code>import { EmoteFetcher } from '@mkody/twitch-emoticons';
 const fetcher = new EmoteFetcher();
 

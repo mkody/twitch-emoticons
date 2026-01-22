@@ -16,7 +16,8 @@ class EmoteFetcher {
      * @param {string} [options.twitchAppID] Your app ID for the Twitch API.
      * @param {string} [options.twitchAppSecret] Your app secret for the Twitch API.
      * @param {ApiClient} [options.apiClient] - Bring your own Twurple ApiClient.
-     * @param {'light' | 'dark'} [options.twitchBackgroundColor='dark'] - Background color for Twitch emotes.
+     * @param {boolean} [options.forceStatic=false] - Force emotes to be static (non-animated).
+     * @param {'light' | 'dark'} [options.twitchBackgroundColor='dark'] - Background color preference for Twitch emotes.
      */
     constructor(options = {}) {
         if (options.apiClient) {
@@ -33,6 +34,12 @@ class EmoteFetcher {
              */
             this.apiClient = new ApiClient({ authProvider });
         }
+
+        /**
+         * Force emotes to be static (non-animated).
+         * @type {boolean}
+         */
+        this.forceStatic = options.forceStatic || false;
 
         /**
          * Background color preference for Twitch emotes.
@@ -84,7 +91,7 @@ class EmoteFetcher {
             channel = new Channel(this, channel_id);
             this.channels.set(channel_id, channel);
         }
-        if (format) channel.format = format;
+        if (format) channel.format = format.toLowerCase();
         return channel;
     }
 

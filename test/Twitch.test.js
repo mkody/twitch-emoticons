@@ -67,7 +67,29 @@ describe('Test Twitch emotes', () => {
             });
         });
 
-        describe('Test background color preference', () => {
+        describe('Override static preference', () => {
+            const emoteFetcher = new EmoteFetcher({
+                twitchAppID: env.TWITCH_ID,
+                twitchAppSecret: env.TWITCH_SECRET
+            });
+            const emoteParser = new EmoteParser(emoteFetcher, {
+                type: 'markdown',
+                match: /:(.+?):/g
+            });
+
+            test('Forcing static in .toLink()', async() => {
+                await emoteFetcher.fetchTwitchEmotes();
+                const emote = emoteFetcher.emotes.get('Kappa');
+                expect(emote.toLink(2, true)).toBe('https://static-cdn.jtvnw.net/emoticons/v2/25/static/dark/3.0');
+            });
+
+            test('Forcing static in .parse()', () => {
+                const text = emoteParser.parse('This is a test string with :CoolCat: in it.', null, true);
+                expect(text).toBe('This is a test string with ![CoolCat](https://static-cdn.jtvnw.net/emoticons/v2/58127/static/dark/1.0 "CoolCat") in it.');
+            });
+        });
+
+        describe('Set background color preference', () => {
             test('Default background should be dark', () => {
                 const emoteFetcher = new EmoteFetcher({
                     twitchAppID: env.TWITCH_ID,
@@ -114,7 +136,7 @@ describe('Test Twitch emotes', () => {
                 await emoteFetcher.fetchTwitchEmotes();
                 const emote = emoteFetcher.emotes.get('Kappa');
                 // And now override to dark
-                expect(emote.toLink(2, 'dark')).toBe('https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/3.0');
+                expect(emote.toLink(2, null, 'dark')).toBe('https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/3.0');
             });
 
             test('Parse string with light background emote', async() => {
@@ -144,7 +166,7 @@ describe('Test Twitch emotes', () => {
                 });
 
                 await emoteFetcher.fetchTwitchEmotes();
-                const text = emoteParser.parse('This is a test string with :CoolCat: in it.', null, 'light');
+                const text = emoteParser.parse('This is a test string with :CoolCat: in it.', null, null, 'light');
                 expect(text).toBe('This is a test string with ![CoolCat](https://static-cdn.jtvnw.net/emoticons/v2/58127/default/light/1.0 "CoolCat") in it.');
             });
         });
