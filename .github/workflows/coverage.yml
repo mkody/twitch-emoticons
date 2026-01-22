@@ -2,8 +2,7 @@ name: Coverage
 
 on:
   pull_request_target:
-    branches:
-      - master
+    branches: [ "master" ]
 
 jobs:
   coverage:
@@ -19,4 +18,5 @@ jobs:
       - name: Check coverage
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
+          test-script: pnpm test
           package-manager: pnpm
