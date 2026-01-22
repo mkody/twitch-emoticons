@@ -31,14 +31,14 @@
         "axios": "^1.13.2"
     },
     "devDependencies": {
-        "@eslint/js": "^9.39.1",
+        "@eslint/js": "^9.39.2",
         "@jest/globals": "^30.2.0",
         "@microsoft/eslint-formatter-sarif": "^3.1.0",
         "docdash": "^2.0.2",
-        "esbuild": "^0.27.0",
-        "eslint": "^9.39.1",
-        "eslint-plugin-jsdoc": "^61.4.1",
-        "globals": "^16.5.0",
+        "esbuild": "^0.27.2",
+        "eslint": "^9.39.2",
+        "eslint-plugin-jsdoc": "^62.3.0",
+        "globals": "^17.0.0",
         "jest": "^30.2.0",
         "jsdoc": "^4.0.5"
     },
@@ -65,7 +65,7 @@
         "node": ">=18.0.0",
         "pnpm": ">=9"
     },
-    "packageManager": "pnpm@10.24.0",
+    "packageManager": "pnpm@10.28.1",
     "pnpm": {
         "onlyBuiltDependencies": [
             "esbuild",
