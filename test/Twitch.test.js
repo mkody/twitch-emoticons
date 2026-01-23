@@ -77,15 +77,43 @@ describe('Test Twitch emotes', () => {
         match: /:(.+?):/g,
       })
 
-      test('Forcing static in .toLink()', async () => {
+      test('Default behavior does not force static', async () => {
         await emoteFetcher.fetchTwitchEmotes()
-        const emote = emoteFetcher.emotes.get('Kappa')
-        expect(emote.toLink({ size: 2, forceStatic: true })).toBe('https://static-cdn.jtvnw.net/emoticons/v2/25/static/dark/3.0')
+        const emote = emoteFetcher.emotes.get('DinoDance')
+        expect(emote.toLink({ size: 2 })).toBe('https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_dcd06b30a5c24f6eb871e8f5edbd44f7/default/dark/3.0')
       })
 
-      test('Forcing static in .parse()', () => {
-        const text = emoteParser.parse('This is a test string with :CoolCat: in it.', { forceStatic: true })
-        expect(text).toBe('This is a test string with ![CoolCat](https://static-cdn.jtvnw.net/emoticons/v2/58127/static/dark/1.0 "CoolCat") in it.')
+      test('Static not forced in EmoteFetcher', async () => {
+        const staticEmoteFetcher = new EmoteFetcher({
+          twitchAppID: env.TWITCH_ID,
+          twitchAppSecret: env.TWITCH_SECRET,
+          forceStatic: false,
+        })
+        await staticEmoteFetcher.fetchTwitchEmotes()
+        const emote = staticEmoteFetcher.emotes.get('DinoDance')
+        expect(emote.toLink({ size: 2 })).toBe('https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_dcd06b30a5c24f6eb871e8f5edbd44f7/default/dark/3.0')
+      })
+
+      test('Static forced in EmoteFetcher', async () => {
+        const staticEmoteFetcher = new EmoteFetcher({
+          twitchAppID: env.TWITCH_ID,
+          twitchAppSecret: env.TWITCH_SECRET,
+          forceStatic: true,
+        })
+        await staticEmoteFetcher.fetchTwitchEmotes()
+        const emote = staticEmoteFetcher.emotes.get('DinoDance')
+        expect(emote.toLink({ size: 2 })).toBe('https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_dcd06b30a5c24f6eb871e8f5edbd44f7/static/dark/3.0')
+      })
+
+      test('Override static in .toLink()', async () => {
+        await emoteFetcher.fetchTwitchEmotes()
+        const emote = emoteFetcher.emotes.get('DinoDance')
+        expect(emote.toLink({ size: 2, forceStatic: true })).toBe('https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_dcd06b30a5c24f6eb871e8f5edbd44f7/static/dark/3.0')
+      })
+
+      test('Override static in .parse()', () => {
+        const text = emoteParser.parse('This is a test string with :DinoDance: in it.', { forceStatic: true })
+        expect(text).toBe('This is a test string with ![DinoDance](https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_dcd06b30a5c24f6eb871e8f5edbd44f7/static/dark/1.0 "DinoDance") in it.')
       })
     })
 
@@ -98,20 +126,7 @@ describe('Test Twitch emotes', () => {
         expect(emoteFetcher.twitchThemeMode).toBe('dark')
       })
 
-      test('Light theme mode option', async () => {
-        const emoteFetcher = new EmoteFetcher({
-          twitchAppID: env.TWITCH_ID,
-          twitchAppSecret: env.TWITCH_SECRET,
-          twitchThemeMode: 'light',
-        })
-        expect(emoteFetcher.twitchThemeMode).toBe('light')
-
-        await emoteFetcher.fetchTwitchEmotes()
-        const emote = emoteFetcher.emotes.get('Kappa')
-        expect(emote.toLink({ size: 2 })).toBe('https://static-cdn.jtvnw.net/emoticons/v2/25/default/light/3.0')
-      })
-
-      test('Dark theme mode option explicitly set', async () => {
+      test('Dark theme mode option in EmoteFetcher', async () => {
         const emoteFetcher = new EmoteFetcher({
           twitchAppID: env.TWITCH_ID,
           twitchAppSecret: env.TWITCH_SECRET,
@@ -122,6 +137,19 @@ describe('Test Twitch emotes', () => {
         await emoteFetcher.fetchTwitchEmotes()
         const emote = emoteFetcher.emotes.get('Kappa')
         expect(emote.toLink({ size: 2 })).toBe('https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/3.0')
+      })
+
+      test('Light theme mode option in EmoteFetcher', async () => {
+        const emoteFetcher = new EmoteFetcher({
+          twitchAppID: env.TWITCH_ID,
+          twitchAppSecret: env.TWITCH_SECRET,
+          twitchThemeMode: 'light',
+        })
+        expect(emoteFetcher.twitchThemeMode).toBe('light')
+
+        await emoteFetcher.fetchTwitchEmotes()
+        const emote = emoteFetcher.emotes.get('Kappa')
+        expect(emote.toLink({ size: 2 })).toBe('https://static-cdn.jtvnw.net/emoticons/v2/25/default/light/3.0')
       })
 
       test('Override theme mode in .toLink()', async () => {

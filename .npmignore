@@ -2,6 +2,7 @@
 .vscode/
 coverage/
 docs/
+docs_static/
 node_modules/
 test/
 .*
