@@ -5,16 +5,57 @@ Gets Twitch, BTTV, FFZ and 7TV emotes as well as parsing text to emotes!
 
 ### Migrate to 3.x
 
-This release introduces some breaking changes!
+**This release introduces some breaking changes!**
 
 - Node.js 20 is required, we've set the minimum to 20.19.
 - This project uses ESM imports. Begone `require(...)`, welcome `import {...} from '...'`.
 - The initialisation of `EmoteFetcher` changed to only use an object as the first parameter.
-  - API keys for Twitch must now be set with `twitchAppID` and `twitchAppSecret` keys.
+  - API keys for Twitch must now be set with `twitchAppID` and `twitchAppSecret` properties.
   - The previously-available `apiClient` is now set in this object too.
+- The defaults for `EmoteParser` changed to use the `html` template and match words `/(\w+)/`.
+- The default `html` template doesn't have `twitch-emote-{size}` anymore in its `class` attribute.
 - If you've exported 7TV emotes, do note that the `sizes` array changed to not include the leading `x.<format>`.
 - *More to come for the final release, as this is still a work in progress.*
 
+<details>
+<summary>See the changes</summary>
+
+Before:
+
+```js
+const { EmoteFetcher, EmoteParser } = require('@mkody/twitch-emoticons');
+
+const fetcher = new EmoteFetcher('<your app id>', '<your app secret>');
+
+// Those next two lines didn't have breaking changes
+await fetcher.fetchTwitchEmotes();
+const parser = new EmoteParser(fetcher);
+
+const parsed = parser.parse('Hello :CoolCat:!');
+console.log(parsed);
+// Hello ![CoolCat](https://static-cdn.jtvnw.net/emoticons/v2/58127/default/dark/1.0 "CoolCat")!
+```
+
+After:
+
+```js
+import { EmoteFetcher, EmoteParser } from '@mkody/twitch-emoticons';
+
+const fetcher = new EmoteFetcher({
+    twitchAppID: '<your app ID>',
+    twitchAppSecret: '<your app secret>'
+});
+
+// Those next two lines didn't have breaking changes
+await fetcher.fetchTwitchEmotes();
+const parser = new EmoteParser(fetcher);
+
+const parsed = parser.parse('Hello CoolCat!');
+console.log(parsed);
+// Hello <img alt="CoolCat" title="CoolCat" class="twitch-emote" src="https://static-cdn.jtvnw.net/emoticons/v2/58127/default/dark/1.0">
+```
+
+</details>
 
 ### Pre-requisites
 
@@ -49,9 +90,11 @@ const fetcher = new EmoteFetcher({
     twitchAppSecret: '<your app secret>'
 });
 const parser = new EmoteParser(fetcher, {
-    type: 'markdown', // Can be `markdown` (default), `html`, `bbcode`, or `plain`.
-    match: /:(.+?):/g // This is the default, which means your emotes must be between colons (:Kappa:).
-                      // Use /(\w+)+?/g to check on every word, like in regular Twitch chat.
+    type: 'markdown', // Can be `html` (default), `markdown`, `bbcode`, or `plain`.
+                      // You can set your own output with `template`.
+    match: /:(.+?):/g // This means your emotes must be between colons (:Kappa:).
+                      // The default is /(\w+)/g and matches any word characters,
+                      // similar to regular Twitch chat.
 });
 
 fetcher.fetchTwitchEmotes(null).then(() => {
@@ -100,8 +143,8 @@ const parser = new EmoteParser(fetcher, {
     template: '<img class="emote" alt="{name}" src="{link}">',
     // Otherwise, just use our provided template
     // type: 'html',
-    // Match without :colons:
-    match: /(\w+)+?/g
+    // Matches words (like \w) but also dashes
+    match: /([a-zA-Z0-9_\-]+)/g
 });
 
 Promise.all([
@@ -174,7 +217,7 @@ Or when using the `EmoteParser`'s `parse()`:
 // Do note that the second parameter is the size, so either set `null` or use it properly
 const kappa = parser.parse('Kappa', null, true);
 console.log(kappa);
-// ![Kappa](https://static-cdn.jtvnw.net/emoticons/v2/25/static/dark/1.0 "Kappa")!
+// <img alt="Kappa" title="Kappa" class="twitch-emote" src="https://static-cdn.jtvnw.net/emoticons/v2/25/static/dark/1.0">
 ```
 
 > [!WARNING]
@@ -237,7 +280,7 @@ Or when using the `EmoteParser`'s `parse()`:
 // And the third is if you want to force the static version, so either set `null`/`false` or use it properly
 const kappa = parser.parse('Kappa', null, false, 'light');
 console.log(kappa);
-// ![Kappa](https://static-cdn.jtvnw.net/emoticons/v2/25/default/light/1.0 "Kappa")!
+// <img alt="Kappa" title="Kappa" class="twitch-emote" src="https://static-cdn.jtvnw.net/emoticons/v2/25/default/light/1.0">
 ```
 
 
@@ -249,6 +292,7 @@ By default we'll return WEBP emotes but you can override this.
 
 ```js
 import { EmoteFetcher } from '@mkody/twitch-emoticons';
+
 const fetcher = new EmoteFetcher();
 
 // Fetch global emotes in AVIF (channel id has to be `null` for global)
@@ -271,6 +315,7 @@ This can be useful to save the emotes in a cache or for offline content.
 
 ```js
 import { EmoteFetcher } from '@mkody/twitch-emoticons';
+
 const fetcher = new EmoteFetcher();
 
 // First fetch some emotes

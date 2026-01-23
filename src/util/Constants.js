@@ -23,7 +23,7 @@ export default {
         CDNAnimated: (id, size = 1) => `https://cdn.frankerfacez.com/emote/${id}/animated/${size}.webp`
     },
     Templates: {
-        html: '<img alt="{name}" title="{name}" class="twitch-emote twitch-emote-{size}" src="{link}">',
+        html: '<img alt="{name}" title="{name}" class="twitch-emote" src="{link}">',
         markdown: '![{name}]({link} "{name}")',
         bbcode: '[img]{link}[/img]',
         plain: '{link}'

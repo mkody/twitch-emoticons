@@ -63,19 +63,53 @@
         <article><h1>twitch-emoticons</h1>
 <p>Gets Twitch, BTTV, FFZ and 7TV emotes as well as parsing text to emotes!</p>
 <h3>Migrate to 3.x</h3>
-<p>This release introduces some breaking changes!</p>
+<p><strong>This release introduces some breaking changes!</strong></p>
 <ul>
 <li>Node.js 20 is required, we've set the minimum to 20.19.</li>
 <li>This project uses ESM imports. Begone <code>require(...)</code>, welcome <code>import {...} from '...'</code>.</li>
 <li>The initialisation of <code>EmoteFetcher</code> changed to only use an object as the first parameter.
 <ul>
-<li>API keys for Twitch must now be set with <code>twitchAppID</code> and <code>twitchAppSecret</code> keys.</li>
+<li>API keys for Twitch must now be set with <code>twitchAppID</code> and <code>twitchAppSecret</code> properties.</li>
 <li>The previously-available <code>apiClient</code> is now set in this object too.</li>
 </ul>
 </li>
+<li>The defaults for <code>EmoteParser</code> changed to use the <code>html</code> template and match words <code>/(\w+)/</code>.</li>
+<li>The default <code>html</code> template doesn't have <code>twitch-emote-{size}</code> anymore in its <code>class</code> attribute.</li>
 <li>If you've exported 7TV emotes, do note that the <code>sizes</code> array changed to not include the leading <code>x.&lt;format&gt;</code>.</li>
 <li><em>More to come for the final release, as this is still a work in progress.</em></li>
 </ul>
+<details>
+<summary>See the changes</summary>
+<p>Before:</p>
+<pre class="prettyprint source lang-js"><code>const { EmoteFetcher, EmoteParser } = require('@mkody/twitch-emoticons');
+
+const fetcher = new EmoteFetcher('&lt;your app id>', '&lt;your app secret>');
+
+// Those next two lines didn't have breaking changes
+await fetcher.fetchTwitchEmotes();
+const parser = new EmoteParser(fetcher);
+
+const parsed = parser.parse('Hello :CoolCat:!');
+console.log(parsed);
+// Hello ![CoolCat](https://static-cdn.jtvnw.net/emoticons/v2/58127/default/dark/1.0 &quot;CoolCat&quot;)!
+</code></pre>
+<p>After:</p>
+<pre class="prettyprint source lang-js"><code>import { EmoteFetcher, EmoteParser } from '@mkody/twitch-emoticons';
+
+const fetcher = new EmoteFetcher({
+    twitchAppID: '&lt;your app ID>',
+    twitchAppSecret: '&lt;your app secret>'
+});
+
+// Those next two lines didn't have breaking changes
+await fetcher.fetchTwitchEmotes();
+const parser = new EmoteParser(fetcher);
+
+const parsed = parser.parse('Hello CoolCat!');
+console.log(parsed);
+// Hello &lt;img alt=&quot;CoolCat&quot; title=&quot;CoolCat&quot; class=&quot;twitch-emote&quot; src=&quot;https://static-cdn.jtvnw.net/emoticons/v2/58127/default/dark/1.0&quot;>
+</code></pre>
+</details>
 <h3>Pre-requisites</h3>
 <p>To fetch Twitch emotes you need to get a client and secret from Twitch <a href="https://dev.twitch.tv/console/apps/create">here</a>, it's free.<br>
 If you are only using BetterTTV, FrankerFaceZ and 7TV you don't need to provide Twitch app keys, as they are independent from the Twitch API.</p>
@@ -98,9 +132,11 @@ const fetcher = new EmoteFetcher({
     twitchAppSecret: '&lt;your app secret>'
 });
 const parser = new EmoteParser(fetcher, {
-    type: 'markdown', // Can be `markdown` (default), `html`, `bbcode`, or `plain`.
-    match: /:(.+?):/g // This is the default, which means your emotes must be between colons (:Kappa:).
-                      // Use /(\w+)+?/g to check on every word, like in regular Twitch chat.
+    type: 'markdown', // Can be `html` (default), `markdown`, `bbcode`, or `plain`.
+                      // You can set your own output with `template`.
+    match: /:(.+?):/g // This means your emotes must be between colons (:Kappa:).
+                      // The default is /(\w+)/g and matches any word characters,
+                      // similar to regular Twitch chat.
 });
 
 fetcher.fetchTwitchEmotes(null).then(() => {
@@ -140,8 +176,8 @@ const parser = new EmoteParser(fetcher, {
     template: '&lt;img class=&quot;emote&quot; alt=&quot;{name}&quot; src=&quot;{link}&quot;>',
     // Otherwise, just use our provided template
     // type: 'html',
-    // Match without :colons:
-    match: /(\w+)+?/g
+    // Matches words (like \w) but also dashes
+    match: /([a-zA-Z0-9_\-]+)/g
 });
 
 Promise.all([
@@ -203,7 +239,7 @@ fetcher.fetchTwitchEmotes(null).then(() => {
 <pre class="prettyprint source lang-js"><code>// Do note that the second parameter is the size, so either set `null` or use it properly
 const kappa = parser.parse('Kappa', null, true);
 console.log(kappa);
-// ![Kappa](https://static-cdn.jtvnw.net/emoticons/v2/25/static/dark/1.0 &quot;Kappa&quot;)!
+// &lt;img alt=&quot;Kappa&quot; title=&quot;Kappa&quot; class=&quot;twitch-emote&quot; src=&quot;https://static-cdn.jtvnw.net/emoticons/v2/25/static/dark/1.0&quot;>
 </code></pre>
 <blockquote>
 <p>[!WARNING]<br>
@@ -256,12 +292,13 @@ fetcher.fetchTwitchEmotes(null).then(() => {
 // And the third is if you want to force the static version, so either set `null`/`false` or use it properly
 const kappa = parser.parse('Kappa', null, false, 'light');
 console.log(kappa);
-// ![Kappa](https://static-cdn.jtvnw.net/emoticons/v2/25/default/light/1.0 &quot;Kappa&quot;)!
+// &lt;img alt=&quot;Kappa&quot; title=&quot;Kappa&quot; class=&quot;twitch-emote&quot; src=&quot;https://static-cdn.jtvnw.net/emoticons/v2/25/default/light/1.0&quot;>
 </code></pre>
 <h4>7TV formats</h4>
 <p>7TV v3 delivers emotes in either WEBP or AVIF.</p>
 <p>By default we'll return WEBP emotes but you can override this.</p>
 <pre class="prettyprint source lang-js"><code>import { EmoteFetcher } from '@mkody/twitch-emoticons';
+
 const fetcher = new EmoteFetcher();
 
 // Fetch global emotes in AVIF (channel id has to be `null` for global)
@@ -279,6 +316,7 @@ await fetcher.fetchSevenTVEmotes(24377667, 'avif');
 <h4>Export and import emote data</h4>
 <p>This can be useful to save the emotes in a cache or for offline content.</p>
 <pre class="prettyprint source lang-js"><code>import { EmoteFetcher } from '@mkody/twitch-emoticons';
+
 const fetcher = new EmoteFetcher();
 
 // First fetch some emotes

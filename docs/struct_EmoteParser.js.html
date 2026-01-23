@@ -56,12 +56,12 @@ class EmoteParser {
      * The strings that can be interpolated are:
      * - `{link}` The link of the emote.
      * - `{name}` The name of the emote.
-     * - `{size}` The size of the image.
+     * - `{size}` The size index of the image.
      * - `{creator}` The channel/owner name of the emote.
-     * @param {string} [options.type='markdown'] - The type of the parser.
-     * Can be one of `markdown`, `html`, `bbcode`, or `plain`.
+     * @param {string} [options.type='html'] - The type of the parser.
+     * Can be one of `html`, `markdown`, `bbcode`, or `plain`.
      * If the `template` option is provided, this is ignored.
-     * @param {RegExp} [options.match=/:(.+?):/g] - The regular expression that matches an emote.
+     * @param {RegExp} [options.match=/(\w+)/g] - The regular expression that matches an emote.
      * Must be a global regex, with one capture group for the emote code.
      */
     constructor(fetcher, options = {}) {
@@ -77,8 +77,8 @@ class EmoteParser {
          */
         this.options = Object.assign({
             template: '',
-            type: 'markdown',
-            match: /:(.+?):/g
+            type: 'html',
+            match: /(\w+)/g
         }, options);
 
         this._validateOptions(this.options);
