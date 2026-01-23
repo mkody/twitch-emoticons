@@ -810,7 +810,7 @@ The strings that can be interpolated are:</p>
             
 
             <td class="description last"><p>The type of the parser.<br>
-Can be one of <code>markdown</code>, <code>html</code>, <code>bbcode</code>, or <code>plain</code>.<br>
+Can be one of  <code>html</code>, <code>markdown</code>,<code>bbcode</code>, or <code>plain</code>.<br>
 If the <code>template</code> option is provided, this is ignored.</p></td>
         </tr>
 
@@ -969,7 +969,7 @@ Must be a global regex, with one capture group for the emote code.</p></td>
 
     
 
-    <h4 class="name" id="parse"><span class="type-signature"></span>parse<span class="signature">(text, size, forceStatic<span class="signature-attributes">opt</span>, themeMode<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    <h4 class="name" id="parse"><span class="type-signature"></span>parse<span class="signature">(text, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {string}</span></h4>
 
     
 
@@ -985,7 +985,7 @@ Must be a global regex, with one capture group for the emote code.</p></td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteParser.js.html">struct/EmoteParser.js</a>, <a href="struct_EmoteParser.js.html#line81">line 81</a>
+        <a href="struct_EmoteParser.js.html">struct/EmoteParser.js</a>, <a href="struct_EmoteParser.js.html#line82">line 82</a>
     </li></ul></dd>
     
 
@@ -1097,6 +1097,67 @@ Must be a global regex, with one capture group for the emote code.</p></td>
 
         <tr>
             
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>{}</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>Parameters for parsing.</p>
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
                 <td class="name"><code>size</code></td>
             
 
@@ -1113,6 +1174,8 @@ Must be a global regex, with one capture group for the emote code.</p></td>
             
                 <td class="attributes">
                 
+                    &lt;optional><br>
+                
 
                 
 
@@ -1121,14 +1184,8 @@ Must be a global regex, with one capture group for the emote code.</p></td>
             
 
             
-                <td class="default">
-                
-                    <code>0</code>
-                
-                </td>
-            
 
-            <td class="description last"><p>Size for emotes.</p></td>
+            <td class="description last"><p>Size (scale) for emotes.</p></td>
         </tr>
 
     
@@ -1161,10 +1218,6 @@ Must be a global regex, with one capture group for the emote code.</p></td>
             
 
             
-                <td class="default">
-                
-                </td>
-            
 
             <td class="description last"><p>Whether to force the emote to be static (non-animated). Defaults to the fetcher's forceStatic or <code>false</code>.</p></td>
         </tr>
@@ -1179,10 +1232,10 @@ Must be a global regex, with one capture group for the emote code.</p></td>
             <td class="type">
             
                 
-<span class="param-type">'light'</span>
+<span class="param-type">'dark'</span>
 |
 
-<span class="param-type">'dark'</span>
+<span class="param-type">'light'</span>
 
 
 
@@ -1202,12 +1255,15 @@ Must be a global regex, with one capture group for the emote code.</p></td>
             
 
             
-                <td class="default">
-                
-                </td>
-            
 
-            <td class="description last"><p>Only for Twitch emotes: the preferred theme mode. Defaults to the fetcher's twitchThemeMode or <code>dark</code>.</p></td>
+            <td class="description last"><p>Only for Twitch: the preferred theme mode. Defaults to the fetcher's twitchThemeMode or <code>dark</code>.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
         </tr>
 
     

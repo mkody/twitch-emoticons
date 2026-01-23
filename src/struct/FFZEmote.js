@@ -61,14 +61,20 @@ class FFZEmote extends Emote {
 
     /**
      * Gets the image link of the emote.
-     * @param {number} size - The size of the image.
-     * @param {boolean} [forceStatic] - Whether to force the emote to be static (non-animated). Defaults to the fetcher's forceStatic or `false`.
+     * @param {object} [options={}] - Options for the link.
+     * @param {number} [options.size=0] - Size (scale) for the emote.
+     * @param {boolean} [options.forceStatic] - Whether to force the emote to be static (non-animated). Defaults to the fetcher's forceStatic or `false`.
      * @returns {string}
      */
-    toLink(size = 0, forceStatic) {
-        size = this.sizes[size];
-        if (this.animated && !forceStatic) return Constants.FFZ.CDNAnimated(this.id, size); // eslint-disable-line new-cap
-        return Constants.FFZ.CDN(this.id, size); // eslint-disable-line new-cap
+    toLink(options = {}) {
+        const {
+            size = 0,
+            forceStatic = this.fetcher.forceStatic || false
+        } = options || {};
+
+        const sizeKey = this.sizes[size];
+        if (this.animated && !forceStatic) return Constants.FFZ.CDNAnimated(this.id, sizeKey); // eslint-disable-line new-cap
+        return Constants.FFZ.CDN(this.id, sizeKey); // eslint-disable-line new-cap
     }
 
     /**

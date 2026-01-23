@@ -45,7 +45,7 @@ describe('Test toObject', () => {
     });
 
     test('7TV Global Emote (AVIF)', async() => {
-        await emoteFetcher.fetchSevenTVEmotes(null, 'avif');
+        await emoteFetcher.fetchSevenTVEmotes(null, { format: 'avif' });
         expect(emoteFetcher.emotes.get('EZ').toObject()).toMatchSnapshot();
     });
 

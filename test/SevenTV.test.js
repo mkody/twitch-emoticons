@@ -10,12 +10,12 @@ describe('Test 7TV emotes', () => {
         });
 
         test('Execute fetchSevenTVEmotes with the WEBP format', async() => {
-            expect(await emoteFetcher.fetchSevenTVEmotes(null, 'webp')).toBeInstanceOf(Collection);
+            expect(await emoteFetcher.fetchSevenTVEmotes(null, { format: 'webp' })).toBeInstanceOf(Collection);
         });
 
         test('Get emote (EZ)', () => {
             const emote = emoteFetcher.emotes.get('EZ');
-            expect(emote.toLink(2)).toBe('https://cdn.7tv.app/emote/01GB4CK01800090V9B3D8CGEEX/3x.webp');
+            expect(emote.toLink({ size: 2 })).toBe('https://cdn.7tv.app/emote/01GB4CK01800090V9B3D8CGEEX/3x.webp');
         });
 
         test('Parse string with emote (EZ)', () => {
@@ -32,12 +32,12 @@ describe('Test 7TV emotes', () => {
         });
 
         test('Execute fetchSevenTVEmotes with the AVIF format', async() => {
-            expect(await emoteFetcher.fetchSevenTVEmotes(null, 'avif')).toBeInstanceOf(Collection);
+            expect(await emoteFetcher.fetchSevenTVEmotes(null, { format: 'avif' })).toBeInstanceOf(Collection);
         });
 
         test('Get emote (Clap)', () => {
             const emote = emoteFetcher.emotes.get('Clap');
-            expect(emote.toLink(2)).toBe('https://cdn.7tv.app/emote/01GAM8EFQ00004MXFXAJYKA859/3x.avif');
+            expect(emote.toLink({ size: 2 })).toBe('https://cdn.7tv.app/emote/01GAM8EFQ00004MXFXAJYKA859/3x.avif');
         });
 
         test('Parse string with emote (Clap)', () => {
@@ -60,7 +60,7 @@ describe('Test 7TV emotes', () => {
         // YABE was picked as it has been renamed from "fubukiYabe" on this channel
         test('Get emote (YABE)', () => {
             const emote = emoteFetcher.emotes.get('YABE');
-            expect(emote.toLink(2)).toBe('https://cdn.7tv.app/emote/01FFNN7CG00009CAK0J14696HH/3x.webp');
+            expect(emote.toLink({ size: 2 })).toBe('https://cdn.7tv.app/emote/01FFNN7CG00009CAK0J14696HH/3x.webp');
         });
 
         test('Parse string with emote (YABE)', () => {
@@ -79,11 +79,11 @@ describe('Test 7TV emotes', () => {
         test('Forcing static in .toLink()', async() => {
             await emoteFetcher.fetchSevenTVEmotes(44317909);
             const emote = emoteFetcher.emotes.get('YABE');
-            expect(emote.toLink(2, true)).toBe('https://cdn.7tv.app/emote/01FFNN7CG00009CAK0J14696HH/3x_static.webp');
+            expect(emote.toLink({ size: 2, forceStatic: true })).toBe('https://cdn.7tv.app/emote/01FFNN7CG00009CAK0J14696HH/3x_static.webp');
         });
 
         test('Forcing static in .parse()', () => {
-            const text = emoteParser.parse('This is a test string with :YABE: in it.', null, true);
+            const text = emoteParser.parse('This is a test string with :YABE: in it.', { forceStatic: true });
             expect(text).toBe('This is a test string with ![YABE](https://cdn.7tv.app/emote/01FFNN7CG00009CAK0J14696HH/1x_static.webp "YABE") in it.');
         });
     });

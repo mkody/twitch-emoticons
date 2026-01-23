@@ -15,7 +15,7 @@ describe('Test FFZ emotes', () => {
 
         test('Get emote (CatBag)', () => {
             const emote = emoteFetcher.emotes.get('CatBag');
-            expect(emote.toLink(2)).toBe('https://cdn.frankerfacez.com/emote/25927/4');
+            expect(emote.toLink({ size: 2 })).toBe('https://cdn.frankerfacez.com/emote/25927/4');
         });
 
         test('Parse string with emote (CatBag)', () => {
@@ -37,7 +37,7 @@ describe('Test FFZ emotes', () => {
 
         test('Get emote (5Head)', () => {
             const emote = emoteFetcher.emotes.get('5Head');
-            expect(emote.toLink(2)).toBe('https://cdn.frankerfacez.com/emote/239504/4');
+            expect(emote.toLink({ size: 2 })).toBe('https://cdn.frankerfacez.com/emote/239504/4');
         });
 
         test('Parse string with emote (5Head)', () => {
@@ -59,7 +59,7 @@ describe('Test FFZ emotes', () => {
 
         test('Get animated emote (MikuSway)', () => {
             const emote = emoteFetcher.emotes.get('MikuSway');
-            expect(emote.toLink(2)).toBe('https://cdn.frankerfacez.com/emote/723102/animated/4.webp');
+            expect(emote.toLink({ size: 2 })).toBe('https://cdn.frankerfacez.com/emote/723102/animated/4.webp');
         });
 
         test('Parse string with emote (monkaEyes) and modifier (ffzHyper)', () => {
@@ -79,11 +79,11 @@ describe('Test FFZ emotes', () => {
         test('Forcing static in .toLink()', async() => {
             await emoteFetcher.fetchFFZEmotes(44317909);
             const emote = emoteFetcher.emotes.get('MikuSway');
-            expect(emote.toLink(2, true)).toBe('https://cdn.frankerfacez.com/emote/723102/4');
+            expect(emote.toLink({ size: 2, forceStatic: true })).toBe('https://cdn.frankerfacez.com/emote/723102/4');
         });
 
         test('Forcing static in .parse()', () => {
-            const text = emoteParser.parse('This is a test string with :MikuSway: in it.', null, true);
+            const text = emoteParser.parse('This is a test string with :MikuSway: in it.', { forceStatic: true });
             expect(text).toBe('This is a test string with ![MikuSway](https://cdn.frankerfacez.com/emote/723102/1 "MikuSway") in it.');
         });
     });

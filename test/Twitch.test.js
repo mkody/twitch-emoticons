@@ -33,7 +33,7 @@ describe('Test Twitch emotes', () => {
 
             test('Get emote (Kappa)', () => {
                 const emote = emoteFetcher.emotes.get('Kappa');
-                expect(emote.toLink(2)).toBe('https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/3.0');
+                expect(emote.toLink({ size: 2 })).toBe('https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/3.0');
             });
 
             test('Parse string with emote (CoolCat)', () => {
@@ -58,7 +58,7 @@ describe('Test Twitch emotes', () => {
 
             test('Get emote (tppD)', () => {
                 const emote = emoteFetcher.emotes.get('tppD');
-                expect(emote.toLink(2)).toBe('https://static-cdn.jtvnw.net/emoticons/v2/307609315/default/dark/3.0');
+                expect(emote.toLink({ size: 2 })).toBe('https://static-cdn.jtvnw.net/emoticons/v2/307609315/default/dark/3.0');
             });
 
             test('Parse string with emote (tppD)', () => {
@@ -80,11 +80,11 @@ describe('Test Twitch emotes', () => {
             test('Forcing static in .toLink()', async() => {
                 await emoteFetcher.fetchTwitchEmotes();
                 const emote = emoteFetcher.emotes.get('Kappa');
-                expect(emote.toLink(2, true)).toBe('https://static-cdn.jtvnw.net/emoticons/v2/25/static/dark/3.0');
+                expect(emote.toLink({ size: 2, forceStatic: true })).toBe('https://static-cdn.jtvnw.net/emoticons/v2/25/static/dark/3.0');
             });
 
             test('Forcing static in .parse()', () => {
-                const text = emoteParser.parse('This is a test string with :CoolCat: in it.', null, true);
+                const text = emoteParser.parse('This is a test string with :CoolCat: in it.', { forceStatic: true });
                 expect(text).toBe('This is a test string with ![CoolCat](https://static-cdn.jtvnw.net/emoticons/v2/58127/static/dark/1.0 "CoolCat") in it.');
             });
         });
@@ -108,7 +108,7 @@ describe('Test Twitch emotes', () => {
 
                 await emoteFetcher.fetchTwitchEmotes();
                 const emote = emoteFetcher.emotes.get('Kappa');
-                expect(emote.toLink(2)).toBe('https://static-cdn.jtvnw.net/emoticons/v2/25/default/light/3.0');
+                expect(emote.toLink({ size: 2 })).toBe('https://static-cdn.jtvnw.net/emoticons/v2/25/default/light/3.0');
             });
 
             test('Dark theme mode option explicitly set', async() => {
@@ -121,7 +121,7 @@ describe('Test Twitch emotes', () => {
 
                 await emoteFetcher.fetchTwitchEmotes();
                 const emote = emoteFetcher.emotes.get('Kappa');
-                expect(emote.toLink(2)).toBe('https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/3.0');
+                expect(emote.toLink({ size: 2 })).toBe('https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/3.0');
             });
 
             test('Override theme mode in .toLink()', async() => {
@@ -136,7 +136,7 @@ describe('Test Twitch emotes', () => {
                 await emoteFetcher.fetchTwitchEmotes();
                 const emote = emoteFetcher.emotes.get('Kappa');
                 // And now override to dark
-                expect(emote.toLink(2, null, 'dark')).toBe('https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/3.0');
+                expect(emote.toLink({ size: 2, themeMode: 'dark' })).toBe('https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/3.0');
             });
 
             test('Parse string with light theme mode emote', async() => {
@@ -166,7 +166,7 @@ describe('Test Twitch emotes', () => {
                 });
 
                 await emoteFetcher.fetchTwitchEmotes();
-                const text = emoteParser.parse('This is a test string with :CoolCat: in it.', null, null, 'light');
+                const text = emoteParser.parse('This is a test string with :CoolCat: in it.', { themeMode: 'light' });
                 expect(text).toBe('This is a test string with ![CoolCat](https://static-cdn.jtvnw.net/emoticons/v2/58127/default/light/1.0 "CoolCat") in it.');
             });
         });

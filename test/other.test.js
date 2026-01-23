@@ -66,7 +66,7 @@ describe('EmoteParser\'s _validateOptions', () => {
                 type: 'invalid-type'
             });
         }).toThrow(
-            new TypeError('Parse type must be one of `markdown`, `html`, `bbcode`, or `plain`')
+            new TypeError('Parse type must be one of `html`, `markdown`, `bbcode`, or `plain`')
         );
     });
 

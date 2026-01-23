@@ -17,7 +17,7 @@ class EmoteFetcher {
      * @param {string} [options.twitchAppSecret] Your app secret for the Twitch API.
      * @param {ApiClient} [options.apiClient] - Bring your own Twurple ApiClient.
      * @param {boolean} [options.forceStatic=false] - Force emotes to be static (non-animated).
-     * @param {'light' | 'dark'} [options.twitchThemeMode='dark'] - Theme mode (background color) preference for Twitch emotes.
+     * @param {'dark' | 'light'} [options.twitchThemeMode='dark'] - Theme mode (background color) preference for Twitch emotes.
      */
     constructor(options = {}) {
         if (options.apiClient) {
@@ -43,7 +43,7 @@ class EmoteFetcher {
 
         /**
          * Theme mode (background color) preference for Twitch emotes.
-         * @type {'light' | 'dark'}
+         * @type {'dark' | 'light'}
          */
         this.twitchThemeMode = options.twitchThemeMode || 'dark';
 
@@ -330,10 +330,15 @@ class EmoteFetcher {
     /**
      * Fetches the 7TV emotes for a channel.
      * @param {int} [channel=null] - ID of the channel.
-     * @param {('webp'|'avif')} [format='webp'] - The type file format to use (webp/avif).
+     * @param {object} [options={}] - Options for fetching.
+     * @param {('webp'|'avif')} [options.format='webp'] - The type file format to use (webp/avif).
      * @returns {Promise<Collection<string, SevenTVEmote>>}
      */
-    fetchSevenTVEmotes(channel = null, format = 'webp') {
+    fetchSevenTVEmotes(channel = null, options = {}) {
+        const {
+            format = 'webp'
+        } = options || {};
+
         return this._getRawSevenTVEmotes(channel).then(rawEmotes => {
             if ('emotes' in rawEmotes) {
                 // From an emote set (like "global")

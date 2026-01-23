@@ -14,8 +14,12 @@ Gets Twitch, BTTV, FFZ and 7TV emotes as well as parsing text to emotes!
   - The previously-available `apiClient` is now set in this object too.
 - The defaults for `EmoteParser` changed to use the `html` template and match words `/(\w+)/`.
 - The default `html` template doesn't have `twitch-emote-{size}` anymore in its `class` attribute.
+- The `EmoteFetcher.fetchSevenTVEmotes()`, `Emote.toLink()`, and `EmoteParse.parse()` methods have their options as an object.
+  - `fetcher.fetchSevenTVEmotes(null, { format: 'avif' })` - First parameter is still the Twitch user ID (or `null` for global).
+  - `emote.toLink({ size: 1, forceStatic: true })`
+  - `parser.parse('Kappa', { size: 1, forceStatic: true })` - First parameter is still the input text.
 - If you've exported 7TV emotes, do note that the `sizes` array changed to not include the leading `x.<format>`.
-- *More to come for the final release, as this is still a work in progress.*
+- *More may come for the final release, as this is still a work in progress.*
 
 <details>
 <summary>See the changes</summary>
@@ -204,8 +208,7 @@ It is also possible to force that using the `Emote`'s `toLink()` method:
 ```js
 const fetcher = new EmoteFetcher({ twitchAppID, twitchAppSecret });
 fetcher.fetchTwitchEmotes(null).then(() => {
-    // Do note that the first parameter is the size, so either set `null` or use it properly
-    const kappa = fetcher.emotes.get('Kappa').toLink(null, true);
+    const kappa = fetcher.emotes.get('Kappa').toLink({ forceStatic: true });
     console.log(kappa);
     // https://static-cdn.jtvnw.net/emoticons/v2/25/static/dark/1.0
 });
@@ -214,8 +217,7 @@ fetcher.fetchTwitchEmotes(null).then(() => {
 Or when using the `EmoteParser`'s `parse()`:
 
 ```js
-// Do note that the second parameter is the size, so either set `null` or use it properly
-const kappa = parser.parse('Kappa', null, true);
+const kappa = parser.parse('Kappa', { forceStatic: true });
 console.log(kappa);
 // <img alt="Kappa" title="Kappa" class="twitch-emote" src="https://static-cdn.jtvnw.net/emoticons/v2/25/static/dark/1.0">
 ```
@@ -265,9 +267,7 @@ It is also possible to force that using the `Emote`'s `toLink()` method:
 ```js
 const fetcher = new EmoteFetcher({ twitchAppID, twitchAppSecret });
 fetcher.fetchTwitchEmotes(null).then(() => {
-    // Do note that the first parameter is the size, so either set `null` or use it properly
-    // And the second is if you want to force the static version, so either set `null`/`false` or use it properly
-    const kappa = fetcher.emotes.get('Kappa').toLink(null, false, 'light');
+    const kappa = fetcher.emotes.get('Kappa').toLink({ themeMode: 'light' });
     console.log(kappa);
     // https://static-cdn.jtvnw.net/emoticons/v2/25/default/light/1.0
 });
@@ -276,9 +276,7 @@ fetcher.fetchTwitchEmotes(null).then(() => {
 Or when using the `EmoteParser`'s `parse()`:
 
 ```js
-// Do note that the second parameter is the size, so either set `null` or use it properly
-// And the third is if you want to force the static version, so either set `null`/`false` or use it properly
-const kappa = parser.parse('Kappa', null, false, 'light');
+const kappa = parser.parse('Kappa', { themeMode: 'light' });
 console.log(kappa);
 // <img alt="Kappa" title="Kappa" class="twitch-emote" src="https://static-cdn.jtvnw.net/emoticons/v2/25/default/light/1.0">
 ```
@@ -296,16 +294,16 @@ import { EmoteFetcher } from '@mkody/twitch-emoticons';
 const fetcher = new EmoteFetcher();
 
 // Fetch global emotes in AVIF (channel id has to be `null` for global)
-await fetcher.fetchSevenTVEmotes(null, 'avif');
+await fetcher.fetchSevenTVEmotes(null, { format: 'avif' });
 
 // Fetch 0kody's emotes with the package's default format (WEBP)
 await fetcher.fetchSevenTVEmotes(44317909);
 
 // ... which is currently the same as
-await fetcher.fetchSevenTVEmotes(44317909, 'webp');
+await fetcher.fetchSevenTVEmotes(44317909, { format: 'webp' });
 
 // Fetch Anatole's emotes in AVIF
-await fetcher.fetchSevenTVEmotes(24377667, 'avif');
+await fetcher.fetchSevenTVEmotes(24377667, { format: 'avif' });
 ```
 
 
@@ -319,7 +317,7 @@ import { EmoteFetcher } from '@mkody/twitch-emoticons';
 const fetcher = new EmoteFetcher();
 
 // First fetch some emotes
-await fetcher.fetchSevenTVEmotes(null, 'avif');
+await fetcher.fetchSevenTVEmotes(null, { format: 'avif' });
 
 // Then you can use .toObject() on an `Emote` to export its data.
 // Here's a map to get them all in a single array.

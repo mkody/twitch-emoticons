@@ -47,14 +47,20 @@ class TwitchEmote extends Emote {
 
     /**
      * Gets the image link of the emote.
-     * @param {number} size - The size of the image, 0, 1, or 2.
-     * @param {boolean} [forceStatic] - Whether to force the emote to be static (non-animated). Defaults to the fetcher's forceStatic or `false`.
-     * @param {'light' | 'dark'} [themeMode] - The preferred theme mode. Defaults to the fetcher's twitchThemeMode or `dark`.
+     * @param {object} [options={}] - Options for the link.
+     * @param {number} [options.size=0] - Size (scale) for the emote.
+     * @param {boolean} [options.forceStatic] - Whether to force the emote to be static (non-animated). Defaults to the fetcher's forceStatic or `false`.
+     * @param {'dark' | 'light'} [options.themeMode] - Only for Twitch: the preferred theme mode. Defaults to the fetcher's twitchThemeMode or `dark`.
      * @returns {string}
      */
-    toLink(size = 0, forceStatic, themeMode) {
-        const theme = themeMode || (this.channel && this.channel.fetcher ? this.channel.fetcher.twitchThemeMode : 'dark');
-        return Constants.Twitch.CDN(this.id, size, forceStatic, theme); // eslint-disable-line new-cap
+    toLink(options = {}) {
+        const {
+            size = 0,
+            forceStatic = this.fetcher.forceStatic || false,
+            themeMode = this.fetcher.twitchThemeMode || 'dark'
+        } = options || {};
+
+        return Constants.Twitch.CDN(this.id, size, forceStatic, themeMode); // eslint-disable-line new-cap
     }
 
     /**

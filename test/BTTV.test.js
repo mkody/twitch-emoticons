@@ -15,7 +15,7 @@ describe('Test BTTV emotes', () => {
 
         test('Get emote (SourPls)', () => {
             const emote = emoteFetcher.emotes.get('SourPls');
-            expect(emote.toLink(2)).toBe('https://cdn.betterttv.net/emote/566ca38765dbbdab32ec0560/3x.webp');
+            expect(emote.toLink({ size: 2 })).toBe('https://cdn.betterttv.net/emote/566ca38765dbbdab32ec0560/3x.webp');
         });
 
         test('Parse string with emote (SourPls)', () => {
@@ -37,7 +37,7 @@ describe('Test BTTV emotes', () => {
 
         test('Get emote (tppUrn)', () => {
             const emote = emoteFetcher.emotes.get('tppUrn');
-            expect(emote.toLink(2)).toBe('https://cdn.betterttv.net/emote/5f5f7d5f68d9d86c020e8672/3x.webp');
+            expect(emote.toLink({ size: 2 })).toBe('https://cdn.betterttv.net/emote/5f5f7d5f68d9d86c020e8672/3x.webp');
         });
 
         test('Parse string with emote (tppUrn)', () => {
@@ -56,11 +56,11 @@ describe('Test BTTV emotes', () => {
         test('Override forcing static in .toLink()', async() => {
             await emoteFetcher.fetchBTTVEmotes();
             const emote = emoteFetcher.emotes.get('SourPls');
-            expect(emote.toLink(2, true)).toBe('https://cdn.betterttv.net/emote/566ca38765dbbdab32ec0560/3x.png');
+            expect(emote.toLink({ size: 2, forceStatic: true })).toBe('https://cdn.betterttv.net/emote/566ca38765dbbdab32ec0560/3x.png');
         });
 
         test('Override forcing static in .parse()', () => {
-            const text = emoteParser.parse('This is a test string with :SourPls: in it.', null, true);
+            const text = emoteParser.parse('This is a test string with :SourPls: in it.', { forceStatic: true });
             expect(text).toBe('This is a test string with ![SourPls](https://cdn.betterttv.net/emote/566ca38765dbbdab32ec0560/1x.png "SourPls") in it.');
         });
     });

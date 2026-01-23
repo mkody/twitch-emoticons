@@ -48,7 +48,7 @@ class EmoteParser {
      * - `{size}` The size of the image.
      * - `{creator}` The channel/owner name of the emote.
      * @param {string} [options.type] - The type of the parser.
-     * Can be one of `markdown`, `html`, `bbcode`, or `plain`.
+     * Can be one of  `html`, `markdown`,`bbcode`, or `plain`.
      * If the `template` option is provided, this is ignored.
      * @param {RegExp} [options.match] - The regular expression that matches an emote.
      * Must be a global regex, with one capture group for the emote code.
@@ -61,8 +61,8 @@ class EmoteParser {
             throw new TypeError('Template must be a string');
         }
 
-        if (!['markdown', 'html', 'bbcode', 'plain'].includes(options.type)) {
-            throw new TypeError('Parse type must be one of `markdown`, `html`, `bbcode`, or `plain`');
+        if (!['html', 'markdown', 'bbcode', 'plain'].includes(options.type)) {
+            throw new TypeError('Parse type must be one of `html`, `markdown`, `bbcode`, or `plain`');
         }
 
         if (!(options.match instanceof RegExp) || !options.match.global) {
@@ -73,19 +73,27 @@ class EmoteParser {
     /**
      * Parses text.
      * @param {string} text - Text to parse.
-     * @param {number} size - Size for emotes.
-     * @param {boolean} [forceStatic] - Whether to force the emote to be static (non-animated). Defaults to the fetcher's forceStatic or `false`.
-     * @param {'light' | 'dark'} [themeMode] - Only for Twitch emotes: the preferred theme mode. Defaults to the fetcher's twitchThemeMode or `dark`.
+     * @param {object} [options={}] - Parameters for parsing.
+     * @param {number} [options.size] - Size (scale) for emotes.
+     * @param {boolean} [options.forceStatic] - Whether to force the emote to be static (non-animated). Defaults to the fetcher's forceStatic or `false`.
+     * @param {'dark' | 'light'} [options.themeMode] - Only for Twitch: the preferred theme mode. Defaults to the fetcher's twitchThemeMode or `dark`.
      * @returns {string}
      */
-    parse(text, size = 0, forceStatic, themeMode) {
+    parse(text, options = {}) {
+        // @NOTE(kody): Not setting defaults here, they'll be handled by each emote's toLink method.
+        const {
+            size,
+            forceStatic,
+            themeMode
+        } = options || {};
+
         const parsed = text.replace(this.options.match, (matched, id) => {
             const emote = this.fetcher.emotes.get(id);
             if (!emote) return matched;
             if (emote.modifier) return '';
 
             const template = this.options.template || Constants.Templates[this.options.type];
-            const link = emote.toLink(size, forceStatic, themeMode);
+            const link = emote.toLink({ size, forceStatic, themeMode });
             const res = template
                 .replace(/{link}/g, link)
                 .replace(/{name}/g, emote.code)

@@ -379,10 +379,10 @@
             <td class="type">
             
                 
-<span class="param-type">'light'</span>
+<span class="param-type">'dark'</span>
 |
 
-<span class="param-type">'dark'</span>
+<span class="param-type">'light'</span>
 
 
 
@@ -696,7 +696,7 @@
 
         
             
-<h4 class="name" id="twitchThemeMode"><span class="type-signature"></span>twitchThemeMode<span class="type-signature"> :'light'|'dark'</span></h4>
+<h4 class="name" id="twitchThemeMode"><span class="type-signature"></span>twitchThemeMode<span class="type-signature"> :'dark'|'light'</span></h4>
 
 
 
@@ -760,10 +760,10 @@
     <ul>
         <li>
             
-<span class="param-type">'light'</span>
+<span class="param-type">'dark'</span>
 |
 
-<span class="param-type">'dark'</span>
+<span class="param-type">'light'</span>
 
 
 
@@ -3697,7 +3697,7 @@ Use <code>null</code> for the global emotes channel.</p></li></ul></dd>
 
     
 
-    <h4 class="name" id="fetchSevenTVEmotes"><span class="type-signature"></span>fetchSevenTVEmotes<span class="signature">(channel<span class="signature-attributes">opt</span>, format<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;<a href="Collection.html">Collection</a>.&lt;string, <a href="SevenTVEmote.html">SevenTVEmote</a>>>}</span></h4>
+    <h4 class="name" id="fetchSevenTVEmotes"><span class="type-signature"></span>fetchSevenTVEmotes<span class="signature">(channel<span class="signature-attributes">opt</span>, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;<a href="Collection.html">Collection</a>.&lt;string, <a href="SevenTVEmote.html">SevenTVEmote</a>>>}</span></h4>
 
     
 
@@ -3713,7 +3713,7 @@ Use <code>null</code> for the global emotes channel.</p></li></ul></dd>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line336">line 336</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line337">line 337</a>
     </li></ul></dd>
     
 
@@ -3829,6 +3829,69 @@ Use <code>null</code> for the global emotes channel.</p></li></ul></dd>
 
         <tr>
             
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>{}</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>Options for fetching.</p>
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
                 <td class="name"><code>format</code></td>
             
 
@@ -3866,6 +3929,13 @@ Use <code>null</code> for the global emotes channel.</p></li></ul></dd>
             
 
             <td class="description last"><p>The type file format to use (webp/avif).</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
         </tr>
 
     
@@ -3930,7 +4000,7 @@ Use <code>null</code> for the global emotes channel.</p></li></ul></dd>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line360">line 360</a>
+        <a href="struct_EmoteFetcher.js.html">struct/EmoteFetcher.js</a>, <a href="struct_EmoteFetcher.js.html#line365">line 365</a>
     </li></ul></dd>
     
 
