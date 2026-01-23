@@ -31,23 +31,22 @@
         "@twurple/auth": "^8.0.3"
     },
     "devDependencies": {
-        "@eslint/js": "^9.39.2",
-        "@jest/globals": "^30.2.0",
         "@microsoft/eslint-formatter-sarif": "^3.1.0",
+        "@typescript-eslint/parser": "^8.53.1",
         "cross-env": "^10.1.0",
         "docdash": "^2.0.2",
         "esbuild": "^0.27.2",
         "eslint": "^9.39.2",
         "eslint-plugin-jsdoc": "^62.3.0",
-        "globals": "^17.0.0",
         "jest": "^30.2.0",
-        "jsdoc": "^4.0.5"
+        "jsdoc": "^4.0.5",
+        "neostandard": "^0.12.2"
     },
     "scripts": {
         "all": "pnpm run lint && pnpm run test && pnpm run build && pnpm run docs",
         "build": "esbuild ./src/index.js --bundle --minify --keep-names --sourcemap --format=esm --outfile=./dist/TwitchEmoticons.min.js",
         "docs": "jsdoc --configure .jsdoc.json",
-        "lint": "eslint ./src ./test",
+        "lint": "eslint .",
         "test": "cross-env NODE_OPTIONS=\"--experimental-vm-modules\" jest"
     },
     "repository": {

@@ -843,7 +843,7 @@ For other types of emotes, use the <code>owner</code> or <code>ownerName</code> 
 
         
             
-<h4 class="name" id="type"><span class="type-signature"></span>type<span class="type-signature"> :string</span></h4>
+<h4 class="name" id="type"><span class="type-signature"></span>type<span class="type-signature"> :string|null</span></h4>
 
 
 
@@ -915,6 +915,9 @@ Either <code>twitch</code>, <code>bttv</code>, <code>ffz</code>, or '7tv'.</p>
         <li>
             
 <span class="param-type">string</span>
+|
+
+<span class="param-type">null</span>
 
 
 
@@ -1100,8 +1103,6 @@ Either <code>twitch</code>, <code>bttv</code>, <code>ffz</code>, or '7tv'.</p>
         
 
         
-        <th>Default</th>
-        
 
         <th class="last">Description</th>
     </tr>
@@ -1137,12 +1138,6 @@ Either <code>twitch</code>, <code>bttv</code>, <code>ffz</code>, or '7tv'.</p>
                 </td>
             
 
-            
-                <td class="default">
-                
-                    <code>{}</code>
-                
-                </td>
             
 
             <td class="description last"><p>Options for the link.</p>
@@ -1492,8 +1487,6 @@ Will result in an Object representation of a BTTVEmote</p></li></ul></dd>
         
 
         
-        <th>Default</th>
-        
 
         <th class="last">Description</th>
     </tr>
@@ -1530,10 +1523,6 @@ Will result in an Object representation of a BTTVEmote</p></li></ul></dd>
             
 
             
-                <td class="default">
-                
-                </td>
-            
 
             <td class="description last"><p>Object representation of this emote</p></td>
         </tr>
@@ -1567,12 +1556,6 @@ Will result in an Object representation of a BTTVEmote</p></li></ul></dd>
                 </td>
             
 
-            
-                <td class="default">
-                
-                    <code>null</code>
-                
-                </td>
             
 
             <td class="description last"><p>Channel this emote belongs to.</p></td>

@@ -1,5 +1,9 @@
-
-.github
-.vscode
-coverage
-node_modules
+.github/
+.vscode/
+coverage/
+docs/
+node_modules/
+test/
+.*
+*.config.js
+*.sarif
