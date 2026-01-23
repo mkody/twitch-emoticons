@@ -93,7 +93,7 @@ const fetcher = new EmoteFetcher({
     twitchAppID: '<your app ID>',
     twitchAppSecret: '<your app secret>',
     forceStatic: false,
-    twitchBackgroundColor: 'dark'
+    twitchThemeMode : 'dark'
 });
 const parser = new EmoteParser(fetcher, {
     // Custom HTML format
@@ -154,7 +154,7 @@ const fetcherDark = new EmoteFetcher({
 
 > [!NOTE]
 > **Q:** Why set this to the `EmoteFetcher` and not `EmoteParser`?  
-> **A:** Because `Emote.toLink()` (that you get from the fetcher) needs that info!
+> **A:** Because `Emote.toLink()` (that you get from the fetcher) uses that info!
 
 It is also possible to force that using the `Emote`'s `toLink()` method:
 
@@ -182,7 +182,7 @@ console.log(kappa);
 > (Twitch: `gif` => `png`; BTTV: `webp` => `png`.)
 
 
-#### Twitch background color preference
+#### Twitch "theme mode" preference
 
 Some Twitch emotes are optimized for light or dark backgrounds.
 
@@ -195,7 +195,7 @@ const fetcherDark = new EmoteFetcher({
     // Your Twitch app keys
     twitchAppID: '<your app ID>',
     twitchAppSecret: '<your app secret>',
-    twitchBackgroundColor: 'dark' // <- Here!
+    twitchThemeMode: 'dark' // <- Here!
 });
 
 // For light backgrounds
@@ -203,7 +203,7 @@ const fetcherLight = new EmoteFetcher({
     // Your Twitch app keys
     twitchAppID: '<your app ID>',
     twitchAppSecret: '<your app secret>',
-    twitchBackgroundColor: 'light' // <- Here!
+    twitchThemeMode: 'light' // <- Here!
 });
 
 fetcherLight.fetchTwitchEmotes(null).then(() => {
@@ -215,7 +215,7 @@ fetcherLight.fetchTwitchEmotes(null).then(() => {
 
 > [!NOTE]
 > **Q:** Why set this to the `EmoteFetcher` and not `EmoteParser`?  
-> **A:** Because `Emote.toLink()` (that you get from the fetcher) needs that info!
+> **A:** Because `Emote.toLink()` (that you get from the fetcher) uses that info!
 
 It is also possible to force that using the `Emote`'s `toLink()` method:
 

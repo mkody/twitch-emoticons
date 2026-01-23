@@ -89,49 +89,49 @@ describe('Test Twitch emotes', () => {
             });
         });
 
-        describe('Set background color preference', () => {
-            test('Default background should be dark', () => {
+        describe('Set theme mode preference', () => {
+            test('Default theme mode should be dark', () => {
                 const emoteFetcher = new EmoteFetcher({
                     twitchAppID: env.TWITCH_ID,
                     twitchAppSecret: env.TWITCH_SECRET
                 });
-                expect(emoteFetcher.twitchBackgroundColor).toBe('dark');
+                expect(emoteFetcher.twitchThemeMode).toBe('dark');
             });
 
-            test('Light background option', async() => {
+            test('Light theme mode option', async() => {
                 const emoteFetcher = new EmoteFetcher({
                     twitchAppID: env.TWITCH_ID,
                     twitchAppSecret: env.TWITCH_SECRET,
-                    twitchBackgroundColor: 'light'
+                    twitchThemeMode: 'light'
                 });
-                expect(emoteFetcher.twitchBackgroundColor).toBe('light');
+                expect(emoteFetcher.twitchThemeMode).toBe('light');
 
                 await emoteFetcher.fetchTwitchEmotes();
                 const emote = emoteFetcher.emotes.get('Kappa');
                 expect(emote.toLink(2)).toBe('https://static-cdn.jtvnw.net/emoticons/v2/25/default/light/3.0');
             });
 
-            test('Dark background option explicitly set', async() => {
+            test('Dark theme mode option explicitly set', async() => {
                 const emoteFetcher = new EmoteFetcher({
                     twitchAppID: env.TWITCH_ID,
                     twitchAppSecret: env.TWITCH_SECRET,
-                    twitchBackgroundColor: 'dark'
+                    twitchThemeMode: 'dark'
                 });
-                expect(emoteFetcher.twitchBackgroundColor).toBe('dark');
+                expect(emoteFetcher.twitchThemeMode).toBe('dark');
 
                 await emoteFetcher.fetchTwitchEmotes();
                 const emote = emoteFetcher.emotes.get('Kappa');
                 expect(emote.toLink(2)).toBe('https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/3.0');
             });
 
-            test('Override background color in .toLink()', async() => {
+            test('Override theme mode in .toLink()', async() => {
                 const emoteFetcher = new EmoteFetcher({
                     twitchAppID: env.TWITCH_ID,
                     twitchAppSecret: env.TWITCH_SECRET,
-                    twitchBackgroundColor: 'light'
+                    twitchThemeMode: 'light'
                 });
                 // Make sure it's light at first
-                expect(emoteFetcher.twitchBackgroundColor).toBe('light');
+                expect(emoteFetcher.twitchThemeMode).toBe('light');
 
                 await emoteFetcher.fetchTwitchEmotes();
                 const emote = emoteFetcher.emotes.get('Kappa');
@@ -139,11 +139,11 @@ describe('Test Twitch emotes', () => {
                 expect(emote.toLink(2, null, 'dark')).toBe('https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/3.0');
             });
 
-            test('Parse string with light background emote', async() => {
+            test('Parse string with light theme mode emote', async() => {
                 const emoteFetcher = new EmoteFetcher({
                     twitchAppID: env.TWITCH_ID,
                     twitchAppSecret: env.TWITCH_SECRET,
-                    twitchBackgroundColor: 'light'
+                    twitchThemeMode: 'light'
                 });
                 const emoteParser = new EmoteParser(emoteFetcher, {
                     type: 'markdown',
@@ -155,7 +155,7 @@ describe('Test Twitch emotes', () => {
                 expect(text).toBe('This is a test string with ![CoolCat](https://static-cdn.jtvnw.net/emoticons/v2/58127/default/light/1.0 "CoolCat") in it.');
             });
 
-            test('Override background color in .parse()', async() => {
+            test('Override theme mode in .parse()', async() => {
                 const emoteFetcher = new EmoteFetcher({
                     twitchAppID: env.TWITCH_ID,
                     twitchAppSecret: env.TWITCH_SECRET

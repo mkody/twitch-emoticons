@@ -1,6 +1,6 @@
 export default {
     Twitch: {
-        CDN: (id, size = 0, forceStatic = false, background = 'dark') => `https://static-cdn.jtvnw.net/emoticons/v2/${id}/${forceStatic ? 'static' : 'default'}/${background}/${size + 1}.0`
+        CDN: (id, size = 0, forceStatic = false, theme = 'dark') => `https://static-cdn.jtvnw.net/emoticons/v2/${id}/${forceStatic ? 'static' : 'default'}/${theme}/${size + 1}.0`
     },
     BTTV: {
         Global: 'https://api.betterttv.net/3/cached/emotes/global',

@@ -131,11 +131,15 @@ const channelId = 44317909;
 const fetcher = new EmoteFetcher({
     // Your Twitch app keys
     twitchAppID: '&lt;your app ID>',
-    twitchAppSecret: '&lt;your app secret>'
+    twitchAppSecret: '&lt;your app secret>',
+    forceStatic: false,
+    twitchThemeMode : 'dark'
 });
 const parser = new EmoteParser(fetcher, {
     // Custom HTML format
     template: '&lt;img class=&quot;emote&quot; alt=&quot;{name}&quot; src=&quot;{link}&quot;>',
+    // Otherwise, just use our provided template
+    // type: 'html',
     // Match without :colons:
     match: /(\w+)+?/g
 });
@@ -181,6 +185,11 @@ but you can override this at the <code>EmoteFetcher</code> level:</p>
     forceStatic: true // &lt;- Here!
 });
 </code></pre>
+<blockquote>
+<p>[!NOTE]<br>
+<strong>Q:</strong> Why set this to the <code>EmoteFetcher</code> and not <code>EmoteParser</code>?<br>
+<strong>A:</strong> Because <code>Emote.toLink()</code> (that you get from the fetcher) uses that info!</p>
+</blockquote>
 <p>It is also possible to force that using the <code>Emote</code>'s <code>toLink()</code> method:</p>
 <pre class="prettyprint source lang-js"><code>const fetcher = new EmoteFetcher({ twitchAppID, twitchAppSecret });
 fetcher.fetchTwitchEmotes(null).then(() => {
@@ -196,9 +205,12 @@ const kappa = parser.parse('Kappa', null, true);
 console.log(kappa);
 // ![Kappa](https://static-cdn.jtvnw.net/emoticons/v2/25/static/dark/1.0 &quot;Kappa&quot;)!
 </code></pre>
-<p><strong>NOTE:</strong> Forcing static images might make the <code>imageType</code> of the <code>Emote</code> not match with your expectations!<br>
+<blockquote>
+<p>[!WARNING]<br>
+Forcing static images might make the <code>imageType</code> of the <code>Emote</code> not match with your expectations!<br>
 (Twitch: <code>gif</code> =&gt; <code>png</code>; BTTV: <code>webp</code> =&gt; <code>png</code>.)</p>
-<h4>Twitch background color preference</h4>
+</blockquote>
+<h4>Twitch &quot;theme mode&quot; preference</h4>
 <p>Some Twitch emotes are optimized for light or dark backgrounds.</p>
 <p>By default, emotes are fetched for dark backgrounds,<br>
 but you can specify a preference at the <code>EmoteFetcher</code> level:</p>
@@ -207,7 +219,7 @@ const fetcherDark = new EmoteFetcher({
     // Your Twitch app keys
     twitchAppID: '&lt;your app ID>',
     twitchAppSecret: '&lt;your app secret>',
-    twitchBackgroundColor: 'dark' // &lt;- Here!
+    twitchThemeMode: 'dark' // &lt;- Here!
 });
 
 // For light backgrounds
@@ -215,7 +227,7 @@ const fetcherLight = new EmoteFetcher({
     // Your Twitch app keys
     twitchAppID: '&lt;your app ID>',
     twitchAppSecret: '&lt;your app secret>',
-    twitchBackgroundColor: 'light' // &lt;- Here!
+    twitchThemeMode: 'light' // &lt;- Here!
 });
 
 fetcherLight.fetchTwitchEmotes(null).then(() => {
@@ -224,6 +236,11 @@ fetcherLight.fetchTwitchEmotes(null).then(() => {
     // https://static-cdn.jtvnw.net/emoticons/v2/25/default/light/1.0
 });
 </code></pre>
+<blockquote>
+<p>[!NOTE]<br>
+<strong>Q:</strong> Why set this to the <code>EmoteFetcher</code> and not <code>EmoteParser</code>?<br>
+<strong>A:</strong> Because <code>Emote.toLink()</code> (that you get from the fetcher) uses that info!</p>
+</blockquote>
 <p>It is also possible to force that using the <code>Emote</code>'s <code>toLink()</code> method:</p>
 <pre class="prettyprint source lang-js"><code>const fetcher = new EmoteFetcher({ twitchAppID, twitchAppSecret });
 fetcher.fetchTwitchEmotes(null).then(() => {
@@ -260,8 +277,7 @@ await fetcher.fetchSevenTVEmotes(44317909, 'webp');
 await fetcher.fetchSevenTVEmotes(24377667, 'avif');
 </code></pre>
 <h4>Export and import emote data</h4>
-<p>This can be useful to save the emotes in a cache or for offline content.<br>
-(For offline content, you'll still need to download emotes and proxy their URLs.)</p>
+<p>This can be useful to save the emotes in a cache or for offline content.</p>
 <pre class="prettyprint source lang-js"><code>import { EmoteFetcher } from '@mkody/twitch-emoticons';
 const fetcher = new EmoteFetcher();
 
@@ -275,6 +291,10 @@ const emotes = fetcher.emotes.map(emote => emote.toObject());
 // Later, with or without a fresh `EmoteFetcher`, you can use .fromObject() on the fetcher.
 fetcher.fromObject(emotes);
 </code></pre>
+<blockquote>
+<p>[!NOTE]<br>
+For offline content, you'll still need to download emotes and proxy their URLs.</p>
+</blockquote>
 <h3>Links</h3>
 <ul>
 <li><a href="https://github.com/mkody/twitch-emoticons">Github</a></li>

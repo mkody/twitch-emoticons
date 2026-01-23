@@ -64,7 +64,7 @@ class EmoteFetcher {
      * @param {string} [options.twitchAppSecret] Your app secret for the Twitch API.
      * @param {ApiClient} [options.apiClient] - Bring your own Twurple ApiClient.
      * @param {boolean} [options.forceStatic=false] - Force emotes to be static (non-animated).
-     * @param {'light' | 'dark'} [options.twitchBackgroundColor='dark'] - Background color preference for Twitch emotes.
+     * @param {'light' | 'dark'} [options.twitchThemeMode='dark'] - Theme mode (background color) preference for Twitch emotes.
      */
     constructor(options = {}) {
         if (options.apiClient) {
@@ -89,10 +89,10 @@ class EmoteFetcher {
         this.forceStatic = options.forceStatic || false;
 
         /**
-         * Background color preference for Twitch emotes.
+         * Theme mode (background color) preference for Twitch emotes.
          * @type {'light' | 'dark'}
          */
-        this.twitchBackgroundColor = options.twitchBackgroundColor || 'dark';
+        this.twitchThemeMode = options.twitchThemeMode || 'dark';
 
         /**
          * Cached emotes.
