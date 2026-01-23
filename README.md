@@ -18,6 +18,7 @@ Gets Twitch, BTTV, FFZ and 7TV emotes as well as parsing text to emotes!
   - `fetcher.fetchSevenTVEmotes(null, { format: 'avif' })` - First parameter is still the Twitch user ID (or `null` for global).
   - `emote.toLink({ size: 1, forceStatic: true })`
   - `parser.parse('Kappa', { size: 1, forceStatic: true })` - First parameter is still the input text.
+- The `owner` getter for `Emote`s has been removed. It isn't reliable enough to get the `Channel` object from any 3rd-party provider, most emotes might be owned by a channel that we never fetched (i.e. shared/public emotes).
 - If you've exported 7TV emotes, do note that the `sizes` array changed to not include the leading `x.<format>`.
 - *More may come for the final release, as this is still a work in progress.*
 

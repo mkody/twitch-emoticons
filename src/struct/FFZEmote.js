@@ -14,16 +14,6 @@ class FFZEmote extends Emote {
     this.type = 'ffz'
   }
 
-  /**
-   * The channel of this emote's creator.
-   * Not guaranteed to contain the emote, or be cached.
-   * @readonly
-   * @type {?Channel}
-   */
-  get owner () {
-    return this.fetcher.channels.get(this.ownerName)
-  }
-
   _setup (data) {
     super._setup(data)
     this.code = data.name

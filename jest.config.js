@@ -6,7 +6,7 @@
 export default {
   // An array of glob patterns indicating a set of files for which coverage information should be collected
   collectCoverageFrom: [
-    '<rootDir>/src/struct/*.{js,jsx,ts,tsx}',
+    '<rootDir>/src/struct/*.js',
   ],
 
   // Indicates which provider should be used to instrument code for coverage

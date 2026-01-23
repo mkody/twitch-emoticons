@@ -14,15 +14,6 @@ class TwitchEmote extends Emote {
     this.type = 'twitch'
   }
 
-  /**
-   * The channel of this emote's creator.
-   * @readonly
-   * @type {Channel}
-   */
-  get owner () {
-    return this.channel
-  }
-
   _setup (data) {
     super._setup(data)
 
