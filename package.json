@@ -43,9 +43,9 @@
         "neostandard": "^0.12.2"
     },
     "scripts": {
-        "all": "pnpm run lint && pnpm run test && pnpm run build && pnpm run docs",
+        "all": "pnpm run lint && pnpm run test && pnpm run build && pnpm run build:docs",
         "build": "esbuild ./src/index.js --bundle --minify --keep-names --sourcemap --format=esm --outfile=./dist/TwitchEmoticons.min.js",
-        "docs": "jsdoc --configure .jsdoc.json",
+        "build:docs": "jsdoc --configure .jsdoc.json",
         "lint": "eslint .",
         "test": "cross-env NODE_OPTIONS=\"--experimental-vm-modules\" jest"
     },

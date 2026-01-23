@@ -80,7 +80,7 @@ class EmoteFetcher {
   /**
    * Sets up a channel
    * @private
-   * @param {int} channelId - ID of the channel.
+   * @param {number} channelId - ID of the channel.
    * @param {string} [format] - The type file format to use (webp/avif).
    * @throws {Error} When Twitch Client ID or Client Secret were not provided.
    * @returns {Channel}
@@ -98,7 +98,7 @@ class EmoteFetcher {
   /**
    * Gets the raw Twitch emotes data for a channel.
    * @private
-   * @param {int} id - ID of the channel.
+   * @param {number} id - ID of the channel.
    * @returns {Promise<object[]>}
    */
   _getRawTwitchEmotes (id) {
@@ -116,7 +116,7 @@ class EmoteFetcher {
   /**
    * Converts and caches a raw twitch emote.
    * @private
-   * @param {int} channelId - ID of the channel.
+   * @param {number} channelId - ID of the channel.
    * @param {object} data - Raw data.
    * @param {TwitchEmote} [existingEmote] - Existing emote to cache.
    * @returns {TwitchEmote}
@@ -133,7 +133,7 @@ class EmoteFetcher {
    * Gets the raw BTTV emotes data for a channel.
    * Use `null` for the global emotes channel.
    * @private
-   * @param {int} [id] - ID of the channel.
+   * @param {number} [id] - ID of the channel.
    * @returns {Promise<object[]>}
    */
   _getRawBTTVEmotes (id) {
@@ -158,7 +158,7 @@ class EmoteFetcher {
   /**
    * Converts and caches a raw BTTV emote.
    * @private
-   * @param {int} channelId - ID of the channel.
+   * @param {number} channelId - ID of the channel.
    * @param {object} data - Raw data.
    * @param {BTTVEmote} [existingEmote] - Existing emote to cache.
    * @returns {BTTVEmote}
@@ -174,7 +174,7 @@ class EmoteFetcher {
   /**
    * Gets the raw FFZ emote data from a set.
    * @private
-   * @param {int} id - ID of the set.
+   * @param {number} id - ID of the set.
    * @returns {Promise<object[]>}
    */
   _getRawFFZEmoteSet (id) {
@@ -190,7 +190,7 @@ class EmoteFetcher {
   /**
    * Gets the raw FFZ emotes data for a channel.
    * @private
-   * @param {int} id - ID of the channel.
+   * @param {number} id - ID of the channel.
    * @returns {Promise<object[]>}
    */
   _getRawFFZEmotes (id) {
@@ -212,7 +212,7 @@ class EmoteFetcher {
   /**
    * Converts and caches a raw FFZ emote.
    * @private
-   * @param {int} channelId - ID of the channel.
+   * @param {number} channelId - ID of the channel.
    * @param {object} data - Raw data.
    * @param {FFZEmote} [existingEmote] - Existing emote to cache.
    * @returns {FFZEmote}
@@ -228,7 +228,7 @@ class EmoteFetcher {
   /**
    * Gets the raw 7TV emotes data for a channel.
    * @private
-   * @param {int} [id] - ID of the channel.
+   * @param {number} [id] - ID of the channel.
    * @returns {Promise<object[]>}
    */
   _getRawSevenTVEmotes (id) {
@@ -242,7 +242,7 @@ class EmoteFetcher {
   /**
    * Converts and caches a raw 7TV emote.
    * @private
-   * @param {int} channelId - ID of the channel.
+   * @param {number} channelId - ID of the channel.
    * @param {object} data - Raw data.
    * @param {string} format - The type file format to use (webp/avif).
    * @param {SevenTVEmote} [existingEmote] - Existing emote to cache.
@@ -259,7 +259,7 @@ class EmoteFetcher {
   /**
    * Fetches the Twitch emotes for a channel.
    * Use `null` for the global emotes channel.
-   * @param {int} [channel] - ID of the channel.
+   * @param {number} [channel] - ID of the channel.
    * @returns {Promise<Collection<string, TwitchEmote>>}
    */
   fetchTwitchEmotes (channel) {
@@ -277,7 +277,7 @@ class EmoteFetcher {
   /**
    * Fetches the BTTV emotes for a channel.
    * Use `null` for the global emotes channel.
-   * @param {int} [channel] - ID of the channel.
+   * @param {number} [channel] - ID of the channel.
    * @returns {Promise<Collection<string, BTTVEmote>>}
    */
   fetchBTTVEmotes (channel) {
@@ -292,7 +292,7 @@ class EmoteFetcher {
 
   /**
    * Fetches the FFZ emotes for a channel.
-   * @param {int} [channel] - ID of the channel.
+   * @param {number} [channel] - ID of the channel.
    * @returns {Promise<Collection<string, FFZEmote>>}
    */
   async fetchFFZEmotes (channel) {
@@ -329,7 +329,7 @@ class EmoteFetcher {
 
   /**
    * Fetches the 7TV emotes for a channel.
-   * @param {int} [channel] - ID of the channel.
+   * @param {number} [channel] - ID of the channel.
    * @param {object} [options] - Options for fetching.
    * @param {('webp'|'avif')} [options.format] - The type file format to use (webp/avif).
    * @returns {Promise<Collection<string, SevenTVEmote>>}

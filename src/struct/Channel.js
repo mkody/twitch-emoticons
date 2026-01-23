@@ -4,7 +4,7 @@ class Channel {
   /**
    * A Twitch channel.
    * @param {EmoteFetcher} fetcher - The emote fetcher.
-   * @param {int} id - ID of the channel.
+   * @param {number} id - ID of the channel.
    */
   constructor (fetcher, id) {
     /**
@@ -16,7 +16,7 @@ class Channel {
     /**
      * The ID of this channel.
      * For the global channel, the ID will be null.
-     * @type {?int}
+     * @type {?number}
      */
     this.channel_id = id || null
 

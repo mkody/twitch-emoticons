@@ -41,7 +41,21 @@ export default [
       ],
       '@stylistic/space-before-function-paren': ['error', 'always'],
       'jsdoc/no-defaults': 'off', // They show up in the generated docs
-      'jsdoc/no-undefined-types': 'off',
+      'jsdoc/no-undefined-types': [
+        'warn',
+        {
+          definedTypes: [
+            'BTTVEmote',
+            'Channel',
+            'Collection',
+            'Emote',
+            'EmoteFetcher',
+            'FFZEmote',
+            'SevenTVEmote',
+            'TwitchEmote',
+          ],
+        },
+      ],
       'jsdoc/require-returns-description': 'off',
     },
   },
