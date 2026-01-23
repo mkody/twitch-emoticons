@@ -42,7 +42,7 @@ class BTTVEmote extends Emote {
    * @param {object} [options] - Options for the link.
    * @param {number} [options.size=0] - Size (scale) for the emote.
    * @param {boolean} [options.forceStatic] - Whether to force the emote to be static (non-animated). Defaults to the fetcher's forceStatic or `false`.
-   * @returns {string}
+   * @returns {string} - The URL to the emote.
    */
   toLink (options) {
     const {
@@ -56,7 +56,7 @@ class BTTVEmote extends Emote {
   /**
    * Override for `toObject`.
    * Will result in an Object representation of a BTTVEmote
-   * @returns {object}
+   * @returns {object} - Object representation of the BTTVEmote.
    */
   toObject () {
     return Object.assign({}, super.toObject(), {
@@ -70,7 +70,7 @@ class BTTVEmote extends Emote {
    * Converts an emote Object into a BTTVEmote
    * @param {object} [emoteObject] - Object representation of this emote
    * @param {Channel} [channel] - Channel this emote belongs to.
-   * @returns {BTTVEmote}
+   * @returns {BTTVEmote} - A BTTVEmote instance.
    */
   static fromObject (emoteObject, channel) {
     return new BTTVEmote(channel, emoteObject.id,

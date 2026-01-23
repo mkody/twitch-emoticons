@@ -54,7 +54,7 @@ class FFZEmote extends Emote {
    * @param {object} [options] - Options for the link.
    * @param {number} [options.size=0] - Size (scale) for the emote.
    * @param {boolean} [options.forceStatic] - Whether to force the emote to be static (non-animated). Defaults to the fetcher's forceStatic or `false`.
-   * @returns {string}
+   * @returns {string} - The URL to the emote.
    */
   toLink (options) {
     const {
@@ -70,7 +70,7 @@ class FFZEmote extends Emote {
   /**
    * Override for `toObject`.
    * Will result in an Object representation of a FFZEmote
-   * @returns {object}
+   * @returns {object} - Object representation of the FFZEmote.
    */
   toObject () {
     return Object.assign({}, super.toObject(), {
@@ -86,7 +86,7 @@ class FFZEmote extends Emote {
    * Converts an emote Object into a FFZEmote
    * @param {object} [emoteObject] - Object representation of this emote
    * @param {Channel} [channel] - Channel this emote belongs to.
-   * @returns {FFZEmote}
+   * @returns {FFZEmote} - A FFZEmote instance.
    */
   static fromObject (emoteObject, channel) {
     // Need to convert sizes array to object, e.g. [1, 2, 4] -> { 1: '1', 2: '2', 4: '4' }

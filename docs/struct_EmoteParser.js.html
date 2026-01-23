@@ -127,7 +127,7 @@ class EmoteParser {
    * @param {number} [options.size] - Size (scale) for emotes.
    * @param {boolean} [options.forceStatic] - Whether to force the emote to be static (non-animated). Defaults to the fetcher's forceStatic or `false`.
    * @param {'dark' | 'light'} [options.themeMode] - Only for Twitch: the preferred theme mode. Defaults to the fetcher's twitchThemeMode or `dark`.
-   * @returns {string}
+   * @returns {string} - The parsed text.
    */
   parse (text, options) {
     // @NOTE(kody): Not setting defaults here, they'll be handled by each emote's toLink method.

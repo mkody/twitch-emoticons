@@ -42,7 +42,7 @@ class TwitchEmote extends Emote {
    * @param {number} [options.size=0] - Size (scale) for the emote.
    * @param {boolean} [options.forceStatic] - Whether to force the emote to be static (non-animated). Defaults to the fetcher's forceStatic or `false`.
    * @param {'dark' | 'light'} [options.themeMode] - Only for Twitch: the preferred theme mode. Defaults to the fetcher's twitchThemeMode or `dark`.
-   * @returns {string}
+   * @returns {string} - The URL to the emote.
    */
   toLink (options) {
     const {
@@ -57,7 +57,7 @@ class TwitchEmote extends Emote {
   /**
    * Override for `toObject`.
    * Will result in an Object representation of a TwitchEmote
-   * @returns {object}
+   * @returns {object} - Object representation of the TwitchEmote.
    */
   toObject () {
     return Object.assign({}, super.toObject(), {
@@ -71,7 +71,7 @@ class TwitchEmote extends Emote {
    * Converts an emote Object into a TwitchEmote
    * @param {object} [emoteObject] - Object representation of this emote
    * @param {Channel} [channel] - Channel this emote belongs to.
-   * @returns {TwitchEmote}
+   * @returns {TwitchEmote} - A TwitchEmote instance.
    */
   static fromObject (emoteObject, channel) {
     return new TwitchEmote(channel, emoteObject.id,

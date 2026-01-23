@@ -56,7 +56,7 @@ class Collection extends Map {
    * Same as `Array#find`.
    * @param {string|Function} propOrFunc - Property or function to test.
    * @param {any} [value] - Value to find.
-   * @returns {any}
+   * @returns {any|null} - The found item or null if none found.
    */
   find (propOrFunc, value) {
     if (typeof propOrFunc === 'string') {
@@ -86,7 +86,7 @@ class Collection extends Map {
    * Same as `Array#filter`.
    * @param {Function} func - Function to test.
    * @param {any} [thisArg] - The context for the function.
-   * @returns {Collection}
+   * @returns {Collection} - A new collection with the filtered items.
    */
   filter (func, thisArg) {
     if (thisArg) func = func.bind(thisArg)
@@ -107,7 +107,7 @@ class Collection extends Map {
    * Same as `Array#map`.
    * @param {Function} func - Function to use.
    * @param {any} [thisArg] - The context for the function.
-   * @returns {any[]}
+   * @returns {any[]} - An array with the mapped items.
    */
   map (func, thisArg) {
     if (thisArg) func = func.bind(thisArg)

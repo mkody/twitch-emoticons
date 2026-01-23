@@ -32,7 +32,7 @@ class Channel {
 
   /**
    * Fetches the BTTV emotes for this channel.
-   * @returns {Promise<Collection<string, BTTVEmote>>}
+   * @returns {Promise<Collection<string, BTTVEmote>>} - A promise that resolves to a collection of BTTVEmotes.
    */
   fetchBTTVEmotes () {
     return this.fetcher.fetchBTTVEmotes(this.id)
@@ -40,7 +40,7 @@ class Channel {
 
   /**
    * Fetches the FFZ emotes for this channel.
-   * @returns {Promise<Collection<string, FFZEmote>>}
+   * @returns {Promise<Collection<string, FFZEmote>>} - A promise that resolves to a collection of FFZEmotes.
    */
   fetchFFZEmotes () {
     return this.fetcher.fetchFFZEmotes(this.id)
@@ -48,7 +48,7 @@ class Channel {
 
   /**
    * Fetches the 7TV emotes for this channel.
-   * @returns {Promise<Collection<string, SevenTVEmote>>}
+   * @returns {Promise<Collection<string, SevenTVEmote>>} - A promise that resolves to a collection of SevenTVEmotes.
    */
   fetchSevenTVEmotes () {
     return this.fetcher.fetchSevenTVEmotes(this.id)

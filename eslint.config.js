@@ -56,7 +56,6 @@ export default [
           ],
         },
       ],
-      'jsdoc/require-returns-description': 'off',
     },
   },
 ]

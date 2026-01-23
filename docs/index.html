@@ -82,6 +82,7 @@
 <li><code>parser.parse('Kappa', { size: 1, forceStatic: true })</code> - First parameter is still the input text.</li>
 </ul>
 </li>
+<li>The <code>owner</code> getter for <code>Emote</code>s has been removed. It isn't reliable enough to get the <code>Channel</code> object from any 3rd-party provider, most emotes might be owned by a channel that we never fetched (i.e. shared/public emotes).</li>
 <li>If you've exported 7TV emotes, do note that the <code>sizes</code> array changed to not include the leading <code>x.&lt;format&gt;</code>.</li>
 <li><em>More may come for the final release, as this is still a work in progress.</em></li>
 </ul>

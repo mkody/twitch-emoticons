@@ -53,7 +53,7 @@ class Emote {
   /**
    * Gets the image link of the emote.
    * @param {number} size - The size of the image.
-   * @returns {string}
+   * @returns {string} - The URL to the emote.
    */
   /* c8 ignore next 3 */
   toLink () {
@@ -63,7 +63,7 @@ class Emote {
   /**
    * Override for `toString`.
    * Will give the emote's name.
-   * @returns {string}
+   * @returns {string} - The emote code.
    */
   /* c8 ignore next 3 */
   toString () {
@@ -73,7 +73,7 @@ class Emote {
   /**
    * Override for `toObject`.
    * Will result in an Object representation of an Emote
-   * @returns {object}
+   * @returns {object} - Object representation of the Emote.
    */
   toObject () {
     return {

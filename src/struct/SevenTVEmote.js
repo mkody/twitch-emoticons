@@ -50,7 +50,7 @@ class SevenTVEmote extends Emote {
    * @param {object} [options] - Options for the link.
    * @param {number} [options.size=0] - Size (scale) for the emote.
    * @param {boolean} [options.forceStatic] - Whether to force the emote to be static (non-animated). Defaults to the fetcher's forceStatic or `false`.
-   * @returns {string}
+   * @returns {string} - The URL to the emote.
    */
   toLink (options) {
     const {
@@ -65,7 +65,7 @@ class SevenTVEmote extends Emote {
   /**
    * Override for `toObject`.
    * Will result in an Object representation of a SevenTVEmote
-   * @returns {object}
+   * @returns {object} - Object representation of the SevenTVEmote.
    */
   toObject () {
     return Object.assign({}, super.toObject(), {
@@ -81,7 +81,7 @@ class SevenTVEmote extends Emote {
    * Converts an emote Object into a SevenTVEmote
    * @param {object} [emoteObject] - Object representation of this emote
    * @param {Channel} [channel] - Channel this emote belongs to.
-   * @returns {SevenTVEmote}
+   * @returns {SevenTVEmote} - A SevenTVEmote instance.
    */
   static fromObject (emoteObject, channel) {
     const sizes = emoteObject.sizes.map((size) => { return { format: channel.format.toUpperCase(), name: size } })
