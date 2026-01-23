@@ -3,7 +3,7 @@
 Gets Twitch, BTTV, FFZ and 7TV emotes as well as parsing text to emotes!
 
 
-### Migrate to 3.x
+## Migrate to 3.x
 
 **This release introduces some breaking changes!**
 
@@ -62,7 +62,7 @@ console.log(parsed)
 
 </details>
 
-### Pre-requisites
+## Pre-requisites
 
 To fetch Twitch emotes you need to get a client and secret from Twitch [here](https://dev.twitch.tv/console/apps/create), it's free.  
 If you are only using BetterTTV, FrankerFaceZ and 7TV you don't need to provide Twitch app keys, as they are independent from the Twitch API.
@@ -71,7 +71,7 @@ You must use a Twitch user ID instead of the username to fetch users' emotes.
 You can use [this page to quickly grab them from a username](https://s.kdy.ch/twitchid/).
 
 
-### Install
+## Install
 
 ```sh
 npm install @mkody/twitch-emoticons
@@ -82,9 +82,9 @@ yarn add @mkody/twitch-emoticons
 ```
 
 
-### Examples
+## Examples
 
-#### Basic Twitch emote parsing
+### Basic Twitch emote parsing
 
 ```js
 import { EmoteFetcher, EmoteParser } from '@mkody/twitch-emoticons'
@@ -115,7 +115,7 @@ fetcher.fetchTwitchEmotes(null).then(() => {
 ```
 
 
-#### Bring your own `@twurple/api`
+### Bring your own `@twurple/api`
 
 If you already use [Twurple](https://twurple.js.org/) in your project and manage authentification
 (i.e. with user tokens), you can reuse it in this project by setting `apiClient` with your
@@ -128,7 +128,7 @@ const fetcher = new EmoteFetcher({
 ```
 
 
-#### All providers, global + channel, custom template and match pattern
+### All providers, global + channel, custom template and match pattern
 
 ```js
 import { EmoteFetcher, EmoteParser } from '@mkody/twitch-emoticons'
@@ -184,7 +184,7 @@ Promise.all([
 ```
 
 
-#### Force static images
+### Force static images
 
 All providers let you ask to only get static versions of their emotes.
 
@@ -200,7 +200,7 @@ const fetcherDark = new EmoteFetcher({
 })
 ```
 
-> [!NOTE]
+> [!NOTE]  
 > **Q:** Why set this to the `EmoteFetcher` and not `EmoteParser`?  
 > **A:** Because `Emote.toLink()` (that you get from the fetcher) uses that info!
 
@@ -223,12 +223,12 @@ console.log(kappa)
 // <img alt="Kappa" title="Kappa" class="twitch-emote" src="https://static-cdn.jtvnw.net/emoticons/v2/25/static/dark/1.0">
 ```
 
-> [!WARNING]
+> [!WARNING]  
 > Forcing static images might make the `imageType` of the `Emote` not match with your expectations!  
 > (Twitch: `gif` => `png`; BTTV: `webp` => `png`.)
 
 
-#### Twitch "theme mode" preference
+### Twitch "theme mode" preference
 
 Some Twitch emotes are optimized for light or dark backgrounds.
 
@@ -259,7 +259,7 @@ fetcherLight.fetchTwitchEmotes(null).then(() => {
 })
 ```
 
-> [!NOTE]
+> [!NOTE]  
 > **Q:** Why set this to the `EmoteFetcher` and not `EmoteParser`?  
 > **A:** Because `Emote.toLink()` (that you get from the fetcher) uses that info!
 
@@ -283,7 +283,7 @@ console.log(kappa)
 ```
 
 
-#### 7TV formats
+### 7TV formats
 
 7TV v3 delivers emotes in either WEBP or AVIF.
 
@@ -308,7 +308,7 @@ await fetcher.fetchSevenTVEmotes(24377667, { format: 'avif' })
 ```
 
 
-#### Export and import emote data
+### Export and import emote data
 
 This can be useful to save the emotes in a cache or for offline content.
 
@@ -328,11 +328,11 @@ const emotes = fetcher.emotes.map((emote) => emote.toObject())
 fetcher.fromObject(emotes)
 ```
 
-> [!NOTE]
+> [!NOTE]  
 > For offline content, you'll still need to download emotes and proxy their URLs.
 
 
-### Links
+## Links
 
 - [Github](https://github.com/mkody/twitch-emoticons)
 - [Documentation](https://mkody.github.io/twitch-emoticons/)

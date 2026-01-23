@@ -1,0 +1,17 @@
+.usertext h1 {
+  font-size: 28px;
+  margin-top: 1em;
+}
+
+.usertext h2 {
+  font-size: 22px;
+  margin-top: 1.5em;
+}
+
+.usertext h2 ~ h3 {
+  margin-top: 0.5em;
+}
+
+.usertext h3 {
+  font-size: 20px;
+}

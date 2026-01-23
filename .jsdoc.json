@@ -20,7 +20,12 @@
     "monospaceLinks": true,
     "useLongnameInNav": false,
     "default": {
-      "includeDate": false
+      "includeDate": false,
+      "staticFiles": {
+        "include": [
+          "./docs_static"
+        ]
+      }
     }
   },
   "opts": {
@@ -34,12 +39,10 @@
   "plugins": [
     "plugins/markdown"
   ],
-  "markdown": {
-    "hardwrap": true
-  },
   "docdash": {
     "sort": false,
     "private": false,
+    "scripts": ["custom.css"],
     "menu": {
       "GitHub": {
         "href": "https://github.com/mkody/twitch-emoticons",
