@@ -21,3 +21,17 @@ export {
   SevenTVEmote,
   TwitchEmote,
 }
+
+// Default export for compatibility
+export default {
+  BTTVEmote,
+  Channel,
+  Collection,
+  Constants,
+  Emote,
+  EmoteFetcher,
+  EmoteParser,
+  FFZEmote,
+  SevenTVEmote,
+  TwitchEmote,
+}

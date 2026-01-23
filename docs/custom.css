@@ -15,3 +15,9 @@
 .usertext h3 {
   font-size: 20px;
 }
+
+.usertext h4 {
+  color: #000;
+  font-size: 18px;
+  margin-top: 1em;
+}

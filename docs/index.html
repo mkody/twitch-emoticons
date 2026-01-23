@@ -64,65 +64,88 @@
 <p>Gets Twitch, BTTV, FFZ and 7TV emotes as well as parsing text to emotes!</p>
 <h2>Migrate to 3.x</h2>
 <p><strong>This release introduces some breaking changes!</strong></p>
+<details>
+<summary>Click here to toggle for details</summary>
+<h3>List of breaking changes from 2.x to 3.x</h3>
 <ul>
-<li>Node.js 20 is required, we've set the minimum to 20.19.</li>
-<li>This project uses ESM imports. Begone <code>require(...)</code>, welcome <code>import {...} from '...'</code>.</li>
-<li>The initialisation of <code>EmoteFetcher</code> changed to only use an object as the first parameter.
+<li>Node.js 20 is required, we've set the minimum to 20.19.<br>
+<em>By the way, this library is now an ECMAScript module, so you can use proper <code>import {...} from '...'</code> imports.</em></li>
+<li>The initialisation of <code>EmoteFetcher</code> changed to only use an object as the first parameter for options.
 <ul>
 <li>API keys for Twitch must now be set with <code>twitchAppID</code> and <code>twitchAppSecret</code> properties.</li>
 <li>The previously-available <code>apiClient</code> is now set in this object too.</li>
 </ul>
 </li>
-<li>The defaults for <code>EmoteParser</code> changed to use the <code>html</code> template and match words <code>/(\w+)/</code>.</li>
-<li>The default <code>html</code> template doesn't have <code>twitch-emote-{size}</code> anymore in its <code>class</code> attribute.</li>
-<li>The <code>EmoteFetcher.fetchSevenTVEmotes()</code>, <code>Emote.toLink()</code>, and <code>EmoteParse.parse()</code> methods have their options as an object.
+<li>The defaults for <code>EmoteParser</code> changed to use the <code>html</code> template and it doesn't require <code>:colons:</code> by default (using <code>/(\w+)/</code> to match any words).</li>
+<li>The default <code>html</code> template doesn't have <code>twitch-emote-{size}</code> anymore in its <code>class</code> attribute.<br>
+<em>The <code>size</code> isn't consistent between the different sources, so it can't reliably be used in a general way.</em></li>
+<li>The <code>EmoteFetcher.fetchSevenTVEmotes()</code>, <code>Emote.toLink()</code>, and <code>EmoteParse.parse()</code> methods now have their options as an object.
 <ul>
 <li><code>fetcher.fetchSevenTVEmotes(null, { format: 'avif' })</code> - First parameter is still the Twitch user ID (or <code>null</code> for global).</li>
-<li><code>emote.toLink({ size: 1, forceStatic: true })</code></li>
-<li><code>parser.parse('Kappa', { size: 1, forceStatic: true })</code> - First parameter is still the input text.</li>
+<li><code>emote.toLink({ size: 1, forceStatic: true, themeMode: 'light' })</code></li>
+<li><code>parser.parse('Kappa', { size: 2, forceStatic: true, themeMode: 'dark' })</code> - First parameter is still the input text.</li>
 </ul>
 </li>
-<li>The <code>owner</code> getter for <code>Emote</code>s has been removed. It isn't reliable enough to get the <code>Channel</code> object from any 3rd-party provider, most emotes might be owned by a channel that we never fetched (i.e. shared/public emotes).</li>
+<li>The <code>owner</code> getter for <code>Emote</code>s has been removed.<br>
+<em>It isn't reliable enough to get the <code>Channel</code> object from any 3rd-party provider, most emotes might be owned by a channel that we never fetched (i.e. shared/public emotes).</em></li>
 <li>If you've exported 7TV emotes, do note that the <code>sizes</code> array changed to not include the leading <code>x.&lt;format&gt;</code>.</li>
-<li><em>More may come for the final release, as this is still a work in progress.</em></li>
+<li><strong>More may come for the final release, as this is still a work in progress.</strong></li>
 </ul>
-<details>
-<summary>See the changes</summary>
-<p>Before:</p>
-<pre class="prettyprint source lang-js"><code>const { EmoteFetcher, EmoteParser } = require('@mkody/twitch-emoticons')
+<h3>Example of code changes</h3>
+<h4>Before (2.x)</h4>
+<p>Here using CommonJS.</p>
+<pre class="prettyprint source lang-js"><code>const { EmoteFetcher, EmoteParser } = require('@mkody/twitch-emoticons') // This should still work
 
-const fetcher = new EmoteFetcher('&lt;your app id>', '&lt;your app secret>')
+const fetcher = new EmoteFetcher('&lt;your app ID>', '&lt;your app secret>') // &lt;- The first two parameters were for the Twitch app ID/secret
 
-// Those next two lines didn't have breaking changes
-await fetcher.fetchTwitchEmotes()
-const parser = new EmoteParser(fetcher)
+// Those next three lines didn't have breaking changes
+fetcher.fetchTwitchEmotes().then(() => { // CommonJS doesn't handle `await` at the top level
+  const parser = new EmoteParser(fetcher)
+  const emote = emoteFetcher.emotes.get('Kappa')
 
-const parsed = parser.parse('Hello :CoolCat:!')
-console.log(parsed)
-// Hello ![CoolCat](https://static-cdn.jtvnw.net/emoticons/v2/58127/default/dark/1.0 &quot;CoolCat&quot;)!
+  console.log(emote.toLink(2)) // &lt;- Only the size was available and was set as the first parameter
+  // https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/3.0
+
+  console.log(parser.parse('Hello :CoolCat:!')) // &lt;- Used colons and returned Markdown by default
+  // Hello ![CoolCat](https://static-cdn.jtvnw.net/emoticons/v2/58127/default/dark/1.0 &quot;CoolCat&quot;)!
+})
 </code></pre>
-<p>After:</p>
-<pre class="prettyprint source lang-js"><code>import { EmoteFetcher, EmoteParser } from '@mkody/twitch-emoticons'
+<h4>After (3.x)</h4>
+<p>Here using ESM.</p>
+<pre class="prettyprint source lang-js"><code>import { EmoteFetcher, EmoteParser } from '@mkody/twitch-emoticons' // Proper imports!
 
-const fetcher = new EmoteFetcher({
+const fetcher = new EmoteFetcher({ // &lt;- Uses an object!
   twitchAppID: '&lt;your app ID>',
   twitchAppSecret: '&lt;your app secret>',
 })
 
-// Those next two lines didn't have breaking changes
+// Those next three lines didn't have breaking changes
 await fetcher.fetchTwitchEmotes()
 const parser = new EmoteParser(fetcher)
+const emote = emoteFetcher.emotes.get('Kappa')
 
-const parsed = parser.parse('Hello CoolCat!')
-console.log(parsed)
+console.log(emote.toLink({ size: 2 })) // &lt;- Uses an object!
+// https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/3.0
+
+console.log(parser.parse('Hello CoolCat!')) // &lt;- Doesn't require :colons: and returns HTML by default!
 // Hello &lt;img alt=&quot;CoolCat&quot; title=&quot;CoolCat&quot; class=&quot;twitch-emote&quot; src=&quot;https://static-cdn.jtvnw.net/emoticons/v2/58127/default/dark/1.0&quot;>
 </code></pre>
+<blockquote>
+<p>[!NOTE]<br>
+We still support CommonJS' <code>require(...)</code> and the old default-based ESM import for compatibility:</p>
+<pre class="prettyprint source lang-js"><code>// If you still didn't move to modules
+const { EmoteFetcher, EmoteParser } = require('@mkody/twitch-emoticons')
+// Not recommanded, but still available
+import TwitchEmoticons from '@mkody/twitch-emoticons'
+const { EmoteFetcher, EmoteParser } = TwitchEmoticons
+</code></pre>
+</blockquote>
 </details>
 <h2>Pre-requisites</h2>
-<p>To fetch Twitch emotes you need to get a client and secret from Twitch <a href="https://dev.twitch.tv/console/apps/create">here</a>, it's free.<br>
-If you are only using BetterTTV, FrankerFaceZ and 7TV you don't need to provide Twitch app keys, as they are independent from the Twitch API.</p>
+<p>To fetch Twitch emotes you need to <a href="https://dev.twitch.tv/console/apps/create">create an app here</a>, it's free.<br>
+If you are only using BetterTTV, FrankerFaceZ and 7TV you don't need to provide Twitch app keys.</p>
 <p>You must use a Twitch user ID instead of the username to fetch users' emotes.<br>
-You can use <a href="https://s.kdy.ch/twitchid/">this page to quickly grab them from a username</a>.</p>
+You can use <a href="https://s.kdy.ch/twitchid/">this page to manually convert them</a>.</p>
 <h2>Install</h2>
 <pre class="prettyprint source lang-sh"><code>npm install @mkody/twitch-emoticons
 # or
@@ -131,6 +154,8 @@ pnpm install @mkody/twitch-emoticons
 yarn add @mkody/twitch-emoticons
 </code></pre>
 <h2>Examples</h2>
+<details>
+<summary>Click here to toggle the examples</summary>
 <h3>Basic Twitch emote parsing</h3>
 <pre class="prettyprint source lang-js"><code>import { EmoteFetcher, EmoteParser } from '@mkody/twitch-emoticons'
 
@@ -335,6 +360,7 @@ fetcher.fromObject(emotes)
 <p>[!NOTE]<br>
 For offline content, you'll still need to download emotes and proxy their URLs.</p>
 </blockquote>
+</details>
 <h2>Links</h2>
 <ul>
 <li><a href="https://github.com/mkody/twitch-emoticons">Github</a></li>
