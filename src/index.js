@@ -1,3 +1,4 @@
+/// <reference types="../typings/index.d.ts" />
 import BTTVEmote from './struct/BTTVEmote.js'
 import Channel from './struct/Channel.js'
 import Collection from './util/Collection.js'

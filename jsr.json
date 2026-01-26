@@ -1,0 +1,16 @@
+{
+  "name": "@mkody/twitch-emoticons",
+  "version": "3.0.0-beta.1",
+  "license": "MIT",
+  "exports": "./src/index.js",
+  "publish": {
+    "include": [
+      "dist/",
+      "src/",
+      "typings/",
+      "LICENSE",
+      "README.md",
+      "SECURITY.md"
+    ]
+  }
+}

@@ -1,99 +1,99 @@
 {
-    "name": "@mkody/twitch-emoticons",
-    "version": "3.0.0-beta.1",
-    "description": "Gets Twitch, BTTV, FFZ and 7TV emotes as well as parsing text to emotes!",
-    "type": "module",
-    "license": "MIT",
-    "author": "MKody <gh@kdy.ch> (André Fernandes)",
-    "contributors": [
-        "1Computer",
-        "Killusions",
-        "MKody",
-        "Tzahi12345"
-    ],
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/mkody/twitch-emoticons.git"
-    },
-    "bugs": {
-        "url": "https://github.com/mkody/twitch-emoticons/issues"
-    },
-    "homepage": "https://github.com/mkody/twitch-emoticons",
-    "keywords": [
-        "7tv",
-        "bettertwitchtv",
-        "bttv",
-        "emotes",
-        "emoticons",
-        "ffz",
-        "frankerfacez",
-        "parse",
-        "seventv",
-        "twitch-api",
-        "twitch"
-    ],
-    "sideEffects": false,
-    "main": "./dist/index.cjs",
-    "typings": "./typings/index.d.ts",
-    "exports": {
-      ".": {
-        "types": "./typings/index.d.ts",
-        "script": "./dist/TwitchEmoticons.min.js",
-        "import": "./src/index.js",
-        "require": "./dist/index.cjs",
-        "default": "./src/index.js"
-      }
-    },
-    "jsdelivr": "dist/TwitchEmoticons.min.js",
-    "unpkg": "dist/TwitchEmoticons.min.js",
-    "dependencies": {
-        "@twurple/api": "^8.0.3",
-        "@twurple/auth": "^8.0.3"
-    },
-    "devDependencies": {
-        "@microsoft/eslint-formatter-sarif": "^3.1.0",
-        "@typescript-eslint/parser": "^8.53.1",
-        "cross-env": "^10.1.0",
-        "docdash": "^2.0.2",
-        "esbuild": "^0.27.2",
-        "eslint": "^9.39.2",
-        "eslint-plugin-jsdoc": "^62.3.0",
-        "jest": "^30.2.0",
-        "jsdoc": "^4.0.5",
-        "neostandard": "^0.12.2"
-    },
-    "scripts": {
-        "all": "pnpm run lint && pnpm run test && pnpm run build",
-        "build": "pnpm run build:cjs && pnpm run build:esm && pnpm run build:global && pnpm run build:docs",
-        "build:cjs": "esbuild src/index.js --bundle --platform=node --outfile=dist/index.cjs --format=cjs --packages=external",
-        "build:esm": "esbuild src/index.js --bundle --minify --keep-names --sourcemap --format=esm --outfile=dist/TwitchEmoticons.esm.min.js",
-        "build:global": "esbuild src/index.js --bundle --minify --keep-names --sourcemap --format=iife --global-name=TwitchEmoticons --outfile=dist/TwitchEmoticons.min.js",
-        "build:docs": "jsdoc --configure .jsdoc.json",
-        "lint": "eslint .",
-        "test": "cross-env NODE_OPTIONS=\"--experimental-vm-modules\" jest"
-    },
-    "publishConfig": {
-      "access": "public"
-    },
-    "files": [
-      "dist/",
-      "src/",
-      "typings/",
-      "SECURITY.md"
-    ],
-    "directories": {
-        "doc": "docs",
-        "test": "test"
-    },
-    "engines": {
-        "node": ">=20.19.0",
-        "pnpm": ">=10"
-    },
-    "packageManager": "pnpm@10.28.1",
-    "pnpm": {
-        "onlyBuiltDependencies": [
-            "esbuild",
-            "unrs-resolver"
-        ]
+  "name": "@mkody/twitch-emoticons",
+  "version": "3.0.0-beta.1",
+  "description": "Gets Twitch, BTTV, FFZ and 7TV emotes as well as parsing text to emotes!",
+  "type": "module",
+  "license": "MIT",
+  "author": "MKody <gh@kdy.ch> (André Fernandes)",
+  "contributors": [
+    "1Computer",
+    "Killusions",
+    "MKody",
+    "Tzahi12345"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mkody/twitch-emoticons.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mkody/twitch-emoticons/issues"
+  },
+  "homepage": "https://github.com/mkody/twitch-emoticons",
+  "keywords": [
+    "7tv",
+    "bettertwitchtv",
+    "bttv",
+    "emotes",
+    "emoticons",
+    "ffz",
+    "frankerfacez",
+    "parse",
+    "seventv",
+    "twitch-api",
+    "twitch"
+  ],
+  "sideEffects": false,
+  "main": "./dist/index.cjs",
+  "typings": "./typings/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./typings/index.d.ts",
+      "script": "./dist/TwitchEmoticons.min.js",
+      "import": "./src/index.js",
+      "require": "./dist/index.cjs",
+      "default": "./src/index.js"
     }
+  },
+  "jsdelivr": "dist/TwitchEmoticons.min.js",
+  "unpkg": "dist/TwitchEmoticons.min.js",
+  "dependencies": {
+    "@twurple/api": "^8.0.3",
+    "@twurple/auth": "^8.0.3"
+  },
+  "devDependencies": {
+    "@microsoft/eslint-formatter-sarif": "^3.1.0",
+    "@typescript-eslint/parser": "^8.53.1",
+    "cross-env": "^10.1.0",
+    "docdash": "^2.0.2",
+    "esbuild": "^0.27.2",
+    "eslint": "^9.39.2",
+    "eslint-plugin-jsdoc": "^62.4.1",
+    "jest": "^30.2.0",
+    "jsdoc": "^4.0.5",
+    "neostandard": "^0.12.2"
+  },
+  "scripts": {
+    "all": "pnpm run lint && pnpm run test && pnpm run build",
+    "build": "pnpm run build:cjs && pnpm run build:esm && pnpm run build:global && pnpm run build:docs",
+    "build:cjs": "esbuild src/index.js --bundle --platform=node --outfile=dist/index.cjs --format=cjs --packages=external",
+    "build:esm": "esbuild src/index.js --bundle --minify --keep-names --sourcemap --format=esm --outfile=dist/TwitchEmoticons.esm.min.js",
+    "build:global": "esbuild src/index.js --bundle --minify --keep-names --sourcemap --format=iife --global-name=TwitchEmoticons --outfile=dist/TwitchEmoticons.min.js",
+    "build:docs": "jsdoc --configure .jsdoc.json",
+    "lint": "eslint .",
+    "test": "cross-env NODE_OPTIONS=\"--experimental-vm-modules\" jest"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist/",
+    "src/",
+    "typings/",
+    "SECURITY.md"
+  ],
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
+  "engines": {
+    "node": ">=20.19.0",
+    "pnpm": ">=10"
+  },
+  "packageManager": "pnpm@10.28.2",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "unrs-resolver"
+    ]
+  }
 }
