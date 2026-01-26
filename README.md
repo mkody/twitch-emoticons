@@ -14,6 +14,8 @@ Gets Twitch, BTTV, FFZ and 7TV emotes as well as parsing text to emotes!
 
 - Node.js 20 is required, we've set the minimum to 20.19.  
   *By the way, this library is now an ECMAScript module, so you can use proper `import {...} from '...'` imports.*
+- If you were using this library with ESM imports, the default export (`import TwitchEmoticons from '...'`) was removed.  
+  *Use `import { EmoteFetcher, EmoteParser } from '@mkody/twitch-emoticons'` instead.*
 - The initialisation of `EmoteFetcher` changed to only use an object as the first parameter for options.
   - API keys for Twitch must now be set with `twitchAppID` and `twitchAppSecret` properties.
   - The previously-available `apiClient` is now set in this object too.
@@ -25,41 +27,46 @@ Gets Twitch, BTTV, FFZ and 7TV emotes as well as parsing text to emotes!
   - `emote.toLink({ size: 1, forceStatic: true, themeMode: 'light' })`
   - `parser.parse('Kappa', { size: 2, forceStatic: true, themeMode: 'dark' })` - First parameter is still the input text.
 - The `owner` getter for `Emote`s has been removed.  
-  *It isn't reliable enough to get the `Channel` object from any 3rd-party provider, most emotes might be owned by a channel that we never fetched (i.e. shared/public emotes).*
+  *It isn't reliable to get the `Channel` object, moreso with 3rd-party providers since emotes might be owned by a channel that we never fetched (i.e. shared/public emotes).*
 - If you've exported 7TV emotes, do note that the `sizes` array changed to not include the leading `x.<format>`.
 - **More may come for the final release, as this is still a work in progress.**
 
 
 ### Example of code changes
 
+Here using an ESM-based project.
+
+We export a CommonJS-compatible build, so you can still use `require(...)`:  
+```js
+const { EmoteFetcher, EmoteParser } = require('@mkody/twitch-emoticons')
+``` 
+
+
 #### Before (2.x)
 
-Here using CommonJS.
-
-```js demo.csj
-const { EmoteFetcher, EmoteParser } = require('@mkody/twitch-emoticons') // This should still work
+```js
+import TwitchEmoticons from '@mkody/twitch-emoticons' // This actually still works, for compatibility's sake
+const { EmoteFetcher, EmoteParser } = TwitchEmoticons
 
 const fetcher = new EmoteFetcher('<your app ID>', '<your app secret>') // <- The first two parameters were for the Twitch app ID/secret
 
 // Those next three lines didn't have breaking changes
-fetcher.fetchTwitchEmotes().then(() => { // CommonJS doesn't handle `await` at the top level
-  const parser = new EmoteParser(fetcher)
-  const emote = emoteFetcher.emotes.get('Kappa')
+await fetcher.fetchTwitchEmotes() // Do note that CommonJS doesn't handle `await` at the top level
+const parser = new EmoteParser(fetcher)
+const emote = emoteFetcher.emotes.get('Kappa')
 
-  console.log(emote.toLink(2)) // <- Only the size was available and was set as the first parameter
-  // https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/3.0
+console.log(emote.toLink(2)) // <- Only the size was available and was set as the first parameter
+// https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/3.0
 
-  console.log(parser.parse('Hello :CoolCat:!')) // <- Used colons and returned Markdown by default
-  // Hello ![CoolCat](https://static-cdn.jtvnw.net/emoticons/v2/58127/default/dark/1.0 "CoolCat")!
-})
+console.log(parser.parse('Hello :CoolCat:!')) // <- Used colons and returned Markdown by default
+// Hello ![CoolCat](https://static-cdn.jtvnw.net/emoticons/v2/58127/default/dark/1.0 "CoolCat")!
 ```
+
 
 #### After (3.x)
 
-Here using ESM.
-
-```js demo.mjs
-import { EmoteFetcher, EmoteParser } from '@mkody/twitch-emoticons' // Proper imports!
+```js
+import { EmoteFetcher, EmoteParser } from '@mkody/twitch-emoticons' // <- Proper imports!
 
 const fetcher = new EmoteFetcher({ // <- Uses an object!
   twitchAppID: '<your app ID>',
@@ -77,16 +84,6 @@ console.log(emote.toLink({ size: 2 })) // <- Uses an object!
 console.log(parser.parse('Hello CoolCat!')) // <- Doesn't require :colons: and returns HTML by default!
 // Hello <img alt="CoolCat" title="CoolCat" class="twitch-emote" src="https://static-cdn.jtvnw.net/emoticons/v2/58127/default/dark/1.0">
 ```
-
-> **NOTE:**  
-> We still support CommonJS' `require(...)` and the old default-based ESM import for compatibility:
-> ```js
-> // If you still didn't move to modules
-> const { EmoteFetcher, EmoteParser } = require('@mkody/twitch-emoticons')
-> // Not recommanded, but still available
-> import TwitchEmoticons from '@mkody/twitch-emoticons'
-> const { EmoteFetcher, EmoteParser } = TwitchEmoticons
-> ```
 
 </details>
 
@@ -116,7 +113,7 @@ yarn add @mkody/twitch-emoticons
 <details>
 <summary>Click here to toggle the examples</summary>
 
-### Basic Twitch emote parsing
+### 1. Basic Twitch emote parsing
 
 ```js
 import { EmoteFetcher, EmoteParser } from '@mkody/twitch-emoticons'
@@ -128,7 +125,7 @@ const fetcher = new EmoteFetcher({
 })
 const parser = new EmoteParser(fetcher, {
   type: 'markdown',   // Can be `html` (default), `markdown`, `bbcode`, or `plain`.
-                      // You can set your own output with `template`.
+                      // You can also set your own output, see example 3.
   match: /:(.+?):/g,  // This means your emotes must be between colons (:Kappa:).
                       // The default is /(\w+)/g and matches any word characters,
                       // similar to regular Twitch chat.
@@ -147,7 +144,7 @@ console.log(parsed)
 ```
 
 
-### Bring your own `@twurple/api`
+### 2. Bring your own `@twurple/api`
 
 If you already use [Twurple](https://twurple.js.org/) in your project and manage authentification
 (i.e. with user tokens), you can reuse it in this project by setting `apiClient` with your
@@ -160,7 +157,7 @@ const fetcher = new EmoteFetcher({
 ```
 
 
-### All providers, global + channel, custom template and match pattern
+### 3. All providers, global + channel, custom template and match pattern
 
 ```js
 import { EmoteFetcher, EmoteParser } from '@mkody/twitch-emoticons'
@@ -215,7 +212,7 @@ Promise.all([
 ```
 
 
-### Force static images
+### 4. Force static images
 
 All providers let you ask to only get static versions of their emotes.
 
@@ -260,7 +257,7 @@ console.log(dinoDance)
 > (Twitch: `gif` => `png`; BTTV: `webp` => `png`.)
 
 
-### Twitch "theme mode" preference
+### 5. Twitch "theme mode" preference
 
 Some Twitch emotes are optimized for light or dark backgrounds.
 
@@ -309,7 +306,7 @@ console.log(kappa)
 ```
 
 
-### 7TV formats
+### 6. 7TV formats
 
 7TV v3 delivers emotes in either WEBP or AVIF.
 
@@ -330,7 +327,7 @@ await fetcher.fetchSevenTVEmotes(24377667, { format: 'avif' })
 ```
 
 
-### Export and import emote data
+### 7. Export and import emote data
 
 This can be useful to save the emotes in a cache or for offline content.
 
