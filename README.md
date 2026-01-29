@@ -12,7 +12,7 @@ Gets Twitch, BTTV, FFZ and 7TV emotes as well as parsing text to emotes!
 
 ### List of breaking changes from 2.x to 3.x
 
-- Node.js 20 is required, we've set the minimum to 20.19.  
+- Node.js 20 is required, we've set the minimum to 20.18.1.  
   *By the way, this library is now an ECMAScript module, so you can use proper `import {...} from '...'` imports.*
 - If you were using this library with ESM imports, the default export (`import TwitchEmoticons from '...'`) was removed.  
   *Use `import { EmoteFetcher, EmoteParser } from '@mkody/twitch-emoticons'` instead.*
