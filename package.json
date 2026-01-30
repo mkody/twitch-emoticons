@@ -33,42 +33,45 @@
     "twitch"
   ],
   "sideEffects": false,
-  "main": "./dist/index.cjs",
-  "typings": "./typings/index.d.ts",
   "exports": {
     ".": {
-      "types": "./typings/index.d.ts",
-      "script": "./dist/TwitchEmoticons.min.js",
-      "import": "./src/index.js",
-      "require": "./dist/index.cjs",
-      "default": "./src/index.js"
+      "import": {
+        "types": "./typings/index.d.ts",
+        "default": "./src/index.js"
+      },
+      "require": {
+        "types": "./typings/index.d.cts",
+        "default": "./dist/TwitchEmoticons.cjs"
+      }
     }
   },
-  "jsdelivr": "dist/TwitchEmoticons.min.js",
-  "unpkg": "dist/TwitchEmoticons.min.js",
+  "types": "./typings/index.d.ts",
+  "main": "./dist/TwitchEmoticons.cjs",
+  "jsdelivr": "./dist/TwitchEmoticons.min.js",
+  "unpkg": "./dist/TwitchEmoticons.min.js",
   "dependencies": {
     "@twurple/api": "^8.0.3",
     "@twurple/auth": "^8.0.3"
   },
   "devDependencies": {
     "@microsoft/eslint-formatter-sarif": "^3.1.0",
-    "@typescript-eslint/parser": "^8.53.1",
+    "@typescript-eslint/parser": "^8.54.0",
     "cross-env": "^10.1.0",
     "docdash": "^2.0.2",
     "esbuild": "^0.27.2",
     "eslint": "^9.39.2",
-    "eslint-plugin-jsdoc": "^62.4.1",
+    "eslint-plugin-jsdoc": "^62.5.0",
     "jest": "^30.2.0",
     "jsdoc": "^4.0.5",
     "neostandard": "^0.12.2"
   },
   "scripts": {
-    "all": "pnpm run lint && pnpm run test && pnpm run build",
-    "build": "pnpm run build:cjs && pnpm run build:esm && pnpm run build:global && pnpm run build:docs",
-    "build:cjs": "esbuild src/index.js --bundle --platform=node --outfile=dist/index.cjs --format=cjs --packages=external",
+    "all": "pnpm run lint && pnpm run test && pnpm run esbuild && pnpm run build:docs",
+    "build:cjs": "esbuild src/index.js --bundle --platform=node --outfile=dist/TwitchEmoticons.cjs --format=cjs --packages=external",
+    "build:docs": "jsdoc --configure .jsdoc.json",
     "build:esm": "esbuild src/index.js --bundle --minify --keep-names --sourcemap --format=esm --outfile=dist/TwitchEmoticons.esm.min.js",
     "build:global": "esbuild src/index.js --bundle --minify --keep-names --sourcemap --format=iife --global-name=TwitchEmoticons --outfile=dist/TwitchEmoticons.min.js",
-    "build:docs": "jsdoc --configure .jsdoc.json",
+    "esbuild": "pnpm run build:cjs && pnpm run build:esm && pnpm run build:global",
     "lint": "eslint .",
     "test": "cross-env NODE_OPTIONS=\"--experimental-vm-modules\" jest"
   },

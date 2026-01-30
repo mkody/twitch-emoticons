@@ -32,14 +32,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Build
+        run: pnpm build
+
       - name: Run tests
         run: pnpm test
         env:
           TWITCH_ID: ${{ secrets.TWITCH_ID }}
           TWITCH_SECRET: ${{ secrets.TWITCH_SECRET }}
-
-      - name: Build
-        run: pnpm build
 
       - name: Publish to npmjs
         run: npm publish
