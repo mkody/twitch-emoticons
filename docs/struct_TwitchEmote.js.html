@@ -45,93 +45,93 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const Emote = require('./Emote');
-const Constants = require('../util/Constants');
+            <pre class="prettyprint source linenums"><code>import Emote from './Emote.js'
+import Constants from '../util/Constants.js'
 
 /** @augments Emote */
 class TwitchEmote extends Emote {
-    /**
-     * A Twitch emote.
-     * @param {Channel} channel - Channel this emote belongs to.
-     * @param {string} id - ID of the emote.
-     * @param {data} data - The raw emote data.
-     */
-    constructor(channel, id, data) {
-        super(channel, id, data);
-        this.type = 'twitch';
-    }
+  /**
+   * A Twitch emote.
+   * @param {Channel} channel - Channel this emote belongs to.
+   * @param {string} id - ID of the emote.
+   * @param {data} data - The raw emote data.
+   */
+  constructor (channel, id, data) {
+    super(channel, id, data)
+    this.type = 'twitch'
+  }
+
+  _setup (data) {
+    super._setup(data)
 
     /**
-     * The channel of this emote's creator.
-     * @readonly
-     * @type {Channel}
+     * The set ID of the emote.
+     * @type {?string}
      */
-    get owner() {
-        return this.channel;
-    }
-
-    _setup(data) {
-        super._setup(data);
-
-        /**
-         * The set ID of the emote.
-         * @type {?string}
-         */
-        this.set = data.emoticon_set;
-
-        /**
-         * If emote is animated.
-         * @type {boolean}
-         */
-        this.animated = 'animated' in data.formats;
-
-        /**
-         * The image type of the emote.
-         * @type {string}
-         */
-        this.imageType = 'animated' in data.formats ? 'gif' : 'png';
-    }
+    this.set = data.emoticon_set
 
     /**
-     * Gets the image link of the emote.
-     * @param {number} size - The size of the image, 0, 1, or 2.
-     * @returns {string}
+     * If emote is animated.
+     * @type {boolean}
      */
-    toLink(size = 0) {
-        return Constants.Twitch.CDN(this.id, size); // eslint-disable-line new-cap
-    }
+    this.animated = 'animated' in data.formats
 
     /**
-     * Override for `toObject`.
-     * Will result in an Object representation of a TwitchEmote
-     * @returns {object}
+     * The image type of the emote.
+     * @type {string}
      */
-    toObject() {
-        return Object.assign({}, super.toObject(), {
-            animated: this.animated,
-            set: this.set,
-            type: this.type
-        });
-    }
+    this.imageType = 'animated' in data.formats ? 'gif' : 'png'
+  }
 
-    /**
-     * Converts an emote Object into a TwitchEmote
-     * @param {object} [emoteObject] - Object representation of this emote
-     * @param {Channel} [channel=null] - Channel this emote belongs to.
-     * @returns {TwitchEmote}
-     */
-    static fromObject(emoteObject, channel = null) {
-        return new TwitchEmote(channel, emoteObject.id,
-            {
-                code: emoteObject.code,
-                animated: emoteObject.animated,
-                emoticon_set: emoteObject.set,
-                formats: emoteObject.animated ? { animated: emoteObject.animated } : {}
-            });
-    }
+  /**
+   * Gets the image link of the emote.
+   * @param {object} [options] - Options for the link.
+   * @param {number} [options.size=0] - Size (scale) for the emote.
+   * @param {boolean} [options.forceStatic] - Whether to force the emote to be static (non-animated). Defaults to the fetcher's forceStatic or `false`.
+   * @param {'dark' | 'light'} [options.themeMode] - Only for Twitch: the preferred theme mode. Defaults to the fetcher's twitchThemeMode or `dark`.
+   * @returns {string} - The URL to the emote.
+   */
+  toLink (options) {
+    const {
+      size = 0,
+      forceStatic = this.fetcher.forceStatic || false,
+      themeMode = this.fetcher.twitchThemeMode || 'dark',
+    } = options || {}
+
+    return Constants.Twitch.CDN(this.id, size, forceStatic, themeMode)
+  }
+
+  /**
+   * Override for `toObject`.
+   * Will result in an Object representation of a TwitchEmote
+   * @returns {object} - Object representation of the TwitchEmote.
+   */
+  toObject () {
+    return Object.assign({}, super.toObject(), {
+      animated: this.animated,
+      set: this.set,
+      type: this.type,
+    })
+  }
+
+  /**
+   * Converts an emote Object into a TwitchEmote
+   * @param {object} [emoteObject] - Object representation of this emote
+   * @param {Channel} [channel] - Channel this emote belongs to.
+   * @returns {TwitchEmote} - A TwitchEmote instance.
+   */
+  static fromObject (emoteObject, channel) {
+    return new TwitchEmote(channel, emoteObject.id,
+      {
+        code: emoteObject.code,
+        animated: emoteObject.animated,
+        emoticon_set: emoteObject.set,
+        formats: emoteObject.animated ? { animated: emoteObject.animated } : {},
+      })
+  }
 }
 
-module.exports = TwitchEmote;
+export default TwitchEmote
 </code></pre>
         </article>
     </section>
@@ -155,5 +155,7 @@ module.exports = TwitchEmote;
 
 
 
+    <link type="text/css" rel="stylesheet" href="custom.css">
+    
 </body>
 </html>

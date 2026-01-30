@@ -1,46 +1,58 @@
 {
-    "tags": {
-        "allowUnknownTags": true,
-        "dictionaries": ["jsdoc"]
-    },
-    "source": {
-        "include": ["README.md", "src/struct", "src/util", "package.json"],
-        "includePattern": ".js$",
-        "excludePattern": "(node_modules/|docs)"
-    },
-    "templates": {
-        "cleverLinks": false,
-        "monospaceLinks": true,
-        "useLongnameInNav": false,
-        "default": {
-            "includeDate": false
-        }
-    },
-    "opts": {
-        "destination": "./docs",
-        "encoding": "utf8",
-        "private": true,
-        "recurse": true,
-        "verbose": true,
-        "template": "./node_modules/docdash"
-    },
-    "plugins": ["plugins/markdown"],
-    "markdown": {
-        "hardwrap": true
-    },
-    "docdash": {
-        "sort": false,
-        "private": false,
-        "menu": {
-            "GitHub": {
-                "href":"https://github.com/mkody/twitch-emoticons",
-                "target":"_blank",
-                "class":"menu-item",
-                "id":"github_link"
-            }
-        },
-        "scopeInOutputPath": false,
-        "nameInOutputPath": false,
-        "versionInOutputPath": false
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": [
+      "jsdoc"
+    ]
+  },
+  "source": {
+    "include": [
+      "README.md",
+      "src/struct",
+      "src/util",
+      "package.json"
+    ],
+    "includePattern": ".js$",
+    "excludePattern": "(node_modules/|docs)"
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": true,
+    "useLongnameInNav": false,
+    "default": {
+      "includeDate": false,
+      "staticFiles": {
+        "include": [
+          "./docs_static"
+        ]
+      }
     }
+  },
+  "opts": {
+    "destination": "./docs",
+    "encoding": "utf8",
+    "private": true,
+    "recurse": true,
+    "verbose": true,
+    "template": "./node_modules/docdash"
+  },
+  "plugins": [
+    "plugins/markdown"
+  ],
+  "docdash": {
+    "sort": false,
+    "private": false,
+    "scripts": ["custom.css"],
+    "menu": {
+      "GitHub": {
+        "href": "https://github.com/mkody/twitch-emoticons",
+        "target": "_blank",
+        "class": "menu-item",
+        "id": "github_link"
+      }
+    },
+    "scopeInOutputPath": false,
+    "nameInOutputPath": false,
+    "versionInOutputPath": false
+  }
 }
