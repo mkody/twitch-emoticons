@@ -68,39 +68,37 @@
 <summary>Click here to toggle for details</summary>
 <h3>List of breaking changes from 2.x to 3.x</h3>
 <ul>
-<li>Node.js 20 is required, we've set the minimum to 20.18.1.<br>
-<em>By the way, this library is now an ECMAScript module, so you can use proper <code>import {...} from '...'</code> imports.</em></li>
-<li>If you were using this library with ESM imports, the default export (<code>import TwitchEmoticons from '...'</code>) was removed.<br>
-<em>Use <code>import { EmoteFetcher, EmoteParser } from '@mkody/twitch-emoticons'</code> instead.</em></li>
-<li>The initialisation of <code>EmoteFetcher</code> changed to only use an object as the first parameter for options.
+<li>Node.js 20 is required; we've set the minimum to 20.18.1.<br>
+<em>This library is now an ECMAScript module, so you can use proper <code>import {...} from '...'</code> imports.</em></li>
+<li>The initialization of <code>EmoteFetcher</code> changed to only use an object as the first parameter for options.
 <ul>
 <li>API keys for Twitch must now be set with <code>twitchAppID</code> and <code>twitchAppSecret</code> properties.</li>
-<li>The previously-available <code>apiClient</code> is now set in this object too.</li>
+<li>The previously available <code>apiClient</code> is now set in this object too.</li>
 </ul>
 </li>
-<li>The defaults for <code>EmoteParser</code> changed to use the <code>html</code> template and it doesn't require <code>:colons:</code> by default (using <code>/(\w+)/</code> to match any words).</li>
+<li>The defaults for <code>EmoteParser</code> changed to use the <code>html</code> template, and it doesn't require <code>:colons:</code> by default (using <code>/(\w+)/</code> to match any words).</li>
 <li>The default <code>html</code> template doesn't have <code>twitch-emote-{size}</code> anymore in its <code>class</code> attribute.<br>
-<em>The <code>size</code> isn't consistent between the different sources, so it can't reliably be used in a general way.</em></li>
+<em>The <code>size</code> isn't consistent between the different sources, so it can't reliably be used.</em></li>
 <li>The <code>EmoteFetcher.fetchSevenTVEmotes()</code>, <code>Emote.toLink()</code>, and <code>EmoteParse.parse()</code> methods now have their options as an object.
 <ul>
-<li><code>fetcher.fetchSevenTVEmotes(null, { format: 'avif' })</code> - First parameter is still the Twitch user ID (or <code>null</code> for global).</li>
+<li><code>fetcher.fetchSevenTVEmotes(null, { format: 'avif' })</code> - The first parameter is still the Twitch user ID (or <code>null</code> for global).</li>
 <li><code>emote.toLink({ size: 1, forceStatic: true, themeMode: 'light' })</code></li>
-<li><code>parser.parse('Kappa', { size: 2, forceStatic: true, themeMode: 'dark' })</code> - First parameter is still the input text.</li>
+<li><code>parser.parse('Kappa', { size: 2, forceStatic: true, themeMode: 'dark' })</code> - The first parameter is still the input text.</li>
 </ul>
 </li>
 <li>The <code>owner</code> getter for <code>Emote</code>s has been removed.<br>
-<em>It isn't reliable to get the <code>Channel</code> object, moreso with 3rd-party providers since emotes might be owned by a channel that we never fetched (i.e. shared/public emotes).</em></li>
+<em>It isn't reliable to get the <code>Channel</code> object, more so with 3rd-party providers since emotes might be owned by a channel that we never fetched (for shared/public emotes).</em></li>
 <li>If you've exported 7TV emotes, do note that the <code>sizes</code> array changed to not include the leading <code>x.&lt;format&gt;</code>.</li>
 <li><strong>More may come for the final release, as this is still a work in progress.</strong></li>
 </ul>
 <h3>Example of code changes</h3>
-<p>Here using an ESM-based project.</p>
+<p>Our examples are running in an ESM-based project (<code>&quot;type&quot;: &quot;module&quot;</code>).</p>
 <p>We export a CommonJS-compatible build, so you can still use <code>require(...)</code>:</p>
 <pre class="prettyprint source lang-js"><code>const { EmoteFetcher, EmoteParser } = require('@mkody/twitch-emoticons')
 </code></pre>
 <h4>Before (2.x)</h4>
-<pre class="prettyprint source lang-js"><code>import TwitchEmoticons from '@mkody/twitch-emoticons' // This actually still works, for compatibility's sake
-const { EmoteFetcher, EmoteParser } = TwitchEmoticons
+<pre class="prettyprint source lang-js"><code>import TwitchEmoticons from '@mkody/twitch-emoticons' // This actually still works, for compatibility's sake,
+const { EmoteFetcher, EmoteParser } = TwitchEmoticons // but you should move away from this...
 
 const fetcher = new EmoteFetcher('&lt;your app ID>', '&lt;your app secret>') // &lt;- The first two parameters were for the Twitch app ID/secret
 
@@ -146,7 +144,10 @@ You can use <a href="https://s.kdy.ch/twitchid/">this page to manually convert t
 pnpm install @mkody/twitch-emoticons
 # or
 yarn add @mkody/twitch-emoticons
+# or
+deno add npm:@mkody/twitch-emoticons
 </code></pre>
+<p>See this package on <a href="https://www.npmjs.com/package/@mkody/twitch-emoticons">npm</a> (<a href="https://npmx.dev/package/@mkody/twitch-emoticons">npmx</a>) or <a href="https://jsr.io/@mkody/twitch-emoticons">jsr</a>.</p>
 <h2>Examples</h2>
 <details>
 <summary>Click here to toggle the examples</summary>

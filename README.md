@@ -12,29 +12,27 @@ Gets Twitch, BTTV, FFZ and 7TV emotes as well as parsing text to emotes!
 
 ### List of breaking changes from 2.x to 3.x
 
-- Node.js 20 is required, we've set the minimum to 20.18.1.  
-  *By the way, this library is now an ECMAScript module, so you can use proper `import {...} from '...'` imports.*
-- If you were using this library with ESM imports, the default export (`import TwitchEmoticons from '...'`) was removed.  
-  *Use `import { EmoteFetcher, EmoteParser } from '@mkody/twitch-emoticons'` instead.*
-- The initialisation of `EmoteFetcher` changed to only use an object as the first parameter for options.
+- Node.js 20 is required; we've set the minimum to 20.18.1.  
+  *This library is now an ECMAScript module, so you can use proper `import {...} from '...'` imports.*
+- The initialization of `EmoteFetcher` changed to only use an object as the first parameter for options.
   - API keys for Twitch must now be set with `twitchAppID` and `twitchAppSecret` properties.
-  - The previously-available `apiClient` is now set in this object too.
-- The defaults for `EmoteParser` changed to use the `html` template and it doesn't require `:colons:` by default (using `/(\w+)/` to match any words).
+  - The previously available `apiClient` is now set in this object too.
+- The defaults for `EmoteParser` changed to use the `html` template, and it doesn't require `:colons:` by default (using `/(\w+)/` to match any words).
 - The default `html` template doesn't have `twitch-emote-{size}` anymore in its `class` attribute.  
-  *The `size` isn't consistent between the different sources, so it can't reliably be used in a general way.*
+  *The `size` isn't consistent between the different sources, so it can't reliably be used.*
 - The `EmoteFetcher.fetchSevenTVEmotes()`, `Emote.toLink()`, and `EmoteParse.parse()` methods now have their options as an object.
-  - `fetcher.fetchSevenTVEmotes(null, { format: 'avif' })` - First parameter is still the Twitch user ID (or `null` for global).
+  - `fetcher.fetchSevenTVEmotes(null, { format: 'avif' })` - The first parameter is still the Twitch user ID (or `null` for global).
   - `emote.toLink({ size: 1, forceStatic: true, themeMode: 'light' })`
-  - `parser.parse('Kappa', { size: 2, forceStatic: true, themeMode: 'dark' })` - First parameter is still the input text.
+  - `parser.parse('Kappa', { size: 2, forceStatic: true, themeMode: 'dark' })` - The first parameter is still the input text.
 - The `owner` getter for `Emote`s has been removed.  
-  *It isn't reliable to get the `Channel` object, moreso with 3rd-party providers since emotes might be owned by a channel that we never fetched (i.e. shared/public emotes).*
+  *It isn't reliable to get the `Channel` object, more so with 3rd-party providers since emotes might be owned by a channel that we never fetched (for shared/public emotes).*
 - If you've exported 7TV emotes, do note that the `sizes` array changed to not include the leading `x.<format>`.
 - **More may come for the final release, as this is still a work in progress.**
 
 
 ### Example of code changes
 
-Here using an ESM-based project.
+Our examples are running in an ESM-based project (`"type": "module"`).
 
 We export a CommonJS-compatible build, so you can still use `require(...)`:  
 ```js
@@ -45,8 +43,8 @@ const { EmoteFetcher, EmoteParser } = require('@mkody/twitch-emoticons')
 #### Before (2.x)
 
 ```js
-import TwitchEmoticons from '@mkody/twitch-emoticons' // This actually still works, for compatibility's sake
-const { EmoteFetcher, EmoteParser } = TwitchEmoticons
+import TwitchEmoticons from '@mkody/twitch-emoticons' // This actually still works, for compatibility's sake,
+const { EmoteFetcher, EmoteParser } = TwitchEmoticons // but you should move away from this...
 
 const fetcher = new EmoteFetcher('<your app ID>', '<your app secret>') // <- The first two parameters were for the Twitch app ID/secret
 
@@ -102,10 +100,18 @@ You can use [this page to manually convert them](https://s.kdy.ch/twitchid/).
 ```sh
 npm install @mkody/twitch-emoticons
 # or
-pnpm install @mkody/twitch-emoticons
+pnpm add @mkody/twitch-emoticons
 # or
 yarn add @mkody/twitch-emoticons
+# or
+deno add npm:@mkody/twitch-emoticons
 ```
+
+See this package on [npm] ([npmx]) or [jsr].
+
+[npm]: https://www.npmjs.com/package/@mkody/twitch-emoticons
+[npmx]: https://npmx.dev/package/@mkody/twitch-emoticons
+[jsr]: https://jsr.io/@mkody/twitch-emoticons
 
 
 ## Examples
