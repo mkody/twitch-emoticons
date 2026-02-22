@@ -26,10 +26,10 @@ jobs:
         run: pnpm install
 
       - name: Build
-        run: pnpm build
+        run: pnpm run esbuild
 
       - name: Run tests
-        run: pnpm test
+        run: pnpm run test
         env:
           TWITCH_ID: ${{ secrets.TWITCH_ID }}
           TWITCH_SECRET: ${{ secrets.TWITCH_SECRET }}
