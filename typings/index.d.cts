@@ -1,4 +1,4 @@
-export class Channel {
+declare class Channel {
   public constructor (
     fetcher: EmoteFetcher,
     id: number
@@ -15,7 +15,7 @@ export class Channel {
   public fetchSevenTVEmotes (): Promise<Collection<string, SevenTVEmote>>
 }
 
-export abstract class Emote {
+declare abstract class Emote {
   public constructor (
     channel: Channel,
     id: string,
@@ -29,7 +29,7 @@ export abstract class Emote {
   public code: string
 }
 
-export class EmoteFetcher {
+declare class EmoteFetcher {
   public constructor (
     options?: {
       twitchAppID?: string,
@@ -69,7 +69,7 @@ export class EmoteFetcher {
   ): Emote[]
 }
 
-export class EmoteParser {
+declare class EmoteParser {
   public constructor (
     fetcher: EmoteFetcher,
     options?: {
@@ -89,7 +89,7 @@ export class EmoteParser {
   ): string
 }
 
-export class TwitchEmote extends Emote {
+declare class TwitchEmote extends Emote {
   public constructor (
     channel: Channel,
     id: string,
@@ -112,7 +112,7 @@ export class TwitchEmote extends Emote {
   public toObject (): EmoteObject
 }
 
-export class BTTVEmote extends Emote {
+declare class BTTVEmote extends Emote {
   public constructor (
     channel: Channel,
     id: string,
@@ -134,7 +134,7 @@ export class BTTVEmote extends Emote {
   public toObject (): EmoteObject
 }
 
-export class FFZEmote extends Emote {
+declare class FFZEmote extends Emote {
   public constructor (
     channel: Channel,
     id: string,
@@ -158,7 +158,7 @@ export class FFZEmote extends Emote {
   public toObject (): EmoteObject
 }
 
-export class SevenTVEmote extends Emote {
+declare class SevenTVEmote extends Emote {
   public constructor (
     channel: Channel,
     id: string,
@@ -181,7 +181,7 @@ export class SevenTVEmote extends Emote {
   public toObject (): EmoteObject
 }
 
-export interface EmoteObject {
+interface EmoteObject {
   code: string,
   id: string,
   channel_id: string | null,
@@ -193,7 +193,7 @@ export interface EmoteObject {
   imageType?: string
 }
 
-export declare const Constants: {
+declare const Constants: {
   Twitch: {
     CDN: (id: string, size?: number, forceStatic?: boolean, theme?: 'dark' | 'light') => string;
   };
@@ -225,7 +225,7 @@ export declare const Constants: {
   };
 }
 
-export class Collection<K, V> extends Map<K, V> {
+declare class Collection<K, V> extends Map<K, V> {
   public find (
     propOrFunc: string | ((item: V, index: number, coll: this) => boolean),
     value?: any
@@ -238,4 +238,17 @@ export class Collection<K, V> extends Map<K, V> {
   public map (
     func: (item: V, index: number, coll: this) => any
   ): Array<any>
+}
+
+export {
+  Channel,
+  Emote,
+  EmoteFetcher,
+  EmoteParser,
+  TwitchEmote,
+  BTTVEmote,
+  FFZEmote,
+  SevenTVEmote,
+  Collection,
+  Constants,
 }

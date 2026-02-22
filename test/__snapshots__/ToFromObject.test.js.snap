@@ -9,10 +9,10 @@ exports[`Test toObject 7TV Global Emote (AVIF) 1`] = `
   "imageType": "avif",
   "ownerName": "TrippyColour",
   "sizes": [
-    "1x.avif",
-    "2x.avif",
-    "3x.avif",
-    "4x.avif",
+    "1",
+    "2",
+    "3",
+    "4",
   ],
   "type": "7tv",
 }
@@ -27,10 +27,10 @@ exports[`Test toObject 7TV User Emote 1`] = `
   "imageType": "webp",
   "ownerName": "jenji333",
   "sizes": [
-    "1x.webp",
-    "2x.webp",
-    "3x.webp",
-    "4x.webp",
+    "1",
+    "2",
+    "3",
+    "4",
   ],
   "type": "7tv",
 }

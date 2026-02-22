@@ -17,12 +17,12 @@ jobs:
   eslint:
     name: Run eslint scanning
     runs-on: ubuntu-latest
-    
+
     permissions:
       contents: read
       security-events: write
       actions: read
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -40,7 +40,7 @@ jobs:
         run: pnpm install --dev
 
       - name: Run ESLint
-        run: pnpm run lint
+        run: pnpm lint
           --format @microsoft/eslint-formatter-sarif
           --output-file eslint-results.sarif
         continue-on-error: true

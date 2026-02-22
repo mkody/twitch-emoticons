@@ -274,84 +274,6 @@
 
         
             
-<h4 class="name" id="owner"><span class="type-signature type-signature-readonly">(readonly) </span>owner<span class="type-signature"> :<a href="Channel.html">Channel</a></span></h4>
-
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The channel of this emote's creator.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_TwitchEmote.js.html">struct/TwitchEmote.js</a>, <a href="struct_TwitchEmote.js.html#line22">line 22</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description usertext">
-    <p>The channel of this emote's creator.</p>
-</div>
-
-
-
-    <h5 class="h5-types">Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type"><a href="Channel.html">Channel</a></span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-
-        
-            
 <h4 class="name" id="set"><span class="type-signature type-signature-nullable">(nullable) </span>set<span class="type-signature"> :string</span></h4>
 
 
@@ -367,7 +289,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_TwitchEmote.js.html">struct/TwitchEmote.js</a>, <a href="struct_TwitchEmote.js.html#line33">line 33</a>
+        <a href="struct_TwitchEmote.js.html">struct/TwitchEmote.js</a>, <a href="struct_TwitchEmote.js.html#line24">line 24</a>
     </li></ul></dd>
     
 
@@ -445,7 +367,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_TwitchEmote.js.html">struct/TwitchEmote.js</a>, <a href="struct_TwitchEmote.js.html#line39">line 39</a>
+        <a href="struct_TwitchEmote.js.html">struct/TwitchEmote.js</a>, <a href="struct_TwitchEmote.js.html#line30">line 30</a>
     </li></ul></dd>
     
 
@@ -523,7 +445,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_TwitchEmote.js.html">struct/TwitchEmote.js</a>, <a href="struct_TwitchEmote.js.html#line45">line 45</a>
+        <a href="struct_TwitchEmote.js.html">struct/TwitchEmote.js</a>, <a href="struct_TwitchEmote.js.html#line36">line 36</a>
     </li></ul></dd>
     
 
@@ -678,8 +600,8 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The channel this emote belongs to.<br>
-Only accurate and constant on Twitch emotes.<br>
+    <dd class="tag-description"><ul class="dummy"><li><p>The channel this emote belongs to.
+Only accurate and constant on Twitch emotes.
 For other types of emotes, use the <code>owner</code> or <code>ownerName</code> property.</p></li></ul></dd>
     
 
@@ -731,8 +653,8 @@ For other types of emotes, use the <code>owner</code> or <code>ownerName</code> 
 
 
 <div class="description usertext">
-    <p>The channel this emote belongs to.<br>
-Only accurate and constant on Twitch emotes.<br>
+    <p>The channel this emote belongs to.
+Only accurate and constant on Twitch emotes.
 For other types of emotes, use the <code>owner</code> or <code>ownerName</code> property.</p>
 </div>
 
@@ -839,7 +761,7 @@ For other types of emotes, use the <code>owner</code> or <code>ownerName</code> 
 
         
             
-<h4 class="name" id="type"><span class="type-signature"></span>type<span class="type-signature"> :string</span></h4>
+<h4 class="name" id="type"><span class="type-signature"></span>type<span class="type-signature"> :string|null</span></h4>
 
 
 
@@ -848,7 +770,7 @@ For other types of emotes, use the <code>owner</code> or <code>ownerName</code> 
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The type of this emote.<br>
+    <dd class="tag-description"><ul class="dummy"><li><p>The type of this emote.
 Either <code>twitch</code>, <code>bttv</code>, <code>ffz</code>, or '7tv'.</p></li></ul></dd>
     
 
@@ -900,7 +822,7 @@ Either <code>twitch</code>, <code>bttv</code>, <code>ffz</code>, or '7tv'.</p></
 
 
 <div class="description usertext">
-    <p>The type of this emote.<br>
+    <p>The type of this emote.
 Either <code>twitch</code>, <code>bttv</code>, <code>ffz</code>, or '7tv'.</p>
 </div>
 
@@ -911,6 +833,9 @@ Either <code>twitch</code>, <code>bttv</code>, <code>ffz</code>, or '7tv'.</p>
         <li>
             
 <span class="param-type">string</span>
+|
+
+<span class="param-type">null</span>
 
 
 
@@ -1016,7 +941,7 @@ Either <code>twitch</code>, <code>bttv</code>, <code>ffz</code>, or '7tv'.</p>
 
     
 
-    <h4 class="name" id="toLink"><span class="type-signature"></span>toLink<span class="signature">(size)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    <h4 class="name" id="toLink"><span class="type-signature"></span>toLink<span class="signature">(options<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {string}</span></h4>
 
     
 
@@ -1032,7 +957,7 @@ Either <code>twitch</code>, <code>bttv</code>, <code>ffz</code>, or '7tv'.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_TwitchEmote.js.html">struct/TwitchEmote.js</a>, <a href="struct_TwitchEmote.js.html#line53">line 53</a>
+        <a href="struct_TwitchEmote.js.html">struct/TwitchEmote.js</a>, <a href="struct_TwitchEmote.js.html#line47">line 47</a>
     </li></ul></dd>
     
 
@@ -1092,6 +1017,63 @@ Either <code>twitch</code>, <code>bttv</code>, <code>ffz</code>, or '7tv'.</p>
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Options for the link.</p>
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
 
         
         <th>Default</th>
@@ -1120,6 +1102,16 @@ Either <code>twitch</code>, <code>bttv</code>, <code>ffz</code>, or '7tv'.</p>
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
 
             
                 <td class="default">
@@ -1129,7 +1121,93 @@ Either <code>twitch</code>, <code>bttv</code>, <code>ffz</code>, or '7tv'.</p>
                 </td>
             
 
-            <td class="description last"><p>The size of the image, 0, 1, or 2.</p></td>
+            <td class="description last"><p>Size (scale) for the emote.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>forceStatic</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>Whether to force the emote to be static (non-animated). Defaults to the fetcher's forceStatic or <code>false</code>.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>themeMode</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'dark'</span>
+|
+
+<span class="param-type">'light'</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>Only for Twitch: the preferred theme mode. Defaults to the fetcher's twitchThemeMode or <code>dark</code>.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
         </tr>
 
     
@@ -1154,6 +1232,12 @@ Either <code>twitch</code>, <code>bttv</code>, <code>ffz</code>, or '7tv'.</p>
 <h5 class="h5-returns">Returns:</h5>
 
         
+<div class="param-desc">
+    <ul>
+<li>The URL to the emote.</li>
+</ul>
+</div>
+
 
 
 <dl class="param-type">
@@ -1188,7 +1272,7 @@ Either <code>twitch</code>, <code>bttv</code>, <code>ffz</code>, or '7tv'.</p>
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Override for <code>toObject</code>.<br>
+    <dd class="tag-description"><ul class="dummy"><li><p>Override for <code>toObject</code>.
 Will result in an Object representation of a TwitchEmote</p></li></ul></dd>
     
 
@@ -1264,6 +1348,12 @@ Will result in an Object representation of a TwitchEmote</p></li></ul></dd>
 <h5 class="h5-returns">Returns:</h5>
 
         
+<div class="param-desc">
+    <ul>
+<li>Object representation of the TwitchEmote.</li>
+</ul>
+</div>
+
 
 
 <dl class="param-type">
@@ -1368,8 +1458,6 @@ Will result in an Object representation of a TwitchEmote</p></li></ul></dd>
         
 
         
-        <th>Default</th>
-        
 
         <th class="last">Description</th>
     </tr>
@@ -1406,10 +1494,6 @@ Will result in an Object representation of a TwitchEmote</p></li></ul></dd>
             
 
             
-                <td class="default">
-                
-                </td>
-            
 
             <td class="description last"><p>Object representation of this emote</p></td>
         </tr>
@@ -1444,12 +1528,6 @@ Will result in an Object representation of a TwitchEmote</p></li></ul></dd>
             
 
             
-                <td class="default">
-                
-                    <code>null</code>
-                
-                </td>
-            
 
             <td class="description last"><p>Channel this emote belongs to.</p></td>
         </tr>
@@ -1476,6 +1554,12 @@ Will result in an Object representation of a TwitchEmote</p></li></ul></dd>
 <h5 class="h5-returns">Returns:</h5>
 
         
+<div class="param-desc">
+    <ul>
+<li>A TwitchEmote instance.</li>
+</ul>
+</div>
+
 
 
 <dl class="param-type">
@@ -1524,5 +1608,7 @@ Will result in an Object representation of a TwitchEmote</p></li></ul></dd>
 
 
 
+    <link type="text/css" rel="stylesheet" href="custom.css">
+    
 </body>
 </html>
