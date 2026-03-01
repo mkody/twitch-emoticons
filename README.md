@@ -2,6 +2,11 @@
 
 Gets Twitch, BTTV, FFZ and 7TV emotes as well as parsing text to emotes!
 
+> [!IMPORTANT]  
+> This branch is for the **currently pre-released** 3.0 version.  
+> If you want to see the latest stable version (as of this commit),
+> [switch to the `version/2.9` branch](https://github.com/mkody/twitch-emoticons/tree/version/2.9).
+
 
 ## Migrate to 3.x
 
@@ -86,9 +91,9 @@ console.log(parser.parse('Hello CoolCat!')) // <- Doesn't require :colons: and r
 </details>
 
 
-## Pre-requisites
+## Prerequisites
 
-To fetch Twitch emotes you need to [create an app here](https://dev.twitch.tv/console/apps/create), it's free.  
+To fetch "native" Twitch emotes you need to [create an app here](https://dev.twitch.tv/console/apps/create), it's free.  
 If you are only using BetterTTV, FrankerFaceZ and 7TV you don't need to provide Twitch app keys.
 
 You must use a Twitch user ID instead of the username to fetch users' emotes.  
@@ -97,21 +102,33 @@ You can use [this page to manually convert them](https://s.kdy.ch/twitchid/).
 
 ## Install
 
+From [npm] ([browse on npmx]; use the `@next` tag):
+
 ```sh
-npm install @mkody/twitch-emoticons
+npm install @mkody/twitch-emoticons@next
 # or
-pnpm add @mkody/twitch-emoticons
+pnpm add @mkody/twitch-emoticons@next
 # or
-yarn add @mkody/twitch-emoticons
+yarn add @mkody/twitch-emoticons@next
 # or
-deno add npm:@mkody/twitch-emoticons
+deno add npm:@mkody/twitch-emoticons@next
 ```
 
-See this package on [npm] ([npmx]) or [jsr].
+From [jsr]:
 
-[npm]: https://www.npmjs.com/package/@mkody/twitch-emoticons
-[npmx]: https://npmx.dev/package/@mkody/twitch-emoticons
-[jsr]: https://jsr.io/@mkody/twitch-emoticons
+```sh
+npx jsr add @mkody/twitch-emoticons
+# or
+pnpm add jsr:@mkody/twitch-emoticons
+# or
+yarn add jsr:@mkody/twitch-emoticons
+# or (version has to be specified while it's a pre-release)
+deno add jsr:@mkody/twitch-emoticons@3.0.0-beta.1
+```
+
+[npm]: https://www.npmjs.com/package/@mkody/twitch-emoticons/v/3.0.0-beta.1
+[browse on npmx]: https://npmx.dev/package/@mkody/twitch-emoticons/v/3.0.0-beta.1
+[jsr]: https://jsr.io/@mkody/twitch-emoticons@3.0.0-beta.1
 
 
 ## Examples
