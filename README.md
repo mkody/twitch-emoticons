@@ -93,7 +93,7 @@ console.log(parser.parse('Hello CoolCat!')) // <- Doesn't require :colons: and r
 
 ## Prerequisites
 
-To fetch "native" Twitch emotes you need to [create an app here](https://dev.twitch.tv/console/apps/create), it's free.  
+To fetch "native" Twitch emotes, you need to [create an app here](https://dev.twitch.tv/console/apps/create), it's free.  
 If you are only using BetterTTV, FrankerFaceZ and 7TV you don't need to provide Twitch app keys.
 
 You must use a Twitch user ID instead of the username to fetch users' emotes.  
@@ -148,11 +148,11 @@ First, you need to load a list of emotes, and for that you create a new `EmoteFe
 
 ```js
 const fetcher = new EmoteFetcher({
-  // If you want to use emotes from twitch.tv, you'll need to be authentified to use their API. You have two options:
-  // Option 1: Provide your app ID and Secret here (get them at https://dev.twitch.tv/console/apps )
+  // If you want to use emotes from twitch.tv, you'll need to be authenticated to use their API. You have two options:
+  // Option 1: Provide your app ID and secret here (get them at https://dev.twitch.tv/console/apps).
   twitchAppID,      // <string>
   twitchAppSecret,  // <string>
-  // Option 2: If you need a different way to auth or already use `@twurple/api`, you can provide your ApiClient object here
+  // Option 2: If you need a different way to auth or already use `@twurple/api`, you can provide your ApiClient object here.
   apiClient, // <ApiClient>
 
   // Force emotes to be static (non-animated).
@@ -165,14 +165,14 @@ const fetcher = new EmoteFetcher({
 
 And then you need to make the calls to load what you want.
 
-There is a method per platform, all of them are `async` (so use `await` or Promises):
+There is one method per platform; all of them return Promises (so you can use `await` or use callbacks):
 - `fetcher.fetchTwitchEmotes()`
 - `fetcher.fetchBTTVEmotes()`
 - `fetcher.fetchFFZEmotes()`
 - `fetcher.fetchSevenTVEmotes()`
 
 The first parameter is the Twitch user ID of the channel you want to load emotes from.  
-If not provided or it's `null`/fals-y, it loads what we call "global emotes" - which are available to all users of the platform.
+If not provided or it's `null`/falsy, it loads what we call "global emotes", which are available to all users of the platform.
 
 Do note that `fetchSevenTVEmotes` accepts a second parameter with an object:
 - `format`: Set the image type used, either `webp` or `avif`. Default: `webp`
@@ -189,48 +189,51 @@ await fetcher.fetchSevenTVEmotes(null, { format: 'avif' }) // Example of loading
 
 ### Parse strings to include emotes with `EmoteParser`
 
-And now that we have saved our list of emotes that we can be expected to find, let's use it!  
+And now that we have our list of emotes that we can expect to find, let's use it!  
 Let's create our `EmoteParser` object:
 
 ```js
 const parser = new EmoteParser(
-  // The first parameter is our EmoteFetcher, we're passing our object that holds the list of fetched emotes
+  // The first parameter is our EmoteFetcher, the object that holds the list of fetched emotes.
   fetcher, // <EmoteFetcher>
 
-  // The second parameter is an *optional* object with settings
+  // The second parameter is an *optional* object with settings.
   {
-    // What output should be used when you parse messages? There's two way to set that up:
+    // What output should be used when you parse messages? There are two ways to set that up:
     // Option 1: Use one of the provided templates:
     // - `html`: `<img alt="{name}" title="{name}" class="twitch-emote" src="{link}">`
     // - `markdown`: `![{name}]({link} "{name}")`
     // - `bbcode`: `[img]{link}[/img]`
     // - `plain`: `{link}`
     type, // <'html' | 'markdown' | 'bbcode' | 'plain'> - Default: 'html'
-    // Option 2: Custom format, it has priority over option 1. You can use those: `{link}`, `{name}`, `{size}`, `{creator}`.
+    // Option 2: Make your own template; it has priority over option 1. You can use those: `{link}`, `{name}`, `{size}`, `{creator}`.
     template, // <string> - Default: ''
 
-    // You can customize the Regular Expression used to find possible emotes.
+    // You can customize the regular expression used to find possible emotes.
     match, // <RegExp>
 }
 ) 
 ```
 
-New that you have an EmoteParser object, you can do two things with it: lookup for an `Emote` or parse text and get the output as set by `type` or `template`.
+Now that you have an EmoteParser object, you can do two things with it:
+look up an `Emote` or parse text and get the output as set by `type` or `template`.
 
-To grab an specific Emote, you can do `fetcher.emotes.get('...')`, with the case-sensitive name of the emote in place of the ellipsis.  
-From there, you can read properties like `.code`, `.animated`, `.imageType`, or `.type`, but you can also use the `.toLink()` method to... get a link!
+To grab a specific emote, you can do `fetcher.emotes.get('...')`, with the case-sensitive name of the emote in place of the ellipsis.  
+From there, you can read properties like `.code`, `.animated`, `.imageType`, or `.type`,
+but you can also use the `.toLink()` method to… get a link!
 
 To parse text, you use the `parser.parse()` method.  
-The first paramter is the input text. There's also an optional second parameter where you can provide a few settings (which can overwrite the same ones set in the `EmoteFetcher`).
+The first parameter is the input text. There's also an optional second parameter
+where you can provide a few settings (which can overwrite the same ones set in the `EmoteFetcher`).
 
 ```js
 const parsed = parser.parse(
-  // The text to parse
+  // The text to parse.
   text, // <string>
 
-  // The second paramter is an *optional* object with the settings
+  // The second parameter is an *optional* object with the settings.
   {
-    // Size (scale) for emotes. It varies by providers and not all share the same resolution in pixels. Play with this value if you want, but not garantees!
+    // Size (scale) for emotes. It varies by provider, and not all share the same resolution in pixels. Play with this value if you'd like, but no guarantees!
     size, // <number>
 
     // Force emotes to be static (non-animated).
@@ -286,8 +289,8 @@ console.log(parsed)
 
 ### 2. Bring your own `@twurple/api`
 
-If you already use [Twurple](https://twurple.js.org/) in your project and manage authentification
-(i.e. with user tokens), you can reuse it in this project by setting `apiClient` with your
+If you already use [Twurple](https://twurple.js.org/) in your project and manage authentication
+(i.e., with user tokens), you can reuse it in this project by setting `apiClient` with your
 [ApiClient](https://twurple.js.org/reference/api/classes/ApiClient.html) object.
 
 ```js
@@ -461,7 +464,7 @@ console.log(kappa)
 
 7TV v3 delivers emotes in either WEBP or AVIF.
 
-By default we'll return WEBP emotes but you can override this.
+By default we'll return WEBP emotes, but you can override this.
 
 ```js
 // (setup)

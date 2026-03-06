@@ -140,7 +140,7 @@ console.log(parser.parse('Hello CoolCat!')) // &lt;- Doesn't require :colons: an
 </code></pre>
 </details>
 <h2>Prerequisites</h2>
-<p>To fetch &quot;native&quot; Twitch emotes you need to <a href="https://dev.twitch.tv/console/apps/create">create an app here</a>, it's free.<br>
+<p>To fetch &quot;native&quot; Twitch emotes, you need to <a href="https://dev.twitch.tv/console/apps/create">create an app here</a>, it's free.<br>
 If you are only using BetterTTV, FrankerFaceZ and 7TV you don't need to provide Twitch app keys.</p>
 <p>You must use a Twitch user ID instead of the username to fetch users' emotes.<br>
 You can use <a href="https://s.kdy.ch/twitchid/">this page to manually convert them</a>.</p>
@@ -174,11 +174,11 @@ If you want a more complete documentation, see: https://mkody.github.io/twitch-e
 <h3>Grab emotes with <code>EmoteFetcher</code></h3>
 <p>First, you need to load a list of emotes, and for that you create a new <code>EmoteFetcher</code> object:</p>
 <pre class="prettyprint source lang-js"><code>const fetcher = new EmoteFetcher({
-  // If you want to use emotes from twitch.tv, you'll need to be authentified to use their API. You have two options:
-  // Option 1: Provide your app ID and Secret here (get them at https://dev.twitch.tv/console/apps )
+  // If you want to use emotes from twitch.tv, you'll need to be authenticated to use their API. You have two options:
+  // Option 1: Provide your app ID and secret here (get them at https://dev.twitch.tv/console/apps).
   twitchAppID,      // &lt;string>
   twitchAppSecret,  // &lt;string>
-  // Option 2: If you need a different way to auth or already use `@twurple/api`, you can provide your ApiClient object here
+  // Option 2: If you need a different way to auth or already use `@twurple/api`, you can provide your ApiClient object here.
   apiClient, // &lt;ApiClient>
 
   // Force emotes to be static (non-animated).
@@ -189,7 +189,7 @@ If you want a more complete documentation, see: https://mkody.github.io/twitch-e
 })
 </code></pre>
 <p>And then you need to make the calls to load what you want.</p>
-<p>There is a method per platform, all of them are <code>async</code> (so use <code>await</code> or Promises):</p>
+<p>There is one method per platform; all of them return Promises (so you can use <code>await</code> or use callbacks):</p>
 <ul>
 <li><code>fetcher.fetchTwitchEmotes()</code></li>
 <li><code>fetcher.fetchBTTVEmotes()</code></li>
@@ -197,7 +197,7 @@ If you want a more complete documentation, see: https://mkody.github.io/twitch-e
 <li><code>fetcher.fetchSevenTVEmotes()</code></li>
 </ul>
 <p>The first parameter is the Twitch user ID of the channel you want to load emotes from.<br>
-If not provided or it's <code>null</code>/fals-y, it loads what we call &quot;global emotes&quot; - which are available to all users of the platform.</p>
+If not provided or it's <code>null</code>/falsy, it loads what we call &quot;global emotes&quot;, which are available to all users of the platform.</p>
 <p>Do note that <code>fetchSevenTVEmotes</code> accepts a second parameter with an object:</p>
 <ul>
 <li><code>format</code>: Set the image type used, either <code>webp</code> or <code>avif</code>. Default: <code>webp</code></li>
@@ -209,41 +209,44 @@ await fetcher.fetchFFZEmotes()
 await fetcher.fetchSevenTVEmotes(null, { format: 'avif' }) // Example of loading images in AVIF here
 </code></pre>
 <h3>Parse strings to include emotes with <code>EmoteParser</code></h3>
-<p>And now that we have saved our list of emotes that we can be expected to find, let's use it!<br>
+<p>And now that we have our list of emotes that we can expect to find, let's use it!<br>
 Let's create our <code>EmoteParser</code> object:</p>
 <pre class="prettyprint source lang-js"><code>const parser = new EmoteParser(
-  // The first parameter is our EmoteFetcher, we're passing our object that holds the list of fetched emotes
+  // The first parameter is our EmoteFetcher, the object that holds the list of fetched emotes.
   fetcher, // &lt;EmoteFetcher>
 
-  // The second parameter is an *optional* object with settings
+  // The second parameter is an *optional* object with settings.
   {
-    // What output should be used when you parse messages? There's two way to set that up:
+    // What output should be used when you parse messages? There are two ways to set that up:
     // Option 1: Use one of the provided templates:
     // - `html`: `&lt;img alt=&quot;{name}&quot; title=&quot;{name}&quot; class=&quot;twitch-emote&quot; src=&quot;{link}&quot;>`
     // - `markdown`: `![{name}]({link} &quot;{name}&quot;)`
     // - `bbcode`: `[img]{link}[/img]`
     // - `plain`: `{link}`
     type, // &lt;'html' | 'markdown' | 'bbcode' | 'plain'> - Default: 'html'
-    // Option 2: Custom format, it has priority over option 1. You can use those: `{link}`, `{name}`, `{size}`, `{creator}`.
+    // Option 2: Make your own template; it has priority over option 1. You can use those: `{link}`, `{name}`, `{size}`, `{creator}`.
     template, // &lt;string> - Default: ''
 
-    // You can customize the Regular Expression used to find possible emotes.
+    // You can customize the regular expression used to find possible emotes.
     match, // &lt;RegExp>
 }
 ) 
 </code></pre>
-<p>New that you have an EmoteParser object, you can do two things with it: lookup for an <code>Emote</code> or parse text and get the output as set by <code>type</code> or <code>template</code>.</p>
-<p>To grab an specific Emote, you can do <code>fetcher.emotes.get('...')</code>, with the case-sensitive name of the emote in place of the ellipsis.<br>
-From there, you can read properties like <code>.code</code>, <code>.animated</code>, <code>.imageType</code>, or <code>.type</code>, but you can also use the <code>.toLink()</code> method to... get a link!</p>
+<p>Now that you have an EmoteParser object, you can do two things with it:
+look up an <code>Emote</code> or parse text and get the output as set by <code>type</code> or <code>template</code>.</p>
+<p>To grab a specific emote, you can do <code>fetcher.emotes.get('...')</code>, with the case-sensitive name of the emote in place of the ellipsis.<br>
+From there, you can read properties like <code>.code</code>, <code>.animated</code>, <code>.imageType</code>, or <code>.type</code>,
+but you can also use the <code>.toLink()</code> method to… get a link!</p>
 <p>To parse text, you use the <code>parser.parse()</code> method.<br>
-The first paramter is the input text. There's also an optional second parameter where you can provide a few settings (which can overwrite the same ones set in the <code>EmoteFetcher</code>).</p>
+The first parameter is the input text. There's also an optional second parameter
+where you can provide a few settings (which can overwrite the same ones set in the <code>EmoteFetcher</code>).</p>
 <pre class="prettyprint source lang-js"><code>const parsed = parser.parse(
-  // The text to parse
+  // The text to parse.
   text, // &lt;string>
 
-  // The second paramter is an *optional* object with the settings
+  // The second parameter is an *optional* object with the settings.
   {
-    // Size (scale) for emotes. It varies by providers and not all share the same resolution in pixels. Play with this value if you want, but not garantees!
+    // Size (scale) for emotes. It varies by provider, and not all share the same resolution in pixels. Play with this value if you'd like, but no guarantees!
     size, // &lt;number>
 
     // Force emotes to be static (non-animated).
@@ -288,8 +291,8 @@ console.log(parsed)
 // Hello ![CoolCat](https://static-cdn.jtvnw.net/emoticons/v2/58127/default/dark/1.0 &quot;CoolCat&quot;)!
 </code></pre>
 <h3>2. Bring your own <code>@twurple/api</code></h3>
-<p>If you already use <a href="https://twurple.js.org/">Twurple</a> in your project and manage authentification
-(i.e. with user tokens), you can reuse it in this project by setting <code>apiClient</code> with your
+<p>If you already use <a href="https://twurple.js.org/">Twurple</a> in your project and manage authentication
+(i.e., with user tokens), you can reuse it in this project by setting <code>apiClient</code> with your
 <a href="https://twurple.js.org/reference/api/classes/ApiClient.html">ApiClient</a> object.</p>
 <pre class="prettyprint source lang-js"><code>import { StaticAuthProvider } from '@twurple/auth'
 import { ApiClient } from '@twurple/api'
@@ -432,7 +435,7 @@ console.log(kappa)
 </code></pre>
 <h3>6. 7TV formats</h3>
 <p>7TV v3 delivers emotes in either WEBP or AVIF.</p>
-<p>By default we'll return WEBP emotes but you can override this.</p>
+<p>By default we'll return WEBP emotes, but you can override this.</p>
 <pre class="prettyprint source lang-js"><code>// (setup)
 import { EmoteFetcher } from '@mkody/twitch-emoticons'
 const fetcher = new EmoteFetcher()
