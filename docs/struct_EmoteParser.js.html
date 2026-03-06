@@ -75,14 +75,12 @@ class EmoteParser {
      * The parser options.
      * @type {object}
      */
-    this.options = Object.assign(
-      {
-        template: '',
-        type: 'html',
-        match: /(\w+)/g,
-      },
-      options
-    )
+    this.options = {
+      template: '',
+      type: 'html',
+      match: /(\w+)/g,
+      ...options,
+    }
 
     this._validateOptions(this.options)
   }
@@ -145,10 +143,10 @@ class EmoteParser {
       const template = this.options.template || Constants.Templates[this.options.type]
       const link = emote.toLink({ size, forceStatic, themeMode })
       const res = template
-        .replace(/{link}/g, link)
-        .replace(/{name}/g, emote.code)
-        .replace(/{size}/g, size)
-        .replace(/{creator}/g, emote.ownerName || 'global')
+        .replaceAll('{link}', link)
+        .replaceAll('{name}', emote.code)
+        .replaceAll('{size}', size)
+        .replaceAll('{creator}', emote.ownerName || 'global')
 
       return res
     })

@@ -1,5 +1,5 @@
 import { describe, expect, test, beforeEach } from '@jest/globals'
-import { env } from 'process'
+import { env } from 'node:process'
 import { EmoteFetcher, EmoteParser } from '../src/index.js'
 
 describe('Test toObject', () => {
@@ -95,7 +95,7 @@ describe('Test fromObject', () => {
   const emoteFetcher = new EmoteFetcher()
   const emoteParser = new EmoteParser(emoteFetcher, {
     type: 'markdown',
-    match: /(\w+)+?/g,
+    match: /(\w+)/g,
   })
 
   const emotesObj = [

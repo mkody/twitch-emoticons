@@ -60,11 +60,12 @@ class TwitchEmote extends Emote {
    * @returns {object} - Object representation of the TwitchEmote.
    */
   toObject () {
-    return Object.assign({}, super.toObject(), {
+    return {
+      ...super.toObject(),
       animated: this.animated,
       set: this.set,
       type: this.type,
-    })
+    }
   }
 
   /**

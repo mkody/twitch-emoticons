@@ -211,7 +211,7 @@ const parser = new EmoteParser(
 
     // You can customize the regular expression used to find possible emotes.
     match, // <RegExp>
-}
+  },
 ) 
 ```
 
@@ -241,7 +241,7 @@ const parsed = parser.parse(
 
     // Theme mode (background color) preference for Twitch emotes.
     twitchThemeMode // <'dark' | 'light'> - Default: what's in EmoteFetcher or 'dark'
-  }
+  },
 )
 ```
 

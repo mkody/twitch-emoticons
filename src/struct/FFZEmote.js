@@ -73,13 +73,14 @@ class FFZEmote extends Emote {
    * @returns {object} - Object representation of the FFZEmote.
    */
   toObject () {
-    return Object.assign({}, super.toObject(), {
+    return {
+      ...super.toObject(),
       animated: this.animated,
       sizes: this.sizes,
       ownerName: this.ownerName,
       type: this.type,
       modifier: this.modifier,
-    })
+    }
   }
 
   /**

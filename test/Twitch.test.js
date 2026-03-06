@@ -1,5 +1,5 @@
 import { describe, expect, test } from '@jest/globals'
-import { env } from 'process'
+import { env } from 'node:process'
 import { EmoteFetcher, EmoteParser, Collection } from '../src/index.js'
 
 describe('Test Twitch emotes', () => {

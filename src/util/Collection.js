@@ -13,9 +13,14 @@ class Collection extends Map {
    */
   find (propOrFunc, value) {
     if (typeof propOrFunc === 'string') {
-      if (typeof value === 'undefined') return null
+      if (value === undefined) {
+        return null
+      }
+
       for (const item of this.values()) {
-        if (item[propOrFunc] === value) return item
+        if (item[propOrFunc] === value) {
+          return item
+        }
       }
 
       return null
@@ -24,7 +29,9 @@ class Collection extends Map {
     if (typeof propOrFunc === 'function') {
       let i = 0
       for (const item of this.values()) {
-        if (propOrFunc(item, i, this)) return item
+        if (propOrFunc(item, i, this)) {
+          return item
+        }
         i++
       }
 
@@ -42,13 +49,17 @@ class Collection extends Map {
    * @returns {Collection} - A new collection with the filtered items.
    */
   filter (func, thisArg) {
-    if (thisArg) func = func.bind(thisArg)
+    if (thisArg) {
+      func = func.bind(thisArg)
+    }
 
     const results = new this.constructor()
 
     let i = 0
     for (const [key, item] of this) {
-      if (func(item, i, this)) results.set(key, item)
+      if (func(item, i, this)) {
+        results.set(key, item)
+      }
       i++
     }
 
@@ -63,9 +74,12 @@ class Collection extends Map {
    * @returns {any[]} - An array with the mapped items.
    */
   map (func, thisArg) {
-    if (thisArg) func = func.bind(thisArg)
+    if (thisArg) {
+      func = func.bind(thisArg)
+    }
 
     const array = new Array(this.size)
+
     let i = 0
     for (const item of this.values()) {
       array[i] = func(item, i, this)

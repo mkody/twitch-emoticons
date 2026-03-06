@@ -68,13 +68,14 @@ class SevenTVEmote extends Emote {
    * @returns {object} - Object representation of the SevenTVEmote.
    */
   toObject () {
-    return Object.assign({}, super.toObject(), {
+    return {
+      ...super.toObject(),
       animated: this.animated,
       sizes: this.sizes,
       ownerName: this.ownerName,
       type: this.type,
       imageType: this.imageType,
-    })
+    }
   }
 
   /**

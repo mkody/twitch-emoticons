@@ -59,11 +59,12 @@ class BTTVEmote extends Emote {
    * @returns {object} - Object representation of the BTTVEmote.
    */
   toObject () {
-    return Object.assign({}, super.toObject(), {
+    return {
+      ...super.toObject(),
       animated: this.animated,
       ownerName: this.ownerName,
       type: this.type,
-    })
+    }
   }
 
   /**

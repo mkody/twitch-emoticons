@@ -184,18 +184,21 @@ class EmoteFetcher {
    * @returns {Promise&lt;object[]>} - A promise that resolves to an array of raw BTTV emote data.
    */
   _getRawBTTVEmotes (id) {
-    const endpoint = !id
-      ? Constants.BTTV.Global
-      : Constants.BTTV.Channel(id)
+    const endpoint = id
+      ? Constants.BTTV.Channel(id)
+      : Constants.BTTV.Global
 
     return fetch(endpoint)
       .then((response) => response.json())
       .then((data) => {
         // Global emotes
-        if (data instanceof Array) return data
+        if (Array.isArray(data)) return data
         // Channel emotes
-        if (data &amp;&amp; data.channelEmotes &amp;&amp; data.sharedEmotes) {
-          return [...data.channelEmotes, ...data.sharedEmotes]
+        if (data?.channelEmotes &amp;&amp; data?.sharedEmotes) {
+          return [
+            ...data.channelEmotes,
+            ...data.sharedEmotes,
+          ]
         }
         // Fallback - in case the response format is unexpected
         return data || []
@@ -279,9 +282,9 @@ class EmoteFetcher {
    * @returns {Promise&lt;object[]>} - A promise that resolves to an array of raw 7TV emote data.
    */
   _getRawSevenTVEmotes (id) {
-    const endpoint = !id
-      ? Constants.SevenTV.Global
-      : Constants.SevenTV.Channel(id)
+    const endpoint = id
+      ? Constants.SevenTV.Channel(id)
+      : Constants.SevenTV.Global
 
     return fetch(endpoint).then((response) => response.json())
   }
@@ -387,7 +390,7 @@ class EmoteFetcher {
     } = options || {}
 
     return this._getRawSevenTVEmotes(channel).then((rawEmotes) => {
-      if ('emotes' in rawEmotes) {
+      if (Object.hasOwn(rawEmotes, 'emotes')) {
         // From an emote set (like "global")
         for (const data of rawEmotes.emotes) {
           this._cacheSevenTVEmote(channel, data, format)
