@@ -165,7 +165,8 @@ const fetcher = new EmoteFetcher({
 
 And then you need to make the calls to load what you want.
 
-There is one method per platform; all of them return Promises (so you can use `await` or use callbacks):
+There is one method per platform; all of them return Promises (so you can use `await` or callback chains):
+
 - `fetcher.fetchTwitchEmotes()`
 - `fetcher.fetchBTTVEmotes()`
 - `fetcher.fetchFFZEmotes()`
@@ -174,7 +175,8 @@ There is one method per platform; all of them return Promises (so you can use `a
 The first parameter is the Twitch user ID of the channel you want to load emotes from.  
 If not provided or it's `null`/falsy, it loads what we call "global emotes", which are available to all users of the platform.
 
-Do note that `fetchSevenTVEmotes` accepts a second parameter with an object:
+Do note that `fetchSevenTVEmotes()` accepts a second parameter with an object:
+
 - `format`: Set the image type used, either `webp` or `avif`. Default: `webp`
 
 So if you want to load all global emotes, you can do it that way:
@@ -294,11 +296,11 @@ If you already use [Twurple](https://twurple.js.org/) in your project and manage
 [ApiClient](https://twurple.js.org/reference/api/classes/ApiClient.html) object.
 
 ```js
-import { StaticAuthProvider } from '@twurple/auth'
 import { ApiClient } from '@twurple/api'
+import { StaticAuthProvider } from '@twurple/auth'
 import { EmoteFetcher } from '@mkody/twitch-emoticons'
 
-const authProvider = new StaticAuthProvider(clientId, accessToken)
+const authProvider = new StaticAuthProvider('<your app ID>', '<access token>')
 const myCustomApiClient = new ApiClient({ authProvider })
 
 const fetcher = new EmoteFetcher({
@@ -330,6 +332,7 @@ const parser = new EmoteParser(fetcher, {
   match: /([a-zA-Z0-9_\-]+)/g,
 })
 
+// Fetch all emotes at once and wait for all of them to complete
 Promise.all([
   // Twitch global
   fetcher.fetchTwitchEmotes(),
@@ -347,18 +350,20 @@ Promise.all([
   fetcher.fetchFFZEmotes(),
   // FFZ channel
   fetcher.fetchFFZEmotes(channelId),
-]).then(() => {
-  const globalEmotes = parser.parse('EZ Clap way too easy LUL now for the last boss monkaS LaterSooner')
-  console.log(globalEmotes)
-  // <img class="emote" alt="EZ" src="https://cdn.7tv.app/emote/63071b80942ffb69e13d700f/1x.webp"> <img class="emote" alt="Clap" src="https://cdn.7tv.app/emote/62fc0a0c4a75fd54bd3520a9/1x.webp"> way too easy <img class="emote" alt="LUL" src="https://static-cdn.jtvnw.net/emoticons/v2/425618/default/dark/1.0"> now for the last boss <img class="emote" alt="monkaS" src="https://cdn.betterttv.net/emote/56e9f494fff3cc5c35e5287e/1x.webp"> <img class="emote" alt="LaterSooner" src="https://cdn.frankerfacez.com/emote/149346/1">
+])
+  .then(() => {
+    const globalEmotes = parser.parse('EZ Clap way too easy LUL now for the last boss monkaS LaterSooner')
+    console.log(globalEmotes)
+    // <img class="emote" alt="EZ" src="https://cdn.7tv.app/emote/63071b80942ffb69e13d700f/1x.webp"> <img class="emote" alt="Clap" src="https://cdn.7tv.app/emote/62fc0a0c4a75fd54bd3520a9/1x.webp"> way too easy <img class="emote" alt="LUL" src="https://static-cdn.jtvnw.net/emoticons/v2/425618/default/dark/1.0"> now for the last boss <img class="emote" alt="monkaS" src="https://cdn.betterttv.net/emote/56e9f494fff3cc5c35e5287e/1x.webp"> <img class="emote" alt="LaterSooner" src="https://cdn.frankerfacez.com/emote/149346/1">
 
-  const channelEmotes = parser.parse('KEKW that was 3Head TeriPoint')
-  console.log(channelEmotes)
-  // <img class="emote" alt="KEKW" src="https://cdn.betterttv.net/emote/5e9c6c187e090362f8b0b9e8/1x.webp"> that was <img class="emote" alt="3Head" src="https://cdn.frankerfacez.com/emote/274406/1"> <img class="emote" alt="TeriPoint" src="https://cdn.7tv.app/emote/61dc299b600369a98b38ebef/1x.webp">
-}).catch((err) => {
-  console.error('Error loading emotes...')
-  console.error(err)
-})
+    const channelEmotes = parser.parse('KEKW that was 3Head TeriPoint')
+    console.log(channelEmotes)
+    // <img class="emote" alt="KEKW" src="https://cdn.betterttv.net/emote/5e9c6c187e090362f8b0b9e8/1x.webp"> that was <img class="emote" alt="3Head" src="https://cdn.frankerfacez.com/emote/274406/1"> <img class="emote" alt="TeriPoint" src="https://cdn.7tv.app/emote/61dc299b600369a98b38ebef/1x.webp">
+  })
+  .catch((err) => {
+    console.error('Error loading emotes...')
+    console.error(err)
+  })
 ```
 
 
@@ -518,6 +523,7 @@ fetcher.fromObject(emotes)
 - [Changelog](https://github.com/mkody/twitch-emoticons/releases)
 
 This library uses the following:
+
 - [Twurple](https://twurple.js.org/) and the [Twitch API](https://dev.twitch.tv/)
 - [BetterTTV API](https://betterttv.com/developers/api)
 - [FrankerFaceZ API](https://api.frankerfacez.com/docs/)
