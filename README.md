@@ -131,6 +131,123 @@ deno add jsr:@mkody/twitch-emoticons@3.0.0-beta.1
 [jsr]: https://jsr.io/@mkody/twitch-emoticons@3.0.0-beta.1
 
 
+## Quick docs
+
+<details>
+<summary>Click here to toggle the docs</summary>
+
+Here's some quick documentation to explain our two classes, the principal methods, and the settings.
+
+> **NOTE:**  
+> If you want a more complete documentation, see: https://mkody.github.io/twitch-emoticons/
+
+
+### Grab emotes with `EmoteFetcher`
+
+First, you need to load a list of emotes, and for that you create a new `EmoteFetcher` object:
+
+```js
+const fetcher = new EmoteFetcher({
+  // If you want to use emotes from twitch.tv, you'll need to be authentified to use their API. You have two options:
+  // Option 1: Provide your app ID and Secret here (get them at https://dev.twitch.tv/console/apps )
+  twitchAppID,      // <string>
+  twitchAppSecret,  // <string>
+  // Option 2: If you need a different way to auth or already use `@twurple/api`, you can provide your ApiClient object here
+  apiClient, // <ApiClient>
+
+  // Force emotes to be static (non-animated).
+  forceStatic, // <boolean> - Default: false
+
+  // Theme mode (background color) preference for Twitch emotes.
+  twitchThemeMode // <'dark' | 'light'> - Default: 'dark'
+})
+```
+
+And then you need to make the calls to load what you want.
+
+There is a method per platform, all of them are `async` (so use `await` or Promises):
+- `fetcher.fetchTwitchEmotes()`
+- `fetcher.fetchBTTVEmotes()`
+- `fetcher.fetchFFZEmotes()`
+- `fetcher.fetchSevenTVEmotes()`
+
+The first parameter is the Twitch user ID of the channel you want to load emotes from.  
+If not provided or it's `null`/fals-y, it loads what we call "global emotes" - which are available to all users of the platform.
+
+Do note that `fetchSevenTVEmotes` accepts a second parameter with an object:
+- `format`: Set the image type used, either `webp` or `avif`. Default: `webp`
+
+So if you want to load all global emotes, you can do it that way:
+
+```js
+await fetcher.fetchTwitchEmotes()
+await fetcher.fetchBTTVEmotes()
+await fetcher.fetchFFZEmotes()
+await fetcher.fetchSevenTVEmotes(null, { format: 'avif' }) // Example of loading images in AVIF here
+```
+
+
+### Parse strings to include emotes with `EmoteParser`
+
+And now that we have saved our list of emotes that we can be expected to find, let's use it!  
+Let's create our `EmoteParser` object:
+
+```js
+const parser = new EmoteParser(
+  // The first parameter is our EmoteFetcher, we're passing our object that holds the list of fetched emotes
+  fetcher, // <EmoteFetcher>
+
+  // The second parameter is an *optional* object with settings
+  {
+    // What output should be used when you parse messages? There's two way to set that up:
+    // Option 1: Use one of the provided templates:
+    // - `html`: `<img alt="{name}" title="{name}" class="twitch-emote" src="{link}">`
+    // - `markdown`: `![{name}]({link} "{name}")`
+    // - `bbcode`: `[img]{link}[/img]`
+    // - `plain`: `{link}`
+    type, // <'html' | 'markdown' | 'bbcode' | 'plain'> - Default: 'html'
+    // Option 2: Custom format, it has priority over option 1. You can use those: `{link}`, `{name}`, `{size}`, `{creator}`.
+    template, // <string> - Default: ''
+
+    // You can customize the Regular Expression used to find possible emotes.
+    match, // <RegExp>
+}
+) 
+```
+
+New that you have an EmoteParser object, you can do two things with it: lookup for an `Emote` or parse text and get the output as set by `type` or `template`.
+
+To grab an specific Emote, you can do `fetcher.emotes.get('...')`, with the case-sensitive name of the emote in place of the ellipsis.  
+From there, you can read properties like `.code`, `.animated`, `.imageType`, or `.type`, but you can also use the `.toLink()` method to... get a link!
+
+To parse text, you use the `parser.parse()` method.  
+The first paramter is the input text. There's also an optional second parameter where you can provide a few settings (which can overwrite the same ones set in the `EmoteFetcher`).
+
+```js
+const parsed = parser.parse(
+  // The text to parse
+  text, // <string>
+
+  // The second paramter is an *optional* object with the settings
+  {
+    // Size (scale) for emotes. It varies by providers and not all share the same resolution in pixels. Play with this value if you want, but not garantees!
+    size, // <number>
+
+    // Force emotes to be static (non-animated).
+    forceStatic, // <boolean> - Default: what's in EmoteFetcher or false
+
+    // Theme mode (background color) preference for Twitch emotes.
+    twitchThemeMode // <'dark' | 'light'> - Default: what's in EmoteFetcher or 'dark'
+  }
+)
+```
+
+And that's it for the essentials!  
+You can go through the examples below if you need to see more complete code and direct usage.
+
+</details>
+
+
 ## Examples
 
 <details>
@@ -174,8 +291,15 @@ If you already use [Twurple](https://twurple.js.org/) in your project and manage
 [ApiClient](https://twurple.js.org/reference/api/classes/ApiClient.html) object.
 
 ```js
+import { StaticAuthProvider } from '@twurple/auth'
+import { ApiClient } from '@twurple/api'
+import { EmoteFetcher } from '@mkody/twitch-emoticons'
+
+const authProvider = new StaticAuthProvider(clientId, accessToken)
+const myCustomApiClient = new ApiClient({ authProvider })
+
 const fetcher = new EmoteFetcher({
-  apiClient: yourOwnTwurpleApiClientHere,
+  apiClient: myCustomApiClient,
 })
 ```
 
@@ -243,6 +367,8 @@ By default, we allow animated emotes to be used,
 but you can override this at the `EmoteFetcher` level:
 
 ```js
+import { EmoteFetcher } from '@mkody/twitch-emoticons'
+
 const fetcher = new EmoteFetcher({
   twitchAppID: '<your app ID>',
   twitchAppSecret: '<your app secret>',
@@ -288,6 +414,8 @@ By default, emotes are fetched for dark backgrounds,
 but you can specify a preference at the `EmoteFetcher` level:
 
 ```js
+import { EmoteFetcher } from '@mkody/twitch-emoticons'
+
 // For dark backgrounds (default)
 const fetcherDark = new EmoteFetcher({
   twitchAppID: '<your app ID>',
@@ -336,6 +464,10 @@ console.log(kappa)
 By default we'll return WEBP emotes but you can override this.
 
 ```js
+// (setup)
+import { EmoteFetcher } from '@mkody/twitch-emoticons'
+const fetcher = new EmoteFetcher()
+
 // Fetch global emotes in AVIF (channel id has to be `null` for global)
 await fetcher.fetchSevenTVEmotes(null, { format: 'avif' })
 
@@ -355,6 +487,10 @@ await fetcher.fetchSevenTVEmotes(24377667, { format: 'avif' })
 This can be useful to save the emotes in a cache or for offline content.
 
 ```js
+// (setup)
+import { EmoteFetcher } from '@mkody/twitch-emoticons'
+const fetcher = new EmoteFetcher()
+
 // First fetch some emotes
 await fetcher.fetchSevenTVEmotes(null, { format: 'avif' })
 

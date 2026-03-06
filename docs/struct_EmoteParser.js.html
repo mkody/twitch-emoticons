@@ -58,7 +58,7 @@ class EmoteParser {
    * - `{name}` The name of the emote.
    * - `{size}` The size index of the image.
    * - `{creator}` The channel/owner name of the emote.
-   * @param {string} [options.type='html'] - The type of the parser.
+   * @param {'html' | 'markdown' | 'bbcode' | 'plain'} [options.type='html'] - The type of the parser.
    * Can be one of `html`, `markdown`, `bbcode`, or `plain`.
    * If the `template` option is provided, this is ignored.
    * @param {RegExp} [options.match=/(\w+)/g] - The regular expression that matches an emote.
@@ -97,8 +97,8 @@ class EmoteParser {
    * - `{name}` The name of the emote.
    * - `{size}` The size of the image.
    * - `{creator}` The channel/owner name of the emote.
-   * @param {string} [options.type] - The type of the parser.
-   * Can be one of  `html`, `markdown`,`bbcode`, or `plain`.
+   * @param {'html' | 'markdown' | 'bbcode' | 'plain'} [options.type] - The type of the parser.
+   * Can be one of `html`, `markdown`, `bbcode`, or `plain`.
    * If the `template` option is provided, this is ignored.
    * @param {RegExp} [options.match] - The regular expression that matches an emote.
    * Must be a global regex, with one capture group for the emote code.
