@@ -8,6 +8,7 @@ import TwitchEmote from './TwitchEmote.js'
 
 import { ApiClient } from '@twurple/api'
 import { AppTokenAuthProvider } from '@twurple/auth'
+import TwitchGQL from './TwitchGQL.js'
 
 class EmoteFetcher {
   /**
@@ -34,6 +35,12 @@ class EmoteFetcher {
        */
       this.apiClient = new ApiClient({ authProvider })
     }
+
+    /**
+     * Twitch GraphQL API instance.
+     * @type {TwitchGQL}
+     */
+    this.twitchGQL = new TwitchGQL()
 
     /**
      * Force emotes to be static (non-animated).
@@ -99,17 +106,26 @@ class EmoteFetcher {
    * Gets the raw Twitch emotes data for a channel.
    * @private
    * @param {number} id - ID of the channel.
+   * @param {('helix'|'gql')} [api] - The API to source from (helix/gql).
    * @returns {Promise<object[]>} - A promise that resolves to an array of raw Twitch emote data.
    */
-  _getRawTwitchEmotes (id) {
-    if (!this.apiClient) {
-      throw new Error('Client id or client secret not provided.')
-    }
-
-    if (id) {
-      return this.apiClient.chat.getChannelEmotes(id)
+  _getRawTwitchEmotes (id, api) {
+    if (api === 'gql') {
+      if (id) {
+        return this.twitchGQL.getChannelEmotes(id)
+      } else {
+        return this.twitchGQL.getGlobalEmotes()
+      }
     } else {
-      return this.apiClient.chat.getGlobalEmotes()
+      if (!this.apiClient) {
+        throw new Error('Client id or client secret not provided.')
+      }
+
+      if (id) {
+        return this.apiClient.chat.getChannelEmotes(id)
+      } else {
+        return this.apiClient.chat.getGlobalEmotes()
+      }
     }
   }
 
@@ -260,10 +276,16 @@ class EmoteFetcher {
    * Fetches the Twitch emotes for a channel.
    * Use `null` for the global emotes channel.
    * @param {number} [channel] - ID of the channel.
+   * @param {object} [options] - Options for fetching.
+   * @param {('helix'|'gql')} [options.api] - The API to source from (helix/gql).
    * @returns {Promise<Collection<string, TwitchEmote>>} - A promise that resolves to a collection of TwitchEmotes.
    */
-  fetchTwitchEmotes (channel) {
-    return this._getRawTwitchEmotes(channel).then((rawEmotes) => {
+  fetchTwitchEmotes (channel, options) {
+    const {
+      api = 'helix',
+    } = options || {}
+
+    return this._getRawTwitchEmotes(channel, api).then((rawEmotes) => {
       for (const emote of rawEmotes) {
         this._cacheTwitchEmote(channel, {
           code: emote.name, id: emote.id, formats: emote.formats,
