@@ -158,7 +158,7 @@ describe('Test Twitch emotes', () => {
           twitchAppSecret: env.TWITCH_SECRET,
           twitchThemeMode: 'light',
         })
-        // Make sure it's light at first
+        // Make sure it is light at first
         expect(emoteFetcher.twitchThemeMode).toBe('light')
 
         await emoteFetcher.fetchTwitchEmotes()

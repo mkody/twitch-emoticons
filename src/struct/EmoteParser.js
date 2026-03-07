@@ -81,7 +81,7 @@ class EmoteParser {
    * @returns {string} - The parsed text.
    */
   parse (text, options) {
-    // @NOTE(kody): Not setting defaults here, they'll be handled by each emote's toLink method.
+    // @NOTE(kody): Not setting defaults here, they will be handled by each emote's toLink method.
     const {
       size,
       forceStatic,

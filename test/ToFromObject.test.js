@@ -7,7 +7,7 @@ describe('Test toObject', () => {
 
   beforeEach(() => {
     // Make a fresh EmoteFetcher object before each tests
-    // This prevents surprises in case there's an emote name used in multiple sources
+    // This prevents surprises in case there is an emote name used in multiple sources
     emoteFetcher = new EmoteFetcher({
       twitchAppID: env.TWITCH_ID,
       twitchAppSecret: env.TWITCH_SECRET,

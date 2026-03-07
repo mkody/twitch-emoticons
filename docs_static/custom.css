@@ -21,3 +21,7 @@
   font-size: 18px;
   margin-top: 1em;
 }
+
+.usertext summary {
+  cursor: pointer;
+}

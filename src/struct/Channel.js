@@ -27,7 +27,7 @@ class Channel {
     this.emotes = new Collection()
   }
 
-  /* There are tests that those are returning Collections, but c8 doesn't get it. */
+  /* There are tests that those are returning Collections, but c8 does not get it. */
   /* c8 ignore start */
 
   /**
