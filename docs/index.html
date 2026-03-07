@@ -145,7 +145,7 @@ If you are only using BetterTTV, FrankerFaceZ and 7TV you don't need to provide 
 <p>You must use a Twitch user ID instead of the username to fetch users' emotes.<br>
 You can use <a href="https://s.kdy.ch/twitchid/">this page to manually convert them</a>.</p>
 <h2>Install</h2>
-<p>From <a href="https://www.npmjs.com/package/@mkody/twitch-emoticons/v/3.0.0-beta.1">npm</a> (<a href="https://npmx.dev/package/@mkody/twitch-emoticons/v/3.0.0-beta.1">browse on npmx</a>; use the <code>@next</code> tag):</p>
+<p>From <a href="https://www.npmjs.com/package/@mkody/twitch-emoticons/v/3.0.0-beta.2">npm</a> (<a href="https://npmx.dev/package/@mkody/twitch-emoticons/v/3.0.0-beta.2">browse on npmx</a>; use the <code>@next</code> tag):</p>
 <pre class="prettyprint source lang-sh"><code>npm install @mkody/twitch-emoticons@next
 # or
 pnpm add @mkody/twitch-emoticons@next
@@ -154,14 +154,14 @@ yarn add @mkody/twitch-emoticons@next
 # or
 deno add npm:@mkody/twitch-emoticons@next
 </code></pre>
-<p>From <a href="https://jsr.io/@mkody/twitch-emoticons@3.0.0-beta.1">jsr</a>:</p>
+<p>From <a href="https://jsr.io/@mkody/twitch-emoticons@3.0.0-beta.2">jsr</a>:</p>
 <pre class="prettyprint source lang-sh"><code>npx jsr add @mkody/twitch-emoticons
 # or
 pnpm add jsr:@mkody/twitch-emoticons
 # or
 yarn add jsr:@mkody/twitch-emoticons
 # or (version has to be specified while it's a pre-release)
-deno add jsr:@mkody/twitch-emoticons@3.0.0-beta.1
+deno add jsr:@mkody/twitch-emoticons@3.0.0-beta.2
 </code></pre>
 <h2>Quick docs</h2>
 <details>
@@ -185,7 +185,7 @@ If you want a more complete documentation, see: https://mkody.github.io/twitch-e
   forceStatic, // &lt;boolean> - Default: false
 
   // Theme mode (background color) preference for Twitch emotes.
-  twitchThemeMode // &lt;'dark' | 'light'> - Default: 'dark'
+  twitchThemeMode, // &lt;'dark' | 'light'> - Default: 'dark'
 })
 </code></pre>
 <p>And then you need to make the calls to load what you want.</p>
@@ -219,16 +219,16 @@ Let's create our <code>EmoteParser</code> object:</p>
   {
     // What output should be used when you parse messages? There are two ways to set that up:
     // Option 1: Use one of the provided templates:
-    // - `html`: `&lt;img alt=&quot;{name}&quot; title=&quot;{name}&quot; class=&quot;twitch-emote&quot; src=&quot;{link}&quot;>`
-    // - `markdown`: `![{name}]({link} &quot;{name}&quot;)`
-    // - `bbcode`: `[img]{link}[/img]`
-    // - `plain`: `{link}`
+    // - 'html': `&lt;img alt=&quot;{name}&quot; title=&quot;{name}&quot; class=&quot;twitch-emote&quot; src=&quot;{link}&quot;>`
+    // - 'markdown': `![{name}]({link} &quot;{name}&quot;)`
+    // - 'bbcode': `[img]{link}[/img]`
+    // - 'plain': `{link}`
     type, // &lt;'html' | 'markdown' | 'bbcode' | 'plain'> - Default: 'html'
-    // Option 2: Make your own template; it has priority over option 1. You can use those: `{link}`, `{name}`, `{size}`, `{creator}`.
+    // Option 2: Make your own template; this has priority over option 1. You can use those: `{link}`, `{name}`, `{size}`, `{creator}`.
     template, // &lt;string> - Default: ''
 
     // You can customize the regular expression used to find possible emotes.
-    match, // &lt;RegExp>
+    match, // &lt;RegExp> - Default: /(\w+)/g
   },
 ) 
 </code></pre>
@@ -320,13 +320,11 @@ const fetcher = new EmoteFetcher({
 const parser = new EmoteParser(fetcher, {
   // Custom HTML format
   template: '&lt;img class=&quot;emote&quot; alt=&quot;{name}&quot; src=&quot;{link}&quot;>',
-  // Otherwise, just use our provided template
-  // type: 'html',
   // Matches words (like \w) but also dashes
   match: /([a-zA-Z0-9_\-]+)/g,
 })
 
-// Fetch all emotes at once and wait for all of them to complete
+// Fetch all the emotes we want and wait for everything to complete
 Promise.all([
   // Twitch global
   fetcher.fetchTwitchEmotes(),

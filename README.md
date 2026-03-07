@@ -159,7 +159,7 @@ const fetcher = new EmoteFetcher({
   forceStatic, // <boolean> - Default: false
 
   // Theme mode (background color) preference for Twitch emotes.
-  twitchThemeMode // <'dark' | 'light'> - Default: 'dark'
+  twitchThemeMode, // <'dark' | 'light'> - Default: 'dark'
 })
 ```
 
@@ -203,16 +203,16 @@ const parser = new EmoteParser(
   {
     // What output should be used when you parse messages? There are two ways to set that up:
     // Option 1: Use one of the provided templates:
-    // - `html`: `<img alt="{name}" title="{name}" class="twitch-emote" src="{link}">`
-    // - `markdown`: `![{name}]({link} "{name}")`
-    // - `bbcode`: `[img]{link}[/img]`
-    // - `plain`: `{link}`
+    // - 'html': `<img alt="{name}" title="{name}" class="twitch-emote" src="{link}">`
+    // - 'markdown': `![{name}]({link} "{name}")`
+    // - 'bbcode': `[img]{link}[/img]`
+    // - 'plain': `{link}`
     type, // <'html' | 'markdown' | 'bbcode' | 'plain'> - Default: 'html'
-    // Option 2: Make your own template; it has priority over option 1. You can use those: `{link}`, `{name}`, `{size}`, `{creator}`.
+    // Option 2: Make your own template; this has priority over option 1. You can use those: `{link}`, `{name}`, `{size}`, `{creator}`.
     template, // <string> - Default: ''
 
     // You can customize the regular expression used to find possible emotes.
-    match, // <RegExp>
+    match, // <RegExp> - Default: /(\w+)/g
   },
 ) 
 ```
@@ -326,13 +326,11 @@ const fetcher = new EmoteFetcher({
 const parser = new EmoteParser(fetcher, {
   // Custom HTML format
   template: '<img class="emote" alt="{name}" src="{link}">',
-  // Otherwise, just use our provided template
-  // type: 'html',
   // Matches words (like \w) but also dashes
   match: /([a-zA-Z0-9_\-]+)/g,
 })
 
-// Fetch all emotes at once and wait for all of them to complete
+// Fetch all the emotes we want and wait for everything to complete
 Promise.all([
   // Twitch global
   fetcher.fetchTwitchEmotes(),
