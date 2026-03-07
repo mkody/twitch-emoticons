@@ -123,12 +123,12 @@ pnpm add jsr:@mkody/twitch-emoticons
 # or
 yarn add jsr:@mkody/twitch-emoticons
 # or (version has to be specified while it's a pre-release)
-deno add jsr:@mkody/twitch-emoticons@3.0.0-beta.1
+deno add jsr:@mkody/twitch-emoticons@3.0.0-beta.2
 ```
 
-[npm]: https://www.npmjs.com/package/@mkody/twitch-emoticons/v/3.0.0-beta.1
-[browse on npmx]: https://npmx.dev/package/@mkody/twitch-emoticons/v/3.0.0-beta.1
-[jsr]: https://jsr.io/@mkody/twitch-emoticons@3.0.0-beta.1
+[npm]: https://www.npmjs.com/package/@mkody/twitch-emoticons/v/3.0.0-beta.2
+[browse on npmx]: https://npmx.dev/package/@mkody/twitch-emoticons/v/3.0.0-beta.2
+[jsr]: https://jsr.io/@mkody/twitch-emoticons@3.0.0-beta.2
 
 
 ## Quick docs
