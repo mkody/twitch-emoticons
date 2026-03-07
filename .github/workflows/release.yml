@@ -2,7 +2,7 @@ name: Publish Package
 
 on:
   release:
-    types: [ released ]
+    types: [ published ]
 
 jobs:
   build:
@@ -42,7 +42,12 @@ jobs:
           TWITCH_SECRET: ${{ secrets.TWITCH_SECRET }}
 
       - name: Publish to npmjs
+        if: github.event.release.prerelease == false
         run: npm publish
+
+      - name: Publish to npmjs (prerelease)
+        if: github.event.release.prerelease == true
+        run: npm publish --tag next
 
       - name: Publish to jsr
         run: npx jsr publish
