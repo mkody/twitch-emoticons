@@ -10,7 +10,7 @@ Gets Twitch, BTTV, FFZ and 7TV emotes as well as parsing text to emotes!
 
 ## Migrate to 3.x
 
-**This release introduces some breaking changes!**
+**This release introduces breaking changes!**
 
 <details>
 <summary>Click here to toggle for details</summary>
