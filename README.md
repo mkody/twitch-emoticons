@@ -31,7 +31,8 @@ Gets Twitch, BTTV, FFZ and 7TV emotes as well as parsing text to emotes!
   - `parser.parse('Kappa', { size: 2, forceStatic: true, themeMode: 'dark' })` - The first parameter is still the input text.
 - The `owner` getter for `Emote`s has been removed.  
   *It is not reliable to get the `Channel` object, more so with 3rd-party providers since emotes might be owned by a channel that we never fetched (for shared/public emotes).*
-- If you have exported 7TV emotes, do note that the `sizes` array changed to not include the leading `x.<format>`.
+- If you have exported 7TV emotes, do note that the `sizes` array changed to not include the leading `x.<format>`.  
+  *The rest of the export/import is still compatible with the current implementation.*
 
 
 ### Example of code changes
@@ -466,7 +467,7 @@ console.log(kappa)
 
 ### 6. 7TV formats
 
-7TV v3 delivers emotes in either WEBP or AVIF.
+7TV delivers emotes in either WEBP or AVIF.
 
 By default we will return WEBP emotes, but you can override this.
 
@@ -526,4 +527,4 @@ This library uses the following:
 - [Twurple](https://twurple.js.org/) and the [Twitch API](https://dev.twitch.tv/)
 - [BetterTTV API](https://betterttv.com/developers/api)
 - [FrankerFaceZ API](https://api.frankerfacez.com/docs/)
-- [7TV API](https://7tv.io/)
+- [7TV API (v3 via GraphQL)](https://github.com/SevenTV/SevenTV/tree/main/apps/api/src/http/v3/gql)

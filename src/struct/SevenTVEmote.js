@@ -16,27 +16,34 @@ class SevenTVEmote extends Emote {
 
   _setup (data) {
     super._setup(data)
-    this.code = data.name
+
+    // First is the possible alias, then fallback to the default name
+    this.code = data.name || data.data.name
 
     /**
      * The name of the emote creator's channel.
      * @type {?string}
      */
-    this.ownerName = 'owner' in data.data ? data.data.owner.display_name : null
+    this.ownerName = data.data.owner?.display_name || null
 
     /**
      * Available image sizes.
      * @type {string[]}
      */
     this.sizes = data.data.host.files
-      .filter((el) => el.format === this.channel.format.toUpperCase())
       .map((el) => el.name.replace(/x\.(\w+)/, ''))
+      .sort((a, b) => Number(a) - Number(b))
+
+    if (this.sizes.length === 0) {
+      // This is the current (2026-03-16) documented default, in case the above breaks
+      this.sizes = ['1', '2', '3', '4']
+    }
 
     /**
      * If emote is animated.
      * @type {boolean}
      */
-    this.animated = data.data.animated
+    this.animated = Boolean(data.data.animated)
 
     /**
      * The image type of the emote.
@@ -85,10 +92,12 @@ class SevenTVEmote extends Emote {
    * @returns {SevenTVEmote} - A SevenTVEmote instance.
    */
   static fromObject (emoteObject, channel) {
-    const sizes = emoteObject.sizes.map((size) => { return { format: channel.format.toUpperCase(), name: size } })
-    return new SevenTVEmote(channel, emoteObject.id,
+    const sizes = emoteObject.sizes.map((size) => { return { name: size } })
+
+    return new SevenTVEmote(
+      channel,
+      emoteObject.id,
       {
-        code: emoteObject.code,
         name: emoteObject.code,
         data: {
           animated: emoteObject.animated,
@@ -99,7 +108,8 @@ class SevenTVEmote extends Emote {
             files: sizes,
           },
         },
-      })
+      }
+    )
   }
 }
 

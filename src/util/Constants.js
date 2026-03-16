@@ -8,8 +8,56 @@ export default {
     CDN: (id, size = 0, forceStatic = false) => `https://cdn.betterttv.net/emote/${id}/${size + 1}x.${forceStatic ? 'png' : 'webp'}`,
   },
   SevenTV: {
-    Global: 'https://7tv.io/v3/emote-sets/global',
-    Channel: (id) => `https://7tv.io/v3/users/twitch/${id}`,
+    GQL: 'https://7tv.io/v3/gql',
+    GlobalQuery: `
+      query GetGlobalEmotes($format: [ImageFormat!]) {
+        namedEmoteSet(name: GLOBAL) {
+          emotes {
+            id
+            name
+            flags
+            data {
+              name
+              flags
+              animated
+              host {
+                files(formats: $format) {
+                  name
+                }
+              }
+              owner {
+                display_name
+              }
+            }
+          }
+        }
+      }`,
+    ChannelQuery: `
+      query GetChannelEmotes($id: String!, $format: [ImageFormat!]) {
+        userByConnection(platform: TWITCH, id: $id) {
+          emote_sets(entitled: false) {
+            flags
+            emotes {
+              id
+              name
+              flags
+              data {
+                name
+                flags
+                animated
+                host {
+                  files(formats: $format) {
+                    name
+                  }
+                }
+                owner {
+                  display_name
+                }
+              }
+            }
+          }
+        }
+      }`,
     CDN: (id, format, size = 1, forceStatic = false) => `https://cdn.7tv.app/emote/${id}/${size}x${forceStatic ? '_static' : ''}.${format}`,
   },
   FFZ: {
