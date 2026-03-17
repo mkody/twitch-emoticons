@@ -97,7 +97,7 @@ To fetch "native" emotes from Twitch.tv, you need to [create an app here](https:
 If you are only using BetterTTV, FrankerFaceZ and 7TV you do not need to provide Twitch app keys.
 
 You must use a Twitch user ID instead of the username to fetch users' emotes.  
-You can use [this page to manually convert them](https://s.kdy.ch/twitchid/).
+If you just need to get one or a very few, you can [use this page to manually convert them](https://s.kdy.ch/twitchid/) (please do not automate/abuse it).
 
 
 ## Install
@@ -339,7 +339,7 @@ const fetcher = new EmoteFetcher({
 })
 const parser = new EmoteParser(fetcher, {
   // Custom HTML format
-  template:  `
+  template: `
     <img
       class="emote"
       alt="{name}"
@@ -532,7 +532,7 @@ fetcher.fromObject(emotes)
 ```
 
 > **NOTE:**  
-> For offline access, you' will still need to download emotes and proxy their URLs.
+> For offline access, you will still need to download emotes and proxy their URLs.
 
 </details>
 
