@@ -465,7 +465,7 @@ export class SevenTVEmote extends Emote {
   public zeroWidth: boolean
 
   /**
-   * If emote is NSFW (or Twitch disallowed, just in case).
+   * If emote is NSFW.
    * Do note that this flag isn't always applied to what *looks* NSFW.
    */
   public nsfw: boolean
@@ -524,7 +524,7 @@ export interface EmoteObject {
   animated?: boolean,
   /** If emote can be zero-width (overlaying). (Only {@linkcode FFZEmote}, {@linkcode SevenTVEmote}) */
   zeroWidth?: boolean,
-  /** If emote is NSFW (or Twitch disallowed, just in case). (Only {@linkcode SevenTVEmote}) */
+  /** If emote is NSFW. (Only {@linkcode SevenTVEmote}) */
   nsfw?: boolean
   /** If the emote is a modifier (effect) and should be hidden. (Only {@linkcode FFZEmote}) */
   modifier?: boolean
