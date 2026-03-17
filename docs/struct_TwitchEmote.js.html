@@ -83,13 +83,13 @@ class TwitchEmote extends Emote {
          * If emote is animated.
          * @type {boolean}
          */
-        this.animated = 'animated' in data.formats;
+        this.animated = data.formats.includes('animated');
 
         /**
          * The image type of the emote.
          * @type {string}
          */
-        this.imageType = 'animated' in data.formats ? 'gif' : 'png';
+        this.imageType = data.formats.includes('animated') ? 'gif' : 'png';
     }
 
     /**
@@ -126,7 +126,7 @@ class TwitchEmote extends Emote {
                 code: emoteObject.code,
                 animated: emoteObject.animated,
                 emoticon_set: emoteObject.set,
-                formats: emoteObject.animated ? { animated: emoteObject.animated } : {}
+                formats: emoteObject.animated ? ['static', 'animated'] : ['static']
             });
     }
 }
