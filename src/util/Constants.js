@@ -8,50 +8,76 @@ export default {
     CDN: (id, size = 0, forceStatic = false) => `https://cdn.betterttv.net/emote/${id}/${size + 1}x.${forceStatic ? 'png' : 'webp'}`,
   },
   SevenTV: {
-    GQL: 'https://7tv.io/v3/gql',
+    GQL: 'https://7tv.io/v4/gql',
     GlobalQuery: `
-      query GetGlobalEmotes($format: [ImageFormat!]) {
-        namedEmoteSet(name: GLOBAL) {
-          emotes {
-            id
-            name
-            flags
-            data {
-              name
-              flags
-              animated
-              host {
-                files(formats: $format) {
-                  name
+      query GetGlobalEmotes {
+        emoteSets {
+          global {
+            emotes {
+              items {
+                id
+                alias
+                flags {
+                  zeroWidth
                 }
-              }
-              owner {
-                display_name
+                emote {
+                  defaultName
+                  owner {
+                    connections {
+                      platform
+                      platformDisplayName
+                    }
+                  }
+                  flags {
+                    nsfw
+                    defaultZeroWidth
+                    animated
+                  }
+                  images {
+                    url
+                    mime
+                    scale
+                  }
+                }
               }
             }
           }
         }
-      }`,
+      }
+`,
     ChannelQuery: `
-      query GetChannelEmotes($id: String!, $format: [ImageFormat!]) {
-        userByConnection(platform: TWITCH, id: $id) {
-          emote_sets(entitled: false) {
-            flags
-            emotes {
-              id
-              name
-              flags
-              data {
-                name
-                flags
-                animated
-                host {
-                  files(formats: $format) {
-                    name
+      query GetChannelEmotes($platformId: String!) {
+        users {
+          userByConnection(platform: TWITCH, platformId: $platformId) {
+            style {
+              activeEmoteSet {
+                emotes {
+                  items {
+                    id
+                    alias
+                    flags {
+                      zeroWidth
+                    }
+                    emote {
+                      defaultName
+                      owner {
+                        connections {
+                          platform
+                          platformDisplayName
+                        }
+                      }
+                      flags {
+                        nsfw
+                        defaultZeroWidth
+                        animated
+                      }
+                      images {
+                        url
+                        mime
+                        scale
+                      }
+                    }
                   }
-                }
-                owner {
-                  display_name
                 }
               }
             }

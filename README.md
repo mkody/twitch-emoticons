@@ -202,7 +202,7 @@ method to… get a link!
 >   - `.modifier` (boolean, emote effects, should be hidden)
 > - 7TV:
 >   - `.zeroWidth` (boolean, can overlay an another emote)
->   - `.nsfw` (boolean, flagged "Sexual" or "Twitch disallowed")
+>   - `.nsfw` (boolean, flagged as "NSFW")
 
 
 ### Parse strings to include emotes with `EmoteParser`
@@ -547,4 +547,4 @@ This library uses the following:
 - [Twurple](https://twurple.js.org/) and the [Twitch API](https://dev.twitch.tv/)
 - [BetterTTV API](https://betterttv.com/developers/api)
 - [FrankerFaceZ API](https://api.frankerfacez.com/docs/)
-- [7TV API (v3 via GraphQL)](https://github.com/SevenTV/SevenTV/tree/main/apps/api/src/http/v3/gql)
+- [7TV API (v4 via GraphQL)](https://github.com/SevenTV/SevenTV/tree/main/apps/api/src/http/v4/gql)
