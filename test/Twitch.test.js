@@ -198,5 +198,20 @@ describe('Test Twitch emotes', () => {
         expect(text).toBe('This is a test string with ![CoolCat](https://static-cdn.jtvnw.net/emoticons/v2/58127/default/light/1.0 "CoolCat") in it.')
       })
     })
+
+    describe('Check emote flags', () => {
+      const emoteFetcher = new EmoteFetcher()
+
+      test('Kappa: not animated', async () => {
+        await emoteFetcher.fetchTwitchEmotes()
+        const emote = emoteFetcher.emotes.get('Kappa')
+        expect(emote.animated).toBe(false)
+      })
+
+      test('DinoDance: animated', () => {
+        const emote = emoteFetcher.emotes.get('DinoDance')
+        expect(emote.animated).toBe(true)
+      })
+    })
   }
 })

@@ -221,8 +221,17 @@ Now that you have an EmoteParser object, you can do two things with it:
 look up an `Emote` or parse text and get the output as set by `type` or `template`.
 
 To grab a specific emote, you can do `fetcher.emotes.get('...')`, with the case-sensitive name of the emote in place of the ellipsis.  
-From there, you can read properties like `.code`, `.animated`, `.imageType`, or `.type`,
-but you can also use the `.toLink()` method to… get a link!
+From there, you can read properties like `.id`, `.code`, `.ownerName`,
+`.animated`, `.imageType`, or `.type`, but you can also use the `.toLink()`
+method to… get a link!
+
+> Note: Some extended `Emote`s have additional properties:
+> - FFZ:
+>   - `.zeroWidth` (boolean, can overlay an another emote)
+>   - `.modifier` (boolean, emote effects, should be hidden)
+> - 7TV:
+>   - `.zeroWidth` (boolean, can overlay an another emote)
+>   - `.nsfw` (boolean, flagged "Sexual" or "Twitch disallowed")
 
 To parse text, you use the `parser.parse()` method.  
 The first parameter is the input text. There is also an optional second parameter

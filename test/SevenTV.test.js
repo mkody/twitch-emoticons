@@ -87,4 +87,32 @@ describe('Test 7TV emotes', () => {
       expect(text).toBe('This is a test string with ![YABE](https://cdn.7tv.app/emote/01FFNN7CG00009CAK0J14696HH/1x_static.webp "YABE") in it.')
     })
   })
+
+  describe('Check emote flags', () => {
+    const emoteFetcher = new EmoteFetcher()
+
+    test('YABE: animated, not nsfw, not zero-width', async () => {
+      await emoteFetcher.fetchSevenTVEmotes(44317909)
+      const emote = emoteFetcher.emotes.get('YABE')
+      expect(emote.animated).toBe(true)
+      expect(emote.nsfw).toBe(false)
+      expect(emote.zeroWidth).toBe(false)
+    })
+
+    test('Clueless: not animated, not nsfw, not zero-width', () => {
+      const emote = emoteFetcher.emotes.get('Clueless')
+      expect(emote.animated).toBe(false)
+      expect(emote.nsfw).toBe(false)
+      expect(emote.zeroWidth).toBe(false)
+    })
+
+    test('ALERT: animated, not nsfw, zero-width', () => {
+      const emote = emoteFetcher.emotes.get('ALERT')
+      expect(emote.animated).toBe(true)
+      expect(emote.nsfw).toBe(false)
+      expect(emote.zeroWidth).toBe(true)
+    })
+
+    test.todo('We need to find an emote with a "Sexual" flag for testing.')
+  })
 })

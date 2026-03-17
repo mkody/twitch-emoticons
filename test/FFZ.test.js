@@ -53,11 +53,8 @@ describe('Test FFZ emotes', () => {
       match: /:(.+?):/g,
     })
 
-    test('Execute fetchFFZEmotes with user ID', async () => {
-      expect(await emoteFetcher.fetchFFZEmotes(44317909)).toBeInstanceOf(Collection)
-    })
-
-    test('Get animated emote (MikuSway)', () => {
+    test('Get animated emote (MikuSway)', async () => {
+      await emoteFetcher.fetchFFZEmotes(44317909)
       const emote = emoteFetcher.emotes.get('MikuSway')
       expect(emote.toLink({ size: 2 })).toBe('https://cdn.frankerfacez.com/emote/723102/animated/4.webp')
     })
@@ -86,5 +83,26 @@ describe('Test FFZ emotes', () => {
       const text = emoteParser.parse('This is a test string with :MikuSway: in it.', { forceStatic: true })
       expect(text).toBe('This is a test string with ![MikuSway](https://cdn.frankerfacez.com/emote/723102/1 "MikuSway") in it.')
     })
+  })
+
+  describe('Check emote flags', () => {
+    const emoteFetcher = new EmoteFetcher()
+
+    test('MikuSway: animated, not zero-width, not a modifier', async () => {
+      await emoteFetcher.fetchFFZEmotes(44317909)
+      const emote = emoteFetcher.emotes.get('MikuSway')
+      expect(emote.animated).toBe(true)
+      expect(emote.zeroWidth).toBe(false)
+      expect(emote.modifier).toBe(false)
+    })
+
+    test('ffzHyper: not animated, not zero-width, a modifier', () => {
+      const emote = emoteFetcher.emotes.get('ffzHyper')
+      expect(emote.animated).toBe(false)
+      expect(emote.zeroWidth).toBe(false)
+      expect(emote.modifier).toBe(true)
+    })
+
+    test.todo('We need to find an emote that can overlay another (zero-width) for testing.')
   })
 })

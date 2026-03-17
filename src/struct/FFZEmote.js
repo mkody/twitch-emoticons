@@ -15,7 +15,10 @@ class FFZEmote extends Emote {
   }
 
   _setup (data) {
-    super._setup(data)
+    /**
+     * The code or name of the emote.
+     * @type {string}
+     */
     this.code = data.name
 
     /**
@@ -43,7 +46,13 @@ class FFZEmote extends Emote {
     this.imageType = 'animated' in data ? 'webp' : 'png'
 
     /**
-     * If the emote is a modifier and should be hidden.
+     * If emote can be zero-width (overlaying).
+     * @type {boolean}
+     */
+    this.zeroWidth = data.modifier && data.modifier_flags === 0
+
+    /**
+     * If the emote is a modifier (effect) and should be hidden.
      * @type {boolean}
      */
     this.modifier = data.modifier && (data.modifier_flags & 1) !== 0
@@ -79,6 +88,7 @@ class FFZEmote extends Emote {
       sizes: this.sizes,
       ownerName: this.ownerName,
       type: this.type,
+      zeroWidth: this.zeroWidth,
       modifier: this.modifier,
     }
   }
@@ -91,10 +101,14 @@ class FFZEmote extends Emote {
    */
   static fromObject (emoteObject, channel) {
     // Need to convert sizes array to object, e.g. [1, 2, 4] -> { 1: '1', 2: '2', 4: '4' }
-    const sizesObj = emoteObject.sizes.reduce((acc, curr) => {
-      acc[curr] = curr
-      return acc
-    }, {})
+    const sizesObj = emoteObject.sizes.reduce(
+      (acc, curr) => {
+        acc[curr] = curr
+        return acc
+      },
+      {}
+    )
+
     return new FFZEmote(channel, emoteObject.id,
       {
         code: emoteObject.code,
@@ -102,8 +116,8 @@ class FFZEmote extends Emote {
         urls: sizesObj,
         ...emoteObject.animated ? { animated: sizesObj } : {},
         owner: { name: emoteObject.ownerName },
-        modifier: emoteObject.modifier,
-        modifier_flags: emoteObject.modifier,
+        modifier: (emoteObject.zeroWidth || emoteObject.modifier),
+        modifier_flags: (emoteObject.modifier ? 1 : 0),
       })
   }
 }

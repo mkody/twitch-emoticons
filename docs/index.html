@@ -236,8 +236,26 @@ Create an <code>EmoteParser</code> object:</p>
 <p>Now that you have an EmoteParser object, you can do two things with it:
 look up an <code>Emote</code> or parse text and get the output as set by <code>type</code> or <code>template</code>.</p>
 <p>To grab a specific emote, you can do <code>fetcher.emotes.get('...')</code>, with the case-sensitive name of the emote in place of the ellipsis.<br>
-From there, you can read properties like <code>.code</code>, <code>.animated</code>, <code>.imageType</code>, or <code>.type</code>,
-but you can also use the <code>.toLink()</code> method to… get a link!</p>
+From there, you can read properties like <code>.id</code>, <code>.code</code>, <code>.ownerName</code>,
+<code>.animated</code>, <code>.imageType</code>, or <code>.type</code>, but you can also use the <code>.toLink()</code>
+method to… get a link!</p>
+<blockquote>
+<p>Note: Some extended <code>Emote</code>s have additional properties:</p>
+<ul>
+<li>FFZ:
+<ul>
+<li><code>.zeroWidth</code> (boolean, can overlay an another emote)</li>
+<li><code>.modifier</code> (boolean, emote effects, should be hidden)</li>
+</ul>
+</li>
+<li>7TV:
+<ul>
+<li><code>.zeroWidth</code> (boolean, can overlay an another emote)</li>
+<li><code>.nsfw</code> (boolean, flagged &quot;Sexual&quot; or &quot;Twitch disallowed&quot;)</li>
+</ul>
+</li>
+</ul>
+</blockquote>
 <p>To parse text, you use the <code>parser.parse()</code> method.<br>
 The first parameter is the input text. There is also an optional second parameter
 where you can provide a few settings (which can overwrite the same ones set in the <code>EmoteFetcher</code>).</p>

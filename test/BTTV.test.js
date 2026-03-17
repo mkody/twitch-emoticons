@@ -64,4 +64,19 @@ describe('Test BTTV emotes', () => {
       expect(text).toBe('This is a test string with ![SourPls](https://cdn.betterttv.net/emote/566ca38765dbbdab32ec0560/1x.png "SourPls") in it.')
     })
   })
+
+  describe('Check emote flags', () => {
+    const emoteFetcher = new EmoteFetcher()
+
+    test('GabeN: not animated', async () => {
+      await emoteFetcher.fetchBTTVEmotes()
+      const emote = emoteFetcher.emotes.get('GabeN')
+      expect(emote.animated).toBe(false)
+    })
+
+    test('SourPls: animated', () => {
+      const emote = emoteFetcher.emotes.get('SourPls')
+      expect(emote.animated).toBe(true)
+    })
+  })
 })

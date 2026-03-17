@@ -15,9 +15,31 @@ class SevenTVEmote extends Emote {
   }
 
   _setup (data) {
-    super._setup(data)
+    // "Active" Emote flag's bitfield (copied in full for reference)
+    // https://github.com/SevenTV/SevenTV/blob/cd3d3b183caff640f2f3c41041794d5c71bc2d5d/shared/src/old_types/mod.rs#L710-L715
+    const ActiveEmoteFlags = {
+      ZeroWidth: 1, // 1 << 0
+      OverrideTwitchGlobal: 65536, // 1 << 16
+      OverrideTwitchSubscriber: 131072, // 1 << 17
+      OverrideBetterTTV: 262144, // 1 << 18
+    }
 
-    // First is the possible alias, then fallback to the default name
+    // Emote flags' bitfield (copied in full for reference)
+    // https://github.com/SevenTV/SevenTV/blob/cd3d3b183caff640f2f3c41041794d5c71bc2d5d/shared/src/old_types/mod.rs#L624-L632
+    const EmoteFlags = {
+      Private: 1, // 1 << 0
+      Authentic: 2, // 1 << 1
+      ZeroWidth: 256, // 1 << 8
+      Sexual: 65536, // 1 << 16
+      Epilepsy: 131072, // 1 << 17
+      Edgy: 262144, // 1 << 18
+      TwitchDisallowed: 16777216, // 1 << 24
+    }
+
+    /**
+     * The code or name of the emote.
+     * @type {string}
+     */
     this.code = data.name || data.data.name
 
     /**
@@ -44,6 +66,18 @@ class SevenTVEmote extends Emote {
      * @type {boolean}
      */
     this.animated = Boolean(data.data.animated)
+
+    /**
+     * If emote is NSFW (or Twitch disallowed, just in case). Do note that this flag isn't always applied to what *looks* NSFW.
+     * @type {boolean}
+     */
+    this.nsfw = (data.data.flags & EmoteFlags.Sexual) !== 0 || (data.data.flags & EmoteFlags.TwitchDisallowed) !== 0
+
+    /**
+     * If emote can be zero-width (overlaying).
+     * @type {boolean}
+     */
+    this.zeroWidth = (data.flags & ActiveEmoteFlags.ZeroWidth) !== 0 || (data.data.flags & EmoteFlags.ZeroWidth) !== 0
 
     /**
      * The image type of the emote.
@@ -78,6 +112,8 @@ class SevenTVEmote extends Emote {
     return {
       ...super.toObject(),
       animated: this.animated,
+      nsfw: this.nsfw,
+      zeroWidth: this.zeroWidth,
       sizes: this.sizes,
       ownerName: this.ownerName,
       type: this.type,
@@ -93,6 +129,7 @@ class SevenTVEmote extends Emote {
    */
   static fromObject (emoteObject, channel) {
     const sizes = emoteObject.sizes.map((size) => { return { name: size } })
+    const flags = (emoteObject.nsfw ? 65536 : 0) | (emoteObject.zeroWidth ? 256 : 0)
 
     return new SevenTVEmote(
       channel,
@@ -101,11 +138,12 @@ class SevenTVEmote extends Emote {
         name: emoteObject.code,
         data: {
           animated: emoteObject.animated,
-          owner: {
-            display_name: emoteObject.ownerName,
-          },
+          flags,
           host: {
             files: sizes,
+          },
+          owner: {
+            display_name: emoteObject.ownerName,
           },
         },
       }
