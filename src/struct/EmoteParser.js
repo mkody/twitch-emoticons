@@ -103,7 +103,6 @@ class EmoteParser {
         .replaceAll('{is-animated}', emote.animated ? 'true' : 'false')
         .replaceAll('{is-zero-width}', emote.zeroWidth ? 'true' : 'false')
         .replaceAll('{is-nsfw}', emote.nsfw ? 'true' : 'false')
-        .replaceAll('{is-modifier}', emote.modifier ? 'true' : 'false')
 
       return res
     })
