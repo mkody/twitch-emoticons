@@ -16,12 +16,12 @@ class Channel {
     /**
      * The ID of this channel.
      * For the global channel, the ID will be null.
-     * @type {?number}
+     * @type {number | null}
      */
     this.channel_id = id || null
 
     /**
-     * Cached emotes belonging to this channel.
+     * Cached {@linkcode Emote}s belonging to this channel.
      * @type {Collection<string, Emote>}
      */
     this.emotes = new Collection()
@@ -32,7 +32,7 @@ class Channel {
 
   /**
    * Fetches the BTTV emotes for this channel.
-   * @returns {Promise<Collection<string, BTTVEmote>>} - A promise that resolves to a collection of BTTVEmotes.
+   * @returns {Promise<Collection<string, BTTVEmote>>} - A promise that resolves to a collection of {@linkcode BTTVEmote}s.
    */
   fetchBTTVEmotes () {
     return this.fetcher.fetchBTTVEmotes(this.id)
@@ -40,7 +40,7 @@ class Channel {
 
   /**
    * Fetches the FFZ emotes for this channel.
-   * @returns {Promise<Collection<string, FFZEmote>>} - A promise that resolves to a collection of FFZEmotes.
+   * @returns {Promise<Collection<string, FFZEmote>>} - A promise that resolves to a collection of {@linkcode FFZEmote}s.
    */
   fetchFFZEmotes () {
     return this.fetcher.fetchFFZEmotes(this.id)
@@ -48,7 +48,7 @@ class Channel {
 
   /**
    * Fetches the 7TV emotes for this channel.
-   * @returns {Promise<Collection<string, SevenTVEmote>>} - A promise that resolves to a collection of SevenTVEmotes.
+   * @returns {Promise<Collection<string, SevenTVEmote>>} - A promise that resolves to a collection of {@linkcode SevenTVEmote}s.
    */
   fetchSevenTVEmotes () {
     return this.fetcher.fetchSevenTVEmotes(this.id)

@@ -62,14 +62,14 @@ class EmoteFetcher {
    * @param {object} [options={}] Fetcher's options.
    * @param {string} [options.twitchAppID] Your app ID for the Twitch API.
    * @param {string} [options.twitchAppSecret] Your app secret for the Twitch API.
-   * @param {ApiClient} [options.apiClient] - Bring your own Twurple ApiClient.
+   * @param {ApiClient} [options.apiClient] - Bring your own Twurple {@linkcode ApiClient}.
    * @param {boolean} [options.forceStatic=false] - Force emotes to be static (non-animated).
    * @param {'dark' | 'light'} [options.twitchThemeMode='dark'] - Theme mode (background color) preference for Twitch emotes.
    */
   constructor (options = {}) {
     if (options.apiClient) {
       /**
-       * Provided Twitch ApiClient.
+       * Provided Twitch {@linkcode ApiClient}.
        * @type {ApiClient}
        */
       this.apiClient = options.apiClient
@@ -95,15 +95,15 @@ class EmoteFetcher {
     this.twitchThemeMode = options.twitchThemeMode || 'dark'
 
     /**
-     * Cached emotes.
-     * Collectionped by emote code to Emote instance.
+     * Cached {@linkcode Emote}s.
+     * Collectioned by emote code to the {@linkcode Emote} instance.
      * @type {Collection&lt;string, Emote>}
      */
     this.emotes = new Collection()
 
     /**
-     * Cached channels.
-     * Collectionped by name to Channel instance.
+     * Cached {@linkcode Channel}s.
+     * Collectioned by name to the {@linkcode Channel} instance.
      * @type {Collection&lt;string, Channel>}
      */
     this.channels = new Collection()
@@ -315,7 +315,7 @@ class EmoteFetcher {
    * Fetches the Twitch emotes for a channel.
    * Use `null` for the global emotes channel.
    * @param {number} [channel] - ID of the channel.
-   * @returns {Promise&lt;Collection&lt;string, TwitchEmote>>} - A promise that resolves to a collection of TwitchEmotes.
+   * @returns {Promise&lt;Collection&lt;string, TwitchEmote>>} - A promise that resolves to a collection of {@linkcode TwitchEmote}s.
    */
   fetchTwitchEmotes (channel) {
     // Ensure channel is null, to be consistent with falsy values
@@ -341,7 +341,7 @@ class EmoteFetcher {
    * Fetches the BTTV emotes for a channel.
    * Use `null` for the global emotes channel.
    * @param {number} [channel] - ID of the channel.
-   * @returns {Promise&lt;Collection&lt;string, BTTVEmote>>} - A promise that resolves to a collection of BTTVEmotes.
+   * @returns {Promise&lt;Collection&lt;string, BTTVEmote>>} - A promise that resolves to a collection of {@linkcode BTTVEmote}s.
    */
   fetchBTTVEmotes (channel) {
     // Ensure channel is null, to be consistent with falsy values
@@ -359,7 +359,7 @@ class EmoteFetcher {
   /**
    * Fetches the FFZ emotes for a channel.
    * @param {number} [channel] - ID of the channel.
-   * @returns {Promise&lt;Collection&lt;string, FFZEmote>>} - A promise that resolves to a collection of FFZEmotes.
+   * @returns {Promise&lt;Collection&lt;string, FFZEmote>>} - A promise that resolves to a collection of {@linkcode FFZEmote}s.
    */
   async fetchFFZEmotes (channel) {
     // Ensure channel is null, to be consistent with falsy values
@@ -401,7 +401,7 @@ class EmoteFetcher {
    * @param {number} [channel] - ID of the channel.
    * @param {object} [options] - Options for fetching.
    * @param {('webp'|'avif')} [options.format] - The type file format to use (webp/avif).
-   * @returns {Promise&lt;Collection&lt;string, SevenTVEmote>>} - A promise that resolves to a collection of SevenTVEmotes.
+   * @returns {Promise&lt;Collection&lt;string, SevenTVEmote>>} - A promise that resolves to a collection of {@linkcode SevenTVEmote}s.
    */
   fetchSevenTVEmotes (channel, options) {
     // Ensure channel is null, to be consistent with falsy values
@@ -425,10 +425,10 @@ class EmoteFetcher {
   }
 
   /**
-   * Converts emote Objects to emotes
+   * Converts emote objects to emotes
    * @param {object[]} [emotesArray] - An array of emote objects
    * @throws {TypeError} When an emote has an unknown type.
-   * @returns {Emote[]} - An array of Emote instances.
+   * @returns {Emote[]} - An array of {@linkcode Emote} instances.
    */
   fromObject (emotesArray) {
     const emotes = []

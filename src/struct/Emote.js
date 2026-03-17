@@ -2,7 +2,7 @@ class Emote {
   /**
    * Base class for emotes.
    * This constructor is not to be used.
-   * @param {Channel} channel - Channel this emote belongs to.
+   * @param {Channel} channel - {@linkcode Channel} this emote belongs to.
    * @param {string} id - ID of the emote.
    * @param {data} data - The raw emote data.
    * @throws {Error} When trying to use the base Emote class directly.
@@ -13,13 +13,13 @@ class Emote {
     }
 
     /**
-     * The emote fetcher.
+     * The {@linkcode EmoteFetcher} being used.
      * @type {EmoteFetcher}
      */
     this.fetcher = channel.fetcher
 
     /**
-     * The channel this emote belongs to.
+     * The {@linkcode Channel} this emote belongs to.
      * Only accurate and constant on Twitch emotes.
      * For other types of emotes, use the `ownerName` property.
      * @type {Channel}
@@ -33,9 +33,8 @@ class Emote {
     this.id = id
 
     /**
-     * The type of this emote.
-     * Either `twitch`, `bttv`, `ffz`, or '7tv'.
-     * @type {string | null}
+     * The type/platform of this emote.
+     * @type {'twitch' | 'bttv' | 'ffz' | '7tv' | null}
      */
     this.type = null
 
@@ -72,8 +71,8 @@ class Emote {
 
   /**
    * Override for `toObject`.
-   * Will result in an Object representation of an Emote
-   * @returns {object} - Object representation of the Emote.
+   * Will result in an Object representation of an {@linkcode Emote}.
+   * @returns {object} - Object representation of the {@linkcode Emote}.
    */
   toObject () {
     return {

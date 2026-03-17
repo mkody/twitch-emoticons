@@ -5,7 +5,7 @@ import Constants from '../util/Constants.js'
 class BTTVEmote extends Emote {
   /**
    * A BTTV emote.
-   * @param {Channel} channel - Channel this emote belongs to.
+   * @param {Channel} channel - {@linkcode Channel} this emote belongs to.
    * @param {string} id - ID of the emote.
    * @param {data} data - The raw emote data.
    */
@@ -18,8 +18,8 @@ class BTTVEmote extends Emote {
     super._setup(data)
 
     /**
-     * The name of the emote creator's channel.
-     * Will be null for global or channel emotes.
+     * The name of the emote owner.
+     * Might be null for global emotes.
      * @type {string | null}
      */
     this.ownerName = 'user' in data ? data.user.name : null
@@ -31,7 +31,7 @@ class BTTVEmote extends Emote {
     this.imageType = 'webp'
 
     /**
-     * If emote is animated.
+     * If the emote is animated.
      * @type {boolean}
      */
     this.animated = data.animated
@@ -54,9 +54,9 @@ class BTTVEmote extends Emote {
   }
 
   /**
-   * Override for `toObject`.
-   * Will result in an Object representation of a BTTVEmote
-   * @returns {object} - Object representation of the BTTVEmote.
+   * Override of the override for `toObject`.
+   * Will result in an Object representation of a {@linkcode BTTVEmote}.
+   * @returns {object} - Object representation of the {@linkcode BTTVEmote}.
    */
   toObject () {
     return {
@@ -68,10 +68,10 @@ class BTTVEmote extends Emote {
   }
 
   /**
-   * Converts an emote Object into a BTTVEmote
+   * Converts an emote Object into a {@linkcode BTTVEmote}
    * @param {object} [emoteObject] - Object representation of this emote
-   * @param {Channel} [channel] - Channel this emote belongs to.
-   * @returns {BTTVEmote} - A BTTVEmote instance.
+   * @param {Channel} [channel] - {@linkcode Channel} this emote belongs to.
+   * @returns {BTTVEmote} - A {@linkcode BTTVEmote} instance.
    */
   static fromObject (emoteObject, channel) {
     return new BTTVEmote(

@@ -144,7 +144,7 @@ console.log(parser.parse('Hello CoolCat!')) // &lt;- Does not require :colons: a
 <p>To fetch &quot;native&quot; emotes from Twitch.tv, you need to <a href="https://dev.twitch.tv/console/apps/create">create an app here</a>, it is free.<br>
 If you are only using BetterTTV, FrankerFaceZ and 7TV you do not need to provide Twitch app keys.</p>
 <p>You must use a Twitch user ID instead of the username to fetch users' emotes.<br>
-You can use <a href="https://s.kdy.ch/twitchid/">this page to manually convert them</a>.</p>
+If you just need to get one or a very few, you can <a href="https://s.kdy.ch/twitchid/">use this page to manually convert them</a> (please do not automate/abuse it).</p>
 <h2>Install</h2>
 <p>From <a href="https://www.npmjs.com/package/@mkody/twitch-emoticons/v/3.0.0-beta.4">npm</a> (<a href="https://npmx.dev/package/@mkody/twitch-emoticons/v/3.0.0-beta.4">browse on npmx</a>; use the <code>@next</code> tag):</p>
 <pre class="prettyprint source lang-sh"><code>npm install @mkody/twitch-emoticons@next
@@ -343,7 +343,7 @@ const fetcher = new EmoteFetcher({
 })
 const parser = new EmoteParser(fetcher, {
   // Custom HTML format
-  template:  `
+  template: `
     &lt;img
       class=&quot;emote&quot;
       alt=&quot;{name}&quot;
@@ -504,7 +504,7 @@ fetcher.fromObject(emotes)
 </code></pre>
 <blockquote>
 <p><strong>NOTE:</strong><br>
-For offline access, you' will still need to download emotes and proxy their URLs.</p>
+For offline access, you will still need to download emotes and proxy their URLs.</p>
 </blockquote>
 </details>
 <h2>Links</h2>

@@ -169,7 +169,7 @@
 
             
 
-            <td class="description last"><p>Channel this emote belongs to.</p></td>
+            <td class="description last"><p><a href="Channel.html"><code>Channel</code></a> this emote belongs to.</p></td>
         </tr>
 
     
@@ -445,7 +445,7 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>If emote is animated.</p></li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li><p>If the emote is animated.</p></li></ul></dd>
     
 
     
@@ -491,7 +491,7 @@
 
 
 <div class="description usertext">
-    <p>If emote is animated.</p>
+    <p>If the emote is animated.</p>
 </div>
 
 
@@ -523,7 +523,7 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The emote fetcher.</p></li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li><p>The <a href="EmoteFetcher.html"><code>EmoteFetcher</code></a> being used.</p></li></ul></dd>
     
 
     
@@ -574,7 +574,7 @@
 
 
 <div class="description usertext">
-    <p>The emote fetcher.</p>
+    <p>The <a href="EmoteFetcher.html"><code>EmoteFetcher</code></a> being used.</p>
 </div>
 
 
@@ -606,7 +606,7 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The channel this emote belongs to.
+    <dd class="tag-description"><ul class="dummy"><li><p>The <a href="Channel.html"><code>Channel</code></a> this emote belongs to.
 Only accurate and constant on Twitch emotes.
 For other types of emotes, use the <code>ownerName</code> property.</p></li></ul></dd>
     
@@ -659,7 +659,7 @@ For other types of emotes, use the <code>ownerName</code> property.</p></li></ul
 
 
 <div class="description usertext">
-    <p>The channel this emote belongs to.
+    <p>The <a href="Channel.html"><code>Channel</code></a> this emote belongs to.
 Only accurate and constant on Twitch emotes.
 For other types of emotes, use the <code>ownerName</code> property.</p>
 </div>
@@ -767,7 +767,7 @@ For other types of emotes, use the <code>ownerName</code> property.</p>
 
         
             
-<h4 class="name" id="type"><span class="type-signature"></span>type<span class="type-signature"> :string|null</span></h4>
+<h4 class="name" id="type"><span class="type-signature"></span>type<span class="type-signature"> :'twitch'|'bttv'|'ffz'|'7tv'|null</span></h4>
 
 
 
@@ -776,14 +776,13 @@ For other types of emotes, use the <code>ownerName</code> property.</p>
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The type of this emote.
-Either <code>twitch</code>, <code>bttv</code>, <code>ffz</code>, or '7tv'.</p></li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li><p>The type/platform of this emote.</p></li></ul></dd>
     
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_Emote.js.html">struct/Emote.js</a>, <a href="struct_Emote.js.html#line40">line 40</a>
+        <a href="struct_Emote.js.html">struct/Emote.js</a>, <a href="struct_Emote.js.html#line39">line 39</a>
     </li></ul></dd>
     
 
@@ -828,8 +827,7 @@ Either <code>twitch</code>, <code>bttv</code>, <code>ffz</code>, or '7tv'.</p></
 
 
 <div class="description usertext">
-    <p>The type of this emote.
-Either <code>twitch</code>, <code>bttv</code>, <code>ffz</code>, or '7tv'.</p>
+    <p>The type/platform of this emote.</p>
 </div>
 
 
@@ -838,7 +836,16 @@ Either <code>twitch</code>, <code>bttv</code>, <code>ffz</code>, or '7tv'.</p>
     <ul>
         <li>
             
-<span class="param-type">string</span>
+<span class="param-type">'twitch'</span>
+|
+
+<span class="param-type">'bttv'</span>
+|
+
+<span class="param-type">'ffz'</span>
+|
+
+<span class="param-type">'7tv'</span>
 |
 
 <span class="param-type">null</span>
@@ -870,7 +877,7 @@ Either <code>twitch</code>, <code>bttv</code>, <code>ffz</code>, or '7tv'.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="struct_Emote.js.html">struct/Emote.js</a>, <a href="struct_Emote.js.html#line50">line 50</a>
+        <a href="struct_Emote.js.html">struct/Emote.js</a>, <a href="struct_Emote.js.html#line49">line 49</a>
     </li></ul></dd>
     
 
@@ -1278,8 +1285,8 @@ Either <code>twitch</code>, <code>bttv</code>, <code>ffz</code>, or '7tv'.</p>
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Override for <code>toObject</code>.
-Will result in an Object representation of a TwitchEmote</p></li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li><p>Override of the override for <code>toObject</code>.
+Will result in an Object representation of a <a href="TwitchEmote.html"><code>TwitchEmote</code></a>.</p></li></ul></dd>
     
 
     
@@ -1356,7 +1363,7 @@ Will result in an Object representation of a TwitchEmote</p></li></ul></dd>
         
 <div class="param-desc">
     <ul>
-<li>Object representation of the TwitchEmote.</li>
+<li>Object representation of the <a href="TwitchEmote.html"><code>TwitchEmote</code></a>.</li>
 </ul>
 </div>
 
@@ -1394,7 +1401,7 @@ Will result in an Object representation of a TwitchEmote</p></li></ul></dd>
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Converts an emote Object into a TwitchEmote</p></li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li><p>Converts an emote Object into a <a href="TwitchEmote.html"><code>TwitchEmote</code></a></p></li></ul></dd>
     
 
     
@@ -1535,7 +1542,7 @@ Will result in an Object representation of a TwitchEmote</p></li></ul></dd>
 
             
 
-            <td class="description last"><p>Channel this emote belongs to.</p></td>
+            <td class="description last"><p><a href="Channel.html"><code>Channel</code></a> this emote belongs to.</p></td>
         </tr>
 
     
@@ -1562,7 +1569,7 @@ Will result in an Object representation of a TwitchEmote</p></li></ul></dd>
         
 <div class="param-desc">
     <ul>
-<li>A TwitchEmote instance.</li>
+<li>A <a href="TwitchEmote.html"><code>TwitchEmote</code></a> instance.</li>
 </ul>
 </div>
 

@@ -5,7 +5,7 @@ import Constants from '../util/Constants.js'
 class SevenTVEmote extends Emote {
   /**
    * A 7TV emote.
-   * @param {Channel} channel - Channel this emote belongs to.
+   * @param {Channel} channel - {@linkcode Channel} this emote belongs to.
    * @param {string} id - ID of the emote.
    * @param {data} data - The raw emote data.
    */
@@ -43,7 +43,8 @@ class SevenTVEmote extends Emote {
     this.code = data.name || data.data.name
 
     /**
-     * The name of the emote creator's channel.
+     * The name of the emote owner.
+     * Might be null for global emotes.
      * @type {string | null}
      */
     this.ownerName = data.data.owner?.display_name || null
@@ -68,7 +69,7 @@ class SevenTVEmote extends Emote {
     this.imageType = this.channel.format
 
     /**
-     * If emote is animated.
+     * If the emote is animated.
      * @type {boolean}
      */
     this.animated = Boolean(data.data.animated)
@@ -80,7 +81,8 @@ class SevenTVEmote extends Emote {
     this.zeroWidth = (data.flags & ActiveEmoteFlags.ZeroWidth) !== 0 || (data.data.flags & EmoteFlags.ZeroWidth) !== 0
 
     /**
-     * If emote is NSFW (or Twitch disallowed, just in case). Do note that this flag isn't always applied to what *looks* NSFW.
+     * If emote is NSFW (or Twitch disallowed, just in case).
+     * Do note that this flag isn't always applied to what *looks* NSFW.
      * @type {boolean}
      */
     this.nsfw = (data.data.flags & EmoteFlags.Sexual) !== 0 || (data.data.flags & EmoteFlags.TwitchDisallowed) !== 0
@@ -104,9 +106,9 @@ class SevenTVEmote extends Emote {
   }
 
   /**
-   * Override for `toObject`.
-   * Will result in an Object representation of a SevenTVEmote
-   * @returns {object} - Object representation of the SevenTVEmote.
+   * Override of the override for `toObject`.
+   * Will result in an Object representation of a {@linkcode SevenTVEmote}.
+   * @returns {object} - Object representation of the {@linkcode SevenTVEmote}.
    */
   toObject () {
     return {
@@ -122,10 +124,10 @@ class SevenTVEmote extends Emote {
   }
 
   /**
-   * Converts an emote Object into a SevenTVEmote
+   * Converts an emote Object into a {@linkcode SevenTVEmote}
    * @param {object} [emoteObject] - Object representation of this emote
-   * @param {Channel} [channel] - Channel this emote belongs to.
-   * @returns {SevenTVEmote} - A SevenTVEmote instance.
+   * @param {Channel} [channel] - {@linkcode Channel} this emote belongs to.
+   * @returns {SevenTVEmote} - A {@linkcode SevenTVEmote} instance.
    */
   static fromObject (emoteObject, channel) {
     const sizes = emoteObject.sizes.map((size) => { return { name: size } })

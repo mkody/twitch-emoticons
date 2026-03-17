@@ -5,7 +5,7 @@ import Constants from '../util/Constants.js'
 class FFZEmote extends Emote {
   /**
    * An FFZ emote.
-   * @param {Channel} channel - Channel this emote belongs to.
+   * @param {Channel} channel - {@linkcode Channel} this emote belongs to.
    * @param {string} id - ID of the emote.
    * @param {data} data - The raw emote data.
    */
@@ -22,7 +22,8 @@ class FFZEmote extends Emote {
     this.code = data.name
 
     /**
-     * The name of the emote creator's channel.
+     * The name of the emote owner.
+     * Might be null for global emotes.
      * @type {string | null}
      */
     this.ownerName = 'owner' in data ? data.owner.name : null
@@ -40,7 +41,7 @@ class FFZEmote extends Emote {
     this.imageType = 'animated' in data ? 'webp' : 'png'
 
     /**
-     * If emote is animated.
+     * If the emote is animated.
      * @type {boolean}
      */
     this.animated = 'animated' in data
@@ -77,9 +78,9 @@ class FFZEmote extends Emote {
   }
 
   /**
-   * Override for `toObject`.
-   * Will result in an Object representation of a FFZEmote
-   * @returns {object} - Object representation of the FFZEmote.
+   * Override of the override for `toObject`.
+   * Will result in an Object representation of a {@linkcode FFZEmote}.
+   * @returns {object} - Object representation of the {@linkcode FFZEmote}.
    */
   toObject () {
     return {
@@ -94,10 +95,10 @@ class FFZEmote extends Emote {
   }
 
   /**
-   * Converts an emote Object into a FFZEmote
+   * Converts an emote Object into a {@linkcode FFZEmote}
    * @param {object} [emoteObject] - Object representation of this emote
-   * @param {Channel} [channel] - Channel this emote belongs to.
-   * @returns {FFZEmote} - A FFZEmote instance.
+   * @param {Channel} [channel] - {@linkcode Channel} this emote belongs to.
+   * @returns {FFZEmote} - A {@linkcode FFZEmote} instance.
    */
   static fromObject (emoteObject, channel) {
     // Need to convert sizes array to object, e.g. [1, 2, 4] -> { 1: '1', 2: '2', 4: '4' }

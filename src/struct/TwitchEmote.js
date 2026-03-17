@@ -5,7 +5,7 @@ import Constants from '../util/Constants.js'
 class TwitchEmote extends Emote {
   /**
    * A Twitch emote.
-   * @param {Channel} channel - Channel this emote belongs to.
+   * @param {Channel} channel - {@linkcode Channel} this emote belongs to.
    * @param {string} id - ID of the emote.
    * @param {data} data - The raw emote data.
    */
@@ -30,7 +30,7 @@ class TwitchEmote extends Emote {
     this.imageType = data.formats?.includes('animated') ? 'gif' : 'png'
 
     /**
-     * If emote is animated.
+     * If the emote is animated.
      * @type {boolean}
      */
     this.animated = data.formats?.includes('animated') || false
@@ -55,9 +55,9 @@ class TwitchEmote extends Emote {
   }
 
   /**
-   * Override for `toObject`.
-   * Will result in an Object representation of a TwitchEmote
-   * @returns {object} - Object representation of the TwitchEmote.
+   * Override of the override for `toObject`.
+   * Will result in an Object representation of a {@linkcode TwitchEmote}.
+   * @returns {object} - Object representation of the {@linkcode TwitchEmote}.
    */
   toObject () {
     return {
@@ -69,10 +69,10 @@ class TwitchEmote extends Emote {
   }
 
   /**
-   * Converts an emote Object into a TwitchEmote
+   * Converts an emote Object into a {@linkcode TwitchEmote}
    * @param {object} [emoteObject] - Object representation of this emote
-   * @param {Channel} [channel] - Channel this emote belongs to.
-   * @returns {TwitchEmote} - A TwitchEmote instance.
+   * @param {Channel} [channel] -{@linkcode Channel} this emote belongs to.
+   * @returns {TwitchEmote} - A {@linkcode TwitchEmote} instance.
    */
   static fromObject (emoteObject, channel) {
     return new TwitchEmote(

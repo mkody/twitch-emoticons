@@ -3,7 +3,7 @@ import Constants from '../util/Constants.js'
 class EmoteParser {
   /**
    * A parser to replace text with emotes.
-   * @param {EmoteFetcher} fetcher - The fetcher to use the cache of.
+   * @param {EmoteFetcher} fetcher - The {@linkcode EmoteFetcher} to use the cache of.
    * @param {object} [options={}] - Options for the parser.
    * @param {string} [options.template=''] - The template to be used.
    * The strings that can be interpolated are:
@@ -19,13 +19,13 @@ class EmoteParser {
    */
   constructor (fetcher, options = {}) {
     /**
-     * The emote fetcher being used.
+     * The {@linkcode EmoteFetcher} being used.
      * @type {EmoteFetcher}
      */
     this.fetcher = fetcher
 
     /**
-     * The parser options.
+     * The parser's options.
      * @type {object}
      */
     this.options = {
