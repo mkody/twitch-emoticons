@@ -225,7 +225,9 @@ Create an <code>EmoteParser</code> object:</p>
     // - 'bbcode': `[img]{link}[/img]`
     // - 'plain': `{link}`
     type, // &lt;'html' | 'markdown' | 'bbcode' | 'plain'> - Default: 'html'
-    // Option 2: Make your own template; this has priority over option 1. You can use those: `{link}`, `{name}`, `{size}`, `{creator}`.
+    // Option 2: Make your own template; this has priority over option 1.
+    // You can use those: `{link}`, `{name}`, `{size}`, `{creator}`,
+    //                    `{is-animated}`, `{is-nsfw}`, `{is-zero-width}`, `{is-modifier}`.
     template, // &lt;string> - Default: ''
 
     // You can customize the regular expression used to find possible emotes.
@@ -340,7 +342,17 @@ const fetcher = new EmoteFetcher({
 })
 const parser = new EmoteParser(fetcher, {
   // Custom HTML format
-  template: '&lt;img class=&quot;emote&quot; alt=&quot;{name}&quot; src=&quot;{link}&quot;>',
+  template:  `
+    &lt;img
+      class=&quot;emote&quot;
+      alt=&quot;{name}&quot;
+      src=&quot;{link}&quot;
+      data-scale=&quot;{size}&quot;
+      data-animated=&quot;{is-animated}&quot;
+      data-overlay=&quot;{is-zero-width}&quot;
+      data-nsfw=&quot;{is-nsfw}&quot;
+      data-modifier=&quot;{is-modifier}&quot;
+    >`,
   // Matches words (like \w) but also dashes
   match: /([a-zA-Z0-9_\-]+)/g,
 })
