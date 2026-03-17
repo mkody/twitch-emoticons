@@ -200,7 +200,10 @@ describe('Test Twitch emotes', () => {
     })
 
     describe('Check emote flags', () => {
-      const emoteFetcher = new EmoteFetcher()
+      const emoteFetcher = new EmoteFetcher({
+        twitchAppID: env.TWITCH_ID,
+        twitchAppSecret: env.TWITCH_SECRET,
+      })
 
       test('Kappa: not animated', async () => {
         await emoteFetcher.fetchTwitchEmotes()
