@@ -15,20 +15,6 @@ export class Channel {
   public fetchSevenTVEmotes (): Promise<Collection<string, SevenTVEmote>>
 }
 
-export abstract class Emote {
-  public constructor (
-    channel: Channel,
-    id: string,
-    data: object
-  )
-
-  public fetcher: EmoteFetcher
-  public channel: Channel
-  public id: string
-  public type: 'twitch' | 'bttv' | 'ffz' | '7tv' | null
-  public code: string
-}
-
 export class EmoteFetcher {
   public constructor (
     options?: {
@@ -40,25 +26,27 @@ export class EmoteFetcher {
     }
   )
 
-  public emotes: Collection<string, Emote>
-  public channels: Collection<string, Channel>
+  public apiClient?: object
   public forceStatic: boolean
   public twitchThemeMode: 'dark' | 'light'
+  public emotes: Collection<string, Emote>
+  public channels: Collection<string, Channel>
+  public ffzModifiersFetched: boolean
 
   public fetchTwitchEmotes (
-    id?: number
+    channel?: number
   ): Promise<Collection<string, TwitchEmote>>
 
   public fetchBTTVEmotes (
-    id?: number
+    channel?: number
   ): Promise<Collection<string, BTTVEmote>>
 
   public fetchFFZEmotes (
-    id?: number
+    channel?: number
   ): Promise<Collection<string, FFZEmote>>
 
   public fetchSevenTVEmotes (
-    id?: number,
+    channel?: number,
     options?: {
       format?: 'webp' | 'avif'
     }
@@ -79,6 +67,13 @@ export class EmoteParser {
     }
   )
 
+  public fetcher: EmoteFetcher
+  public options: {
+    template: string,
+    type: 'html' | 'markdown' | 'bbcode' | 'plain',
+    match: RegExp
+  }
+
   public parse (
     text: string,
     options?: {
@@ -89,6 +84,26 @@ export class EmoteParser {
   ): string
 }
 
+export abstract class Emote {
+  public constructor (
+    channel: Channel,
+    id: string,
+    data: object
+  )
+
+  public fetcher: EmoteFetcher
+  public channel: Channel
+  public id: string
+  public type: 'twitch' | 'bttv' | 'ffz' | '7tv' | null
+  public code: string
+
+  public toLink (): string
+
+  public toString (): string
+
+  public toObject (): EmoteObject
+}
+
 export class TwitchEmote extends Emote {
   public constructor (
     channel: Channel,
@@ -96,10 +111,9 @@ export class TwitchEmote extends Emote {
     data: object
   )
 
-  public set?: string;
-  public animated: boolean
+  public set: string | null;
   public imageType: 'png' | 'gif'
-  public readonly owner: Channel
+  public animated: boolean
 
   public toLink (
     options?: {
@@ -109,7 +123,10 @@ export class TwitchEmote extends Emote {
     }
   ): string
 
-  public toObject (): EmoteObject
+  public fromObject (
+    emoteObject: EmoteObject,
+    channel: Channel
+  ): TwitchEmote
 }
 
 export class BTTVEmote extends Emote {
@@ -120,9 +137,8 @@ export class BTTVEmote extends Emote {
   )
 
   public ownerName: string | null
-  public animated: boolean
   public imageType: 'webp'
-  public readonly owner?: Channel
+  public animated: boolean
 
   public toLink (
     options?: {
@@ -132,6 +148,11 @@ export class BTTVEmote extends Emote {
   ): string
 
   public toObject (): EmoteObject
+
+  public fromObject (
+    emoteObject: EmoteObject,
+    channel: Channel
+  ): BTTVEmote
 }
 
 export class FFZEmote extends Emote {
@@ -143,10 +164,10 @@ export class FFZEmote extends Emote {
 
   public ownerName: string | null
   public sizes: string[]
-  public animated: boolean
   public imageType: 'png' | 'webp'
+  public animated: boolean
+  public zeroWidth: boolean
   public modifier: boolean
-  public readonly owner?: Channel
 
   public toLink (
     options?: {
@@ -156,6 +177,11 @@ export class FFZEmote extends Emote {
   ): string
 
   public toObject (): EmoteObject
+
+  public fromObject (
+    emoteObject: EmoteObject,
+    channel: Channel
+  ): FFZEmote
 }
 
 export class SevenTVEmote extends Emote {
@@ -167,9 +193,10 @@ export class SevenTVEmote extends Emote {
 
   public ownerName: string | null
   public sizes: string[]
-  public animated: boolean
   public imageType: 'webp' | 'avif'
-  public readonly owner?: Channel
+  public animated: boolean
+  public zeroWidth: boolean
+  public nsfw: boolean
 
   public toLink (
     options?: {
@@ -179,6 +206,11 @@ export class SevenTVEmote extends Emote {
   ): string
 
   public toObject (): EmoteObject
+
+  public fromObject (
+    emoteObject: EmoteObject,
+    channel: Channel
+  ): SevenTVEmote
 }
 
 export interface EmoteObject {
@@ -186,36 +218,67 @@ export interface EmoteObject {
   id: string,
   channel_id: string | null,
   type: 'twitch' | 'bttv' | 'ffz' | '7tv' | null,
-  animated?: boolean,
+  set?: string,
   ownerName?: string,
   sizes?: string[],
-  set?: string,
   imageType?: string
+  animated?: boolean,
+  zeroWidth?: boolean,
+  nsfw?: boolean
+  modifier?: boolean
 }
 
 export declare const Constants: {
   Twitch: {
-    CDN: (id: string, size?: number, forceStatic?: boolean, theme?: 'dark' | 'light') => string;
+    CDN: (
+      id: string,
+      size?: number,
+      forceStatic?:
+      boolean,
+      theme?: 'dark' | 'light'
+    ) => string;
   };
   BTTV: {
     Global: string;
-    Channel: (id: string) => string;
-    CDN: (id: string, size?: number, forceStatic?: boolean) => string;
+    Channel: (
+      id: string
+    ) => string;
+    CDN: (
+      id: string,
+      size?: number,
+      forceStatic?: boolean
+    ) => string;
   };
   SevenTV: {
-    Global: string;
-    Channel: (id: string) => string;
-    CDN: (id: string, format: string, size?: number, forceStatic?: boolean) => string;
+    GQL: string;
+    GlobalQuery: string;
+    ChannelQuery: string;
+    CDN: (
+      id: string,
+      format: string,
+      size?: number,
+      forceStatic?: boolean
+    ) => string;
   };
   FFZ: {
     sets: {
       Global: number;
       Modifiers: number;
     };
-    Set: (id: string) => string;
-    Channel: (id: string) => string;
-    CDN: (id: string, size?: number) => string;
-    CDNAnimated: (id: string, size?: number) => string;
+    Set: (
+      id: string
+    ) => string;
+    Channel: (
+      id: string
+    ) => string;
+    CDN: (
+      id: string,
+      size?: number
+    ) => string;
+    CDNAnimated: (
+      id: string,
+      size?: number
+    ) => string;
   };
   Templates: {
     html: string;

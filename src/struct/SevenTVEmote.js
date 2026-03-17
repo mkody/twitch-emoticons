@@ -44,7 +44,7 @@ class SevenTVEmote extends Emote {
 
     /**
      * The name of the emote creator's channel.
-     * @type {?string}
+     * @type {string | null}
      */
     this.ownerName = data.data.owner?.display_name || null
 
@@ -62,16 +62,16 @@ class SevenTVEmote extends Emote {
     }
 
     /**
+     * The image type of the emote.
+     * @type {string}
+     */
+    this.imageType = this.channel.format
+
+    /**
      * If emote is animated.
      * @type {boolean}
      */
     this.animated = Boolean(data.data.animated)
-
-    /**
-     * If emote is NSFW (or Twitch disallowed, just in case). Do note that this flag isn't always applied to what *looks* NSFW.
-     * @type {boolean}
-     */
-    this.nsfw = (data.data.flags & EmoteFlags.Sexual) !== 0 || (data.data.flags & EmoteFlags.TwitchDisallowed) !== 0
 
     /**
      * If emote can be zero-width (overlaying).
@@ -80,10 +80,10 @@ class SevenTVEmote extends Emote {
     this.zeroWidth = (data.flags & ActiveEmoteFlags.ZeroWidth) !== 0 || (data.data.flags & EmoteFlags.ZeroWidth) !== 0
 
     /**
-     * The image type of the emote.
-     * @type {string}
+     * If emote is NSFW (or Twitch disallowed, just in case). Do note that this flag isn't always applied to what *looks* NSFW.
+     * @type {boolean}
      */
-    this.imageType = this.channel.format
+    this.nsfw = (data.data.flags & EmoteFlags.Sexual) !== 0 || (data.data.flags & EmoteFlags.TwitchDisallowed) !== 0
   }
 
   /**
@@ -111,13 +111,13 @@ class SevenTVEmote extends Emote {
   toObject () {
     return {
       ...super.toObject(),
-      animated: this.animated,
-      nsfw: this.nsfw,
-      zeroWidth: this.zeroWidth,
-      sizes: this.sizes,
-      ownerName: this.ownerName,
       type: this.type,
+      ownerName: this.ownerName,
+      sizes: this.sizes,
       imageType: this.imageType,
+      animated: this.animated,
+      zeroWidth: this.zeroWidth,
+      nsfw: this.nsfw,
     }
   }
 

@@ -21,7 +21,7 @@ class Emote {
     /**
      * The channel this emote belongs to.
      * Only accurate and constant on Twitch emotes.
-     * For other types of emotes, use the `owner` or `ownerName` property.
+     * For other types of emotes, use the `ownerName` property.
      * @type {Channel}
      */
     this.channel = channel
@@ -57,7 +57,7 @@ class Emote {
    */
   /* c8 ignore next 3 */
   toLink () {
-    return null
+    return ''
   }
 
   /**
@@ -79,7 +79,8 @@ class Emote {
     return {
       code: this.code,
       id: this.id,
-      channel_id: this.channel.channel_id,
+      channel_id: this.channel?.channel_id || null,
+      type: this.type,
     }
   }
 }

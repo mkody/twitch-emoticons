@@ -66,21 +66,21 @@ class TwitchEmote extends Emote {
 
     /**
      * The set ID of the emote.
-     * @type {?string}
+     * @type {string | null}
      */
-    this.set = data.emoticon_set
+    this.set = data.emoticon_set || null
+
+    /**
+     * The image type of the emote.
+     * @type {'png' | 'gif'}
+     */
+    this.imageType = data.formats?.includes('animated') ? 'gif' : 'png'
 
     /**
      * If emote is animated.
      * @type {boolean}
      */
     this.animated = data.formats?.includes('animated') || false
-
-    /**
-     * The image type of the emote.
-     * @type {string}
-     */
-    this.imageType = data.formats?.includes('animated') ? 'gif' : 'png'
   }
 
   /**
@@ -109,9 +109,9 @@ class TwitchEmote extends Emote {
   toObject () {
     return {
       ...super.toObject(),
-      animated: this.animated,
-      set: this.set,
       type: this.type,
+      set: this.set,
+      animated: this.animated,
     }
   }
 
@@ -122,13 +122,16 @@ class TwitchEmote extends Emote {
    * @returns {TwitchEmote} - A TwitchEmote instance.
    */
   static fromObject (emoteObject, channel) {
-    return new TwitchEmote(channel, emoteObject.id,
+    return new TwitchEmote(
+      channel,
+      emoteObject.id,
       {
         code: emoteObject.code,
         animated: emoteObject.animated,
         emoticon_set: emoteObject.set,
         formats: emoteObject.animated ? ['static', 'animated'] : ['static'],
-      })
+      }
+    )
   }
 }
 

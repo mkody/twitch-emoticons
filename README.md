@@ -25,6 +25,7 @@ Gets Twitch, BTTV, FFZ and 7TV emotes as well as parsing text to emotes!
 - The defaults for `EmoteParser` changed to use the `html` template, and it does not require `:colons:` by default (using `/(\w+)/` to match any words).
 - The default `html` template does not have `twitch-emote-{size}` anymore in its `class` attribute.  
   *The `size` is inconsistent between the different sources, so it cannot be reliably used.*
+- If you somehow used `EmoteFetcher.globalChannel`, it has now been removed.
 - The `EmoteFetcher.fetchSevenTVEmotes()`, `Emote.toLink()`, and `EmoteParse.parse()` methods now have their options as an object.
   - `fetcher.fetchSevenTVEmotes(null, { format: 'avif' })` - The first parameter is still the Twitch user ID (or `null` for global).
   - `emote.toLink({ size: 1, forceStatic: true, themeMode: 'light' })`

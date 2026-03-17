@@ -20,21 +20,21 @@ class BTTVEmote extends Emote {
     /**
      * The name of the emote creator's channel.
      * Will be null for global or channel emotes.
-     * @type {?string}
+     * @type {string | null}
      */
     this.ownerName = 'user' in data ? data.user.name : null
-
-    /**
-     * If emote is animated.
-     * @type {boolean}
-     */
-    this.animated = data.animated
 
     /**
      * The image type of the emote.
      * @type {string}
      */
     this.imageType = 'webp'
+
+    /**
+     * If emote is animated.
+     * @type {boolean}
+     */
+    this.animated = data.animated
   }
 
   /**
@@ -61,9 +61,9 @@ class BTTVEmote extends Emote {
   toObject () {
     return {
       ...super.toObject(),
-      animated: this.animated,
-      ownerName: this.ownerName,
       type: this.type,
+      ownerName: this.ownerName,
+      animated: this.animated,
     }
   }
 
@@ -74,14 +74,17 @@ class BTTVEmote extends Emote {
    * @returns {BTTVEmote} - A BTTVEmote instance.
    */
   static fromObject (emoteObject, channel) {
-    return new BTTVEmote(channel, emoteObject.id,
+    return new BTTVEmote(
+      channel,
+      emoteObject.id,
       {
         code: emoteObject.code,
         animated: emoteObject.animated,
         user: {
           name: emoteObject.ownerName,
         },
-      })
+      }
+    )
   }
 }
 

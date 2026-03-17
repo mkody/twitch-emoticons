@@ -85,6 +85,7 @@ If you want to see the latest stable version (as of this commit),
 <li>The defaults for <code>EmoteParser</code> changed to use the <code>html</code> template, and it does not require <code>:colons:</code> by default (using <code>/(\w+)/</code> to match any words).</li>
 <li>The default <code>html</code> template does not have <code>twitch-emote-{size}</code> anymore in its <code>class</code> attribute.<br>
 <em>The <code>size</code> is inconsistent between the different sources, so it cannot be reliably used.</em></li>
+<li>If you somehow used <code>EmoteFetcher.globalChannel</code>, it has now been removed.</li>
 <li>The <code>EmoteFetcher.fetchSevenTVEmotes()</code>, <code>Emote.toLink()</code>, and <code>EmoteParse.parse()</code> methods now have their options as an object.
 <ul>
 <li><code>fetcher.fetchSevenTVEmotes(null, { format: 'avif' })</code> - The first parameter is still the Twitch user ID (or <code>null</code> for global).</li>

@@ -69,15 +69,6 @@ class EmoteFetcher {
   }
 
   /**
-   * The global channel for Twitch, BTTV and 7TV.
-   * @readonly
-   * @type {?Channel}
-   */
-  get globalChannel () {
-    return this.channels.get(null)
-  }
-
-  /**
    * Sets up a channel
    * @private
    * @param {number} channelId - ID of the channel.
@@ -280,11 +271,19 @@ class EmoteFetcher {
    * @returns {Promise<Collection<string, TwitchEmote>>} - A promise that resolves to a collection of TwitchEmotes.
    */
   fetchTwitchEmotes (channel) {
+    // Ensure channel is null, to be consistent with falsy values
+    if (!channel) channel = null
+
     return this._getRawTwitchEmotes(channel).then((rawEmotes) => {
       for (const emote of rawEmotes) {
-        this._cacheTwitchEmote(channel, {
-          code: emote.name, id: emote.id, formats: emote.formats,
-        })
+        this._cacheTwitchEmote(
+          channel,
+          {
+            code: emote.name,
+            id: emote.id,
+            formats: emote.formats,
+          }
+        )
       }
 
       return this.channels.get(channel).emotes.filter((e) => e.type === 'twitch')
@@ -298,6 +297,9 @@ class EmoteFetcher {
    * @returns {Promise<Collection<string, BTTVEmote>>} - A promise that resolves to a collection of BTTVEmotes.
    */
   fetchBTTVEmotes (channel) {
+    // Ensure channel is null, to be consistent with falsy values
+    if (!channel) channel = null
+
     return this._getRawBTTVEmotes(channel).then((rawEmotes) => {
       for (const data of rawEmotes) {
         this._cacheBTTVEmote(channel, data)
@@ -313,6 +315,9 @@ class EmoteFetcher {
    * @returns {Promise<Collection<string, FFZEmote>>} - A promise that resolves to a collection of FFZEmotes.
    */
   async fetchFFZEmotes (channel) {
+    // Ensure channel is null, to be consistent with falsy values
+    if (!channel) channel = null
+
     // Fetch modifier emotes at least once
     if (!this.ffzModifiersFetched) {
       this.ffzModifiersFetched = true
@@ -352,6 +357,9 @@ class EmoteFetcher {
    * @returns {Promise<Collection<string, SevenTVEmote>>} - A promise that resolves to a collection of SevenTVEmotes.
    */
   fetchSevenTVEmotes (channel, options) {
+    // Ensure channel is null, to be consistent with falsy values
+    if (!channel) channel = null
+
     const {
       format = 'webp',
     } = options || {}
@@ -371,17 +379,29 @@ class EmoteFetcher {
 
   /**
    * Converts emote Objects to emotes
-   * @param {object} [emotesArray] - An array of emote objects
+   * @param {object[]} [emotesArray] - An array of emote objects
    * @throws {TypeError} When an emote has an unknown type.
    * @returns {Emote[]} - An array of Emote instances.
    */
   fromObject (emotesArray) {
     const emotes = []
     const classMap = {
-      'bttv': { class: BTTVEmote, cache: (emoteObject, channelId, existingEmote) => this._cacheBTTVEmote(channelId, null, existingEmote) },
-      'ffz': { class: FFZEmote, cache: (emoteObject, channelId, existingEmote) => this._cacheFFZEmote(channelId, null, existingEmote) },
-      '7tv': { class: SevenTVEmote, cache: (emoteObject, channelId, existingEmote) => this._cacheSevenTVEmote(channelId, null, emoteObject.imageType, existingEmote) },
-      'twitch': { class: TwitchEmote, cache: (emoteObject, channelId, existingEmote) => this._cacheTwitchEmote(channelId, null, existingEmote) },
+      'bttv': {
+        class: BTTVEmote,
+        cache: (_, channelId, existingEmote) => this._cacheBTTVEmote(channelId, null, existingEmote),
+      },
+      'ffz': {
+        class: FFZEmote,
+        cache: (_, channelId, existingEmote) => this._cacheFFZEmote(channelId, null, existingEmote),
+      },
+      '7tv': {
+        class: SevenTVEmote,
+        cache: (emoteObject, channelId, existingEmote) => this._cacheSevenTVEmote(channelId, null, emoteObject.imageType, existingEmote),
+      },
+      'twitch': {
+        class: TwitchEmote,
+        cache: (_, channelId, existingEmote) => this._cacheTwitchEmote(channelId, null, existingEmote),
+      },
     }
 
     for (const emoteObject of emotesArray) {
@@ -396,6 +416,7 @@ class EmoteFetcher {
       classMap[type].cache(emoteObject, emoteObject.channel_id, emote)
       emotes.push(emote)
     }
+
     return emotes
   }
 }

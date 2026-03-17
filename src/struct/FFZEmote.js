@@ -23,7 +23,7 @@ class FFZEmote extends Emote {
 
     /**
      * The name of the emote creator's channel.
-     * @type {?string}
+     * @type {string | null}
      */
     this.ownerName = 'owner' in data ? data.owner.name : null
 
@@ -34,16 +34,16 @@ class FFZEmote extends Emote {
     this.sizes = 'animated' in data ? Object.keys(data.animated) : Object.keys(data.urls)
 
     /**
+     * The image type of the emote.
+     * @type {'png' | 'webp'}
+     */
+    this.imageType = 'animated' in data ? 'webp' : 'png'
+
+    /**
      * If emote is animated.
      * @type {boolean}
      */
     this.animated = 'animated' in data
-
-    /**
-     * The image type of the emote.
-     * @type {string}
-     */
-    this.imageType = 'animated' in data ? 'webp' : 'png'
 
     /**
      * If emote can be zero-width (overlaying).
@@ -84,10 +84,10 @@ class FFZEmote extends Emote {
   toObject () {
     return {
       ...super.toObject(),
-      animated: this.animated,
-      sizes: this.sizes,
-      ownerName: this.ownerName,
       type: this.type,
+      ownerName: this.ownerName,
+      sizes: this.sizes,
+      animated: this.animated,
       zeroWidth: this.zeroWidth,
       modifier: this.modifier,
     }
@@ -109,7 +109,9 @@ class FFZEmote extends Emote {
       {}
     )
 
-    return new FFZEmote(channel, emoteObject.id,
+    return new FFZEmote(
+      channel,
+      emoteObject.id,
       {
         code: emoteObject.code,
         name: emoteObject.code,
@@ -118,7 +120,8 @@ class FFZEmote extends Emote {
         owner: { name: emoteObject.ownerName },
         modifier: (emoteObject.zeroWidth || emoteObject.modifier),
         modifier_flags: (emoteObject.modifier ? 1 : 0),
-      })
+      }
+    )
   }
 }
 

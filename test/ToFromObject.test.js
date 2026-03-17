@@ -68,7 +68,7 @@ describe('Test toObject', () => {
   "channel_id": null,
   "code": "Kappa",
   "id": "25",
-  "set": undefined,
+  "set": null,
   "type": "twitch",
 }
 `)
@@ -83,7 +83,7 @@ describe('Test toObject', () => {
   "channel_id": 56648155,
   "code": "tppD",
   "id": "307609315",
-  "set": undefined,
+  "set": null,
   "type": "twitch",
 }
 `)
