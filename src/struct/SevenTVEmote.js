@@ -15,46 +15,32 @@ class SevenTVEmote extends Emote {
   }
 
   _setup (data) {
-    // "Active" Emote flag's bitfield (copied in full for reference)
-    // https://github.com/SevenTV/SevenTV/blob/cd3d3b183caff640f2f3c41041794d5c71bc2d5d/shared/src/old_types/mod.rs#L710-L715
-    const ActiveEmoteFlags = {
-      ZeroWidth: 1, // 1 << 0
-      OverrideTwitchGlobal: 65536, // 1 << 16
-      OverrideTwitchSubscriber: 131072, // 1 << 17
-      OverrideBetterTTV: 262144, // 1 << 18
-    }
-
-    // Emote flags' bitfield (copied in full for reference)
-    // https://github.com/SevenTV/SevenTV/blob/cd3d3b183caff640f2f3c41041794d5c71bc2d5d/shared/src/old_types/mod.rs#L624-L632
-    const EmoteFlags = {
-      Private: 1, // 1 << 0
-      Authentic: 2, // 1 << 1
-      ZeroWidth: 256, // 1 << 8
-      Sexual: 65536, // 1 << 16
-      Epilepsy: 131072, // 1 << 17
-      Edgy: 262144, // 1 << 18
-      TwitchDisallowed: 16777216, // 1 << 24
-    }
+    // Let's try to find a matching Twitch username in the connections of the emote's owner, otherwise try to use the first username we can get
+    const connections = Array.isArray(data.emote.owner?.connections)
+      ? data.emote.owner.connections
+      : []
+    const twitchConnection = connections.find((connection) => connection.platform === 'TWITCH')
 
     /**
      * The code or name of the emote.
      * @type {string}
      */
-    this.code = data.name || data.data.name
+    this.code = data.alias || data.emote.defaultName
 
     /**
      * The name of the emote owner.
      * Might be null for global emotes.
      * @type {string | null}
      */
-    this.ownerName = data.data.owner?.display_name || null
+    this.ownerName = twitchConnection?.platformDisplayName || connections[0]?.platformDisplayName || null
 
     /**
      * Available image sizes.
      * @type {string[]}
      */
-    this.sizes = data.data.host.files
-      .map((el) => el.name.replace(/x\.(\w+)/, ''))
+    this.sizes = data.emote.images
+      .filter((image) => !image.url?.includes('_static') && image.mime?.includes(this.channel.format))
+      .map((image) => String(image.scale))
       .sort((a, b) => Number(a) - Number(b))
 
     if (this.sizes.length === 0) {
@@ -72,20 +58,22 @@ class SevenTVEmote extends Emote {
      * If the emote is animated.
      * @type {boolean}
      */
-    this.animated = Boolean(data.data.animated)
+    this.animated = Boolean(data.emote.flags.animated)
 
     /**
      * If emote can be zero-width (overlaying).
      * @type {boolean}
      */
-    this.zeroWidth = (data.flags & ActiveEmoteFlags.ZeroWidth) !== 0 || (data.data.flags & EmoteFlags.ZeroWidth) !== 0
+    this.zeroWidth = data.flags && 'zeroWidth' in data.flags
+      ? Boolean(data.flags.zeroWidth)
+      : Boolean(data.emote.flags.defaultZeroWidth)
 
     /**
-     * If emote is NSFW (or Twitch disallowed, just in case).
+     * If emote is NSFW.
      * Do note that this flag isn't always applied to what *looks* NSFW.
      * @type {boolean}
      */
-    this.nsfw = (data.data.flags & EmoteFlags.Sexual) !== 0 || (data.data.flags & EmoteFlags.TwitchDisallowed) !== 0
+    this.nsfw = Boolean(data.emote.flags.nsfw)
   }
 
   /**
@@ -130,23 +118,37 @@ class SevenTVEmote extends Emote {
    * @returns {SevenTVEmote} - A {@linkcode SevenTVEmote} instance.
    */
   static fromObject (emoteObject, channel) {
-    const sizes = emoteObject.sizes.map((size) => { return { name: size } })
-    const flags = (emoteObject.nsfw ? 65536 : 0) | (emoteObject.zeroWidth ? 256 : 0)
+    const connections = emoteObject.ownerName
+      ? [
+          {
+            platform: 'TWITCH',
+            platformDisplayName: emoteObject.ownerName,
+          },
+        ]
+      : []
+    const images = emoteObject.sizes.map((size) => {
+      const parsed = Number.parseInt(String(size))
+      return {
+        mime: `image/${channel.format}`,
+        scale: Number.isNaN(parsed) ? 1 : parsed,
+      }
+    })
 
     return new SevenTVEmote(
       channel,
       emoteObject.id,
       {
-        name: emoteObject.code,
-        data: {
-          animated: emoteObject.animated,
-          flags,
-          host: {
-            files: sizes,
-          },
+        emote: {
+          defaultName: emoteObject.code,
           owner: {
-            display_name: emoteObject.ownerName,
+            connections,
           },
+          flags: {
+            animated: emoteObject.animated || false,
+            nsfw: emoteObject.nsfw || false,
+            defaultZeroWidth: emoteObject.zeroWidth || false,
+          },
+          images,
         },
       }
     )
