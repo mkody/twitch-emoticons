@@ -119,7 +119,7 @@ declare class EmoteFetcher {
    * Fetches the 7TV emotes for a channel.
    * @param {number} [channel] - ID of the channel.
    * @param {object} [options] - Options for fetching.
-   * @param {('webp'|'avif')} [options.format] - The type file format to use (webp/avif).
+   * @param {'webp' | 'avif'} [options.format] - The type file format to use (webp/avif).
    * @returns {Promise<Collection<string, SevenTVEmote>>} - A promise that resolves to a collection of {@linkcode SevenTVEmote}s.
    */
   public fetchSevenTVEmotes (
@@ -613,9 +613,9 @@ declare class Collection<K, V> extends Map<K, V> {
   /**
    * Finds first matching value by property or function.
    * Same as `Array#find`.
-   * @param {string|Function} propOrFunc - Property or function to test.
+   * @param {string | Function} propOrFunc - Property or function to test.
    * @param {any} [value] - Value to find.
-   * @returns {any|null} - The found item or null if none found.
+   * @returns {any | null} - The found item or null if none found.
    */
   public find (
     propOrFunc: string | ((item: V, index: number, coll: this) => boolean),

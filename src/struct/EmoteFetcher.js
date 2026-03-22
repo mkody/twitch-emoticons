@@ -223,7 +223,7 @@ class EmoteFetcher {
    * Gets the raw 7TV emotes data for a channel.
    * @private
    * @param {number} [id] - ID of the channel.
-   * @param {('webp'|'avif')} [format] - The type file format to use (webp/avif).
+   * @param {'webp' | 'avif'} [format] - The type file format to use (webp/avif).
    * @returns {Promise<object[]>} - A promise that resolves to an array of raw 7TV emote data.
    */
   _getRawSevenTVEmotes (id, format) {
@@ -252,7 +252,7 @@ class EmoteFetcher {
    * @private
    * @param {number} channelId - ID of the channel.
    * @param {object} data - Raw data.
-   * @param {('webp'|'avif')} format - The type file format to use (webp/avif).
+   * @param {'webp' | 'avif'} format - The type file format to use (webp/avif).
    * @param {SevenTVEmote} [existingEmote] - Existing emote to cache.
    * @returns {SevenTVEmote} - A SevenTVEmote instance.
    */
@@ -353,7 +353,7 @@ class EmoteFetcher {
    * Fetches the 7TV emotes for a channel.
    * @param {number} [channel] - ID of the channel.
    * @param {object} [options] - Options for fetching.
-   * @param {('webp'|'avif')} [options.format] - The type file format to use (webp/avif).
+   * @param {'webp' | 'avif'} [options.format] - The type file format to use (webp/avif).
    * @returns {Promise<Collection<string, SevenTVEmote>>} - A promise that resolves to a collection of {@linkcode SevenTVEmote}s.
    */
   fetchSevenTVEmotes (channel, options) {

@@ -7,9 +7,9 @@ class Collection extends Map {
   /**
    * Finds first matching value by property or function.
    * Same as `Array#find`.
-   * @param {string|Function} propOrFunc - Property or function to test.
+   * @param {string | Function} propOrFunc - Property or function to test.
    * @param {any} [value] - Value to find.
-   * @returns {any|null} - The found item or null if none found.
+   * @returns {any | null} - The found item or null if none found.
    */
   find (propOrFunc, value) {
     if (typeof propOrFunc === 'string') {
