@@ -25,7 +25,8 @@ Gets Twitch, BTTV, FFZ and 7TV emotes as well as parsing text to emotes!
 - The defaults for `EmoteParser` changed to use the `html` template, and it does not require `:colons:` by default (using `/(\w+)/` to match any words).
 - The default `html` template does not have `twitch-emote-{size}` anymore in its `class` attribute.  
   *The `size` is inconsistent between the different sources, so it cannot be reliably used.*
-- If you somehow used `EmoteFetcher.globalChannel`, it has now been removed.
+- If you somehow used `EmoteFetcher.globalChannel`, it has now been removed.  
+  *Directly use `EmoteFetcher.channels.get(null)` instead.*
 - The `EmoteFetcher.fetchSevenTVEmotes()`, `Emote.toLink()`, and `EmoteParse.parse()` methods now have their options as an object.
   - `fetcher.fetchSevenTVEmotes(null, { format: 'avif' })` - The first parameter is still the Twitch user ID (or `null` for global).
   - `emote.toLink({ size: 1, forceStatic: true, themeMode: 'light' })`
@@ -189,10 +190,24 @@ await fetcher.fetchFFZEmotes()
 await fetcher.fetchSevenTVEmotes(null, { format: 'avif' }) // Example of loading images in AVIF here
 ```
 
+With the emotes now fetched, you can look them up!  
+To grab a specific emote, you can do `fetcher.emotes.get('...')`, with the case-sensitive name of the emote in place of the ellipsis.  
+From there, you can read properties like `.id`, `.code`, `.ownerName`,
+`.animated`, `.imageType`, or `.type`, but you can also use the `.toLink()`
+method to… get a link!
+
+> Note: Some extended `Emote`s have additional properties:
+> - FFZ:
+>   - `.zeroWidth` (boolean, can overlay an another emote)
+>   - `.modifier` (boolean, emote effects, should be hidden)
+> - 7TV:
+>   - `.zeroWidth` (boolean, can overlay an another emote)
+>   - `.nsfw` (boolean, flagged "Sexual" or "Twitch disallowed")
+
 
 ### Parse strings to include emotes with `EmoteParser`
 
-And now that we have our list of emotes that we can expect to find, we should use it!  
+And now that we have our list of emotes that we can expect to find, we should use it.  
 Create an `EmoteParser` object:
 
 ```js
@@ -220,24 +235,8 @@ const parser = new EmoteParser(
 ) 
 ```
 
-Now that you have an EmoteParser object, you can do two things with it:
-look up an `Emote` or parse text and get the output as set by `type` or `template`.
-
-To grab a specific emote, you can do `fetcher.emotes.get('...')`, with the case-sensitive name of the emote in place of the ellipsis.  
-From there, you can read properties like `.id`, `.code`, `.ownerName`,
-`.animated`, `.imageType`, or `.type`, but you can also use the `.toLink()`
-method to… get a link!
-
-> Note: Some extended `Emote`s have additional properties:
-> - FFZ:
->   - `.zeroWidth` (boolean, can overlay an another emote)
->   - `.modifier` (boolean, emote effects, should be hidden)
-> - 7TV:
->   - `.zeroWidth` (boolean, can overlay an another emote)
->   - `.nsfw` (boolean, flagged "Sexual" or "Twitch disallowed")
-
-To parse text, you use the `parser.parse()` method.  
-The first parameter is the input text. There is also an optional second parameter
+And now, we can parse text and get the output as set by `type` or `template`, using the `parser.parse()` method.  
+Just pass the input text as the first parameter. There is also an optional second parameter
 where you can provide a few settings (which can overwrite the same ones set in the `EmoteFetcher`).
 
 ```js
