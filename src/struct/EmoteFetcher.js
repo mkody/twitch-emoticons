@@ -223,10 +223,9 @@ class EmoteFetcher {
    * Gets the raw 7TV emotes data for a channel.
    * @private
    * @param {number} [id] - ID of the channel.
-   * @param {'webp' | 'avif'} [format] - The type file format to use (webp/avif).
    * @returns {Promise<object[]>} - A promise that resolves to an array of raw 7TV emote data.
    */
-  _getRawSevenTVEmotes (id, format) {
+  _getRawSevenTVEmotes (id) {
     return fetch(
       Constants.SevenTV.GQL,
       {
@@ -239,8 +238,8 @@ class EmoteFetcher {
             ? Constants.SevenTV.ChannelQuery
             : Constants.SevenTV.GlobalQuery,
           variables: id
-            ? { id: String(id), format: [format.toUpperCase()] }
-            : { format: [format.toUpperCase()] },
+            ? { platformId: String(id) }
+            : undefined,
         }),
       }
     )
@@ -364,10 +363,10 @@ class EmoteFetcher {
       format = 'webp',
     } = options || {}
 
-    return this._getRawSevenTVEmotes(channel, format).then((rawEmotes) => {
+    return this._getRawSevenTVEmotes(channel).then((rawEmotes) => {
       const emoteItems = channel
-        ? rawEmotes?.data?.userByConnection?.emote_sets?.find((set) => set.flags === 0)?.emotes
-        : rawEmotes?.data?.namedEmoteSet?.emotes
+        ? rawEmotes?.data?.users?.userByConnection?.style?.activeEmoteSet?.emotes?.items
+        : rawEmotes?.data?.emoteSets?.global?.emotes?.items
 
       for (const data of Array.isArray(emoteItems) ? emoteItems : []) {
         this._cacheSevenTVEmote(channel, data, format)
