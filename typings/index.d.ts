@@ -198,7 +198,7 @@ export class EmoteParser {
 export abstract class Emote {
   /**
    * Base class for emotes.
-   * This constructor is not to be used.
+   * This constructor is not to be used directly.
    * @param {Channel} channel - {@linkcode Channel} this emote belongs to.
    * @param {string} id - ID of the emote.
    * @param {data} data - The raw emote data.
