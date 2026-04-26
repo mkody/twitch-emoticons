@@ -14,7 +14,7 @@ class EmoteParser {
    * @param {'html' | 'markdown' | 'bbcode' | 'plain'} [options.type='html'] - The type of the parser.
    * Can be one of `html`, `markdown`, `bbcode`, or `plain`.
    * If the `template` option is provided, this is ignored.
-   * @param {RegExp} [options.match=/(\w+)/g] - The regular expression that matches an emote.
+   * @param {RegExp} [options.match=/([^\s]+)/g] - The regular expression that matches an emote.
    * Must be a global regex, with one capture group for the emote code.
    */
   constructor (fetcher, options = {}) {
@@ -31,7 +31,7 @@ class EmoteParser {
     this.options = {
       template: '',
       type: 'html',
-      match: /(\w+)/g,
+      match: /([^\s]+)/g,
       ...options,
     }
 

@@ -42,6 +42,27 @@ describe('Test Twitch emotes', () => {
       })
     })
 
+    describe('Test "classic" emoticons', () => {
+      const emoteFetcher = new EmoteFetcher({
+        twitchAppID: env.TWITCH_ID,
+        twitchAppSecret: env.TWITCH_SECRET,
+      })
+      const emoteParser = new EmoteParser(emoteFetcher, {
+        type: 'markdown',
+      })
+
+      test('Get ":)" emote', async () => {
+        await emoteFetcher.fetchTwitchEmotes()
+        const emote = emoteFetcher.emotes.get(':)')
+        expect(emote.toLink({ size: 1 })).toBe('https://static-cdn.jtvnw.net/emoticons/v2/1/default/dark/2.0')
+      })
+
+      test('Parse string with ":)", ":D", ">(", ":|", ":/", "O_o"', () => {
+        const text = emoteParser.parse('Various "classic" emoticons: :) :D >( :| :/ O_o')
+        expect(text).toBe('Various "classic" emoticons: ![:)](https://static-cdn.jtvnw.net/emoticons/v2/1/default/dark/1.0 ":)") ![:D](https://static-cdn.jtvnw.net/emoticons/v2/3/default/dark/1.0 ":D") ![>(](https://static-cdn.jtvnw.net/emoticons/v2/4/default/dark/1.0 ">(") ![:|](https://static-cdn.jtvnw.net/emoticons/v2/5/default/dark/1.0 ":|") ![:/](https://static-cdn.jtvnw.net/emoticons/v2/10/default/dark/1.0 ":/") ![O_o](https://static-cdn.jtvnw.net/emoticons/v2/6/default/dark/1.0 "O_o")')
+      })
+    })
+
     describe('Test user emotes', () => {
       const emoteFetcher = new EmoteFetcher({
         twitchAppID: env.TWITCH_ID,

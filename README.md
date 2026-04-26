@@ -22,7 +22,7 @@ Gets Twitch, BTTV, FFZ and 7TV emotes as well as parsing text to emotes!
 - The initialization of `EmoteFetcher` changed to only use an object as the first parameter for options.
   - API keys for Twitch must now be set with `twitchAppID` and `twitchAppSecret` properties.
   - The previously available `apiClient` is now set in this object too.
-- The defaults for `EmoteParser` changed to use the `html` template, and it does not require `:colons:` by default (using `/(\w+)/` to match any words).
+- The defaults for `EmoteParser` changed to use the `html` template, and it does not require `:colons:` by default (using `/([^\s]+)/g` to match non-whitespaces).
 - The default `html` template does not have `twitch-emote-{size}` anymore in its `class` attribute.  
   *The `size` is inconsistent between the different sources, so it cannot be reliably used.*
 - If you somehow used `EmoteFetcher.globalChannel`, it has now been removed.  
@@ -124,12 +124,12 @@ pnpm add jsr:@mkody/twitch-emoticons
 # or
 yarn add jsr:@mkody/twitch-emoticons
 # or (version has to be specified while it is a pre-release)
-deno add jsr:@mkody/twitch-emoticons@3.0.0-beta.5
+deno add jsr:@mkody/twitch-emoticons@3.0.0-beta.6
 ```
 
-[npm]: https://www.npmjs.com/package/@mkody/twitch-emoticons/v/3.0.0-beta.5
-[browse on npmx]: https://npmx.dev/package/@mkody/twitch-emoticons/v/3.0.0-beta.5
-[jsr]: https://jsr.io/@mkody/twitch-emoticons@3.0.0-beta.5
+[npm]: https://www.npmjs.com/package/@mkody/twitch-emoticons/v/3.0.0-beta.6
+[browse on npmx]: https://npmx.dev/package/@mkody/twitch-emoticons/v/3.0.0-beta.6
+[jsr]: https://jsr.io/@mkody/twitch-emoticons@3.0.0-beta.6
 
 
 ## Quick docs
@@ -230,7 +230,7 @@ const parser = new EmoteParser(
     template, // <string> - Default: ''
 
     // You can customize the regular expression used to find possible emotes.
-    match, // <RegExp> - Default: /(\w+)/g
+    match, // <RegExp> - Default: /([^\s]+)/g
   },
 ) 
 ```
@@ -284,9 +284,9 @@ const fetcher = new EmoteFetcher({
 const parser = new EmoteParser(fetcher, {
   type: 'markdown',   // Can be `html` (default), `markdown`, `bbcode`, or `plain`.
                       // You can also set your own output, see example 3.
-  match: /:(.+?):/g,  // This means your emotes must be between colons (:Kappa:).
-                      // The default is /(\w+)/g and matches any word characters,
-                      // similar to regular Twitch chat.
+  match: /:(.+?):/g,  // Requires emotes to be between colons (:Kappa:).
+                      // The default `/([^\s]+)/g` matches any non-whitespace
+                      // characters, similar to regular Twitch chat.
 })
 
 await fetcher.fetchTwitchEmotes(null) // `null` or a missing parameter will load "global" emotes.

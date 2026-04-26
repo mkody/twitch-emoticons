@@ -44,7 +44,7 @@
 
 
     <section class="package">
-        <h3>@mkody/twitch-emoticons 3.0.0-beta.5</h3>		
+        <h3>@mkody/twitch-emoticons 3.0.0-beta.6</h3>		
     </section>
 
 
@@ -82,7 +82,7 @@ If you want to see the latest stable version (as of this commit),
 <li>The previously available <code>apiClient</code> is now set in this object too.</li>
 </ul>
 </li>
-<li>The defaults for <code>EmoteParser</code> changed to use the <code>html</code> template, and it does not require <code>:colons:</code> by default (using <code>/(\w+)/</code> to match any words).</li>
+<li>The defaults for <code>EmoteParser</code> changed to use the <code>html</code> template, and it does not require <code>:colons:</code> by default (using <code>/([^\s]+)/g</code> to match non-whitespaces).</li>
 <li>The default <code>html</code> template does not have <code>twitch-emote-{size}</code> anymore in its <code>class</code> attribute.<br>
 <em>The <code>size</code> is inconsistent between the different sources, so it cannot be reliably used.</em></li>
 <li>If you somehow used <code>EmoteFetcher.globalChannel</code>, it has now been removed.<br>
@@ -147,7 +147,7 @@ If you are only using BetterTTV, FrankerFaceZ and 7TV you do not need to provide
 <p>You must use a Twitch user ID instead of the username to fetch users' emotes.<br>
 If you just need to get one or a very few, you can <a href="https://s.kdy.ch/twitchid/">use this page to manually convert them</a> (please do not automate/abuse it).</p>
 <h2>Install</h2>
-<p>From <a href="https://www.npmjs.com/package/@mkody/twitch-emoticons/v/3.0.0-beta.5">npm</a> (<a href="https://npmx.dev/package/@mkody/twitch-emoticons/v/3.0.0-beta.5">browse on npmx</a>; use the <code>@next</code> tag):</p>
+<p>From <a href="https://www.npmjs.com/package/@mkody/twitch-emoticons/v/3.0.0-beta.6">npm</a> (<a href="https://npmx.dev/package/@mkody/twitch-emoticons/v/3.0.0-beta.6">browse on npmx</a>; use the <code>@next</code> tag):</p>
 <pre class="prettyprint source lang-sh"><code>npm install @mkody/twitch-emoticons@next
 # or
 pnpm add @mkody/twitch-emoticons@next
@@ -156,14 +156,14 @@ yarn add @mkody/twitch-emoticons@next
 # or
 deno add npm:@mkody/twitch-emoticons@next
 </code></pre>
-<p>From <a href="https://jsr.io/@mkody/twitch-emoticons@3.0.0-beta.5">jsr</a>:</p>
+<p>From <a href="https://jsr.io/@mkody/twitch-emoticons@3.0.0-beta.6">jsr</a>:</p>
 <pre class="prettyprint source lang-sh"><code>npx jsr add @mkody/twitch-emoticons
 # or
 pnpm add jsr:@mkody/twitch-emoticons
 # or
 yarn add jsr:@mkody/twitch-emoticons
 # or (version has to be specified while it is a pre-release)
-deno add jsr:@mkody/twitch-emoticons@3.0.0-beta.5
+deno add jsr:@mkody/twitch-emoticons@3.0.0-beta.6
 </code></pre>
 <h2>Quick docs</h2>
 <details>
@@ -255,7 +255,7 @@ Create an <code>EmoteParser</code> object:</p>
     template, // &lt;string> - Default: ''
 
     // You can customize the regular expression used to find possible emotes.
-    match, // &lt;RegExp> - Default: /(\w+)/g
+    match, // &lt;RegExp> - Default: /([^\s]+)/g
   },
 ) 
 </code></pre>
@@ -298,9 +298,9 @@ const fetcher = new EmoteFetcher({
 const parser = new EmoteParser(fetcher, {
   type: 'markdown',   // Can be `html` (default), `markdown`, `bbcode`, or `plain`.
                       // You can also set your own output, see example 3.
-  match: /:(.+?):/g,  // This means your emotes must be between colons (:Kappa:).
-                      // The default is /(\w+)/g and matches any word characters,
-                      // similar to regular Twitch chat.
+  match: /:(.+?):/g,  // Requires emotes to be between colons (:Kappa:).
+                      // The default `/([^\s]+)/g` matches any non-whitespace
+                      // characters, similar to regular Twitch chat.
 })
 
 await fetcher.fetchTwitchEmotes(null) // `null` or a missing parameter will load &quot;global&quot; emotes.
