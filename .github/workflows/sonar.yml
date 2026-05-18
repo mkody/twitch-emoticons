@@ -2,10 +2,10 @@ name: Sonar
 
 on:
   push:
-    branches: [ "master" ]
+    branches: ["master"]
 
   pull_request_target:
-    branches: [ "master" ]
+    branches: ["master"]
 
   workflow_dispatch:
 
@@ -25,7 +25,7 @@ jobs:
           fetch-tags: true
 
       - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v7
+        uses: SonarSource/sonarqube-scan-action@v8
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

@@ -1,17 +1,10 @@
 {
   "tags": {
     "allowUnknownTags": true,
-    "dictionaries": [
-      "jsdoc"
-    ]
+    "dictionaries": ["jsdoc"]
   },
   "source": {
-    "include": [
-      "README.md",
-      "src/struct",
-      "src/util",
-      "package.json"
-    ],
+    "include": ["README.md", "src/struct", "src/util", "package.json"],
     "includePattern": ".js$",
     "excludePattern": "(node_modules/|docs)"
   },
@@ -22,9 +15,7 @@
     "default": {
       "includeDate": false,
       "staticFiles": {
-        "include": [
-          "./docs_static"
-        ]
+        "include": ["./docs_static"]
       }
     }
   },
@@ -36,9 +27,7 @@
     "verbose": true,
     "template": "./node_modules/docdash"
   },
-  "plugins": [
-    "plugins/markdown"
-  ],
+  "plugins": ["plugins/markdown"],
   "docdash": {
     "sort": false,
     "private": false,
