@@ -145,6 +145,7 @@ export class EmoteParser {
    * A parser to replace text with emotes.
    * @param {EmoteFetcher} fetcher - The {@linkcode EmoteFetcher} to use the cache of.
    * @param {object} [options={}] - Options for the parser.
+   * @param {boolean} [options.allowNSFW=false] - Only for 7TV: allow usage of NSFW/unlisted emotes.
    * @param {string} [options.template=''] - The template to be used.
    * The strings that can be interpolated are:
    * - `{link}` The link of the emote.
@@ -160,6 +161,7 @@ export class EmoteParser {
   public constructor (
     fetcher: EmoteFetcher,
     options?: {
+      allowNSFW?: boolean,
       template?: string,
       type?: 'html' | 'markdown' | 'bbcode' | 'plain',
       match?: RegExp

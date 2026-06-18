@@ -85,9 +85,11 @@ If you want to see the latest stable version (as of this commit),
 <li>The defaults for <code>EmoteParser</code> changed to use the <code>html</code> template, and it does not require <code>:colons:</code> by default (using <code>/([^\s]+)/g</code> to match non-whitespaces).</li>
 <li>The default <code>html</code> template does not have <code>twitch-emote-{size}</code> anymore in its <code>class</code> attribute.<br>
 <em>The <code>size</code> is inconsistent between the different sources, so it cannot be reliably used.</em></li>
+<li>The <code>EmoteParser</code> now has an <code>allowNSFW</code> option, set to <code>false</code> by default.<br>
+<em>This prevents rendering &quot;NSFW&quot; emotes using <code>EmoteParser.parse()</code>, which is a flag currently only available to emotes from 7TV when they are flagged &quot;Sexual&quot;/&quot;Twitch disallowed&quot; or they are unlisted.</em></li>
 <li>If you somehow used <code>EmoteFetcher.globalChannel</code>, it has now been removed.<br>
 <em>Directly use <code>EmoteFetcher.channels.get(null)</code> instead.</em></li>
-<li>The <code>EmoteFetcher.fetchSevenTVEmotes()</code>, <code>Emote.toLink()</code>, and <code>EmoteParse.parse()</code> methods now have their options as an object.
+<li>The <code>EmoteFetcher.fetchSevenTVEmotes()</code>, <code>Emote.toLink()</code>, and <code>EmoteParser.parse()</code> methods now have their options as an object.
 <ul>
 <li><code>fetcher.fetchSevenTVEmotes(null, { format: 'avif' })</code> - The first parameter is still the Twitch user ID (or <code>null</code> for global).</li>
 <li><code>emote.toLink({ size: 1, forceStatic: true, themeMode: 'light' })</code></li>
@@ -228,7 +230,7 @@ method to… get a link!</p>
 <li>7TV:
 <ul>
 <li><code>.zeroWidth</code> (boolean, can overlay an another emote)</li>
-<li><code>.nsfw</code> (boolean, flagged &quot;Sexual&quot; or &quot;Twitch disallowed&quot;)</li>
+<li><code>.nsfw</code> (boolean, flagged &quot;Sexual&quot;/&quot;Twitch disallowed&quot; or unlisted)</li>
 </ul>
 </li>
 </ul>
@@ -242,6 +244,9 @@ Create an <code>EmoteParser</code> object:</p>
 
   // The second parameter is an *optional* object with settings.
   {
+    // Allow, or explicitly disallow, rendering emotes we flag as &quot;NSFW&quot; (7TV only)
+    allowNSFW, // &lt;boolean> - Default: false
+    
     // What output should be used when you parse messages? There are two ways to set that up:
     // Option 1: Use one of the provided templates:
     // - 'html': `&lt;img alt=&quot;{name}&quot; title=&quot;{name}&quot; class=&quot;twitch-emote&quot; src=&quot;{link}&quot;>`
@@ -342,6 +347,8 @@ const fetcher = new EmoteFetcher({
   twitchThemeMode: 'dark',
 })
 const parser = new EmoteParser(fetcher, {
+  // Allow NSFW/unlisted emotes from 7TV
+  allowNSFW: true,
   // Custom HTML format
   template: `
     &lt;img
@@ -353,7 +360,7 @@ const parser = new EmoteParser(fetcher, {
       data-overlay=&quot;{is-zero-width}&quot;
       data-nsfw=&quot;{is-nsfw}&quot;
     >`,
-  // Matches words (like \w) but also dashes
+  // Matches words (like \w) and dashes
   match: /([a-zA-Z0-9_\-]+)/g,
 })
 

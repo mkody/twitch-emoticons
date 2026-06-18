@@ -5,6 +5,7 @@ class EmoteParser {
    * A parser to replace text with emotes.
    * @param {EmoteFetcher} fetcher - The {@linkcode EmoteFetcher} to use the cache of.
    * @param {object} [options={}] - Options for the parser.
+   * @param {boolean} [options.allowNSFW=false] - Only for 7TV: allow usage of NSFW/unlisted emotes.
    * @param {string} [options.template=''] - The template to be used.
    * The strings that can be interpolated are:
    * - `{link}` The link of the emote.
@@ -29,6 +30,7 @@ class EmoteParser {
      * @type {object}
      */
     this.options = {
+      allowNSFW: false,
       template: '',
       type: 'html',
       match: /([^\s]+)/g,
@@ -92,6 +94,7 @@ class EmoteParser {
       const emote = this.fetcher.emotes.get(id)
       if (!emote) return matched
       if (emote.modifier) return ''
+      if (emote.nsfw && !this.options.allowNSFW) return matched
 
       const template = this.options.template || Constants.Templates[this.options.type]
       const link = emote.toLink({ size, forceStatic, themeMode })

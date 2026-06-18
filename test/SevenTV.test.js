@@ -93,6 +93,7 @@ describe('Test 7TV emotes', () => {
 
     test('YABE: animated, not nsfw, not zero-width', async () => {
       await emoteFetcher.fetchSevenTVEmotes(44317909)
+
       const emote = emoteFetcher.emotes.get('YABE')
       expect(emote.animated).toBe(true)
       expect(emote.nsfw).toBe(false)
@@ -118,6 +119,34 @@ describe('Test 7TV emotes', () => {
       expect(emote.animated).toBe(true)
       expect(emote.nsfw).toBe(true)
       expect(emote.zeroWidth).toBe(false)
+    })
+  })
+
+  describe('Check allowNSFW option', () => {
+    const emoteFetcher = new EmoteFetcher()
+
+    test('Default option (false)', async () => {
+      await emoteFetcher.fetchSevenTVEmotes(44317909)
+
+      const defaultParser = new EmoteParser(emoteFetcher)
+      const text = defaultParser.parse('This is a test string with :THIS: in it.')
+      expect(text).toBe('This is a test string with :THIS: in it.')
+    })
+
+    test('Set to false', async () => {
+      const disallowedFetcher = new EmoteParser(emoteFetcher, { allowNSFW: false })
+      const text = disallowedFetcher.parse('This is a test string with :THIS: in it.')
+      expect(text).toBe('This is a test string with :THIS: in it.')
+    })
+
+    test('Set to true', async () => {
+      const allowedFetcher = new EmoteParser(emoteFetcher, {
+        allowNSFW: true,
+        type: 'markdown',
+        match: /:(.+?):/g,
+      })
+      const text = allowedFetcher.parse('This is a test string with :THIS: in it.')
+      expect(text).toBe('This is a test string with ![THIS](https://cdn.7tv.app/emote/01FKM7D0C8000F3BGNNF3YQE66/1x.webp "THIS") in it.')
     })
   })
 })

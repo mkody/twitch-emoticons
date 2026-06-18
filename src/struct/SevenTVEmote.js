@@ -85,7 +85,7 @@ class SevenTVEmote extends Emote {
      * Do note that this flag isn't always applied to what *looks* NSFW.
      * @type {boolean}
      */
-    this.nsfw = (data.data.flags & EmoteFlags.Sexual) !== 0 || (data.data.flags & EmoteFlags.TwitchDisallowed) !== 0 || !data.data.listed
+    this.nsfw = (data.data.flags & EmoteFlags.Sexual) !== 0 || (data.data.flags & EmoteFlags.TwitchDisallowed) !== 0 || data.data.listed === false
   }
 
   /**

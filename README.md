@@ -25,9 +25,11 @@ Gets Twitch, BTTV, FFZ and 7TV emotes as well as parsing text to emotes!
 - The defaults for `EmoteParser` changed to use the `html` template, and it does not require `:colons:` by default (using `/([^\s]+)/g` to match non-whitespaces).
 - The default `html` template does not have `twitch-emote-{size}` anymore in its `class` attribute.  
   *The `size` is inconsistent between the different sources, so it cannot be reliably used.*
+- The `EmoteParser` now has an `allowNSFW` option, set to `false` by default.  
+  *This prevents rendering "NSFW" emotes using `EmoteParser.parse()`, which is a flag currently only available to emotes from 7TV when they are flagged "Sexual"/"Twitch disallowed" or they are unlisted.*
 - If you somehow used `EmoteFetcher.globalChannel`, it has now been removed.  
   *Directly use `EmoteFetcher.channels.get(null)` instead.*
-- The `EmoteFetcher.fetchSevenTVEmotes()`, `Emote.toLink()`, and `EmoteParse.parse()` methods now have their options as an object.
+- The `EmoteFetcher.fetchSevenTVEmotes()`, `Emote.toLink()`, and `EmoteParser.parse()` methods now have their options as an object.
   - `fetcher.fetchSevenTVEmotes(null, { format: 'avif' })` - The first parameter is still the Twitch user ID (or `null` for global).
   - `emote.toLink({ size: 1, forceStatic: true, themeMode: 'light' })`
   - `parser.parse('Kappa', { size: 2, forceStatic: true, themeMode: 'dark' })` - The first parameter is still the input text.
@@ -202,7 +204,7 @@ method to… get a link!
 >   - `.modifier` (boolean, emote effects, should be hidden)
 > - 7TV:
 >   - `.zeroWidth` (boolean, can overlay an another emote)
->   - `.nsfw` (boolean, flagged "Sexual" or "Twitch disallowed")
+>   - `.nsfw` (boolean, flagged "Sexual"/"Twitch disallowed" or unlisted)
 
 
 ### Parse strings to include emotes with `EmoteParser`
@@ -217,6 +219,9 @@ const parser = new EmoteParser(
 
   // The second parameter is an *optional* object with settings.
   {
+    // Allow, or explicitly disallow, rendering emotes we flag as "NSFW" (7TV only)
+    allowNSFW, // <boolean> - Default: false
+    
     // What output should be used when you parse messages? There are two ways to set that up:
     // Option 1: Use one of the provided templates:
     // - 'html': `<img alt="{name}" title="{name}" class="twitch-emote" src="{link}">`
@@ -337,6 +342,8 @@ const fetcher = new EmoteFetcher({
   twitchThemeMode: 'dark',
 })
 const parser = new EmoteParser(fetcher, {
+  // Allow NSFW/unlisted emotes from 7TV
+  allowNSFW: true,
   // Custom HTML format
   template: `
     <img
@@ -348,7 +355,7 @@ const parser = new EmoteParser(fetcher, {
       data-overlay="{is-zero-width}"
       data-nsfw="{is-nsfw}"
     >`,
-  // Matches words (like \w) but also dashes
+  // Matches words (like \w) and dashes
   match: /([a-zA-Z0-9_\-]+)/g,
 })
 
