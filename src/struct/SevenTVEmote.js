@@ -81,11 +81,11 @@ class SevenTVEmote extends Emote {
     this.zeroWidth = (data.flags & ActiveEmoteFlags.ZeroWidth) !== 0 || (data.data.flags & EmoteFlags.ZeroWidth) !== 0
 
     /**
-     * If emote is NSFW (or Twitch disallowed, just in case).
+     * If emote is NSFW/unlisted (or Twitch disallowed, just in case).
      * Do note that this flag isn't always applied to what *looks* NSFW.
      * @type {boolean}
      */
-    this.nsfw = (data.data.flags & EmoteFlags.Sexual) !== 0 || (data.data.flags & EmoteFlags.TwitchDisallowed) !== 0
+    this.nsfw = (data.data.flags & EmoteFlags.Sexual) !== 0 || (data.data.flags & EmoteFlags.TwitchDisallowed) !== 0 || !data.data.listed
   }
 
   /**

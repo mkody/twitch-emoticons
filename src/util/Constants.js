@@ -25,6 +25,7 @@ export default {
                   name
                 }
               }
+              listed
               owner {
                 display_name
               }
@@ -50,6 +51,7 @@ export default {
                     name
                   }
                 }
+                listed
                 owner {
                   display_name
                 }

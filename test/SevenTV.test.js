@@ -113,6 +113,11 @@ describe('Test 7TV emotes', () => {
       expect(emote.zeroWidth).toBe(true)
     })
 
-    test.todo('We need to find an emote with a "Sexual" flag for testing.')
+    test('THIS: animated, nsfw, not zero-width', async () => {
+      const emote = emoteFetcher.emotes.get('THIS')
+      expect(emote.animated).toBe(true)
+      expect(emote.nsfw).toBe(true)
+      expect(emote.zeroWidth).toBe(false)
+    })
   })
 })
