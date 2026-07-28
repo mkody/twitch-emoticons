@@ -252,11 +252,17 @@ class EmoteFetcher {
      * @returns {Promise&lt;object[]>}
      */
     _getRawSevenTVEmotes(id) {
-        const endpoint = !id
-            ? Constants.SevenTV.Global
-            : Constants.SevenTV.Channel(id); // eslint-disable-line new-cap
+        // If we have a channel ID, we'll need to find the user's emote-set ID,
+        // and then we get the emotes from there.
+        if (id) {
+            return axios.get(Constants.SevenTV.Channel(id)).then(req => { // eslint-disable-line new-cap
+                const emoteSetId = req.data.emote_set.id;
+                return axios.get(Constants.SevenTV.EmoteSet(emoteSetId)).then(reqSet => reqSet.data); // eslint-disable-line new-cap
+            });
+        }
 
-        return axios.get(endpoint).then(req => req.data);
+        // Otherwise, we can just fetch the global emotes directly.
+        return axios.get(Constants.SevenTV.Global).then(req => req.data);
     }
 
     /**
@@ -355,14 +361,9 @@ class EmoteFetcher {
      */
     fetchSevenTVEmotes(channel = null, format = 'webp') {
         return this._getRawSevenTVEmotes(channel).then(rawEmotes => {
+            // We should have an 'emotes' property in our set
             if ('emotes' in rawEmotes) {
-                // From an emote set (like "global")
                 for (const data of rawEmotes.emotes) {
-                    this._cacheSevenTVEmote(channel, data, format);
-                }
-            } else {
-                // From users
-                for (const data of rawEmotes.emote_set.emotes) {
                     this._cacheSevenTVEmote(channel, data, format);
                 }
             }

@@ -10,7 +10,8 @@ module.exports = {
     SevenTV: {
         Global: 'https://7tv.io/v3/emote-sets/global',
         Channel: id => `https://7tv.io/v3/users/twitch/${id}`,
-        CDN: (id, size) => `https://cdn.7tv.app/emote/${id}/${size}`
+        CDN: (id, size) => `https://cdn.7tv.app/emote/${id}/${size}`,
+        EmoteSet: id => `https://7tv.io/v3/emote-sets/${id}`
     },
     FFZ: {
         sets: {
