@@ -208,10 +208,13 @@ class EmoteFetcher {
         // If we have a channel ID, we'll need to find the user's emote-set ID,
         // and then we get the emotes from there.
         if (id) {
-            return axios.get(Constants.SevenTV.Channel(id)).then(req => { // eslint-disable-line new-cap
-                const emoteSetId = req.data.emote_set.id;
-                return axios.get(Constants.SevenTV.EmoteSet(emoteSetId)).then(reqSet => reqSet.data); // eslint-disable-line new-cap
-            });
+            return axios
+                .get(Constants.SevenTV.Channel(id)) // eslint-disable-line new-cap
+                .then(userReq => {
+                    return axios
+                        .get(Constants.SevenTV.EmoteSet(userReq.data.emote_set_id)) // eslint-disable-line new-cap
+                        .then(setReq => setReq.data);
+                });
         }
 
         // Otherwise, we can just fetch the global emotes directly.
