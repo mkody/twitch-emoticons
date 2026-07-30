@@ -166,4 +166,4 @@ This library uses the following:
 - [Twurple](https://twurple.js.org/) and the [Twitch API](https://dev.twitch.tv/)
 - [BetterTTV API](https://betterttv.com/developers/api)
 - [FrankerFaceZ API](https://api.frankerfacez.com/docs/)
-- [7TV API](https://7tv.io/)
+- [7TV API](https://7tv.app/api/docs)
