@@ -554,4 +554,4 @@ This library uses the following:
 - [Twurple](https://twurple.js.org/) and the [Twitch API](https://dev.twitch.tv/)
 - [BetterTTV API](https://betterttv.com/developers/api)
 - [FrankerFaceZ API](https://api.frankerfacez.com/docs/)
-- [7TV API (v3 via GraphQL)](https://github.com/SevenTV/SevenTV/tree/main/apps/api/src/http/v3/gql)
+- [7TV API (v3 via GraphQL)](https://7tv.app/api/docs#gql)
