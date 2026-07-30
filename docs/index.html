@@ -149,7 +149,7 @@ If you are only using BetterTTV, FrankerFaceZ and 7TV you do not need to provide
 <p>You must use a Twitch user ID instead of the username to fetch users' emotes.<br>
 If you just need to get one or a very few, you can <a href="https://s.kdy.ch/twitchid/">use this page to manually convert them</a> (please do not automate/abuse it).</p>
 <h2>Install</h2>
-<p>From <a href="https://www.npmjs.com/package/@mkody/twitch-emoticons/v/3.0.0-beta.6">npm</a> (<a href="https://npmx.dev/package/@mkody/twitch-emoticons/v/3.0.0-beta.6">browse on npmx</a>; use the <code>@next</code> tag):</p>
+<p>From <a href="https://www.npmjs.com/package/@mkody/twitch-emoticons/v/3.0.0-beta.7">npm</a> (<a href="https://npmx.dev/package/@mkody/twitch-emoticons/v/3.0.0-beta.7">browse on npmx</a>; use the <code>@next</code> tag):</p>
 <pre class="prettyprint source lang-sh"><code>npm install @mkody/twitch-emoticons@next
 # or
 pnpm add @mkody/twitch-emoticons@next
@@ -158,22 +158,52 @@ yarn add @mkody/twitch-emoticons@next
 # or
 deno add npm:@mkody/twitch-emoticons@next
 </code></pre>
-<p>From <a href="https://jsr.io/@mkody/twitch-emoticons@3.0.0-beta.6">jsr</a>:</p>
+<p>From <a href="https://jsr.io/@mkody/twitch-emoticons@3.0.0-beta.7">jsr</a>:</p>
 <pre class="prettyprint source lang-sh"><code>npx jsr add @mkody/twitch-emoticons
 # or
 pnpm add jsr:@mkody/twitch-emoticons
 # or
 yarn add jsr:@mkody/twitch-emoticons
 # or (version has to be specified while it is a pre-release)
-deno add jsr:@mkody/twitch-emoticons@3.0.0-beta.6
+deno add jsr:@mkody/twitch-emoticons@3.0.0-beta.7
 </code></pre>
+<h3>Client-side usage</h3>
+<p>While not recommended (please do not expose your Twitch secrets!), you can use this library directly in the browser.</p>
+<p><strong>CJS:</strong></p>
+<pre class="prettyprint source lang-html"><code>&lt;!--
+CDNs:
+- jsDelivr: https://cdn.jsdelivr.net/npm/@mkody/twitch-emoticons@3/dist/TwitchEmoticons.min.js
+- unpkg: https://unpkg.com/@mkody/twitch-emoticons@3/dist/TwitchEmoticons.min.js
+-->
+&lt;script src=&quot;./dist/TwitchEmoticons.min.js&quot;>&lt;/script>
+&lt;script>
+  const fetcher = new TwitchEmoticons.EmoteFetcher()
+  const parser = new TwitchEmoticons.EmoteParser(fetcher)
+  // ...
+&lt;/script>
+</code></pre>
+<p><strong>ESM:</strong></p>
+<pre class="prettyprint source lang-html"><code>&lt;script type=&quot;module&quot;>
+  /*
+  CDNs:
+  - jsDelivr: https://cdn.jsdelivr.net/npm/@mkody/twitch-emoticons@3/dist/TwitchEmoticons.esm.min.js
+  - unpkg: https://unpkg.com/@mkody/twitch-emoticons@3/dist/TwitchEmoticons.esm.min.js
+  */
+  import { EmoteFetcher, EmoteParser } from './dist/TwitchEmoticons.esm.min.js'
+
+  const fetcher = new EmoteFetcher()
+  const parser = new EmoteParser(fetcher)
+  // ...
+&lt;/script>
+</code></pre>
+<p>Demos: <a href="https:%5C/%5C/s.kdy.ch/twitch-emoticons/">https://s.kdy.ch/twitch-emoticons/</a></p>
 <h2>Quick docs</h2>
 <details>
 <summary>Click here to toggle the docs</summary>
 <p>Here is some quick documentation to explain our two classes, the principal methods, and some settings.</p>
 <blockquote>
 <p><strong>NOTE:</strong><br>
-If you want a more complete documentation, see: https://mkody.github.io/twitch-emoticons/</p>
+If you want a more complete documentation, see: <a href="https:%5C/%5C/mkody.github.io/twitch-emoticons/">https://mkody.github.io/twitch-emoticons/</a></p>
 </blockquote>
 <h3>Grab emotes with <code>EmoteFetcher</code></h3>
 <p>First, you need to load a list of emotes, and for that you create a new <code>EmoteFetcher</code> object:</p>

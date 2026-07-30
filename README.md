@@ -126,12 +126,50 @@ pnpm add jsr:@mkody/twitch-emoticons
 # or
 yarn add jsr:@mkody/twitch-emoticons
 # or (version has to be specified while it is a pre-release)
-deno add jsr:@mkody/twitch-emoticons@3.0.0-beta.6
+deno add jsr:@mkody/twitch-emoticons@3.0.0-beta.7
 ```
 
-[npm]: https://www.npmjs.com/package/@mkody/twitch-emoticons/v/3.0.0-beta.6
-[browse on npmx]: https://npmx.dev/package/@mkody/twitch-emoticons/v/3.0.0-beta.6
-[jsr]: https://jsr.io/@mkody/twitch-emoticons@3.0.0-beta.6
+[npm]: https://www.npmjs.com/package/@mkody/twitch-emoticons/v/3.0.0-beta.7
+[browse on npmx]: https://npmx.dev/package/@mkody/twitch-emoticons/v/3.0.0-beta.7
+[jsr]: https://jsr.io/@mkody/twitch-emoticons@3.0.0-beta.7
+
+
+### Client-side usage
+
+While not recommended (please do not expose your Twitch secrets!), you can use this library directly in the browser.
+
+**CJS:**
+```html
+<!--
+CDNs:
+- jsDelivr: https://cdn.jsdelivr.net/npm/@mkody/twitch-emoticons@3/dist/TwitchEmoticons.min.js
+- unpkg: https://unpkg.com/@mkody/twitch-emoticons@3/dist/TwitchEmoticons.min.js
+-->
+<script src="./dist/TwitchEmoticons.min.js"></script>
+<script>
+  const fetcher = new TwitchEmoticons.EmoteFetcher()
+  const parser = new TwitchEmoticons.EmoteParser(fetcher)
+  // ...
+</script>
+```
+
+**ESM:**
+```html
+<script type="module">
+  /*
+  CDNs:
+  - jsDelivr: https://cdn.jsdelivr.net/npm/@mkody/twitch-emoticons@3/dist/TwitchEmoticons.esm.min.js
+  - unpkg: https://unpkg.com/@mkody/twitch-emoticons@3/dist/TwitchEmoticons.esm.min.js
+  */
+  import { EmoteFetcher, EmoteParser } from './dist/TwitchEmoticons.esm.min.js'
+
+  const fetcher = new EmoteFetcher()
+  const parser = new EmoteParser(fetcher)
+  // ...
+</script>
+```
+
+Demos: <https://s.kdy.ch/twitch-emoticons/>
 
 
 ## Quick docs
@@ -142,7 +180,7 @@ deno add jsr:@mkody/twitch-emoticons@3.0.0-beta.6
 Here is some quick documentation to explain our two classes, the principal methods, and some settings.
 
 > **NOTE:**  
-> If you want a more complete documentation, see: https://mkody.github.io/twitch-emoticons/
+> If you want a more complete documentation, see: <https://mkody.github.io/twitch-emoticons/>
 
 
 ### Grab emotes with `EmoteFetcher`
