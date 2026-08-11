@@ -2,11 +2,11 @@
 
 ## Supported Versions
 
-| Version | Supported                             |
-| ------- | ---------------------------------.--- |
-| >= 3.0  | :white_check_mark: (current)          |
-| >= 2.9  | :white_check_mark: (until March 2027) |
-| < 2.9   | :x:                                   |
+| Version | Supported                                 |
+| ------- | ----------------------------------------- |
+| >= 3.0  | :white_check_mark: (current)              |
+| >= 2.9  | :white_check_mark: (until September 2027) |
+| < 2.9   | :x:                                       |
 
 
 ## Reporting a Vulnerability
