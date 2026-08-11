@@ -2,11 +2,13 @@
 
 ## Supported Versions
 
-| Version | Supported                             |
-| ------- | ---------------------------------.--- |
-| >= 3.0  | :white_check_mark: (current)          |
-| >= 2.9  | :white_check_mark: (until March 2027) |
-| < 2.9   | :x:                                   |
+| Version | Supported                                 |
+| ------- | ----------------------------------------- |
+| >= 3.0  | Check on the [master] branch              |
+| >= 2.9  | :white_check_mark: (until September 2027) |
+| < 2.9   | :x:                                       |
+
+[master]: https://github.com/mkody/twitch-emoticons/blob/master/SECURITY.md
 
 
 ## Reporting a Vulnerability
