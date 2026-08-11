@@ -1,6 +1,6 @@
 {
   "name": "@mkody/twitch-emoticons",
-  "version": "3.0.0-beta.4",
+  "version": "3.0.0-beta.7",
   "description": "Gets Twitch, BTTV, FFZ and 7TV emotes as well as parsing text to emotes!",
   "type": "module",
   "license": "MIT",
@@ -50,18 +50,18 @@
   "jsdelivr": "./dist/TwitchEmoticons.min.js",
   "unpkg": "./dist/TwitchEmoticons.min.js",
   "dependencies": {
-    "@twurple/api": "^8.0.3",
-    "@twurple/auth": "^8.0.3"
+    "@twurple/api": "^8.1.4",
+    "@twurple/auth": "^8.1.4"
   },
   "devDependencies": {
     "@microsoft/eslint-formatter-sarif": "^3.1.0",
-    "@typescript-eslint/parser": "^8.57.1",
+    "@typescript-eslint/parser": "^8.65.0",
     "cross-env": "^10.1.0",
     "docdash": "^2.0.2",
-    "esbuild": "^0.27.4",
+    "esbuild": "^0.28.1",
     "eslint": "^9.39.4",
-    "eslint-plugin-jsdoc": "^62.8.0",
-    "jest": "^30.3.0",
+    "eslint-plugin-jsdoc": "^63.3.2",
+    "jest": "^30.4.2",
     "jsdoc": "^4.0.5",
     "neostandard": "^0.13.0"
   },
@@ -89,14 +89,7 @@
     "test": "test"
   },
   "engines": {
-    "node": ">=20.18.1",
-    "pnpm": ">=10"
+    "node": ">=20.18.1"
   },
-  "packageManager": "pnpm@10.32.1",
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild",
-      "unrs-resolver"
-    ]
-  }
+  "packageManager": "pnpm@11.17.0"
 }

@@ -116,11 +116,11 @@ class SevenTVEmote extends Emote {
       : Boolean(data.emote.flags.defaultZeroWidth)
 
     /**
-     * If emote is NSFW.
+     * If emote is NSFW/unlisted.
      * Do note that this flag isn't always applied to what *looks* NSFW.
      * @type {boolean}
      */
-    this.nsfw = Boolean(data.emote.flags.nsfw)
+    this.nsfw = Boolean(data.emote.flags.nsfw || !data.emote.flags.publicListed)
   }
 
   /**
@@ -192,8 +192,11 @@ class SevenTVEmote extends Emote {
           },
           flags: {
             animated: emoteObject.animated || false,
-            nsfw: emoteObject.nsfw || false,
             defaultZeroWidth: emoteObject.zeroWidth || false,
+            // We're lossy on how we store NSFW, since it's both from the `nsfw` and `publicListed` flags.
+            // Applying the value to both here as best as we can, but it probably doesn't match reality.
+            nsfw: emoteObject.nsfw || false,
+            publicListed: !(emoteObject.nsfw || false),
           },
           images,
         },

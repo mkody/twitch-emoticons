@@ -48,14 +48,16 @@
             <pre class="prettyprint source linenums"><code>class Emote {
   /**
    * Base class for emotes.
-   * This constructor is not to be used.
+   * This constructor is not to be used directly.
    * @param {Channel} channel - {@linkcode Channel} this emote belongs to.
    * @param {string} id - ID of the emote.
    * @param {data} data - The raw emote data.
    * @throws {Error} When trying to use the base Emote class directly.
    */
   constructor (channel, id, data) {
-    if (new.target.name === Emote.name) {
+    if (new.target === Emote) {
+      // This is NOT a bug.
+      // Instantiate the appropriate emote class (e.g. TwitchEmote) instead of this.
       throw new Error('Base Emote class cannot be used')
     }
 

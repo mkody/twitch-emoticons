@@ -1,6 +1,6 @@
 name: Version Consistency
 
-on: [ "push" ]
+on: ["push"]
 
 jobs:
   check:

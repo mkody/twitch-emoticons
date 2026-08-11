@@ -145,6 +145,7 @@ declare class EmoteParser {
    * A parser to replace text with emotes.
    * @param {EmoteFetcher} fetcher - The {@linkcode EmoteFetcher} to use the cache of.
    * @param {object} [options={}] - Options for the parser.
+   * @param {boolean} [options.allowNSFW=false] - Only for 7TV: allow usage of NSFW/unlisted emotes.
    * @param {string} [options.template=''] - The template to be used.
    * The strings that can be interpolated are:
    * - `{link}` The link of the emote.
@@ -154,12 +155,13 @@ declare class EmoteParser {
    * @param {'html' | 'markdown' | 'bbcode' | 'plain'} [options.type='html'] - The type of the parser.
    * Can be one of `html`, `markdown`, `bbcode`, or `plain`.
    * If the `template` option is provided, this is ignored.
-   * @param {RegExp} [options.match=/(\w+)/g] - The regular expression that matches an emote.
+   * @param {RegExp} [options.match=/([^\s]+)/g] - The regular expression that matches an emote.
    * Must be a global regex, with one capture group for the emote code.
    */
   public constructor (
     fetcher: EmoteFetcher,
     options?: {
+      allowNSFW?: boolean,
       template?: string,
       type?: 'html' | 'markdown' | 'bbcode' | 'plain',
       match?: RegExp
@@ -198,7 +200,7 @@ declare class EmoteParser {
 declare abstract class Emote {
   /**
    * Base class for emotes.
-   * This constructor is not to be used.
+   * This constructor is not to be used directly.
    * @param {Channel} channel - {@linkcode Channel} this emote belongs to.
    * @param {string} id - ID of the emote.
    * @param {data} data - The raw emote data.

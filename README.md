@@ -22,12 +22,14 @@ Gets Twitch, BTTV, FFZ and 7TV emotes as well as parsing text to emotes!
 - The initialization of `EmoteFetcher` changed to only use an object as the first parameter for options.
   - API keys for Twitch must now be set with `twitchAppID` and `twitchAppSecret` properties.
   - The previously available `apiClient` is now set in this object too.
-- The defaults for `EmoteParser` changed to use the `html` template, and it does not require `:colons:` by default (using `/(\w+)/` to match any words).
+- The defaults for `EmoteParser` changed to use the `html` template, and it does not require `:colons:` by default (using `/([^\s]+)/g` to match non-whitespaces).
 - The default `html` template does not have `twitch-emote-{size}` anymore in its `class` attribute.  
   *The `size` is inconsistent between the different sources, so it cannot be reliably used.*
+- The `EmoteParser` now has an `allowNSFW` option, set to `false` by default.  
+  *This prevents rendering "NSFW" emotes using `EmoteParser.parse()`, which is a flag currently only available to emotes from 7TV when they are flagged "NSFW" or they are unlisted.*
 - If you somehow used `EmoteFetcher.globalChannel`, it has now been removed.  
   *Directly use `EmoteFetcher.channels.get(null)` instead.*
-- The `EmoteFetcher.fetchSevenTVEmotes()`, `Emote.toLink()`, and `EmoteParse.parse()` methods now have their options as an object.
+- The `EmoteFetcher.fetchSevenTVEmotes()`, `Emote.toLink()`, and `EmoteParser.parse()` methods now have their options as an object.
   - `fetcher.fetchSevenTVEmotes(null, { format: 'avif' })` - The first parameter is still the Twitch user ID (or `null` for global).
   - `emote.toLink({ size: 1, forceStatic: true, themeMode: 'light' })`
   - `parser.parse('Kappa', { size: 2, forceStatic: true, themeMode: 'dark' })` - The first parameter is still the input text.
@@ -124,12 +126,50 @@ pnpm add jsr:@mkody/twitch-emoticons
 # or
 yarn add jsr:@mkody/twitch-emoticons
 # or (version has to be specified while it is a pre-release)
-deno add jsr:@mkody/twitch-emoticons@3.0.0-beta.4
+deno add jsr:@mkody/twitch-emoticons@3.0.0-beta.7
 ```
 
-[npm]: https://www.npmjs.com/package/@mkody/twitch-emoticons/v/3.0.0-beta.4
-[browse on npmx]: https://npmx.dev/package/@mkody/twitch-emoticons/v/3.0.0-beta.4
-[jsr]: https://jsr.io/@mkody/twitch-emoticons@3.0.0-beta.4
+[npm]: https://www.npmjs.com/package/@mkody/twitch-emoticons/v/3.0.0-beta.7
+[browse on npmx]: https://npmx.dev/package/@mkody/twitch-emoticons/v/3.0.0-beta.7
+[jsr]: https://jsr.io/@mkody/twitch-emoticons@3.0.0-beta.7
+
+
+### Client-side usage
+
+While not recommended (please do not expose your Twitch secrets!), you can use this library directly in the browser.
+
+**CJS:**
+```html
+<!--
+CDNs:
+- jsDelivr: https://cdn.jsdelivr.net/npm/@mkody/twitch-emoticons@3/dist/TwitchEmoticons.min.js
+- unpkg: https://unpkg.com/@mkody/twitch-emoticons@3/dist/TwitchEmoticons.min.js
+-->
+<script src="./dist/TwitchEmoticons.min.js"></script>
+<script>
+  const fetcher = new TwitchEmoticons.EmoteFetcher()
+  const parser = new TwitchEmoticons.EmoteParser(fetcher)
+  // ...
+</script>
+```
+
+**ESM:**
+```html
+<script type="module">
+  /*
+  CDNs:
+  - jsDelivr: https://cdn.jsdelivr.net/npm/@mkody/twitch-emoticons@3/dist/TwitchEmoticons.esm.min.js
+  - unpkg: https://unpkg.com/@mkody/twitch-emoticons@3/dist/TwitchEmoticons.esm.min.js
+  */
+  import { EmoteFetcher, EmoteParser } from './dist/TwitchEmoticons.esm.min.js'
+
+  const fetcher = new EmoteFetcher()
+  const parser = new EmoteParser(fetcher)
+  // ...
+</script>
+```
+
+Demos: <https://s.kdy.ch/twitch-emoticons/>
 
 
 ## Quick docs
@@ -140,7 +180,7 @@ deno add jsr:@mkody/twitch-emoticons@3.0.0-beta.4
 Here is some quick documentation to explain our two classes, the principal methods, and some settings.
 
 > **NOTE:**  
-> If you want a more complete documentation, see: https://mkody.github.io/twitch-emoticons/
+> If you want a more complete documentation, see: <https://mkody.github.io/twitch-emoticons/>
 
 
 ### Grab emotes with `EmoteFetcher`
@@ -202,7 +242,7 @@ method to… get a link!
 >   - `.modifier` (boolean, emote effects, should be hidden)
 > - 7TV:
 >   - `.zeroWidth` (boolean, can overlay an another emote)
->   - `.nsfw` (boolean, flagged as "NSFW")
+>   - `.nsfw` (boolean, flagged as "NSFW" or unlisted)
 
 
 ### Parse strings to include emotes with `EmoteParser`
@@ -217,6 +257,9 @@ const parser = new EmoteParser(
 
   // The second parameter is an *optional* object with settings.
   {
+    // Allow, or explicitly disallow, rendering emotes we flag as "NSFW" (7TV only)
+    allowNSFW, // <boolean> - Default: false
+    
     // What output should be used when you parse messages? There are two ways to set that up:
     // Option 1: Use one of the provided templates:
     // - 'html': `<img alt="{name}" title="{name}" class="twitch-emote" src="{link}">`
@@ -230,7 +273,7 @@ const parser = new EmoteParser(
     template, // <string> - Default: ''
 
     // You can customize the regular expression used to find possible emotes.
-    match, // <RegExp> - Default: /(\w+)/g
+    match, // <RegExp> - Default: /([^\s]+)/g
   },
 ) 
 ```
@@ -284,9 +327,9 @@ const fetcher = new EmoteFetcher({
 const parser = new EmoteParser(fetcher, {
   type: 'markdown',   // Can be `html` (default), `markdown`, `bbcode`, or `plain`.
                       // You can also set your own output, see example 3.
-  match: /:(.+?):/g,  // This means your emotes must be between colons (:Kappa:).
-                      // The default is /(\w+)/g and matches any word characters,
-                      // similar to regular Twitch chat.
+  match: /:(.+?):/g,  // Requires emotes to be between colons (:Kappa:).
+                      // The default `/([^\s]+)/g` matches any non-whitespace
+                      // characters, similar to regular Twitch chat.
 })
 
 await fetcher.fetchTwitchEmotes(null) // `null` or a missing parameter will load "global" emotes.
@@ -337,6 +380,8 @@ const fetcher = new EmoteFetcher({
   twitchThemeMode: 'dark',
 })
 const parser = new EmoteParser(fetcher, {
+  // Allow NSFW/unlisted emotes from 7TV
+  allowNSFW: true,
   // Custom HTML format
   template: `
     <img
@@ -348,7 +393,7 @@ const parser = new EmoteParser(fetcher, {
       data-overlay="{is-zero-width}"
       data-nsfw="{is-nsfw}"
     >`,
-  // Matches words (like \w) but also dashes
+  // Matches words (like \w) and dashes
   match: /([a-zA-Z0-9_\-]+)/g,
 })
 
@@ -547,4 +592,4 @@ This library uses the following:
 - [Twurple](https://twurple.js.org/) and the [Twitch API](https://dev.twitch.tv/)
 - [BetterTTV API](https://betterttv.com/developers/api)
 - [FrankerFaceZ API](https://api.frankerfacez.com/docs/)
-- [7TV API (v4 via GraphQL)](https://github.com/SevenTV/SevenTV/tree/main/apps/api/src/http/v4/gql)
+- [7TV API (v4 via GraphQL)](https://7tv.app/api/docs#gql)

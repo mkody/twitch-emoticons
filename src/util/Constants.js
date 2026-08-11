@@ -29,6 +29,7 @@ export default {
                     }
                   }
                   flags {
+                    publicListed
                     nsfw
                     defaultZeroWidth
                     animated
@@ -43,8 +44,7 @@ export default {
             }
           }
         }
-      }
-`,
+      }`,
     ChannelQuery: `
       query GetChannelEmotes($platformId: String!) {
         users {
@@ -67,6 +67,7 @@ export default {
                         }
                       }
                       flags {
+                        publicListed
                         nsfw
                         defaultZeroWidth
                         animated
