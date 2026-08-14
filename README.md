@@ -41,13 +41,11 @@ Gets Twitch, BTTV, FFZ and 7TV emotes as well as parsing text to emotes!
 
 ### Example of code changes
 
-Our examples are running in an ESM-based project (`"type": "module"`).
-
-> [!TIP]  
-> Do note that we export a CommonJS-compatible build, so you can still use `require(...)`:  
-> ```js
-> const { EmoteFetcher, EmoteParser } = require('@mkody/twitch-emoticons')
-> ``` 
+Our examples are running in an ESM-based project (`"type": "module"`).  
+Do note that we export a CommonJS-compatible build, so you can still use `require(...)`:  
+```js
+const { EmoteFetcher, EmoteParser } = require('@mkody/twitch-emoticons')
+``` 
 
 
 #### Before (2.x)
@@ -181,7 +179,7 @@ Demos: <https://s.kdy.ch/twitch-emoticons/>
 
 Here is some quick documentation to explain our two classes, the principal methods, and some settings.
 
-> [!TIP]  
+> **NOTE:**  
 > If you want a more complete documentation, see: <https://mkody.github.io/twitch-emoticons/>
 
 
@@ -238,8 +236,7 @@ From there, you can read properties like `.id`, `.code`, `.ownerName`,
 `.animated`, `.imageType`, or `.type`, but you can also use the `.toLink()`
 method to… get a link!
 
-> [!NOTE]  
-> Some extended `Emote`s have additional properties:
+> Note: Some extended `Emote`s have additional properties:
 > - FFZ:
 >   - `.zeroWidth` (boolean, can overlay an another emote)
 >   - `.modifier` (boolean, emote effects, should be hidden)
@@ -457,7 +454,7 @@ console.log(dinoDance)
 // https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_dcd06b30a5c24f6eb871e8f5edbd44f7/static/dark/1.0
 ```
 
-> [!NOTE]  
+> **NOTE:**  
 > *Q:* Why set this to the `EmoteFetcher` and not `EmoteParser`?  
 > *A:* Because `Emote.toLink()` (that you get from the fetcher) uses that info!
 
@@ -477,7 +474,7 @@ console.log(dinoDance)
 // <img alt="DinoDance" title="DinoDance" class="twitch-emote" src="https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_dcd06b30a5c24f6eb871e8f5edbd44f7/static/dark/1.0">
 ```
 
-> [!WARNING]  
+> **WARNING:**  
 > Forcing static images might make the `imageType` of the `Emote` not match with your expectations!  
 > (Twitch: `gif` => `png`; BTTV: `webp` => `png`.)
 
@@ -512,7 +509,7 @@ console.log(kappa)
 // https://static-cdn.jtvnw.net/emoticons/v2/25/default/light/1.0
 ```
 
-> [!NOTE]  
+> **NOTE:**  
 > *Q:* Why set this to the `EmoteFetcher` and not `EmoteParser`?  
 > *A:* Because `Emote.toLink()` (that you get from the fetcher) uses that info!
 
@@ -578,7 +575,7 @@ const emotes = fetcher.emotes.map((emote) => emote.toObject())
 fetcher.fromObject(emotes)
 ```
 
-> [!NOTE]  
+> **NOTE:**  
 > For offline access, you will still need to download emotes and proxy their URLs.
 
 </details>
