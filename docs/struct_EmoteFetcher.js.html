@@ -412,9 +412,18 @@ class EmoteFetcher {
     } = options || {}
 
     return this._getRawSevenTVEmotes(channel, format).then((rawEmotes) => {
-      const emoteItems = channel
-        ? rawEmotes?.data?.userByConnection?.emote_sets?.find((set) => set.flags === 0)?.emotes
-        : rawEmotes?.data?.namedEmoteSet?.emotes
+      let emoteItems = []
+
+      if (channel) {
+        // We first try to get the user's active emote set (technically the one for its Twitch channel)
+        const activeEmoteSet = rawEmotes?.data?.userByConnection?.connections?.find((connection) => connection.platform === 'TWITCH')?.emote_set_id
+        if (activeEmoteSet) {
+          // And now we look for that exact emote set
+          emoteItems = rawEmotes?.data?.userByConnection?.emote_sets?.find((set) => set.id === activeEmoteSet)?.emotes
+        }
+      } else {
+        emoteItems = rawEmotes?.data?.namedEmoteSet?.emotes
+      }
 
       for (const data of Array.isArray(emoteItems) ? emoteItems : []) {
         this._cacheSevenTVEmote(channel, data, format)

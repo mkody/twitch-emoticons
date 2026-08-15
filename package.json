@@ -1,6 +1,6 @@
 {
   "name": "@mkody/twitch-emoticons",
-  "version": "3.0.0-beta.7",
+  "version": "3.0.0-beta.8",
   "description": "Gets Twitch, BTTV, FFZ and 7TV emotes as well as parsing text to emotes!",
   "type": "module",
   "license": "MIT",
@@ -55,10 +55,10 @@
   },
   "devDependencies": {
     "@microsoft/eslint-formatter-sarif": "^3.1.0",
-    "@typescript-eslint/parser": "^8.65.0",
+    "@typescript-eslint/parser": "^8.67.0",
     "cross-env": "^10.1.0",
     "docdash": "^2.0.2",
-    "esbuild": "^0.28.1",
+    "esbuild": "^0.28.2",
     "eslint": "^9.39.4",
     "eslint-plugin-jsdoc": "^63.3.2",
     "jest": "^30.4.2",
@@ -91,5 +91,5 @@
   "engines": {
     "node": ">=20.18.1"
   },
-  "packageManager": "pnpm@11.17.0"
+  "packageManager": "pnpm@11.21.0"
 }
