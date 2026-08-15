@@ -36,8 +36,12 @@ export default {
     ChannelQuery: `
       query GetChannelEmotes($id: String!, $format: [ImageFormat!]) {
         userByConnection(platform: TWITCH, id: $id) {
+          connections {
+            platform
+            emote_set_id
+          }
           emote_sets(entitled: false) {
-            flags
+            id
             emotes {
               id
               name
