@@ -5,7 +5,7 @@ Gets Twitch, BTTV, FFZ and 7TV emotes as well as parsing text to emotes!
 > [!IMPORTANT]  
 > This branch is for the **currently pre-released** 3.0 version.  
 > If you want to see the latest stable version (as of this commit),
-> [switch to the `version/2.9` branch](https://github.com/mkody/twitch-emoticons/tree/version/2.9).
+> switch to the `version/2.9` branch.
 
 
 ## Migrate to 3.x
@@ -583,9 +583,16 @@ fetcher.fromObject(emotes)
 
 ## Links
 
-- [Github](https://github.com/mkody/twitch-emoticons)
-- [Documentation](https://mkody.github.io/twitch-emoticons/)
-- [Changelog](https://github.com/mkody/twitch-emoticons/releases)
+- GitHub:
+  - [Repository](https://github.com/mkody/twitch-emoticons)
+  - [Documentation](https://mkody.github.io/twitch-emoticons/)
+  - [Changelog](https://github.com/mkody/twitch-emoticons/releases)
+- Tangled (mirror):
+  - [Repository](https://tangled.org/kdy.ch/twitch-emoticons)
+  - [Documentation](https://kody.tngl.io/twitch-emoticons/)
+  - [Changelog](https://tangled.org/kdy.ch/twitch-emoticons/tags)
+- RitaGit (mirror):
+  - [Repository](https://git.rita.moe/kody/twitch-emoticons)
 
 This library uses the following:
 

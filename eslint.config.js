@@ -18,6 +18,7 @@ export default [
     ],
   },
   {
+    files: ['**/*.js', '**/*.cjs', '**/*.mjs', '**/*.jsx'],
     rules: {
       '@stylistic/arrow-parens': ['error', 'always'],
       '@stylistic/comma-dangle': [
@@ -35,7 +36,7 @@ export default [
         'error',
         'single',
         {
-          allowTemplateLiterals: true,
+          allowTemplateLiterals: 'always',
           avoidEscape: true,
         },
       ],

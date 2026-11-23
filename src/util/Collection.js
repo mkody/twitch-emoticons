@@ -53,6 +53,8 @@ class Collection extends Map {
       func = func.bind(thisArg)
     }
 
+    // Dynamic constructor so subclasses get their own type back
+    // eslint-disable-next-line new-cap
     const results = new this.constructor()
 
     let i = 0
